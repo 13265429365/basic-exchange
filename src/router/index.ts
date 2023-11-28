@@ -1,4 +1,5 @@
 import { route } from 'quasar/wrappers';
+import { useInitStore } from 'src/stores/init';
 import {
   createMemoryHistory,
   createRouter,
@@ -6,7 +7,11 @@ import {
   createWebHistory,
 } from 'vue-router';
 
-import routes from './routes';
+import routes from 'src/router/routes';
+import { defaultRouter } from 'src/router/defaultRouters';
+
+// 所有模版路由信息
+export const templateRoutes: any = new Map([['default', defaultRouter]]);
 
 /*
  * If not building with SSR mode, you can
@@ -17,10 +22,16 @@ import routes from './routes';
  * with the Router instance.
  */
 
-export default route(function (/* { store, ssrContext } */) {
+export default route(function (
+  {
+    /* store, ssrContext */
+  }
+) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
-    : (process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory);
+    : process.env.VUE_ROUTER_MODE === 'history'
+    ? createWebHistory
+    : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -30,6 +41,27 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
+  });
+
+  // 路由前置守卫
+  Router.beforeEach((to, form, next) => {
+    const initStore = useInitStore();
+    if (
+      (to.name === 'Login' || to.name === 'Register') &&
+      initStore.userToken.length > 0
+    ) {
+      next({ name: 'Home' });
+    } else {
+      // 验证是否跳转到登录页面
+      if (
+        to.matched.some((record) => record.meta.requireAuth) &&
+        initStore.userToken.length === 0
+      ) {
+        next({ name: 'Login', query: { next: to.fullPath } });
+      } else {
+        next();
+      }
+    }
   });
 
   return Router;
