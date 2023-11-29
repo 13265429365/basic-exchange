@@ -6,9 +6,9 @@
         <q-img class="logo" src="/images/default/Logo@2x.png" :ratio="1" />
       </div>
       <div class="row justify-center">
-        <div class="size24 bold">Create New Account</div>
+        <div class="size24 bold">error</div>
       </div>
-      <div class="margint40">
+      <div class="margint40 padding20">
         <q-form>
           <q-input class="marginb15" filled v-model="text" label="Email">
             <template v-slot:prepend>
@@ -45,55 +45,85 @@
             </template>
           </q-input>
           <div class="row no-wrap">
-            <q-select class="marginb15 marginr10" filled v-model="model" :options="options" label="+86">
+            <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options" class="marginb15 marginr10" filled>
               <template v-slot:prepend>
-                <q-icon name="top" @click.stop.prevent />
+                <q-img class="countryLogo" src="/images/default/ch.png" @click.stop.prevent />
+              </template>
+              <template v-slot:option="scope">
+                <q-item v-bind="scope.itemProps">
+                  <q-item-section avatar>
+                    <q-img class="iconLogo" src="/images/default/ch.png" @click.stop.prevent />
+                  </q-item-section>
+                  <q-item-section>
+                    <q-item-label>{{ scope.opt.label }}</q-item-label>
+                    <q-item-label caption>{{ scope.opt.value }}</q-item-label>
+                  </q-item-section>
+                </q-item>
               </template>
             </q-select>
-            <q-input class="marginb15" filled v-model="text" label="Telphone" />
+            <q-input class="marginb31 full-width" filled v-model="text" label="Telphone" />
+          </div>
+          <div class="sub row justify-center items-center marginb19">Signup</div>
+          <div class="size14 text-center marginb31">
+            Already have an account?
+            <span @click="toLogin()" class="login">Login</span>
           </div>
         </q-form>
       </div>
+      <navBar></navBar>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-  import lang from '../components/lang/lang.vue'
+  import lang from 'src/components/lang/lang.vue';
+  import navBar from 'src/components/navBar.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
-
+  import { useRouter } from 'vue-router';
   // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
   export default defineComponent({
     components: {
-      lang
+      lang,
+      navBar
     },
-    name: 'NotFound',
+    name: 'errorView',
     setup() {
+      const router = useRouter();
       let store = reactive({
         isPwd: false,
         options: [
-          'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+          { label: '+86', value: '中国' },
+          { label: '+866', value: '香港' },
         ],
         text: '',
         password: '',
-        model: ''
-      })
+        areaCode: '+86',
+      });
       return {
-        ...toRefs(store)
+        ...toRefs(store),
+        newValue(newValue: void) {
+          console.log(newValue)
+        },
+        toLogin() {
+          router.push('Login')
+        },
       }
     }
   });
 </script>
 <style lang="scss" scoped>
-  .marginr10 {
-    margin-right: 10px;
+  .sub {
+    width: 100%;
+    height: 44px;
+    background: $default;
+    border-radius: 29px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 15px;
   }
-  .marginb15 {
-    margin-bottom: 15px;
-  }
-
-  .marginb31 {
-    margin-bottom: 31px;
+  .login {
+    color: $default;
+    cursor: pointer;
   }
 
   .logo {
@@ -107,9 +137,8 @@
     width: 24px;
     height: 24px;
   }
-
-  .margint40 {
-    margin-top: 40px;
-    padding: 0 20px;
+  .countryLogo {
+    width: 24px;
+    height: 16px;
   }
 </style>

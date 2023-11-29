@@ -45,12 +45,15 @@ export default route(function (
 
   // 路由前置守卫
   Router.beforeEach((to, form, next) => {
+    console.log(to);
     const initStore = useInitStore();
-    if (
-      (to.name === 'Login' || to.name === 'Register') &&
-      initStore.userToken.length > 0
-    ) {
-      next({ name: 'Home' });
+    next();
+    // if (
+    //   (to.name === 'Login' || to.name === 'Register') &&
+    //   initStore.userToken.length > 0
+    // ) {
+    if (to.name === 'Login' || to.name === 'Register') {
+      next();
     } else {
       // 验证是否跳转到登录页面
       if (

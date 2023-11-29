@@ -74,6 +74,7 @@ export default {
     // 返回按钮
     const backFunc = () => {
       props.backUrl === '' ? router.back() : router.push(props.backUrl);
+      // console.log(props.backUrl);
     };
     const state = reactive({
     });
