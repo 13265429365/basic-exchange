@@ -1,5 +1,6 @@
 import { route } from 'quasar/wrappers';
-import { useInitStore } from 'src/stores/init';
+import { UserTokenKey } from 'src/stores/user';
+import { Cookies } from 'quasar';
 import {
   createMemoryHistory,
   createRouter,
@@ -22,11 +23,7 @@ export const templateRoutes: any = new Map([['default', defaultRouter]]);
  * with the Router instance.
  */
 
-export default route(function (
-  {
-    /* store, ssrContext */
-  }
-) {
+export default route(function ({ /* store, */ ssrContext }) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history'
@@ -44,18 +41,21 @@ export default route(function (
   });
 
   // 路由前置守卫
+  const $cookies = ssrContext ? Cookies.parseSSR(ssrContext) : Cookies;
+
   Router.beforeEach((to, form, next) => {
-    const initStore = useInitStore();
+    const userToken = <string>$cookies.get(UserTokenKey);
     if (
       (to.name === 'Login' || to.name === 'Register') &&
-      initStore.userToken.length > 0
+      userToken != null &&
+      userToken.length > 0
     ) {
       next({ name: 'Home' });
     } else {
       // 验证是否跳转到登录页面
       if (
         to.matched.some((record) => record.meta.requireAuth) &&
-        initStore.userToken.length === 0
+        (userToken == null || userToken.length === 0)
       ) {
         next({ name: 'Login', query: { next: to.fullPath } });
       } else {

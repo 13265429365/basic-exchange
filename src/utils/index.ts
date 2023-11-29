@@ -9,5 +9,12 @@ export const imageSrc = (url: string) => {
   if (url.indexOf('http') > -1) {
     return url;
   }
-  return process.env.baseURL + url;
+
+  const baseURL = new URL(<string>process.env.baseURL);
+  return baseURL + url;
+};
+
+// cookiesOptions cookies 额外参数
+export const cookiesOptions = () => {
+  return { expires: '30d 3h 5m' };
 };
