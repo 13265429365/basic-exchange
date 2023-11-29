@@ -18,13 +18,15 @@ export default defineComponent({
     const $cookies = Cookies.parseSSR(ssrContext);
 
     //  获取用户端Cookies信息
-    $initStore.userToken = $cookies.get(UserToken);
+    const userToken = $cookies.get(UserToken);
+    const userLang = $cookies.get(UserLang);
+    $initStore.userToken = userToken ?? '';
     //  请求管理配置文件
     const initPath =
       '/init?domain=' +
       ssrContext?.req.headers.host +
       '&lang=' +
-      $cookies.get(UserLang);
+      (userLang ?? '');
     api.get(initPath).then((res: any) => {
       if (res != null) {
         $initStore.config = res.config;

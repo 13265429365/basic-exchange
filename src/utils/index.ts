@@ -9,5 +9,7 @@ export const imageSrc = (url: string) => {
   if (url.indexOf('http') > -1) {
     return url;
   }
-  return process.env.baseURL + url;
+
+  const baseURL = new URL(<string>process.env.baseURL);
+  return baseURL + url;
 };
