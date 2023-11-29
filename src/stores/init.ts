@@ -50,7 +50,7 @@ export const useInitStore = defineStore('init', {
       //  项目名称
       name: 'BaJie',
       //  项目Logo
-      logo: '/images/logo.png',
+      logo: '/images/defulat/logo.png',
       //  默认语言
       defaultLang: 'en-US',
       //  默认模版

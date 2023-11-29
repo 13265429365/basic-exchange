@@ -3,8 +3,7 @@
     <q-page-container>
       <router-view />
     </q-page-container>
-    <q-footer>
-      <!-- tab -->
+    <!-- <q-footer>
       <q-tabs v-model="currentTab" dense class="bg-white text-black" indicator-color="transparent" active-color="primary">
         <q-tab v-for="(tabi, tabIndex) in tabArr" :key="tabIndex" :name="tabi.name"
           :icon="tabi.name == currentTab ? tabi.imgActive : tabi.img" :label="tabi.label"
@@ -12,13 +11,13 @@
           <q-badge v-if="tabi.name == 'notice'" color="red" floating>2</q-badge>
         </q-tab>
       </q-tabs>
-    </q-footer>
+    </q-footer> -->
   </q-layout>
 </template>
 
 <script lang="ts">
-import { onMounted, reactive, toRefs, watch } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { onMounted, reactive, toRefs } from 'vue';
+// import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 export default {

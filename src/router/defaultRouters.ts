@@ -9,7 +9,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     children: [
       {
         path: '/',
-        name: 'Home',
+        name: 'register',
         componentPath: 'pages',
         component: 'index.vue',
         children: [],

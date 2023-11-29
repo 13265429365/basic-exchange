@@ -3,7 +3,7 @@
     <lang></lang>
     <div>
       <div class="row justify-center">
-        <q-img class="logo" src="/images/Logo@2x.png" :ratio="1" />
+        <q-img class="logo" src="/images/default/Logo@2x.png" :ratio="1" />
       </div>
       <div class="row justify-center">
         <div class="size24 bold">Create New Account</div>
@@ -12,12 +12,12 @@
         <q-form>
           <q-input class="marginb15" filled v-model="text" label="Email">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/sms@2x.png" />
+              <q-img class="iconLogo" src="/images/default/sms@2x.png" />
             </template>
           </q-input>
           <q-input class="marginb15" v-model="password" filled :type="isPwd ? 'password' : 'text'" label="Password">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/lock@2x.png" />
+              <q-img class="iconLogo" src="/images/default/lock@2x.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -26,22 +26,22 @@
           </q-input>
           <q-input class="marginb15" filled v-model="text" label="Confirm Password">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/lock@2x.png" />
+              <q-img class="iconLogo" src="/images/default/lock@2x.png" />
             </template>
           </q-input>
           <q-input class="marginb31" filled v-model="text" label="Code">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/shield-tick@2x.png" />
+              <q-img class="iconLogo" src="/images/default/shield-tick@2x.png" />
             </template>
           </q-input>
           <q-input class="marginb15" filled v-model="text" label="Secret Key">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/key@2x.png" />
+              <q-img class="iconLogo" src="/images/default/key@2x.png" />
             </template>
           </q-input>
           <q-input class="marginb15" filled v-model="text" label="Invite Code">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/profile-2user@2x.png" />
+              <q-img class="iconLogo" src="/images/default/profile-2user@2x.png" />
             </template>
           </q-input>
           <div class="row no-wrap">
@@ -67,14 +67,16 @@
     components: {
       lang
     },
-    name: 'NotFound',
+    name: 'register',
     setup() {
       let store = reactive({
         isPwd: false,
         options: [
           'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
         ],
-
+        text: '',
+        password: '',
+        model: ''
       })
       return {
         ...toRefs(store)
