@@ -1,50 +1,24 @@
 import { defineStore } from 'pinia';
-import { Cookies } from 'quasar';
 
-interface countryInterface {
-  //  国家ID
-  id: number;
+// 初始化管理配置
+export const initializationInitStore = ({
+  config,
+  translate,
+  countryList,
+  languageList,
+}: any) => {
+  const $initStore = useInitStore();
+  $initStore.config = config;
+  $initStore.translate = translate;
+  $initStore.countryList = countryList;
+  $initStore.languageList = languageList;
 
-  //  国家名称
-  name: string;
-
-  //  国家图标
-  icon: string;
-
-  //  国家代码
-  code: string;
-}
-
-interface translateInterface {
-  // 建铭
-  label: string;
-  //  键值
-  value: string;
-}
-
-interface LanguageInterface {
-  //  语言ID
-  id: number;
-
-  //  语言名称
-  name: string;
-
-  //  语言图标
-  icon: string;
-}
-
-export const UserToken = '_UserToken';
-export const UserLang = '_UserLang';
+  return $initStore;
+};
 
 // 初始化数据
 export const useInitStore = defineStore('init', {
   state: () => ({
-    //  用户Cookies Token
-    userToken: '',
-
-    //  用户Cookies Lang 语言
-    userLang: '',
-
     //  配置文件
     config: {
       //  项目名称
@@ -118,15 +92,37 @@ export const useInitStore = defineStore('init', {
     languageList: [] as LanguageInterface[],
   }),
   getters: {},
-  actions: {
-    //  更新用户Token
-    updateUserToken(token: string) {
-      Cookies.set(UserToken, token, { expires: '30d 3h 5m' });
-    },
-
-    //  更新用户语言
-    updateUserLang(lang: string) {
-      Cookies.set(UserLang, lang, { expires: '30d 3h 5m' });
-    },
-  },
+  actions: {},
 });
+
+interface countryInterface {
+  //  国家ID
+  id: number;
+
+  //  国家名称
+  name: string;
+
+  //  国家图标
+  icon: string;
+
+  //  国家代码
+  code: string;
+}
+
+interface translateInterface {
+  // 建铭
+  label: string;
+  //  键值
+  value: string;
+}
+
+interface LanguageInterface {
+  //  语言ID
+  id: number;
+
+  //  语言名称
+  name: string;
+
+  //  语言图标
+  icon: string;
+}
