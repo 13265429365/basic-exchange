@@ -4,9 +4,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useMeta, Cookies, useQuasar } from 'quasar';
+import { useMeta, useQuasar } from 'quasar';
 import { api } from 'src/boot/axios';
-import { useInitStore, UserLang, UserToken } from 'src/stores/init';
+import { initializationInitStore, useInitStore } from 'src/stores/init';
+import { initializationUserStore } from './stores/user';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/index';
 import { useRouter } from 'vue-router';
@@ -14,25 +15,24 @@ import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'App',
   preFetch: ({ ssrContext }) => {
-    const $initStore = useInitStore();
-    const $cookies = Cookies.parseSSR(ssrContext);
+    //  初始化 userStore
+    const $userStore = initializationUserStore({ ssrContext });
 
-    //  获取用户端Cookies信息
-    const userToken = $cookies.get(UserToken);
-    const userLang = $cookies.get(UserLang);
-    $initStore.userToken = userToken ?? '';
     //  请求管理配置文件
     const initPath =
       '/init?domain=' +
       ssrContext?.req.headers.host +
       '&lang=' +
-      (userLang ?? '');
+      $userStore.userLang;
     api.get(initPath).then((res: any) => {
       if (res != null) {
-        $initStore.config = res.config;
-        $initStore.translate = res.translate;
-        $initStore.countryList = res.countryList;
-        $initStore.languageList = res.languageList;
+        //  初始化管理配置信息
+        initializationInitStore({
+          config: res.config,
+          translate: res.translate,
+          countryList: res.countryList,
+          languageList: res.languageList,
+        });
       }
     });
   },

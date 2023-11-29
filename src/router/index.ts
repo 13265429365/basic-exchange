@@ -1,5 +1,5 @@
 import { route } from 'quasar/wrappers';
-import { UserToken } from 'src/stores/init';
+import { UserTokenKey } from 'src/stores/user';
 import { Cookies } from 'quasar';
 import {
   createMemoryHistory,
@@ -44,7 +44,7 @@ export default route(function ({ /* store, */ ssrContext }) {
   const $cookies = ssrContext ? Cookies.parseSSR(ssrContext) : Cookies;
 
   Router.beforeEach((to, form, next) => {
-    const userToken = <string>$cookies.get(UserToken);
+    const userToken = <string>$cookies.get(UserTokenKey);
     if (
       (to.name === 'Login' || to.name === 'Register') &&
       userToken != null &&
