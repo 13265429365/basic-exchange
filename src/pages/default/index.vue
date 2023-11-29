@@ -6,16 +6,21 @@
         <q-img class="logo" src="/images/default/Logo@2x.png" :ratio="1" />
       </div>
       <div class="row justify-center">
-        <div class="size24 bold">Create New Account</div>
+        <div class="size24 text-weight-bold">Create New Account</div>
       </div>
-      <div class="margint40 padding20">
+      <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="marginb15" filled v-model="text" label="Email">
+          <!-- <q-input color="grey-3" label-color="orange" outlined v-model="text" label="Label">
+            <template v-slot:append>
+              <q-icon name="event" color="orange" />
+            </template>
+          </q-input> -->
+          <q-input color="green" class="q-mb-md" filled v-model="text" label="Email">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/sms@2x.png" />
             </template>
           </q-input>
-          <q-input class="marginb15" v-model="password" filled :type="isPwd ? 'password' : 'text'" label="Password">
+          <q-input class="q-mb-md" v-model="password" filled :type="isPwd ? 'password' : 'text'" label="Password">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/lock@2x.png" />
             </template>
@@ -24,28 +29,29 @@
                 @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <q-input class="marginb15" filled v-model="text" label="Confirm Password">
+          <q-input class="q-mb-md" filled v-model="text" label="Confirm Password">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/lock@2x.png" />
             </template>
           </q-input>
-          <q-input class="marginb31" filled v-model="text" label="Code">
+          <q-input class="q-mb-lg" filled v-model="text" label="Code">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/shield-tick@2x.png" />
             </template>
           </q-input>
-          <q-input class="marginb15" filled v-model="text" label="Secret Key">
+          <q-input class="q-mb-md" filled v-model="text" label="Secret Key">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/key@2x.png" />
             </template>
           </q-input>
-          <q-input class="marginb15" filled v-model="text" label="Invite Code">
+          <q-input class="q-mb-md" filled v-model="text" label="Invite Code">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/profile-2user@2x.png" />
             </template>
           </q-input>
           <div class="row no-wrap">
-            <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options" class="marginb15 marginr10" filled>
+            <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
+              class="q-mb-md q-mr-md" filled>
               <template v-slot:prepend>
                 <q-img class="countryLogo" src="/images/default/ch.png" @click.stop.prevent />
               </template>
@@ -61,10 +67,10 @@
                 </q-item>
               </template>
             </q-select>
-            <q-input class="marginb31 full-width" filled v-model="text" label="Telphone" />
+            <q-input class="q-mb-lg full-width" filled v-model="text" label="Telphone" />
           </div>
-          <div class="sub row justify-center items-center marginb19">Signup</div>
-          <div class="size14 text-center marginb31">
+          <q-btn @click="toMypage()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;" color="primary" label="Signup" />
+          <div class="size14 text-center q-mb-xl">
             Already have an account?
             <span @click="toLogin()" class="login">Login</span>
           </div>
@@ -81,9 +87,9 @@
   // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
   export default defineComponent({
     components: {
-      lang
+      lang,
     },
-    name: 'indeaVue',
+    name: 'indexVue',
     setup() {
       const router = useRouter();
       let store = reactive({
@@ -98,46 +104,23 @@
       });
       return {
         ...toRefs(store),
-        newValue(newValue: void) {
+        newValue(newValue : void) {
           console.log(newValue)
         },
         toLogin() {
           console.log(router.getRoutes());
           router.push('Login')
         },
+        toMypage() {
+          console.log(router.getRoutes());
+          router.push('myPage')
+        },
       }
     }
   });
 </script>
 <style lang="scss" scoped>
-  .q-field__control {
-    background-color: #F5F6FA;
-  }
-  .sub {
-    width: 100%;
-    height: 44px;
-    background: rgba(1,172,102,0.5);
-    border-radius: 29px;
-    cursor: pointer;
-    color: #fff;
-    font-size: 15px;
-  }
-  .login {
-    color: $default;
-    cursor: pointer;
-  }
-
-  .logo {
-    width: 70px;
-    height: 70px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-  }
-
-  .iconLogo {
-    width: 24px;
-    height: 24px;
-  }
+  @import url("../../css/login.scss");
   .countryLogo {
     width: 24px;
     height: 16px;

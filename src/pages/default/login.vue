@@ -6,16 +6,16 @@
         <q-img class="logo" src="/images/default/Logo@2x.png" :ratio="1" />
       </div>
       <div class="row justify-center">
-        <div class="size24 bold">Welcome Back</div>
+        <div class="text-weight-bold" style="font-size: 24px;">Welcome Back</div>
       </div>
-      <div class="margint40 padding20">
+      <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="marginb15" filled v-model="text" label="Name">
+          <q-input class="q-mb-md" filled v-model="text" label="Name">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/sms@2x.png" />
+              <q-img class="iconLogo" src="/images/default/profile-2user@2x.png" />
             </template>
           </q-input>
-          <q-input class="marginb15" v-model="password" filled :type="isPwd ? 'password' : 'text'" label="Password">
+          <q-input class="q-mb-md" v-model="password" filled :type="isPwd ? 'password' : 'text'" label="Password">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/lock@2x.png" />
             </template>
@@ -24,13 +24,16 @@
                 @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <q-input class="marginb31" filled v-model="text" label="Code">
+          <q-input class="q-mb-sm" filled v-model="text" label="Code">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/shield-tick@2x.png" />
             </template>
           </q-input>
-          <div class="sub row justify-center items-center marginb19">Login</div>
-          <div class="size14 text-center marginb31">
+          <div @click="toForgot()" class="text-right q-mb-lg" style="font-size: 14px;color:#999999">
+            Forgot Password?
+          </div>
+          <q-btn @click="toMypage()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;" color="primary" label="Login" />
+          <div class="text-center q-mb-xl" style="font-size: 14px;">
             First time here?
             <span @click="toRegister()" class="login">Signup</span>
           </div>
@@ -54,54 +57,25 @@
       const router = useRouter();
       let store = reactive({
         isPwd: false,
-        options: [
-          { label: '+86', value: '中国' },
-          { label: '+866', value: '香港' },
-        ],
         text: '',
         password: '',
-        areaCode: '+86',
       });
       return {
         ...toRefs(store),
-        newValue(newValue: void) {
-          console.log(newValue)
-        },
         toRegister() {
           router.push('/')
+        },
+        toForgot() {
+          router.push('/forgot')
+        },
+        toMypage() {
+          console.log(router.getRoutes());
+          router.push('myPage')
         },
       }
     }
   });
 </script>
 <style lang="scss" scoped>
-  .sub {
-    width: 100%;
-    height: 44px;
-    background: $default;
-    border-radius: 29px;
-    cursor: pointer;
-    color: #fff;
-    font-size: 15px;
-  }
-  .login {
-    color: $default;
-    cursor: pointer;
-  }
-
-  .logo {
-    width: 70px;
-    height: 70px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-  }
-
-  .iconLogo {
-    width: 24px;
-    height: 24px;
-  }
-  .countryLogo {
-    width: 24px;
-    height: 16px;
-  }
+  @import url("../../css/login.scss");
 </style>
