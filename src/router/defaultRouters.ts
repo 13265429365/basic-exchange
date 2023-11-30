@@ -114,4 +114,20 @@ export const defaultRouter: TemplateRouteInterface[] = [
     children: [],
     meta: { requireAuth: false, keepAlive: false },
   },
+  {
+    path: '/show/message',
+    name: 'showMessage',
+    componentPath: 'pages',
+    component: 'showMessage.vue',
+    children: [],
+    meta: { requireAuth: false, keepAlive: false },
+  },
+  {
+    path: '/wallet/index',
+    name: 'walletIndex',
+    componentPath: 'pages',
+    component: 'wallet/index.vue',
+    children: [],
+    meta: { requireAuth: false, keepAlive: false },
+  },
 ];

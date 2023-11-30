@@ -16,7 +16,7 @@
                 </div>
                 <div class="row">
                   <q-btn outline rounded color="white" class="q-pa-xs" size="13px" style="width: 58px;height: 15px;"
-                    label="Edit" no-caps @click="$router.push({ name: 'cardEdit' })" />
+                    label="Edit" no-caps @click="$router.push({ name: 'cardEdit', query: { type: 1 } })" />
                   <q-btn outline rounded color="white" class="q-pa-xs q-ml-sm" size="13px"
                     style="width: 58px;height: 15px;" label="Delete" no-caps @click="alertDelete = true" />
                 </div>
@@ -42,9 +42,9 @@
                 </div>
                 <div class="row">
                   <q-btn outline rounded color="white" class="q-pa-xs" size="13px" style="width: 58px;height: 15px;"
-                    label="Edit" no-caps />
+                    label="Edit" no-caps @click="$router.push({ name: 'cardEdit', query: { type: 2 } })" />
                   <q-btn outline rounded color="white" class="q-pa-xs q-ml-sm" size="13px"
-                    style="width: 58px;height: 15px;" label="Delete" no-caps />
+                    style="width: 58px;height: 15px;" label="Delete" no-caps @click="alertDelete = true" />
                 </div>
               </div>
 

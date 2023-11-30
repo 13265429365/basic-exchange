@@ -1,15 +1,14 @@
 <template>
-  <div class="q-px-md q-py-md row navBar" :style="{
+  <div class="q-px-md q-py-md row navBar justify-between" :style="{
     'background': bgColor,
     height: height
   }">
-
-    <!-- <q-icon class="self-center" name="arrow_back" :color="color" size="22px" @click="backFunc" /> -->
     <q-img class="self-center" src="/images/default/left.png" width="24px" height="24px" @click="backFunc" />
     <p
       :class="[color == 'black' ? 'text-color-3' : 'text-' + color, 'text-weight-bolder', 'q-ma-none', textCenter ? 'text-center' : 'q-pl-sm', 'ellipsis', 'col', 'text-subtitle1']">
       {{ title }}
     </p>
+    <slot name="right"></slot>
   </div>
   <!-- 占位 -->
   <div :style="{ height }"></div>

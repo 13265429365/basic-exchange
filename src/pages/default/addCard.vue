@@ -17,26 +17,55 @@
         </q-scroll-area>
 
 
-
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Bank Name</div>
-        <div class="page_bg full-width row justify-between q-px-md" style="border-radius: 10px;height: 55px;"
-          @click="dialog = true">
-          <div class="self-center row">
-            <q-img :src="options[model].image" width="26px" height="26px" />
-            <div class="self-center q-ml-sm">{{ options[model].value }}</div>
+        <!-- 银行卡类型 -->
+        <div v-if="typeArr[typeDataIndex].type == 1">
+          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Bank Name</div>
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+            @click="dialog = true">
+            <div class="self-center row">
+              <q-img :src="options[model].image" width="26px" height="26px" />
+              <div class="self-center q-ml-sm">{{ options[model].value }}</div>
+            </div>
+            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
           </div>
-          <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
-        </div>
 
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Owner</div>
-        <q-input standout v-model="text" class="q-mb-md" />
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Number</div>
-        <q-input standout v-model="text" class="q-mb-md" />
+          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Owner</div>
+          <q-input standout v-model="text" class="q-mb-md" />
+          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Number</div>
+          <q-input standout v-model="text" class="q-mb-md" />
+        </div>
+        <!-- 数字货币类型 -->
+        <div v-else>
+
+          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Public Blockchain</div>
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+            @click="dialog = true">
+            <div class="self-center row">
+              <q-img :src="options[model].image" width="26px" height="26px" />
+              <div class="self-center q-ml-sm">{{ options[model].value }}</div>
+            </div>
+            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+          </div>
+
+          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Name</div>
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+            @click="dialog = true">
+            <div class="self-center row">
+              <q-img :src="options[model].image" width="26px" height="26px" />
+              <div class="self-center q-ml-sm">{{ options[model].value }}</div>
+            </div>
+            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+          </div>
+
+          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Address</div>
+          <q-input standout v-model="text" class="q-mb-md" />
+
+        </div>
       </div>
 
       <!-- 添加按钮 -->
-      <q-btn unelevated rounded color="primary" label="Save Card" class="full-width q-my-md" no-caps style="height: 44px;"
-        @click="$router.push({ name: 'addCard' })" />
+      <q-btn unelevated rounded color="primary" label="Add Card" class="full-width q-my-md" no-caps style="height: 44px;"
+        @click="alertPass = true" />
     </div>
     <!-- 选择框 -->
     <q-dialog v-model="dialog" position="bottom">
@@ -51,10 +80,11 @@
     <!-- 安全密码 -->
     <q-dialog v-model="alertPass">
       <dialogAlert :isShowCloseBtn="false" title="Security Key" @eventDialogAlert="alertPass = false"
-        @eventDialogAlertYesBtn="yesFun">
+        @eventDialogAlertYesBtn="yesFun($router)">
         <template v-slot:body>
           <div class="q-py-md">
-            <q-input standout placeholder="请输入" v-model="text" :dense="true" class="alertInput" style="height: 48px;" />
+            <q-input type="password" standout placeholder="请输入" v-model="password" :dense="true" class="alertInput"
+              style="height: 48px;" />
           </div>
         </template>
       </dialogAlert>
@@ -63,9 +93,10 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, onMounted } from 'vue';
 import navBar from 'src/components/navBar.vue';
 import dialogAlert from 'src/components/dialogAlert.vue';
+import { useRoute } from 'vue-router';
 
 export default {
   name: 'addNewCard',
@@ -74,21 +105,26 @@ export default {
     const state = reactive({
       dialog: false,
       alertPass: false,
+      password: '',
       text: '',
       model: 0,
       typeDataIndex: 0,
       typeArr: [{
         image: '/images/delete/USDT.png',
-        value: 'Card'
+        value: 'Card',
+        type: 1
       }, {
         image: '/images/delete/BTC.png',
-        value: 'TRC20'
+        value: 'TRC20',
+        type: 2
       }, {
         image: '/images/delete/BTC.png',
-        value: 'TRC20'
+        value: 'TRC20',
+        type: 2
       }, {
         image: '/images/delete/BTC.png',
-        value: 'TRC20'
+        value: 'TRC20',
+        type: 2
       }],
       options: [
         {
@@ -100,14 +136,30 @@ export default {
         },
       ]
     });
-    const yesFun = () => {
+
+    const yesFun = (router: any) => {
       state.alertPass = false;
+      // 密码正确
+      router.push({
+        name: 'showMessage',
+        state: {
+          params: JSON.stringify({
+            title: 'Created Successfully',
+            content: '',
+            yesBtn: 'OK',
+            logo: '/images/default/success.png',
+            backUrl: ''
+          })
+        }
+      })
     };
     // 选择银行
     const changeSelect = (i: any) => {
       state.model = i;
       state.dialog = false;
     };
+
+
     return {
       ...toRefs(state),
       yesFun,
