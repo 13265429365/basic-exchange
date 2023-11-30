@@ -1,6 +1,7 @@
 <template>
-  <div class="q-px-md q-py-md row" :style="{
-    'background': bgColor
+  <div class="q-px-md q-py-md row navBar" :style="{
+    'background': bgColor,
+    height: height
   }">
 
     <!-- <q-icon class="self-center" name="arrow_back" :color="color" size="22px" @click="backFunc" /> -->
@@ -10,6 +11,8 @@
       {{ title }}
     </p>
   </div>
+  <!-- 占位 -->
+  <div :style="{ height }"></div>
 </template>
 
 <script lang="ts">
@@ -41,7 +44,10 @@ export default {
       type: String,
       default: '',
     },
-
+    height: {
+      type: String,
+      default: '60px',
+    },
     textCenter: {
       type: Boolean,
       default: true
@@ -68,4 +74,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.navBar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+</style>

@@ -74,4 +74,12 @@ export const defaultRouter: TemplateRouteInterface[] = [
     children: [],
     meta: { requireAuth: false, keepAlive: false },
   },
+  {
+    path: '/identification',
+    name: 'identification',
+    componentPath: 'pages',
+    component: 'identification.vue',
+    children: [],
+    meta: { requireAuth: false, keepAlive: false },
+  },
 ];
