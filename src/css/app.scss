@@ -1,8 +1,30 @@
-.q-field__control {
+    .q-field__control {
     color: $default !important;
     background: #F5F6FA !important;
     border-radius: 10px !important;
     height: 50px !important;
     min-height: 50px !important;
     outline: none !important;
-}
+    #q-app {
+        height: 100vh;
+    }
+    .text-color-3 {
+        color: #333333;
+    }
+    .text-color-6 {
+        color: #666666;
+    }
+    .text-color-9 {
+        color: #999999;
+    }
+    // 默认页面背景颜色
+    .page_bg {
+        background-color: #f5f6fa;
+    }
+    // 圆角
+    .radius-8 {
+        border-radius: 8px;
+    }
+    .radius-x {
+        border-radius: 9999px;
+    }

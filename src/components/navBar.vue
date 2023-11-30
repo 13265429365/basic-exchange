@@ -1,20 +1,18 @@
 <template>
-  <div class="bg-white q-px-md q-py-md row">
+  <div class="q-px-md q-py-md row navBar" :style="{
+    'background': bgColor,
+    height: height
+  }">
+
+    <!-- <q-icon class="self-center" name="arrow_back" :color="color" size="22px" @click="backFunc" /> -->
     <q-img class="self-center" src="/images/default/left.png" width="24px" height="24px" @click="backFunc" />
-    <div v-if="tabArr[0]" class="row justify-center col">
-      <div class="row col-11 text-center font-size-12 font-c-3 font_bold q-px-xs q-py-xs radius-6"
-        style="background-color: #F6F6F6;">
-        <span :class="['col-4', 'self-center', 'radius-6', 'q-py-xs', tabActive == tabIndex ? 'bg-white' : '']"
-          v-for="(tabi, tabIndex) in tabArr" :key="tabIndex" @click="handleClick(tabIndex)">{{
-            tabi }}</span>
-      </div>
-    </div>
-    <p v-else style="flex: 1;"
-      :class="['font-c-3', 'font-size-16', 'font_bold', 'q-ma-none', textCenter ? 'text-center' : 'q-pl-sm', 'ellipsis', 'q-pl-sm']">
+    <p
+      :class="[color == 'black' ? 'text-color-3' : 'text-' + color, 'text-weight-bolder', 'q-ma-none', textCenter ? 'text-center' : 'q-pl-sm', 'ellipsis', 'col', 'text-subtitle1']">
       {{ title }}
     </p>
-
   </div>
+  <!-- 占位 -->
+  <div :style="{ height }"></div>
 </template>
 
 <script lang="ts">
@@ -24,10 +22,16 @@ import { reactive, toRefs } from 'vue';
 export default {
   name: 'navBar',
   props: {
-    toolbarStyle: {
-      type: Object,
+    color: {
+      type: String,
       default: () => {
-        return { height: '60px' };
+        return 'black';
+      },
+    },
+    bgColor: {
+      type: String,
+      default: () => {
+        return 'white';
       },
     },
     title: {
@@ -40,34 +44,14 @@ export default {
       type: String,
       default: '',
     },
-    moreObject: {
-      type: Object,
-      default: () => {
-        return {
-          label: '',
-          icon: '',
-          click: () => {
-            console.log(1);
-          },
-        };
-      },
-    },
-    tabArr: {
-      type: Array,
-      default: () => {
-        return []
-      }
+    height: {
+      type: String,
+      default: '60px',
     },
     textCenter: {
       type: Boolean,
       default: true
     },
-    tabActive: {
-      type: Number,
-      default: () => {
-        return 0
-      }
-    }
   },
   setup(props: any, { emit }) {
     const router = useRouter();
@@ -91,4 +75,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.navBar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+}
+</style>

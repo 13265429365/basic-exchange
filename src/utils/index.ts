@@ -1,4 +1,5 @@
 import { useInitStore } from 'src/stores/init';
+import { Notify } from 'quasar';
 
 // 图片处理方法
 export const imageSrc = (url: string) => {
@@ -17,4 +18,24 @@ export const imageSrc = (url: string) => {
 // cookiesOptions cookies 额外参数
 export const cookiesOptions = () => {
   return { expires: '30d 3h 5m' };
+};
+
+// 错误提示
+export const NotifyNegative = (msg: string) => {
+  Notify.create({
+    type: 'negative',
+    position: 'top',
+    timeout: 3000,
+    message: msg,
+  });
+};
+
+// 成功提示
+export const NotifyPositive = (msg: string) => {
+  Notify.create({
+    type: 'positive',
+    position: 'top',
+    timeout: 3000,
+    message: msg,
+  });
 };
