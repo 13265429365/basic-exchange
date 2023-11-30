@@ -2,7 +2,7 @@
   <div class="column full-height">
     <navBar title="Identification"></navBar>
     <q-separator style="background: #F4F5FD;" />
-    <div class="col bg-white  q-pa-md">
+    <div class="col bg-white  q-pa-md" v-if="status == 0">
       <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Name</div>
       <q-input standout v-model="text" class="q-mb-md" />
       <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">ID Number</div>
@@ -34,9 +34,22 @@
         </template>
       </uploader>
 
-      <q-btn unelevated rounded color="primary" label="Submit" class="full-width q-my-xl" no-caps />
+      <q-btn unelevated rounded color="primary" label="Submit" class="full-width q-my-xl" no-caps @click="status = 1" />
     </div>
+    <!-- 审核通过 -->
+    <div v-else class="col bg-white  q-pa-md column items-center justify-between">
+      <div class="column items-center ">
+        <q-img src="/images/default/success.png" width="70px" height="70px" style="margin-top: 80px;" />
+        <div class="text-color-3 text-h6 text-weight-medium q-mt-md">Submitted successfully</div>
+        <div class="text-color-9 text-body2 text-center q-mt-sm" style="width: 216px;">Please be patient and keep an eye
+          on
+          the
+          progress at any
+          time</div>
+      </div>
+      <q-btn unelevated rounded color="primary" label="OK" class="full-width q-my-xl" no-caps @click="status = 0" />
 
+    </div>
   </div>
 </template>
 
@@ -52,6 +65,7 @@ export default {
       text: '',
       imgUrl: '',
       imgUrl2: '',
+      status: 0
     });
     return {
       ...toRefs(state)

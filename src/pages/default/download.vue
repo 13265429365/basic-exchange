@@ -5,14 +5,16 @@
     <div class="col">
       <div class="text-color-3  column justify-between items-center">
         <div class="logo column justify-center ">
-          <q-img class="self-center" src="/images/default/download.png" width="56px" height="56px" />
+          <q-img class="self-center" src="/images/delete/download.png" width="56px" height="56px" />
         </div>
         <div class="text-h6 text-weight-bold q-mt-md">Solo App</div>
         <div class="text-body2 text-weight-regular q-mt-sm">Caption app news app news</div>
         <q-btn unelevated rounded color="primary" label="Download" style="width: 269px;height: 44px;margin-top: 40px;"
           no-caps />
       </div>
+
     </div>
+    <q-img src="/images/default/downloadImg.png" width="240px" height="163px" class="self-center q-mb-sm" />
   </div>
 </template>
 
