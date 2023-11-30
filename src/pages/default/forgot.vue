@@ -33,7 +33,7 @@
 <script lang="ts">
   import navBar from 'src/components/navBar.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
-  import { useRouter } from 'vue-router';
+  // import { useRouter } from 'vue-router';
   // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
   export default defineComponent({
     components: {
@@ -41,7 +41,7 @@
     },
     name: 'loginView',
     setup() {
-      const router = useRouter();
+      // const router = useRouter();
       let store = reactive({
         sendCode: false,
         time: 30,
@@ -71,7 +71,6 @@
   });
 </script>
 <style lang="scss" scoped>
-  @import url("../../css/login.scss");
   .success {
     background: rgba(1,172,102,0.2) !important;
     color: #01AC66 !important;

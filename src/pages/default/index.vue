@@ -70,7 +70,7 @@
             <q-input class="q-mb-lg full-width" filled v-model="text" label="Telphone" />
           </div>
           <q-btn @click="toMypage()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;" color="primary" label="Signup" />
-          <div class="size14 text-center q-mb-xl">
+          <div class="size14 text-center q-pb-xl">
             Already have an account?
             <span @click="toLogin()" class="login">Login</span>
           </div>
@@ -108,11 +108,9 @@
           console.log(newValue)
         },
         toLogin() {
-          console.log(router.getRoutes());
           router.push('login')
         },
         toMypage() {
-          console.log(router.getRoutes());
           router.push('info')
         },
       }
@@ -120,9 +118,4 @@
   });
 </script>
 <style lang="scss" scoped>
-  @import url("../../css/login.scss");
-  .countryLogo {
-    width: 24px;
-    height: 16px;
-  }
 </style>

@@ -1,10 +1,34 @@
     .q-field__control {
-    color: $default !important;
-    background: #F5F6FA !important;
-    border-radius: 10px !important;
-    height: 50px !important;
-    min-height: 50px !important;
-    outline: none !important;
+        color: $default !important;
+        background: #F5F6FA !important;
+        border-radius: 10px !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        outline: none !important;
+    }
+    .login {
+        color: #01AC66;
+        cursor: pointer;
+      }
+
+      .logo {
+        width: 70px;
+        height: 70px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+
+      .iconLogo {
+        width: 24px;
+        height: 24px;
+      }
+      .countryLogo {
+        width: 24px;
+        height: 16px;
+      }
+    .size24 {
+      font-size: 24px;
+    }
     #q-app {
         height: 100vh;
     }

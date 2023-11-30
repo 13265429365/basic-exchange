@@ -77,5 +77,4 @@
   });
 </script>
 <style lang="scss" scoped>
-  @import url("../../css/login.scss");
 </style>

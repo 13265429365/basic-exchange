@@ -1,11 +1,11 @@
 <template>
   <div class="mypage">
-    <div class="row justify-between q-pt-xl q-mt-md q-px-md q-pb-lg">
+    <div @click="toEdit()" class="row justify-between q-pt-xl q-mt-md q-px-md q-pb-lg">
       <!-- 头像 -->
       <div class="row">
         <div class="q-mr-md avatar">
           <q-avatar class="q-mr-md avatar">
-            <img src="https://cdn.quasar.dev/img/avatar.png">
+            <img src="/images/default/head.png">
           </q-avatar>
         </div>
         <div class="col-8">
@@ -52,7 +52,7 @@
       <q-list v-for="(item, i) in list" :key="i" bordered class="q-mb-md border-a-8"
         style="border:0 !important;overflow: hidden;border-radius: 8px;">
         <div v-for="(str, s) in item.element" :key="s" class="bg-white">
-          <q-item v-ripple class="q-pa-md" clickable>
+          <q-item @click="toSetting(str.url)" v-ripple class="q-pa-md" clickable>
             <q-item-section avatar style="padding-right: 11px;min-width: 0;">
               <img :src="`/images/default/${str.avatar}`" class="iconLogo">
             </q-item-section>
@@ -99,24 +99,33 @@
 
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
-  import { list } from './data';
+  // 列表数据
+  import { useRouter } from 'vue-router';
+  import { infoList } from './data';
   export default defineComponent({
     name: 'myPage',
     setup() {
+      const router = useRouter();
       let store = reactive({
-        list,
+        list: infoList,
         dialog: false,
       })
       return {
-        ...toRefs(store)
+        ...toRefs(store),
+        toSetting(url: string) {
+          if (url) {
+            router.push(url)
+          }
+        },
+        toEdit() {
+          router.push('info/edit')
+        },
       }
     }
   })
 </script>
 
 <style scoped>
-  @import url("../../css/login.scss");
-
   /* 退出dialog */
   .q-dialog__inner>div {
     border-radius: 20px 20px 0 0;
