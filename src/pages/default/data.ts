@@ -3,13 +3,13 @@ export const list = [
     element: [
       {
         name: 'Card Management',
-        avatar: '卡片管理@2x.png'
+        avatar: 'card.png'
       }, {
         name: 'My Wallet',
-        avatar: '钱包@2x.png'
+        avatar: 'wallet.png'
       }, {
         name: 'My property',
-        avatar: '资产管理@2x.png'
+        avatar: 'property.png'
       }
     ],
   },
@@ -17,13 +17,13 @@ export const list = [
     element: [
       {
         name: 'Share',
-        avatar: '分享@2x.png'
+        avatar: 'share.png'
       }, {
         name: 'Team Management',
-        avatar: '团队管理@2x.png'
+        avatar: 'Management.png'
       }, {
         name: 'Team Benefits',
-        avatar: 'Vip@2x (2).png'
+        avatar: 'Benefits.png'
       }
     ],
   },
@@ -31,19 +31,19 @@ export const list = [
     element: [
       {
         name: 'VIP',
-        avatar: 'Vip@2x (1).png'
+        avatar: 'Vip.png'
       }, {
         name: 'Identification',
-        avatar: '身份认证@2x.png'
+        avatar: 'Identification.png'
       }, {
         name: 'Help Center',
-        avatar: '帮助中心@2x.png'
+        avatar: 'help.png'
       }, {
         name: 'Settings',
-        avatar: 'Vip@2x (1).png'
+        avatar: 'settings.png'
       }, {
         name: 'Download',
-        avatar: '帮助中心@2x.png'
+        avatar: 'download.png'
       }
     ],
   },

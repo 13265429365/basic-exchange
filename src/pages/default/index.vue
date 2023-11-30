@@ -3,7 +3,7 @@
     <lang></lang>
     <div>
       <div class="row justify-center">
-        <q-img class="logo" src="/images/default/Logo@2x.png" :ratio="1" />
+        <q-img class="logo" src="/images/default/logo.png" :ratio="1" />
       </div>
       <div class="row justify-center">
         <div class="size24 text-weight-bold">Create New Account</div>
@@ -17,12 +17,12 @@
           </q-input> -->
           <q-input color="green" class="q-mb-md" filled v-model="text" label="Email">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/sms@2x.png" />
+              <q-img class="iconLogo" src="/images/default/email.png" />
             </template>
           </q-input>
           <q-input class="q-mb-md" v-model="password" filled :type="isPwd ? 'password' : 'text'" label="Password">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/lock@2x.png" />
+              <q-img class="iconLogo" src="/images/default/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -31,34 +31,34 @@
           </q-input>
           <q-input class="q-mb-md" filled v-model="text" label="Confirm Password">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/lock@2x.png" />
+              <q-img class="iconLogo" src="/images/default/password.png" />
             </template>
           </q-input>
           <q-input class="q-mb-lg" filled v-model="text" label="Code">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/shield-tick@2x.png" />
+              <q-img class="iconLogo" src="/images/default/code.png" />
             </template>
           </q-input>
           <q-input class="q-mb-md" filled v-model="text" label="Secret Key">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/key@2x.png" />
+              <q-img class="iconLogo" src="/images/default/key.png" />
             </template>
           </q-input>
           <q-input class="q-mb-md" filled v-model="text" label="Invite Code">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/profile-2user@2x.png" />
+              <q-img class="iconLogo" src="/images/default/user.png" />
             </template>
           </q-input>
           <div class="row no-wrap">
             <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
               class="q-mb-md q-mr-md" filled>
               <template v-slot:prepend>
-                <q-img class="countryLogo" src="/images/default/ch.png" @click.stop.prevent />
+                <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
               </template>
               <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps">
                   <q-item-section avatar>
-                    <q-img class="iconLogo" src="/images/default/ch.png" @click.stop.prevent />
+                    <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>{{ scope.opt.label }}</q-item-label>
@@ -109,11 +109,11 @@
         },
         toLogin() {
           console.log(router.getRoutes());
-          router.push('Login')
+          router.push('login')
         },
         toMypage() {
           console.log(router.getRoutes());
-          router.push('myPage')
+          router.push('info')
         },
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="lang row items-center justify-end">
     <div class="row no-wrap items-center">
-      <q-img class="img" src="/images/default/arrow-swap-horizontal@2x.png" />
+      <q-img class="img" src="/images/default/switch.png" />
       <div id="">language</div>
     </div>
   </div>
