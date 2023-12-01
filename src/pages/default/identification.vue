@@ -34,9 +34,9 @@
         </template>
       </uploader>
 
-      <q-btn unelevated rounded color="primary" label="Submit" class="full-width q-my-xl" no-caps />
+      <q-btn unelevated rounded color="primary" label="Submit" class="full-width q-my-xl" no-caps
+        @click="yesFun($router)" />
     </div>
-
   </div>
 </template>
 
@@ -52,9 +52,26 @@ export default {
       text: '',
       imgUrl: '',
       imgUrl2: '',
+      status: 0
     });
+    const yesFun = (router: any) => {
+      // 密码正确
+      router.push({
+        name: 'showMessage',
+        state: {
+          params: JSON.stringify({
+            title: 'Submitted successfully',
+            content: 'Please be patient and keep an eye on the progress at any time',
+            yesBtn: 'OK',
+            logo: '/images/default/success.png',
+            backUrl: ''
+          })
+        }
+      })
+    };
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      yesFun
     }
   }
 };
