@@ -37,7 +37,8 @@ export const infoList = [
     element: [
       {
         name: 'VIP',
-        avatar: 'info/vip.png'
+        avatar: 'info/vip.png',
+        url: '/grade',
       }, {
         name: 'Identification',
         avatar: 'info/Identification.png',
