@@ -15,7 +15,7 @@ import { reactive, toRefs } from 'vue';
 import navBar from 'src/components/navBar.vue';
 
 export default {
-  name: 'noticeVue',
+  name: 'noticeView',
   components: { navBar },
   setup() {
     const state = reactive({

@@ -4,13 +4,13 @@ export const infoList = [
     element: [
       {
         name: 'Card Management',
-        avatar: 'card.png'
+        avatar: 'info/card.png'
       }, {
         name: 'My Wallet',
-        avatar: 'wallet.png'
+        avatar: 'info/wallet.png'
       }, {
         name: 'My property',
-        avatar: 'property.png'
+        avatar: 'info/property.png'
       }
     ],
   },
@@ -18,13 +18,13 @@ export const infoList = [
     element: [
       {
         name: 'Share',
-        avatar: 'share.png'
+        avatar: 'info/share.png'
       }, {
         name: 'Team Management',
-        avatar: 'Management.png'
+        avatar: 'info/Management.png'
       }, {
         name: 'Team Benefits',
-        avatar: 'Benefits.png'
+        avatar: 'info/Benefits.png'
       }
     ],
   },
@@ -32,20 +32,20 @@ export const infoList = [
     element: [
       {
         name: 'VIP',
-        avatar: 'Vip.png'
+        avatar: 'info/vip.png'
       }, {
         name: 'Identification',
-        avatar: 'Identification.png'
+        avatar: 'info/Identification.png'
       }, {
         name: 'Help Center',
-        avatar: 'help.png'
+        avatar: 'info/help.png'
       }, {
         name: 'Settings',
-        avatar: 'settings.png',
+        avatar: 'info/settings.png',
         url: 'setting'
       }, {
         name: 'Download',
-        avatar: 'download.png'
+        avatar: 'info/download.png'
       }
     ],
   },

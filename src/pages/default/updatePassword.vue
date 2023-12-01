@@ -49,7 +49,7 @@
   import navBar from 'src/components/navBar.vue';
   // 列表
   export default defineComponent({
-    name: 'infoSetting',
+    name: 'updatePassword',
     components: {
       navBar
     },

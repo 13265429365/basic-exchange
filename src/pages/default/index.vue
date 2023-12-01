@@ -89,7 +89,7 @@
     components: {
       lang,
     },
-    name: 'indexVue',
+    name: 'indexView',
     setup() {
       const router = useRouter();
       let store = reactive({

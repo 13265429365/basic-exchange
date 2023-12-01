@@ -103,7 +103,7 @@
   import { useRouter } from 'vue-router';
   import { infoList } from './data';
   export default defineComponent({
-    name: 'myPage',
+    name: 'infoView',
     setup() {
       const router = useRouter();
       let store = reactive({

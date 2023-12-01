@@ -8,6 +8,6 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'userVue',
+  name: 'userView',
 });
 </script>

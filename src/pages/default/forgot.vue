@@ -39,7 +39,7 @@
     components: {
       navBar
     },
-    name: 'loginView',
+    name: 'forgotView',
     setup() {
       // const router = useRouter();
       let store = reactive({

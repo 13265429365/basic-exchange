@@ -47,6 +47,7 @@
       })
       return {
         ...toRefs(store),
+        // 动态参数跳转
         to(url:string, toggle:boolean) {
           if (toggle) {
             return false
