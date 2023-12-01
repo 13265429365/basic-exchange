@@ -99,8 +99,8 @@
 
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
-  // 列表数据
   import { useRouter } from 'vue-router';
+  // 列表数据
   import { infoList } from './data';
   export default defineComponent({
     name: 'infoView',

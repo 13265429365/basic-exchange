@@ -12,7 +12,8 @@ export const infoList = [
         url: 'wallet/index'
       }, {
         name: 'My property',
-        avatar: 'info/property.png'
+        avatar: 'info/property.png',
+        url: 'property',
       }
     ],
   },

@@ -266,4 +266,12 @@ export const defaultRouter: TemplateRouteInterface[] = [
     children: [],
     meta: { requireAuth: false, keepAlive: false },
   },
+  {
+    path: '/property',
+    name: 'myProperty',
+    componentPath: 'pages',
+    component: 'myProperty.vue',
+    children: [],
+    meta: { requireAuth: false, keepAlive: false },
+  },
 ];
