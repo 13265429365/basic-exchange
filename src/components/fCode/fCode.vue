@@ -12,7 +12,6 @@
 <script lang="ts">
   import { defineComponent, ref } from 'vue';
   // import { useRouter } from 'vue-router';
-  // 列表
   export default defineComponent({
     name: 'verifytCode',
     // props: {
