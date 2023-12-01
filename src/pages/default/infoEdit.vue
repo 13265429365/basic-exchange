@@ -42,8 +42,6 @@
                 </q-popup-proxy>
               </template>
             </q-input>
-            <!-- <q-input class="q-mb-md" v-model="date" filled type="date" /> -->
-            <!-- <q-input color="green" class="q-mb-md" filled v-model="Birthday" /> -->
           </div>
           <!-- <div>
             <div class="text-weight-bold q-mb-sm">Phone Number</div>

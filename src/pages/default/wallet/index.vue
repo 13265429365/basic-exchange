@@ -1,5 +1,5 @@
 <template>
-  <div class="column full-height full-width">
+  <div class="column full-width" style="min-height: 100vh;">
     <navBar title="My Wallet">
       <template v-slot:right>
         <div>
@@ -26,7 +26,7 @@
           <div class="bg-white radius-8 row q-pa-sm row" style="height: 60px;">
             <q-img src="/images/default/recharge.png" class="self-center q-mx-sm" width="42px" height="42px" />
             <div class="text-color-3 text-weight-bold self-center ellipsis col">
-              RechargeRechargeRechargeRechargeRechargeRechargeRecharge</div>
+              Recharge</div>
           </div>
         </div>
         <div class="col-6">
@@ -46,7 +46,21 @@
       </div>
 
       <!-- 明细列表 -->
-      <div class="radius-8 bg-white q-pa-md  q-mb-md">
+      <div @click="toBillDetail()" v-for="(item, i) in list" :key="i" class="radius-8 bg-white q-pa-md  q-mb-md">
+        <div class="row justify-between">
+          <div class="">
+            <div class="text-color-3 text-weight-bold">{{item.name}}</div>
+            <div class="text-color-6 text-weight-medium text-caption">{{item.date}}</div>
+          </div>
+          <div>
+            <div :class="['text-body1 text-weight-bold text-center', {'text-red':item.type=='fail','text-primary':item.type=='examine'} ]">{{item.money}}</div>
+            <div :class="['text-weight-medium text-center text-caption', {'text-red':item.type=='fail','text-primary':item.type=='examine'} ]">{{item.type}}</div>
+          </div>
+        </div>
+        <div v-if="item.type=='fail'" class="text-weight-medium text-caption text-red">Failure Reason：This is the reason for the
+          failure</div>
+      </div>
+      <!-- <div class="radius-8 bg-white q-pa-md  q-mb-md">
         <div class="row justify-between">
           <div class="">
             <div class="text-color-3 text-weight-bold">Recharge-BTC</div>
@@ -98,22 +112,29 @@
             <div class="text-weight-medium text-color-6 text-center text-caption">success</div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
+import { useRouter } from 'vue-router';
 import navBar from 'src/components/navBar.vue';
-
+import { walletList } from '../data';
 export default {
   name: 'walletIndex',
   components: { navBar },
   setup() {
-    const state = reactive({});
+    const router = useRouter();
+    const state = reactive({
+      list: walletList,
+    });
     return {
-      ...toRefs(state)
+      ...toRefs(state),
+      toBillDetail() {
+        router.push('/bill/detail')
+      },
     }
   }
 };

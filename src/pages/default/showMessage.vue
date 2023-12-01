@@ -1,6 +1,6 @@
 <template>
   <div class="column full-height">
-    <navBar title="success"></navBar>
+    <navBar :title="params.navTitle"></navBar>
     <div class="col bg-white  q-pa-md column items-center justify-between">
       <div class="column items-center ">
         <q-img :src="params.logo" width="70px" height="70px" style="margin-top: 80px;" />
@@ -25,6 +25,7 @@ export default {
 
     const state = reactive({
       params: {
+        navTitle: 'success',
         title: 'success',
         content: '',
         yesBtn: 'OK',

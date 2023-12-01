@@ -39,11 +39,11 @@
     <div class="bg-grey-1 q-px-md q-py-md full-width">
       <!-- 店铺、交易管理 -->
       <div class="row q-mb-md btn">
-        <q-btn no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col q-mr-md justify-start">
+        <q-btn @click="to('recharge')" no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col q-mr-md justify-start">
           <q-img class="manage" src="/images/default/shop.png" />
           <div>Recharge</div>
         </q-btn>
-        <q-btn no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col">
+        <q-btn @click="to('withdrawal')" no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col">
           <q-img class="manage" src="/images/default/transaction.png" />
           <div>Cash Out</div>
         </q-btn>
@@ -52,7 +52,7 @@
       <q-list v-for="(item, i) in list" :key="i" bordered class="q-mb-md border-a-8"
         style="border:0 !important;overflow: hidden;border-radius: 8px;">
         <div v-for="(str, s) in item.element" :key="s" class="bg-white">
-          <q-item @click="toSetting(str.url)" v-ripple class="q-pa-md" clickable>
+          <q-item @click="to(str.url)" v-ripple class="q-pa-md" clickable>
             <q-item-section avatar style="padding-right: 11px;min-width: 0;">
               <img :src="`/images/default/${str.avatar}`" class="iconLogo">
             </q-item-section>
@@ -112,7 +112,7 @@
       })
       return {
         ...toRefs(store),
-        toSetting(url: string) {
+        to(url: string) {
           if (url) {
             router.push(url)
           }
