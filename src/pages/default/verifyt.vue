@@ -11,7 +11,7 @@
       </div>
       <div class="q-mt-lg q-px-lg">
         <fCode class="q-mb-xl"></fCode>
-        <q-btn class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
+        <q-btn @click="proceed()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
           color="primary" label="Proceed" />
       </div>
     </div>
@@ -20,9 +20,10 @@
 
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
-  // import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import navBar from 'src/components/navBar.vue';
   import fCode from 'src/components/fCode/fCode.vue';
+  import { NotifyPositive } from 'src/utils/index';
   // 列表
   export default defineComponent({
     name: 'verifytCode',
@@ -31,7 +32,7 @@
       fCode
     },
     setup() {
-      // const router = useRouter();
+      const router = useRouter();
       let store = reactive({
         toggle: false,
         options: [
@@ -44,9 +45,10 @@
       })
       return {
         ...toRefs(store),
-        newValue(newValue:void) {
-          console.log(newValue);
-        }
+        proceed() {
+          NotifyPositive('验证成功')
+          router.push('setting')
+        },
       }
     }
   })
