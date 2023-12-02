@@ -61,18 +61,18 @@ module.exports = configure(function(ctx) {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16',
       },
-      extendWebpack(cfg) {
-        cfg.resolve.alias['@'] = path.resolve(__dirname, './src')
-        cfg.module.rules.push({
-          test: /\.tsx?$/,
-          use: [{
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true
-            },
-          }, ],
-        })
-      },
+      // extendWebpack(cfg) {
+      //   cfg.resolve.alias['@'] = path.resolve(__dirname, './src')
+      //   cfg.module.rules.push({
+      //     test: /\.tsx?$/,
+      //     use: [{
+      //       loader: 'ts-loader',
+      //       options: {
+      //         transpileOnly: true
+      //       },
+      //     }, ],
+      //   })
+      // },
       vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,

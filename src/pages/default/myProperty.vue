@@ -30,7 +30,7 @@
       <!-- echarts -->
       <div class="bg-white q-pa-md radius-8">
         <div class="text-weight-bold q-mb-lg">资产分布</div>
-        <div class="row justify-center q-mb-md">
+        <div class="row justify-center q-mb-lg">
           <div @click="init(item.name)" v-for="(item, i) in typeList" :key="i"
             :class="['q-mx-xs q-px-md q-py-xs',{'text-white':item.name==type,'bg-primary':item.name==type,'text-grey-8':item.name!=type,'page_bg':item.name!=type, }]"
             style="border-radius: 18px;">
@@ -42,7 +42,7 @@
           <div class="row justify-center q-mb-sm">
             <div id="myChart" style="width: 140px;height: 140px;"></div>
           </div>
-          <!-- 列表 -->
+          <!-- 资产账户列表 -->
           <div v-for="(item,i) in list" :key="i">
             <div class="row justify-between items-center justify-start">
               <div class="row items-center">
@@ -56,9 +56,20 @@
           </div>
         </div>
         <div v-show="type=='折线图'">
-          <!-- 饼状图 -->
+          <div class="row justify-end q-mb-md">
+            <div class="bg-grey-1 q-pa-xs row" style="border-radius: 4px;">
+              <div @click="switchDate(item.name)" v-for="(item, i) in lineDate" :key="i"
+                :class="['q-mx-xs q-px-sm q-py-xs',{'bg-white':item.name==lineType,'text-grey-8':item.name!=lineType,'bg-grey-1':item.name!=lineType, }]"
+                style="border-radius: 2px;">
+                {{item.name}}
+              </div>
+            </div>
+
+          </div>
+          <!-- 折线图 -->
           <div class="row justify-center q-mb-sm">
-            <div id="lineChart" style="height: 230px;width: 288px;"></div>
+            <div v-show="lineType=='近7日'" id="lineChart" style="height: 230px;width: 288px;"></div>
+            <div v-show="lineType=='近30日'" id="lineThirty" style="height: 230px;width: 288px;"></div>
           </div>
         </div>
       </div>
@@ -83,13 +94,14 @@
   import navBar from 'src/components/navBar.vue';
   import { useRouter } from 'vue-router';
   import * as echarts from 'echarts'
-
+import { lineOption, lineThirty, option } from './data';
   export default {
     name: 'myProperty',
     components: { navBar },
     setup() {
       const router = useRouter();
       const state = reactive({
+        // 饼状图下的列表
         list: [
           {
             name: '积分',
@@ -110,7 +122,7 @@
             back: 'background: #F7BA1E;'
           },
         ],
-        //
+        //资产账户
         accountList: [
           {
             name: 'BTC',
@@ -137,121 +149,35 @@
             icon: 'trc'
           },
         ],
+        // 饼、折线图button
         typeList: [
           { name: '饼图' },
           { name: '折线图' },
         ],
         type: '饼图',
-        // 饼状图
-        option: {
-          // tooltip: {
-          //   trigger: 'item'
-          // },
-          title: {
-            text: '总资产',
-            subtext: '422.61',
-            left: 'center', // 标题居中
-            top: '32%',
-            textStyle: { // 标题样式
-              color: '#4E5969', // 标题颜色
-              fontSize: '12px',
-              textDecoration: 'underline' // 标题装饰
-            },
-            subtextStyle: { // 子标题样式
-              color: '#1D2129', // 子标题颜色
-              fontStyle: 'bold', // 子标题字体样式
-              fontSize: '12px',
-            },
-            padding: [10, 10], // 标题与内容间距
-            itemGap: 8 // 同一级标签间距
-          },
-          series: [
-            {
-              type: 'pie',
-              radius: ['55%', '90%'],
-              avoidLabelOverlap: false,
-              label: {
-                show: false,
-              },
-              emphasis: {
-                label: { show: false },
-              },
-              data: [
-                { value: 1048, name: '积分', itemStyle: { color: '#3F82FE' } },
-                { value: 735, name: 'BTC', itemStyle: { color: '#14C9C9' } },
-                { value: 580, name: '钻石', itemStyle: { color: '#F7BA1E' } },
-              ]
-            }
-          ]
-        },
-        // 折线图
-        lineOption: {
-          grid: {
-            show: false,
-            // left: '0',
-            top: '3%',
-            right: '2%',
-            // bottom: '0',
-            // containLabel: true,
-            // borderWidth: '1',
-          },
-          legend: {
-            data: ['钻石', 'BTC'],
-            // top: '0',
-            bottom: '5%',
-            itemStyle: {
-              color: 'rgba(0,0,0,0)', // 设置图例背景色为灰色
-              borderColor: 'rgba(0,0,0,0)', // 设置图例边框色为黑色
-            },
-          },
-          xAxis: {
-            type: 'category',
-            data: ['9/10', '9/11', '9/12', '9/13', '9/14', '9/15', '9/16',],
-          },
-          yAxis: {
-            type: 'value',
-            interval: 20, // 设置y轴间隔为50
-            axisLabel: {
-              interval: 80 // 设置标签间隔为500
-            },
-            axisTick: {
-              show: false // 设置为false即可取消y轴刻度线
-            },
-            splitLine: {
-              lineStyle: {
-                type: 'dashed' // 设置为'dashed'即可将x轴改为虚线
-              }
-            }
-          },
-          series: [
-            {
-              name: '钻石',
-              data: [0, 40, 80, 90, 40, 0, 90],
-              type: 'line',
-              smooth: true,
-              symbol: 'none',
-              lineStyle: {
-                color: '#3F82FE' // 设置线条颜色为红色
-              },
-            },
-            {
-              name: 'BTC',
-              data: [30, 40, 20, 83, 42, 60, 100],
-              type: 'line',
-              smooth: true,
-              symbol: 'none',
-              lineStyle: {
-                color: '#01AC66' // 设置线条颜色为红色
-              },
-            },
-          ]
-        }
+        // 饼、折线图button
+        lineDate: [
+          { name: '近7日' },
+          { name: '近30日' },
+        ],
+        lineType: '近7日',
+        // 7日折线图echarts
+        lineOption,
+        // 30日折线图echarts
+        lineThirty,
+        // 饼图echarts
+        option,
       });
       onMounted(() => {
+        // 生成饼图
         const chart = echarts.init(document.getElementById('myChart'))
-        const lineChart = echarts.init(document.getElementById('lineChart'))
         chart.setOption(state.option)
+        // 生成7日折线图
+        const lineChart = echarts.init(document.getElementById('lineChart'))
         lineChart.setOption(state.lineOption)
+        // 生成30日折线图
+        const lineType = echarts.init(document.getElementById('lineThirty'))
+        lineType.setOption(state.lineThirty)
       })
       return {
         ...toRefs(state),
@@ -263,13 +189,9 @@
         init(name : string) {
           console.log(name)
           state.type = name
-          // if (name=='饼图') {
-          //   const chart = echarts.init(document.getElementById('myChart'))
-          //   chart.setOption(state.option)
-          // } else {
-          //   const lineChart = echarts.init(document.getElementById('lineChart'))
-          //   lineChart.setOption(state.option)
-          // }
+        },
+        switchDate(name : string) {
+          state.lineType = name
         },
       }
     },

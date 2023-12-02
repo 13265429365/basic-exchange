@@ -24,8 +24,14 @@ export const dynamicRouterFunc = (
   parent = '' //  父级路由
 ) => {
   if (routerList && routerList.length > 0 && template !== '') {
+    // if (template=='pc') {
+    //   console.log(routerList, '路由列表');
+    //   console.log(template, '模板');
+    //   console.log(parent, '父级路由');
+    // }
     routerList.forEach((item) => {
-      template = isMobile ? template : template + 'Pc';
+      // template = isMobile ? template : template + 'Pc';
+      template = isMobile ? template : 'pc';
       //  获取路径
       let vuePath = '../' + item.componentPath + '/' + item.component;
       if (item.componentPath === 'pages') {
@@ -35,14 +41,12 @@ export const dynamicRouterFunc = (
             ? item.component
             : '/' + template + '/' + item.component;
       }
-
       router.addRoute(parent, {
         path: item.path,
         name: item.name,
         component: componentPathList[item.componentPath][vuePath],
         meta: item.meta,
       });
-
       //  递归加载路由
       if (
         item.hasOwnProperty('children') &&

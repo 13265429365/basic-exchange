@@ -13,7 +13,6 @@ import { defaultRouter } from 'src/router/defaultRouters';
 
 // 所有模版路由信息
 export const templateRoutes: any = new Map([['default', defaultRouter]]);
-
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
