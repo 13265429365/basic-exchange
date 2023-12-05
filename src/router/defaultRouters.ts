@@ -281,7 +281,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     component: 'defaultPc.vue',
     children: [
       {
-        path: '/home',
+        path: '/',
         name: 'home',
         componentPath: 'pages',
         component: 'home.vue',
