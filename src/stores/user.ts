@@ -14,7 +14,7 @@ export const initializationUserStore = ({ ssrContext }: any) => {
   $userStore.userToken = $cookies.get(UserTokenKey) ?? '';
 
   //  初始化用户Lang
-  $userStore.userLang = $cookies.get(UserLangKey) ?? '';
+  $userStore.userLang = $cookies.get(UserLangKey) ?? 'en-US';
 
   return $userStore;
 };

@@ -11,7 +11,11 @@ export const initializationInitStore = ({
   $initStore.config = config;
   $initStore.translate = translate;
   $initStore.countryList = countryList;
+  console.log('赋值前A');
+  console.log($initStore.languageList);
   $initStore.languageList = languageList;
+  console.log('赋值后A');
+  console.log($initStore.languageList);
 
   return $initStore;
 };
@@ -35,7 +39,12 @@ export const useInitStore = defineStore('init', {
     countryList: [] as countryInterface[],
 
     //  语言列表
-    languageList: [] as LanguageInterface[],
+    languageList: [
+      {
+        id: 1,
+        name: '中文',
+      },
+    ] as LanguageInterface[],
 
     //  配置文件
     config: {
@@ -106,7 +115,26 @@ export const useInitStore = defineStore('init', {
     },
   }),
   getters: {},
-  actions: {},
+  actions: {
+    newInitializationInitStore({
+      config,
+      translate,
+      countryList,
+      languageList,
+    }: any) {
+      this.config = config;
+      this.translate = translate;
+      this.countryList = countryList;
+      console.log('赋值前');
+
+      console.log(this.languageList);
+      this.languageList = languageList;
+      console.log(88888);
+      console.log('赋值后');
+
+      console.log(this.languageList);
+    },
+  },
 });
 
 interface tabbarInterface {

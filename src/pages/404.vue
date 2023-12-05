@@ -18,13 +18,13 @@
 
 <script lang="ts">
 
-import lang from 'src/components/lang/lang.vue';
+// import lang from 'src/components/lang/lang.vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
 export default defineComponent({
   components: {
-    lang,
+    // lang,
   },
   name: 'errorView',
   setup() {
