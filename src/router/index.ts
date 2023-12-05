@@ -10,9 +10,13 @@ import {
 
 import routes from 'src/router/routes';
 import { defaultRouter } from 'src/router/defaultRouters';
+import { defaultPcRouters } from 'src/router/defaultPCRouters';
 
 // 所有模版路由信息
-export const templateRoutes: any = new Map([['default', defaultRouter]]);
+export const templateRoutes: any = new Map([
+  ['default', defaultRouter],
+  ['defaultPc', defaultPcRouters],
+]);
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
