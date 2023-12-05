@@ -93,7 +93,7 @@
 
 <script lang="ts">
   import { reactive, toRefs, onMounted } from 'vue';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
   import { useRouter } from 'vue-router';
   import * as echarts from 'echarts'
 import { lineOption, lineThirty, option } from './data';

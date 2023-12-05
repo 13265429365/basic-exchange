@@ -8,7 +8,7 @@
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="q-mb-md" v-model="code" placeholder="Code" filled :type="isPwd ? 'password' : 'text'">
+          <q-input class="q-mb-md" v-model="code" placeholder="Code" standout :type="isPwd ? 'password' : 'text'">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/key.png" />
             </template>
@@ -17,7 +17,7 @@
                 @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="ConfirmCode" placeholder="Confirm Code" filled :type="isPwd ? 'password' : 'text'">
+          <q-input class="q-mb-md" v-model="ConfirmCode" placeholder="Confirm Code" standout :type="isPwd ? 'password' : 'text'">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/key.png" />
             </template>
@@ -37,7 +37,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   // import { useRouter } from 'vue-router';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
   // 列表
   export default defineComponent({
     name: 'updateCode',

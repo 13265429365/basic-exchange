@@ -42,8 +42,8 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/navBar.vue';
-import uploader from 'src/components/uploader.vue';
+import navBar from 'src/components/mobile/navBar.vue';
+import uploader from 'src/components/mobile/uploader.vue';
 export default {
   name: 'defaultIdentification',
   components: { navBar, uploader },

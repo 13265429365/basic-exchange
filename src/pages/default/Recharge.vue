@@ -111,11 +111,11 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/navBar.vue';
-import dialogAlert from 'src/components/dialogAlert.vue';
+import navBar from 'src/components/mobile/navBar.vue';
+import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils';
-import uploader from 'src/components/uploader.vue';
+import uploader from 'src/components/mobile/uploader.vue';
 export default {
   name: 'rechargeIndex',
   components: { navBar, dialogAlert, uploader },
@@ -187,13 +187,6 @@ export default {
   :deep .q-uploader__list {
     padding: 0;
   }
-.cardTransparent {
-  background: url('/images/default/cardTransparent.png') no-repeat;
-  background-size: 100% 100%;
-  height: 125px;
-  width: 100%;
-  border-radius: 14px;
-}
 
 .select {
   background-color: rgba(241, 250, 246, 1) !important;
@@ -201,54 +194,5 @@ export default {
 }
 :deep(.q-scrollarea__thumb) {
   display: none !important;
-}
-:deep(.q-field__control) {
-  background-color: #F5F6FA !important;
-  height: 50px;
-  box-shadow: none !important;
-}
-
-:deep(.q-field__marginal) {
-  height: 50px;
-}
-
-:deep(.q-field--labeled .q-field__native) {
-  padding: 0;
-}
-
-:deep(.userInfo-input .q-field__native) {
-  text-align: end;
-}
-
-:deep(.q-field__label) {
-  top: 20px;
-}
-
-:deep(.q-btn) {
-  min-height: 44px;
-}
-
-:deep(.q-field--standout.q-field--rounded .q-field__control) {
-  border-radius: 25px;
-}
-
-:deep(.q-field__control:before) {
-  color: #333333 !important;
-}
-
-:deep(.q-field__native) {
-  color: #333333 !important;
-  font-weight: 500 !important;
-  font-family: PingFangSC-Medium, sans-serif;
-  line-height: 20px;
-}
-
-:deep(.q-field__prepend .q-field--standout .q-field--highlighted) {
-  color: #333333 !important;
-}
-
-:deep(.q-field--focused .q-field--highlighted) {
-  color: #333333 !important;
-  background-color: #333333 !important;
 }
 </style>

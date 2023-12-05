@@ -31,7 +31,7 @@ export const dynamicRouterFunc = (
     // }
     routerList.forEach((item) => {
       // template = isMobile ? template : template + 'Pc';
-      template = isMobile ? template : 'pc';
+      template = isMobile ? template : 'defaultPc';
       //  获取路径
       let vuePath = '../' + item.componentPath + '/' + item.component;
       if (item.componentPath === 'pages') {

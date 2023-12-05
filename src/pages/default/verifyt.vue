@@ -21,8 +21,8 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/navBar.vue';
-  import fCode from 'src/components/fCode/fCode.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
+  import fCode from 'src/components/mobile/fCode.vue';
   import { NotifyPositive } from 'src/utils/index';
   // 列表
   export default defineComponent({

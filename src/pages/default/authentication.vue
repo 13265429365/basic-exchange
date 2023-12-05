@@ -13,9 +13,10 @@
         <q-form>
           <div class="row no-wrap">
             <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
-              class="q-mb-md q-mr-sm" filled>
+              class="q-mb-md q-mr-sm select" standout>
               <template v-slot:prepend>
                 <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
+                <q-icon name="keyboard_arrow_down" />
               </template>
               <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps">
@@ -24,12 +25,15 @@
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>{{ scope.opt.label }}</q-item-label>
-                    <q-item-label caption>{{ scope.opt.value }}</q-item-label>
+                    <!-- <q-item-label caption>{{ scope.opt.value }}</q-item-label> -->
                   </q-item-section>
                 </q-item>
               </template>
+              <template v-slot:append>
+                <div>+86</div>
+              </template>
             </q-select>
-            <q-input placeholder="Enter phone number" class="q-mb-lg full-width" filled v-model="PhoneNumber" />
+            <q-input placeholder="Enter phone number" class="q-mb-lg full-width" standout v-model="PhoneNumber" />
           </div>
           <q-btn @click="toVerifyt()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
             color="primary" label="Send Code" />
@@ -42,7 +46,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
   // 列表
   export default defineComponent({
     name: 'phoneAuthentication',
@@ -75,4 +79,22 @@
 </script>
 
 <style scoped>
+  :deep .q-select .q-field__control:hover:before {
+    opacity: 0;
+  }
+  :deep .q-select .q-field__prepend {
+    padding-right: 0;
+    color: #8F959E;
+  }
+  :deep .q-select  .q-field__append {
+    padding-left: 4px;
+    font-size: 15px;
+    color: #8F959E;
+  }
+  :deep .q-select .q-field__native {
+    display: none;
+  }
+  :deep .q-select  .q-field__append .q-icon {
+    display: none;
+  }
 </style>

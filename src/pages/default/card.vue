@@ -81,8 +81,8 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/navBar.vue';
-import dialogAlert from 'src/components/dialogAlert.vue';
+import navBar from 'src/components/mobile/navBar.vue';
+import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 
 export default {
   name: 'defaultCard',

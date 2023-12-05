@@ -60,7 +60,6 @@ export default defineComponent({
       },
     };
     useMeta(metaData);
-    console.log($initStore.config.template);
     //  动态载入路由
     dynamicRouterFunc(
       $router,
