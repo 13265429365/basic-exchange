@@ -19,6 +19,24 @@ export const initializationInitStore = ({
 // 初始化数据
 export const useInitStore = defineStore('init', {
   state: () => ({
+    //  tabbars 菜单
+    tabbars: [] as tabbarInterface[],
+
+    // 用户菜单
+    userMenu: [] as menuInterface[][],
+
+    // 快捷菜单
+    quickMenu: [] as menuInterface[][],
+
+    //  翻译数据
+    translate: [] as translateInterface[],
+
+    //  国家列表
+    countryList: [] as countryInterface[],
+
+    //  语言列表
+    languageList: [] as LanguageInterface[],
+
     //  配置文件
     config: {
       //  项目名称
@@ -29,71 +47,92 @@ export const useInitStore = defineStore('init', {
       defaultLang: 'en-US',
       //  默认模版
       template: 'default',
+
       //  配置设置
       settings: {
         //  注册配置
         register: {
           //  是否显示确认密码
-          isConfirmPassword: false,
+          showCmfPass: false,
           //  是否显示安全密钥
-          isSecurityKey: false,
+          showSecurityPass: false,
           //  是否显示验证码
-          isVerify: true,
+          showVerify: true,
           //  是否显示手机号码
-          isTelephone: false,
+          showTelephone: false,
           //  是否显示邮箱
-          isEmail: false,
+          showEmail: false,
         },
         //  登录配置
         login: {
           //  是否显示验证码
-          isVerify: true,
+          showVerify: true,
           //  是否显示注册
-          isRegister: true,
+          showRegister: true,
         },
         //  切换语言配置
-        switchLang: {
+        lang: {
           //  登录页面是否显示语言切换
-          isLogin: true,
+          showLogin: true,
           //  注册页面是否显示语言切换
-          isRegister: true,
+          showRegister: true,
           //  首页是否显示语言切换
-          isHome: true,
+          showHome: true,
         },
         //  在线客服配置
         online: {
           //  登录页面是否显示在线客服
-          isLogin: true,
+          showLogin: true,
           //  注册页面是否显示在线客服
-          isRegister: true,
+          showRegister: true,
           //  首页是否显示在线客服
-          isHome: true,
+          showHome: true,
+          //  充值是否跳转到客服
+          depositLink: false,
+          //  提现是否跳转到客服
+          withdrawLink: false,
         },
         wallet: {
           //  是否开启安全密钥, 如果开启了。 提现需要输入安全密钥，修改卡片｜新建卡片｜删除卡片 需要输入安全密钥
-          isSecurityKey: true,
+          showSecurityPass: true,
           //  卡片管理是否开启删除
-          isDelete: true,
+          showDelete: true,
           //  卡片管理是否开启更新
-          isUpdate: true,
+          showUpdate: true,
           //  卡片是否隐藏卡号
-          isHidden: false,
+          showNumber: false,
         },
       },
     },
-
-    //  翻译数据
-    translate: [] as translateInterface[],
-
-    //  国家列表
-    countryList: [] as countryInterface[],
-
-    //  语言列表
-    languageList: [] as LanguageInterface[],
   }),
   getters: {},
   actions: {},
 });
+
+interface tabbarInterface {
+  //  标题
+  name: string;
+
+  //  默认图标
+  icon: string;
+
+  //  激活图标
+  activeIcon: string;
+
+  //  路由
+  route: string;
+}
+
+interface menuInterface {
+  //  标题
+  name: string;
+
+  //  默认图标
+  icon: string;
+
+  //  路由
+  route: string;
+}
 
 interface countryInterface {
   //  国家ID

@@ -2,7 +2,6 @@ import { defineStore } from 'pinia';
 import { cookiesOptions } from 'src/utils';
 import { Cookies } from 'quasar';
 
-export const UserInfoKey = '_UserInfo';
 export const UserTokenKey = '_UserToken';
 export const UserLangKey = '_UserLang';
 
@@ -16,9 +15,6 @@ export const initializationUserStore = ({ ssrContext }: any) => {
 
   //  初始化用户Lang
   $userStore.userLang = $cookies.get(UserLangKey) ?? '';
-
-  //  初始化用户信息
-  $userStore.userInfo = $cookies.get(UserInfoKey);
 
   return $userStore;
 };
@@ -50,12 +46,6 @@ export const useUserStore = defineStore('user', {
     updateUserLang(lang: string) {
       this.userLang = lang;
       Cookies.set(UserLangKey, lang, cookiesOptions());
-    },
-
-    //  更新用户信息
-    updateUserInfo(userInfo: object) {
-      this.userInfo = userInfo;
-      Cookies.set(UserInfoKey, JSON.stringify(userInfo), cookiesOptions());
     },
   },
 });
