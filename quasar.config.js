@@ -14,10 +14,12 @@ const devBaseURL = '//localhost:3010';
 // 线上API接口
 const prodBaseURL = 'https://api.home.ainn.us';
 
-const { configure } = require('quasar/wrappers');
+const {
+  configure
+} = require('quasar/wrappers');
 const path = require('path');
 
-module.exports = configure(function (ctx) {
+module.exports = configure(function(ctx) {
   return {
     eslint: {
       // fix: true,
@@ -59,7 +61,18 @@ module.exports = configure(function (ctx) {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16',
       },
-
+      // extendWebpack(cfg) {
+      //   cfg.resolve.alias['@'] = path.resolve(__dirname, './src')
+      //   cfg.module.rules.push({
+      //     test: /\.tsx?$/,
+      //     use: [{
+      //       loader: 'ts-loader',
+      //       options: {
+      //         transpileOnly: true
+      //       },
+      //     }, ],
+      //   })
+      // },
       vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
@@ -102,7 +115,8 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true, // opens browser window automatically
+      port: 8089,
+      open: false, // opens browser window automatically
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

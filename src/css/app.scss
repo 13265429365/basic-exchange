@@ -1,1 +1,67 @@
-// app global css in SCSS form
+    .q-field__control {
+        color: $default !important;
+        background: #F5F6FA !important;
+        border-radius: 10px !important;
+        height: 50px !important;
+        min-height: 50px !important;
+        outline: none !important;
+    }
+    .login {
+        color: #01AC66;
+        cursor: pointer;
+    }
+    
+    .logo {
+        width: 70px;
+        height: 70px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+    
+    .iconLogo {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .countryLogo {
+        width: 24px;
+        height: 16px;
+    }
+    
+    .size24 {
+        font-size: 24px;
+    }
+    
+    #q-app {
+        height: 100vh;
+    }
+    
+    .text-color-3 {
+        color: #333333 !important;
+    }
+    
+    .text-color-6 {
+        color: #666666;
+    }
+    
+    .text-color-9 {
+        color: #999999;
+    }
+    
+    // 默认页面背景颜色
+    .page_bg {
+        background-color: #f5f6fa;
+    }
+    
+    // 圆角
+    .radius-8 {
+        border-radius: 8px;
+    }
+    
+    .radius-10 {
+        border-radius: 10px;
+    }
+    
+    .radius-x {
+        border-radius: 9999px;
+    }

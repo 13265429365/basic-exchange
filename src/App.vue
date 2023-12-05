@@ -60,12 +60,12 @@ export default defineComponent({
       },
     };
     useMeta(metaData);
-
+    console.log($initStore.config.template);
     //  动态载入路由
     dynamicRouterFunc(
       $router,
-      templateRoutes.get($initStore.config.template),
-      $initStore.config.template,
+      templateRoutes.get($q.platform.is.mobile ? 'default' : 'defaultPc'),
+      $q.platform.is.mobile ? 'default' : 'defaultPc',
       <boolean>$q.platform.is.mobile
     );
     //  覆盖当前路由
