@@ -88,7 +88,7 @@
           <div class="row justify-between no-wrap">
             <q-btn @click="dialog = false" class="q-mr-md" unelevated rounded no-caps
               style="height: 44px;border:1px solid #01AC66;width: 157px;" color="bg-white text-green" label="Cancel" />
-            <q-btn @click="dialog = false" unelevated rounded no-caps
+            <q-btn @click="Logout()" unelevated rounded no-caps
               style="height: 44px;width: 157px;" color="primary" label="Yes,Logout" />
           </div>
         </q-card-section>
@@ -116,6 +116,10 @@
           if (url) {
             router.push(url)
           }
+        },
+        Logout() {
+          router.push('/')
+          store.dialog = false
         },
         toEdit() {
           router.push('info/edit')

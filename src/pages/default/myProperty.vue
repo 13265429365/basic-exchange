@@ -7,12 +7,14 @@
         <div class="column justify-center">
           <div class="row items-center">
             <div class="text-white">Total Assets</div>
-            <q-img src="/images/default/eyes.png" class="q-ml-sm" width="18px" height="18px" />
+            <q-img @click="moneyShow = !moneyShow" src="/images/default/eyes.png" class="q-ml-sm" width="18px" height="18px" />
           </div>
-          <div class="text-white row items-center">
+          <!-- 点击显示、隐藏金额 -->
+          <div v-if="moneyShow" class="text-white row items-center">
             <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">$1200.00</span>
             <span>≈￥69865,21 </span>
           </div>
+          <div v-else class="text-white text-weight-bold " style="font-size: 22px;">**** </div>
         </div>
       </div>
       <!-- 充值提现 -->
@@ -101,6 +103,9 @@ import { lineOption, lineThirty, option } from './data';
     setup() {
       const router = useRouter();
       const state = reactive({
+        // 点击显示、隐藏金额 
+        moneyShow: false,
+        
         // 饼状图下的列表
         list: [
           {

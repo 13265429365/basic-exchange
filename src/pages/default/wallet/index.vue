@@ -13,9 +13,11 @@
         <div class="column justify-center">
           <div class="row">
             <div class="text-white text-weight-bold">Wallet Balance</div>
-            <q-img src="/images/default/eyes.png" class="q-ml-sm" width="18px" height="18px" />
+            <q-img @click="moneyShow = !moneyShow" src="/images/default/eyes.png" class="q-ml-sm cursor-pointer" width="18px" height="18px" />
           </div>
-          <div class="text-white text-weight-bold " style="font-size: 22px;">$1200.00 </div>
+          <!-- 点击显示、隐藏金额 -->
+          <div v-if="moneyShow" class="text-white text-weight-bold " style="font-size: 22px;">$1200.00 </div>
+          <div v-else class="text-white text-weight-bold " style="font-size: 22px;">**** </div>
         </div>
         <q-img src="/images/default/wallet.png" class="self-center" width="68px" height="53.83px" />
 
@@ -129,6 +131,8 @@ export default {
     const router = useRouter();
     const state = reactive({
       list: walletList,
+      // 点击显示、隐藏金额
+      moneyShow: false,
     });
     return {
       ...toRefs(state),
