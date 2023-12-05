@@ -10,12 +10,12 @@
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="q-mb-md" filled v-model="text" label="Name">
+          <q-input class="q-mb-md" standout v-model="text" placeholder="Name">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/user.png" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="password" filled :type="isPwd ? 'password' : 'text'" label="Password">
+          <q-input class="q-mb-md" v-model="password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/password.png" />
             </template>
@@ -24,7 +24,7 @@
                 @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <q-input class="q-mb-sm" filled v-model="text" label="Code">
+          <q-input class="q-mb-sm" standout v-model="text" placeholder="Code">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/code.png" />
             </template>
@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-  import lang from 'src/components/lang/lang.vue';
+  import lang from 'src/components/mobile/lang.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
   // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复

@@ -1,9 +1,13 @@
 <template>
-  <div class="bg-grey-3">321</div>
+  <div class="">
+    <div v-for="item in 100" :key="item">{{item}}</div>
+  </div>
 </template>
 
 <script lang="ts">
-  name: 'home'
+  export default {
+    name: 'homeIndex'
+  }
 </script>
 
 <style>

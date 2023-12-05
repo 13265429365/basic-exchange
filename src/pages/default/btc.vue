@@ -12,13 +12,15 @@
         class="row justify-between radius-8">
         <div class="column justify-center">
           <div class="row">
-            <div class="text-white text-weight-bold"><BTC></BTC></div>
-            <q-img src="/images/default/eyes.png" class="q-ml-sm" width="18px" height="18px" />
+            <div class="text-white text-weight-bold">BTC</div>
+            <q-img @click="moneyShow = !moneyShow" src="/images/default/eyes.png" class="q-ml-sm" width="18px" height="18px" />
           </div>
-          <div class="text-white row items-center">
+          <!-- 点击显示、隐藏金额 -->
+          <div v-if="moneyShow" class="text-white row items-center">
             <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">862.76</span>
             <span>≈￥69865,21 </span>
           </div>
+          <div v-else class="text-white text-weight-bold " style="font-size: 22px;">**** </div>
         </div>
         <q-img src="/images/default/btc.png" class="self-center" width="50px" height="50px" />
 
@@ -69,7 +71,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/navBar.vue';
+import navBar from 'src/components/mobile/navBar.vue';
 import { walletList } from './data';
 export default {
   name: 'btcIndex',
@@ -77,6 +79,8 @@ export default {
   setup() {
     const state = reactive({
       list: walletList,
+      // 点击显示、隐藏金额
+      moneyShow: false,
     });
     return {
       ...toRefs(state)

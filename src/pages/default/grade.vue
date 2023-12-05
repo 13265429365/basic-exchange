@@ -51,7 +51,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/navBar.vue';
+import navBar from 'src/components/mobile/navBar.vue';
 export default {
   name: 'defaultGrade',
   components: { navBar },

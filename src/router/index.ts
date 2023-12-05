@@ -53,7 +53,7 @@ export default route(function ({ /* store, */ ssrContext }) {
       userToken != null &&
       userToken.length > 0
     ) {
-      next({ name: 'Home' });
+      next({ name: 'home' });
     } else {
       // 验证是否跳转到登录页面
       if (

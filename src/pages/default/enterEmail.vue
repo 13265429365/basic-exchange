@@ -8,7 +8,7 @@
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="q-mb-md" v-model="email" placeholder="Enter a email address" filled type="text" />
+          <q-input class="q-mb-md" v-model="email" placeholder="Enter a email address" standout type="text" />
           <q-btn @click="sub()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
             color="primary" label="Sumbit" />
         </q-form>
@@ -20,7 +20,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
   // 列表
   export default defineComponent({
     name: 'enterEmail',

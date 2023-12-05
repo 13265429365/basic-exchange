@@ -15,7 +15,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import navBar from 'src/components/navBar.vue';
+import navBar from 'src/components/mobile/navBar.vue';
 
 export default {
   name: 'showMessage',

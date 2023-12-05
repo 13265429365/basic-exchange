@@ -15,7 +15,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   // import { useRouter } from 'vue-router';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
   // 列表
   import { privacyList } from './data';
   export default defineComponent({

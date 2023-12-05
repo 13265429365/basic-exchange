@@ -35,7 +35,7 @@
           </div>
           <div class="text-weight-bold q-mb-sm size15">Timescales</div>
           <div class="row no-wrap items-center">
-            <q-input @click="startDatePouop=true" placeholder="开始时间" style="height: 34px;" filled v-model="startDate" mask="date">
+            <q-input @click="startDatePouop=true" placeholder="开始时间" style="height: 34px;" standout v-model="startDate" mask="date">
               <template v-slot:append>
                 <q-popup-proxy v-model="startDatePouop">
                   <q-date v-model="startDate">
@@ -47,7 +47,7 @@
               </template>
             </q-input>
             <div class="q-mx-sm" style="width: 15px;height: 1px;border: 1px solid #EDEDED;"></div>
-            <q-input @click="endDatePouop=true" placeholder="结束时间" style="height: 34px;" filled v-model="endDate" mask="date">
+            <q-input @click="endDatePouop=true" placeholder="结束时间" style="height: 34px;" standout v-model="endDate" mask="date">
               <template v-slot:append>
                 <q-popup-proxy v-model="endDatePouop">
                   <q-date v-model="endDate">
@@ -73,7 +73,7 @@
 
 <script lang="ts">
   import { reactive, toRefs } from 'vue';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
 
   export default {
     name: 'billDetail',
@@ -113,11 +113,18 @@
   .size15 {
     font-size: 15px;
   }
-  :deep .q-field__control {
+  :deep(.q-field__control) {
       height: 34px !important;
       min-height: 34px !important;
+      background: #F5F6FA !important;
+      border-radius: 10px !important;
+      outline: none !important;
+      box-shadow: none !important;
   }
   :deep .q-field__native, .q-field__input {
     text-align: center;
+  }
+  :deep .q-field  .q-field__native {
+    color: rgba(0, 0, 0, 0.87) !important;
   }
 </style>

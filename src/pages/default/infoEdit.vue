@@ -21,17 +21,17 @@
           </q-input> -->
           <div>
             <div class="text-weight-bold q-mb-sm">Name</div>
-            <q-input color="green" class="q-mb-md" filled v-model="Name" />
+            <q-input color="green" class="q-mb-md" standout v-model="Name" />
           </div>
           <div>
             <div class="text-weight-bold q-mb-sm">Gender</div>
             <q-select @update:modelValue="newValue($event)" v-model="Gender" :options="GenderList"
-              class="q-mb-md q-mr-md full-width" filled>
+              class="q-mb-md q-mr-md full-width" standout>
             </q-select>
           </div>
           <div>
             <div class="text-weight-bold q-mb-sm">Birthday</div>
-            <q-input @click="birthdayPopup=true" filled v-model="Birthday" mask="date" class="q-mb-lg">
+            <q-input @click="birthdayPopup=true" standout v-model="Birthday" mask="date" class="q-mb-lg">
               <template v-slot:append>
                 <q-popup-proxy v-model="birthdayPopup">
                   <q-date v-model="Birthday">
@@ -77,7 +77,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   // import { useRouter } from 'vue-router';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
   // 列表
   export default defineComponent({
     name: 'infoEdit',

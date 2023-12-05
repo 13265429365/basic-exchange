@@ -30,7 +30,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/navBar.vue';
+  import navBar from 'src/components/mobile/navBar.vue';
   import { NotifyPositive} from 'src/utils/index';
   // 列表
   import { langList } from './data';
