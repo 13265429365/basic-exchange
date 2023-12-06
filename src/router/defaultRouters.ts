@@ -5,7 +5,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     path: '/',
     name: 'Layouts',
     componentPath: 'layouts',
-    component: 'tabs.vue',
+    component: 'default.vue',
     children: [
       {
         path: '/',
