@@ -35,7 +35,7 @@
 
       <div class="q-ml-md q-mt-md">
         <ul class="text-color-3 text-weight-regular" style="padding: 0;">
-          <li>Vip the mounth However mean your life</li>
+          <li class="q-mb-sm">Vip the mounth However mean your life</li>
           <li>Vip the mounth However mean your lifeHowever mean your life</li>
         </ul>
       </div>
