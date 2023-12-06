@@ -34,7 +34,6 @@ import { NotifyPositive } from 'src/utils/index';
 import { useInitStore } from 'src/stores/init';
 
 // 列表
-import { langList } from './data';
 export default defineComponent({
   name: 'languageView',
   components: {
@@ -44,17 +43,14 @@ export default defineComponent({
     const initStore = useInitStore();
     const router = useRouter();
     let store = reactive({
-      list: langList,
+      list: [] as any,
       shape: 'China',
     })
-    console.log(initStore.languageList)
 
     onMounted(() => {
-      console.log(initStore.languageList)
+      store.list = initStore.languageList;
+      console.log(initStore.config.defaultLang)
 
-      setTimeout(() => {
-        console.log(initStore.languageList)
-      }, 5000)
     })
 
     return {

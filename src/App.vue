@@ -14,7 +14,7 @@ import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'App',
-  preFetch: ({ ssrContext }) => {
+  preFetch: async ({ ssrContext }) => {
     //  初始化 userStore
     const $userStore = initializationUserStore({ ssrContext });
     const initStore = useInitStore();
@@ -25,25 +25,22 @@ export default defineComponent({
       ssrContext?.req.headers.host +
       '/' +
       $userStore.userLang;
-    api.get(initPath).then((res: any) => {
+    await api.get(initPath).then((res: any) => {
       if (res != null) {
-        console.log('res.languageList');
-        console.log('===>', res.languageList);
-        initStore.languageList = res.languageList;
 
         //  初始化管理配置信息
-        // initializationInitStore({
-        //   config: res.config,
-        //   translate: res.translate,
-        //   countryList: res.countryList,
-        //   languageList: res.languageList,
-        // });
-        // initStore.newInitializationInitStore({
-        //   config: res.config,
-        //   translate: res.translate,
-        //   countryList: res.countryList,
-        //   languageList: res.languageList,
-        // });
+        initializationInitStore({
+          config: res.config,
+          translate: res.translate,
+          countryList: res.countryList,
+          languageList: res.languageList,
+        });
+        initStore.newInitializationInitStore({
+          config: res.config,
+          translate: res.translate,
+          countryList: res.countryList,
+          languageList: res.languageList,
+        });
       }
     });
   },
