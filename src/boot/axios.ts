@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
 import { Loading, QSpinnerBars } from 'quasar';
-import { useInitStore } from 'src/stores/init';
+import { useUserStore } from 'src/stores/user';
 import { NotifyNegative } from 'src/utils/notify';
 
 declare module '@vue/runtime-core' {
@@ -30,18 +30,18 @@ api.interceptors.request.use((config: any) => {
     });
   }
 
-  const initStore = useInitStore();
+  const userStore = useUserStore();
   // 如果存在Token，那么请求带上Token
   if (
-    initStore.userToken !== '' &&
+    userStore.userToken !== '' &&
     !config.headers.hasOwnProperty('Authorization')
   ) {
-    config.headers['Authorization'] = 'Bearer ' + initStore.userToken;
+    config.headers['Authorization'] = 'Bearer ' + userStore.userToken;
   }
 
   // 如果设置了语言，那么请求带上语言
-  if (initStore.userLang !== '') {
-    config.headers['Accept-Language'] = initStore.userLang;
+  if (userStore.userLang !== '') {
+    config.headers['Accept-Language'] = userStore.userLang;
   }
   return config;
 });
@@ -77,9 +77,7 @@ api.interceptors.response.use(
       }
     }
     //  返回错误
-    return Promise.reject('ERR_UNHANDLED_REJECTION').catch(() => {
-      console.log('Please check whether the request address is correct...');
-    });
+    return Promise.reject(err);
   }
 );
 
