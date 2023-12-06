@@ -72,7 +72,7 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import navBar from 'src/components/mobile/navBar.vue';
-import { walletList } from './data';
+import { walletList } from './ts/data';
 export default {
   name: 'btcIndex',
   components: { navBar },

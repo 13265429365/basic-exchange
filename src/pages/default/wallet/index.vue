@@ -25,14 +25,14 @@
 
       <div class="row q-col-gutter-md q-mt-sm">
         <div class="col-6">
-          <div class="bg-white radius-8 row q-pa-sm row" style="height: 60px;">
+          <div @click="to('/recharge')" class="bg-white radius-8 row q-pa-sm row" style="height: 60px;">
             <q-img src="/images/default/recharge.png" class="self-center q-mx-sm" width="42px" height="42px" />
             <div class="text-color-3 text-weight-bold self-center ellipsis col">
               Recharge</div>
           </div>
         </div>
         <div class="col-6">
-          <div class="bg-white radius-8 row q-pa-sm row" style="height: 60px;">
+          <div @click="to('/withdrawal')" class="bg-white radius-8 row q-pa-sm row" style="height: 60px;">
             <q-img src="/images/default/cashOut.png" class="self-center q-mx-sm" width="42px" height="42px" />
             <div class="text-color-3 text-weight-bold self-center ellipsis col">
               Cash Out</div>
@@ -48,7 +48,7 @@
       </div>
 
       <!-- 明细列表 -->
-      <div @click="toBillDetail()" v-for="(item, i) in list" :key="i" class="radius-8 bg-white q-pa-md  q-mb-md">
+      <div @click="to('/bill/detail')" v-for="(item, i) in list" :key="i" class="radius-8 bg-white q-pa-md  q-mb-md">
         <div class="row justify-between">
           <div class="">
             <div class="text-color-3 text-weight-bold">{{item.name}}</div>
@@ -123,7 +123,7 @@
 import { reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import navBar from 'src/components/mobile/navBar.vue';
-import { walletList } from '../data';
+import { walletList } from './ts/data';
 export default {
   name: 'walletIndex',
   components: { navBar },
@@ -136,8 +136,8 @@ export default {
     });
     return {
       ...toRefs(state),
-      toBillDetail() {
-        router.push('/bill/detail')
+      to(url: string) {
+        router.push(url)
       },
     }
   }

@@ -101,7 +101,7 @@
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
   // 列表数据
-  import { infoList } from './data';
+  import { infoList } from './ts/data';
   export default defineComponent({
     name: 'infoView',
     setup() {

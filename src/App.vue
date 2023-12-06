@@ -20,42 +20,35 @@ export default defineComponent({
     const initStore = useInitStore();
 
     //  请求管理配置文件
-    const initPath =
-      '/init/' +
-      ssrContext?.req.headers.host +
-      '/' +
-      $userStore.userLang;
-    await api.get(initPath).then((res: any) => {
-      if (res != null) {
+    // const initPath =
+    //   '/init/' +
+    //   ssrContext?.req.headers.host +
+    //   '/' +
+    //   $userStore.userLang;
+    // await api.get(initPath).then((res: any) => {
+    //   if (res != null) {
 
-        //  初始化管理配置信息
-        initializationInitStore({
-          config: res.config,
-          translate: res.translate,
-          countryList: res.countryList,
-          languageList: res.languageList,
-        });
-        initStore.newInitializationInitStore({
-          config: res.config,
-          translate: res.translate,
-          countryList: res.countryList,
-          languageList: res.languageList,
-        });
-      }
-    });
+    //     //  初始化管理配置信息
+    //     initializationInitStore({
+    //       config: res.config,
+    //       translate: res.translate,
+    //       countryList: res.countryList,
+    //       languageList: res.languageList,
+    //     });
+    //     initStore.newInitializationInitStore({
+    //       config: res.config,
+    //       translate: res.translate,
+    //       countryList: res.countryList,
+    //       languageList: res.languageList,
+    //     });
+    //   }
+    // });
   },
 
   created: () => {
     const $initStore = useInitStore();
     const $router = useRouter();
     const $q = useQuasar();
-    console.log(111111)
-
-    console.log($initStore.languageList)
-
-    setTimeout(() => {
-      console.log($initStore.languageList)
-    }, 5000)
     //  设置客户端Meta信息
     const metaData = {
       title: $initStore.config.name,

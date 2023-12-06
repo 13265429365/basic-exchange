@@ -33,7 +33,7 @@
   import { useRouter } from 'vue-router';
   import navBar from 'src/components/mobile/navBar.vue';
   // 列表
-  import { settingList } from './data';
+  import { settingList } from './ts/data';
   export default defineComponent({
     name: 'infoSetting',
     components: {
