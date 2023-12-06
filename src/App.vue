@@ -14,20 +14,28 @@ import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'App',
-  preFetch: ({ ssrContext }) => {
+  preFetch: async ({ ssrContext }) => {
     //  初始化 userStore
     const $userStore = initializationUserStore({ ssrContext });
+    const initStore = useInitStore();
 
     //  请求管理配置文件
     const initPath =
-      '/init?domain=' +
+      '/init/' +
       ssrContext?.req.headers.host +
-      '&lang=' +
+      '/' +
       $userStore.userLang;
-    api.get(initPath).then((res: any) => {
+    await api.get(initPath).then((res: any) => {
       if (res != null) {
+
         //  初始化管理配置信息
         initializationInitStore({
+          config: res.config,
+          translate: res.translate,
+          countryList: res.countryList,
+          languageList: res.languageList,
+        });
+        initStore.newInitializationInitStore({
           config: res.config,
           translate: res.translate,
           countryList: res.countryList,
@@ -41,7 +49,13 @@ export default defineComponent({
     const $initStore = useInitStore();
     const $router = useRouter();
     const $q = useQuasar();
+    console.log(111111)
 
+    console.log($initStore.languageList)
+
+    setTimeout(() => {
+      console.log($initStore.languageList)
+    }, 5000)
     //  设置客户端Meta信息
     const metaData = {
       title: $initStore.config.name,

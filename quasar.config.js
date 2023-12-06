@@ -9,17 +9,15 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 // 本地API接口
-const devBaseURL = '//localhost:3010';
+const devBaseURL = 'http://192.168.5.25:3010/api/v1';
 
 // 线上API接口
 const prodBaseURL = 'https://api.home.ainn.us';
 
-const {
-  configure
-} = require('quasar/wrappers');
+const { configure } = require('quasar/wrappers');
 const path = require('path');
 
-module.exports = configure(function(ctx) {
+module.exports = configure(function (ctx) {
   return {
     eslint: {
       // fix: true,

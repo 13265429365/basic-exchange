@@ -2,8 +2,7 @@
   <div>
     <navBar title="language" height="49px"></navBar>
     <q-separator class="q-mt-sm q-mb" color="grey-2" />
-    <q-list bordered class="q-mb-md border-a-8"
-      style="border:0 !important;overflow: hidden;border-radius: 8px;">
+    <q-list bordered class="q-mb-md border-a-8" style="border:0 !important;overflow: hidden;border-radius: 8px;">
       <div @click="switchLang(item.name)" v-for="(item, i) in list" :key="i" class="bg-white">
         <q-item v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
@@ -15,7 +14,7 @@
           </q-item-section>
 
           <q-item-section side>
-            <q-img v-if="shape==item.name" src="/images/default/radio_active.png" class="radioIcon" />
+            <q-img v-if="shape == item.name" src="/images/default/radio_active.png" class="radioIcon" />
             <q-img v-else src="/images/default/radio.png" class="radioIcon" />
             <!-- radio_active.png -->
             <!-- <q-radio v-model="shape" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="item.name" /> -->
@@ -28,44 +27,54 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, toRefs } from 'vue';
-  import { useRouter } from 'vue-router';
-  import navBar from 'src/components/mobile/navBar.vue';
-  import { NotifyPositive} from 'src/utils/index';
-  // 列表
-  import { langList } from './data';
-  export default defineComponent({
-    name: 'languageView',
-    components: {
-      navBar
-    },
-    setup() {
-      const router = useRouter();
-      let store = reactive({
-        list: langList,
-        shape: 'China',
-      })
-      return {
-        ...toRefs(store),
-        switchLang(name: string) {
-          store.shape = name
-          NotifyPositive('切换成功')
-          setTimeout(()=>{
-            router.back()
-          },500)
-        },
-      }
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import navBar from 'src/components/mobile/navBar.vue';
+import { NotifyPositive } from 'src/utils/index';
+import { useInitStore } from 'src/stores/init';
+
+// 列表
+export default defineComponent({
+  name: 'languageView',
+  components: {
+    navBar
+  },
+  setup() {
+    const initStore = useInitStore();
+    const router = useRouter();
+    let store = reactive({
+      list: [] as any,
+      shape: 'China',
+    })
+
+    onMounted(() => {
+      store.list = initStore.languageList;
+      console.log(initStore.config.defaultLang)
+
+    })
+
+    return {
+      ...toRefs(store),
+      switchLang(name: string) {
+        store.shape = name
+        NotifyPositive('切换成功')
+        setTimeout(() => {
+          router.back()
+        }, 500)
+      },
     }
-  })
+  }
+})
 </script>
 
 <style scoped>
-  .radioIcon {
-    width: 20px;
-    height: 20px;
-  }
-  .country {
-    width: 32px;
-    height: 21px;
-  }
+.radioIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.country {
+  width: 32px;
+  height: 21px;
+}
 </style>
