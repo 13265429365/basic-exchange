@@ -40,10 +40,11 @@
 
         <!--            帮助中心列表-->
         <q-list class="q-ma-md bg-white q-mt-lg text-black" style="border-radius: 8px" v-if="helpersList.length > 0">
+          <div class="q-px-md q-pt-sm text-h6 text-weight-medium text-color-3">FAQ</div>
           <q-expansion-item v-for="( helper, helperIndex ) in  helpersList " :key="helperIndex" :label="helper.title">
             <q-card flat>
               <q-card-section>
-                <div class="font-c-6 font-18 text-400" v-html="helper.content"></div>
+                <div class="text-color-3 text-body2 text-weight-medium" v-html="helper.content"></div>
               </q-card-section>
             </q-card>
           </q-expansion-item>

@@ -27,6 +27,7 @@ export default defineComponent({
     //   $userStore.userLang;
     // await api.get(initPath).then((res: any) => {
     //   if (res != null) {
+    //     console.log(111)
 
     //     //  初始化管理配置信息
     //     initializationInitStore({
