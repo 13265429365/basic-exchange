@@ -6,7 +6,7 @@ html::-webkit-scrollbar {
 
 /* 定义滚动条轨道样式 */
 html::-webkit-scrollbar-track {
-  background: #f5f6fa;
+  background: #f5f7fa;
 }
 
 /* 定义滚动滑块样式 */
@@ -50,7 +50,9 @@ html::-webkit-scrollbar-thumb:hover {
   width: 24px;
   height: 16px;
 }
-
+.size16 {
+  font-size: 16px;
+}
 .size24 {
   font-size: 24px;
 }

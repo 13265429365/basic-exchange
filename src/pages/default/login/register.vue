@@ -16,6 +16,7 @@
             </template>
           </q-input> -->
           <q-input standout class="q-mb-md" v-model="userParams.username" placeholder="username">
+
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/email.png" />
             </template>

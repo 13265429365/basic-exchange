@@ -17,7 +17,7 @@
   // import { useRouter } from 'vue-router';
   import navBar from 'src/components/mobile/navBar.vue';
   // 列表
-  import { privacyList } from './data';
+  import { privacyList } from './ts/data';
   export default defineComponent({
     name: 'privacyPolicy',
     components: {

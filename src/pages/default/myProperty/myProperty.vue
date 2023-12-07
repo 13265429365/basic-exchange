@@ -96,7 +96,7 @@
   import navBar from 'src/components/mobile/navBar.vue';
   import { useRouter } from 'vue-router';
   import * as echarts from 'echarts'
-import { lineOption, lineThirty, option } from './data';
+import { lineOption, lineThirty, option } from './ts/data';
   export default {
     name: 'myProperty',
     components: { navBar },

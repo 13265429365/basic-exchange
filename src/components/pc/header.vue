@@ -75,12 +75,12 @@
                 </div>
               </q-item>
               <q-separator class="q-mt-lg" style="background: #F1F1F1;" />
-              <q-item v-for="(item,i) in infoList" :key="i" clickable class="row no-wrap items-center q-py-md q-px-xs">
+              <q-item @click="to(item.url)" v-for="(item,i) in infoList" :key="i" clickable class="row no-wrap items-center q-py-md q-px-xs">
                 <q-img class="q-mr-sm" :src="`/images/default/pc/${item.url}.png`" width="20px" height="20px" />
                 <div>{{item.name}}</div>
               </q-item>
               <q-separator class="q-mt-md" style="background: #F1F1F1;" />
-              <q-item clickable class="row no-wrap items-center q-py-xs q-px-xs">
+              <q-item @click="isLogin=false" clickable class="row no-wrap items-center q-py-xs q-px-xs">
                 <q-img class="q-mr-sm" src="/images/default/pc/LogOut.png" width="20px" height="20px" />
                 <div>Log out</div>
               </q-item>
@@ -96,13 +96,132 @@
       </div>
       <!-- 未登录状态下 -->
       <div v-else class="row items-center no-wrap">
-        <q-btn @click="isLogin=true" class="q-ml-md text-color-3 text-weight-regular"
+        <q-btn @click="LoginShow=true" class="q-ml-md text-color-3 text-weight-regular"
           style="padding: 0 10px;min-height: 30px" unelevated rounded no-caps color="white" label="Login" />
-        <q-btn @click="isLogin=true" class="q-ml-md text-weight-regular" style="padding: 0 10px;min-height: 30px"
+        <q-btn @click="registerShow=true" class="q-ml-md text-weight-regular" style="padding: 0 10px;min-height: 30px"
           unelevated rounded no-caps color="primary" label="Register" />
       </div>
       <q-img class="q-ml-md iconLogo cursor-pointer" src="/images/default/darkness/language.png" />
     </div>
+    <!-- 登录、注册 -->
+    <q-dialog v-model="LoginShow">
+      <q-card style="width: 410px;">
+        <q-card-section style="padding: 30px;">
+          <div class="text-center text-weight-bold text-primary" style="font-size: 36px;">
+            Login
+          </div>
+          <div class="text-center" style="font-size: 18px;">
+            Login to your account
+          </div>
+          <div class="q-mt-lg">
+            <q-form>
+              <q-input class="q-mb-md" standout v-model="text" placeholder="Username">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/user.png" />
+                </template>
+              </q-input>
+              <q-input class="q-mb-md" v-model="password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/password.png" />
+                </template>
+                <template v-slot:append>
+                  <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                    @click="isPwd = !isPwd" />
+                </template>
+              </q-input>
+              <div @click="toForgot()" class="text-right q-mb-lg" style="font-size: 14px;color:#999999">
+                Forgot Password?
+              </div>
+              <q-btn @click="LoginShow=false" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;" color="primary" label="Login" />
+              <div class="text-center" style="font-size: 14px;">
+                First time here?
+                <span @click="toRegister()" class="login">Signup</span>
+              </div>
+            </q-form>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="registerShow">
+      <q-card style="width: 410px;">
+        <q-card-section style="padding: 30px;">
+          <div class="text-center text-weight-bold text-primary" style="font-size: 36px;">
+            Sign Up
+          </div>
+          <div class="text-center" style="font-size: 18px;">
+            Create an account
+          </div>
+          <div class="q-mt-lg">
+            <q-form>
+              <q-input standout class="q-mb-md" v-model="text" placeholder="Email">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/email.png" />
+                </template>
+              </q-input>
+              <q-input class="q-mb-md" v-model="password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/password.png" />
+                </template>
+                <template v-slot:append>
+                  <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                    @click="isPwd = !isPwd" />
+                </template>
+              </q-input>
+              <q-input class="q-mb-md" standout v-model="text" placeholder="Confirm Password">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/password.png" />
+                </template>
+              </q-input>
+              <q-input class="q-mb-md" standout v-model="text" placeholder="Code">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/code.png" />
+                </template>
+              </q-input>
+              <q-input class="q-mb-md" standout v-model="text" placeholder="Secret Key">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/key.png" />
+                </template>
+              </q-input>
+              <q-input class="q-mb-md" standout v-model="text" placeholder="Invite Code">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/user.png" />
+                </template>
+              </q-input>
+              <div class="row no-wrap">
+                <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
+                  class="q-mb-md q-mr-sm select" standout>
+                  <template v-slot:prepend>
+                    <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
+                    <q-icon name="keyboard_arrow_down" />
+                  </template>
+                  <template v-slot:option="scope">
+                    <q-item v-bind="scope.itemProps">
+                      <q-item-section avatar>
+                        <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
+                      </q-item-section>
+                      <q-item-section>
+                        <q-item-label>{{ scope.opt.label }}</q-item-label>
+                        <!-- <q-item-label caption>{{ scope.opt.value }}</q-item-label> -->
+                      </q-item-section>
+                    </q-item>
+                  </template>
+                  <template v-slot:append>
+                    <div>+86</div>
+                  </template>
+                </q-select>
+                <q-input class="q-mb-lg full-width" standout v-model="text" placeholder="Telphone" />
+              </div>
+              <q-btn @click="registerShow=false" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;"
+                color="primary" label="Signup" />
+              <div class="size14 text-center">
+                Already have an account?
+                <span @click="toLogin()" class="login">Login</span>
+              </div>
+            </q-form>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-header>
   <!-- </div> -->
 </template>
@@ -115,7 +234,17 @@
     setup() {
       const router = useRouter();
       let state = reactive({
+        //
+        isPwd: false,
+        LoginShow: false,
+        registerShow: false,
+        options: [
+          { label: '+86', value: '中国' },
+          { label: '+866', value: '香港' },
+        ],
         text: '',
+        password: '',
+        areaCode: '+86',
         // 判断是否登录
         isLogin: false,
         moreList: [
@@ -168,7 +297,7 @@
           },
           {
             name: 'Vip',
-            url: 'Vip',
+            url: 'vip',
           },
         ],
       })
@@ -179,12 +308,68 @@
             router.push(url)
           }
         },
+        toLogin() {
+          state.registerShow = false
+          state.LoginShow = true
+        },
+        toRegister() {
+          state.LoginShow = false
+          state.registerShow = true
+        },
       }
     }
   }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  // 下拉选框样式
+  :deep .q-select .q-field__control:hover:before {
+    opacity: 0;
+  }
+  :deep .q-select .q-field__prepend {
+    padding-right: 0;
+    color: #8F959E;
+  }
+  :deep .q-select  .q-field__append {
+    padding-left: 4px;
+    font-size: 15px;
+    color: #8F959E;
+  }
+  :deep .q-select .q-field__native {
+    display: none;
+  }
+  :deep .q-select  .q-field__append .q-icon {
+    display: none;
+  }
+  // pc版input样式
+  :deep .q-field--standout .q-field__native {
+    color: rgba(0, 0, 0, 0.87) !important;
+  }
+
+  :deep .q-field--standout .q-field__prefix {
+    color: rgba(0, 0, 0, 0.87) !important;
+  }
+
+  :deep .q-field--standout .q-field__append {
+    color: rgba(0, 0, 0, 0.54) !important;
+  }
+
+  :deep .q-field--standout:before {
+    background: #fff !important;
+  }
+  :deep .q-field--standout .q-field__control {
+    background: #fff !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    outline: none !important;
+    border: 1px solid #DDDDDD;
+    box-shadow: none !important;
+    border-radius: 4px;
+  }
+  :deep .q-field--highlighted .q-field__control {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
   .q-header {
     min-width: 1100px;
     position: absolute;
@@ -217,8 +402,7 @@
     right: -35%;
   }
 
-  :deep .q-field__control {
-    color: $default !important;
+  :deep .q-field--outlined .q-field__control {
     background: #fff !important;
     border: 1px solid #DDDDDD !important;
     border-radius: 20px !important;
@@ -227,7 +411,7 @@
     outline: none !important;
   }
 
-  :deep .q-field__marginal {
+  :deep .q-field--outlined .q-field__marginal {
     height: 40px;
     padding-right: 0 !important;
   }

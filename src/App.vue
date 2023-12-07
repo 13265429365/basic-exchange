@@ -49,13 +49,6 @@ export default defineComponent({
     const $initStore = useInitStore();
     const $router = useRouter();
     const $q = useQuasar();
-
-
-    console.log($initStore.languageList)
-
-    setTimeout(() => {
-      console.log($initStore.languageList)
-    }, 5000)
     //  设置客户端Meta信息
     const metaData = {
       title: $initStore.config.name,
