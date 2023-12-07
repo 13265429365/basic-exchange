@@ -30,8 +30,8 @@
   };
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  
   html {
     min-width: 1100px !important;
     overflow: scroll;

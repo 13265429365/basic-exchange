@@ -9,7 +9,8 @@ export const UserLangKey = '_UserLang';
 export const initializationUserStore = ({ ssrContext }: any) => {
   const $cookies = Cookies.parseSSR(ssrContext);
   const $userStore = useUserStore();
-
+  //  初始化用户Token
+  // $userStore.isLogin = $cookies.get(UserTokenKey) ?? '';
   //  初始化用户Token
   $userStore.userToken = $cookies.get(UserTokenKey) ?? '';
 
@@ -22,6 +23,8 @@ export const initializationUserStore = ({ ssrContext }: any) => {
 export const useUserStore = defineStore('user', {
   state: () => {
     return {
+      // 判断是否登录
+      isLogin: false,
       //  用户Token
       userToken: '',
 
@@ -32,13 +35,18 @@ export const useUserStore = defineStore('user', {
       userInfo: {} as any,
     };
   },
-
   getters: {},
 
   actions: {
+    //  更新用户登录状态
+    // updateLoginStatus(token: string) {
+    //   this.isLogin = token;
+    //   Cookies.set(UserTokenKey, token, cookiesOptions());
+    // },
     //  更新用户Token
     updateUserToken(token: string) {
       this.userToken = token;
+      console.log(Cookies)
       Cookies.set(UserTokenKey, token, cookiesOptions());
     },
 

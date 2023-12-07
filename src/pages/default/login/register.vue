@@ -15,7 +15,7 @@
               <q-icon name="event" color="orange" />
             </template>
           </q-input> -->
-          <q-input standout class="q-mb-md" v-model="text" placeholder="Label">
+          <q-input standout class="q-mb-md" v-model="text" placeholder="Email">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/email.png" />
             </template>
