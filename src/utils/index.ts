@@ -2,16 +2,18 @@ import { useInitStore } from 'src/stores/init';
 import { Notify } from 'quasar';
 
 // 图片处理方法
-export const imageSrc = (url: string) => {
+export const imageSrc = (url: string, isUrlPrefix?: boolean) => {
   const initStore = useInitStore();
-  if (url === '') {
+  if (url === '' || url === null || url === undefined) {
     url = initStore.config.logo;
   }
   if (url.indexOf('http') > -1) {
     return url;
   }
 
-  const baseURL = new URL(<string>process.env.baseURL);
+  const baseURL = isUrlPrefix
+    ? new URL(<string>process.env.baseURL)
+    : new URL(<string>process.env.url);
   return baseURL + url;
 };
 

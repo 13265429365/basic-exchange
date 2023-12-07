@@ -6,7 +6,7 @@
       <div @click="switchLang(item.name)" v-for="(item, i) in list" :key="i" class="bg-white">
         <q-item v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-            <q-img :src="`/images/default/${item.avatar}`" class="country" />
+            <q-img :src="imageSrc(item.icon)" class="country" />
           </q-item-section>
 
           <q-item-section>
@@ -32,6 +32,7 @@ import { useRouter } from 'vue-router';
 import navBar from 'src/components/mobile/navBar.vue';
 import { NotifyPositive } from 'src/utils/index';
 import { useInitStore } from 'src/stores/init';
+import { imageSrc } from 'src/utils';
 
 // 列表
 export default defineComponent({
@@ -62,6 +63,7 @@ export default defineComponent({
           router.back()
         }, 500)
       },
+      imageSrc
     }
   }
 })
