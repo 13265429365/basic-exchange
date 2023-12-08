@@ -67,6 +67,33 @@ export const defaultPcRouters: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
+      // 钱包
+      {
+        path: '/wallet',
+        name: 'wallet',
+        componentPath: 'pages',
+        component: 'wallet/wallet.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      // 充值
+      {
+        path: '/recharge',
+        name: 'recharge',
+        componentPath: 'pages',
+        component: 'wallet/Recharge.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      // 提现
+      {
+        path: '/withdrawal',
+        name: 'withdrawal',
+        componentPath: 'pages',
+        component: 'wallet/Withdrawal.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
       // 帮助中心
       {
         path: '/help/center',

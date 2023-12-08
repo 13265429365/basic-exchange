@@ -50,7 +50,7 @@
         activeRouter: '/',
         activeList: [
           { name: 'Dashboard', url: '/dashboard', icon: 'dashboard' },
-          { name: 'My Wallet', url: '', icon: 'MyWallet' },
+          { name: 'My Wallet', url: '/wallet', icon: 'MyWallet' },
           { name: 'Assets', url: '', icon: 'Assets' },
           { name: 'Card', url: '', icon: 'Card' },
           { name: 'My Team', url: '', icon: 'MyTeam' },
