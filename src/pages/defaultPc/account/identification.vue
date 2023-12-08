@@ -95,6 +95,7 @@ export default defineComponent({
     let store = reactive({
       //
       content: '',
+      imgUrl: '',
     });
     return {
       ...toRefs(store),
