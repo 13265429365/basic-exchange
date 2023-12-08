@@ -1,24 +1,32 @@
 /* 为所有的滚动条定义样式 */
+
 html::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 }
+
 
 /* 定义滚动条轨道样式 */
+
 html::-webkit-scrollbar-track {
-  background: #f5f7fa;
+    background: #f5f7fa;
 }
+
 
 /* 定义滚动滑块样式 */
+
 html::-webkit-scrollbar-thumb {
-  background: #dfdfdf;
-  border-radius: 20px;
+    background: #dfdfdf;
+    border-radius: 20px;
 }
 
+
 /* 定义滚动滑块悬浮样式 */
+
 html::-webkit-scrollbar-thumb:hover {
-  background: #c1c1c1;
+    background: #c1c1c1;
 }
+
 // 取消button默认样式
 // .q-field--standout .q-field__control {
 //     color: $default !important;
@@ -31,83 +39,102 @@ html::-webkit-scrollbar-thumb:hover {
 //
 // 登录注册的绿色文本
 .login {
-  color: #01ac66;
-  cursor: pointer;
+    color: #01ac66;
+    cursor: pointer;
 }
+
 // logo大小
 .logo {
-  width: 70px;
-  height: 70px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+    width: 70px;
+    height: 70px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 .iconLogo {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
 .countryLogo {
-  width: 24px;
-  height: 16px;
+    width: 24px;
+    height: 16px;
 }
+
 // 常用文本大小
 .size16 {
-  font-size: 16px;
+    font-size: 16px;
 }
+
 .size24 {
-  font-size: 24px;
+    font-size: 24px;
 }
+
 .size20 {
-  font-size: 20px;
+    font-size: 20px;
 }
+
 .size22 {
-  font-size: 22px;
+    font-size: 22px;
 }
+
 #q-app {
-  height: 100vh;
+    height: 100vh;
 }
+
 // 常用字体颜色
 .text-color-3 {
-  color: #333333 !important;
+    color: #333333 !important;
 }
 
 .text-color-6 {
-  color: #666666;
+    color: #666666;
 }
 
 .text-color-9 {
-  color: #999999;
+    color: #999999;
 }
 
 // 默认页面背景颜色
 .page_bg {
-  background-color: #f5f6fa;
+    background-color: #f5f6fa;
 }
 
 // 圆角
 .radius-8 {
-  border-radius: 8px;
+    border-radius: 8px;
 }
 
 .radius-10 {
-  border-radius: 10px;
+    border-radius: 10px;
 }
 
 .radius-x {
-  border-radius: 9999px;
+    border-radius: 9999px;
 }
+
 // pc端通用header
 .pageHeader {
-  width: 100%;
-  padding: 33px 100px;
-  background: #FAFAFA;
-  font-size: 28px;
-  color: #333;
-  font-weight: bold;
+    width: 100%;
+    padding: 33px 100px;
+    background: #FAFAFA;
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
 }
+
 // pc补全menu右侧元素的宽度(通用)
 .calc {
-  width: calc(100% - 268px);
-  min-width: 1100px - 268px;
+    width: calc(100% - 268px);
+    min-width: 1100px - 268px;
+}
+
+.conent {
+    max-width: 1100px;
+    min-width: 1100px;
+    margin: 0 auto;
+}
+
+.pc-hover {
+    cursor: pointer;
 }
