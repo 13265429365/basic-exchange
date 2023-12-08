@@ -29,11 +29,12 @@ html::-webkit-scrollbar-thumb:hover {
 //     outline: none !important;
 // }
 //
+// 登录注册的绿色文本
 .login {
   color: #01ac66;
   cursor: pointer;
 }
-
+// logo大小
 .logo {
   width: 70px;
   height: 70px;
@@ -50,17 +51,23 @@ html::-webkit-scrollbar-thumb:hover {
   width: 24px;
   height: 16px;
 }
+// 常用文本大小
 .size16 {
   font-size: 16px;
 }
 .size24 {
   font-size: 24px;
 }
-
+.size20 {
+  font-size: 20px;
+}
+.size22 {
+  font-size: 22px;
+}
 #q-app {
   height: 100vh;
 }
-
+// 常用字体颜色
 .text-color-3 {
   color: #333333 !important;
 }
@@ -89,4 +96,18 @@ html::-webkit-scrollbar-thumb:hover {
 
 .radius-x {
   border-radius: 9999px;
+}
+// pc端通用header
+.pageHeader {
+  width: 100%;
+  padding: 33px 100px;
+  background: #FAFAFA;
+  font-size: 28px;
+  color: #333;
+  font-weight: bold;
+}
+// pc补全menu右侧元素的宽度(通用)
+.calc {
+  width: calc(100% - 268px);
+  min-width: 1100px - 268px;
 }
