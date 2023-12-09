@@ -103,7 +103,8 @@
       </div>
       <q-img class="q-ml-md iconLogo cursor-pointer" src="/images/default/darkness/language.png" />
     </div>
-    <!-- 登录、注册 -->
+    
+    <!-- 登录 -->
     <q-dialog v-model="LoginShow">
       <q-card style="width: 410px;">
         <q-card-section style="padding: 30px;">
@@ -142,6 +143,8 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+    
+    <!-- 注册 -->
     <q-dialog v-model="registerShow">
       <q-card style="width: 410px;">
         <q-card-section style="padding: 30px;">

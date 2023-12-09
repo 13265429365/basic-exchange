@@ -11,11 +11,11 @@
 
     <div class="row justify-end" v-if="isShowBtn">
       <div class="col q-px-sm">
-        <q-btn outline rounded color="primary" :label="cancelBtnText" style="height: 40px;" class="full-width"
+        <q-btn outline rounded color="primary" no-caps :label="cancelBtnText" style="height: 40px;" class="full-width"
           text-color="grey" @click="changedialogAlert" />
       </div>
       <div class="col q-px-sm">
-        <q-btn unelevated rounded color="primary" :label="yesBtnText" style="height: 40px;" class="full-width"
+        <q-btn unelevated rounded color="primary" no-caps :label="yesBtnText" style="height: 40px;" class="full-width"
           text-color="white" @click="changedialogAlertYesBtn" />
       </div>
     </div>

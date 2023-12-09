@@ -93,10 +93,10 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, onMounted } from 'vue';
+import { reactive, toRefs } from 'vue';
 import navBar from 'src/components/mobile/navBar.vue';
 import dialogAlert from 'src/components/mobile/dialogAlert.vue';
-import { useRoute } from 'vue-router';
+// import { useRoute } from 'vue-router';
 
 export default {
   name: 'addNewCard',

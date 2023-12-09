@@ -94,6 +94,65 @@ export const defaultPcRouters: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
+      // 资产管理
+      {
+        path: '/assets',
+        name: 'assets',
+        componentPath: 'pages',
+        component: 'assets/assets.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      {
+        path: '/vth',
+        name: 'vth',
+        componentPath: 'pages',
+        component: 'assets/vth.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      // 卡片管理
+      {
+        path: '/card',
+        name: 'card',
+        componentPath: 'pages',
+        component: 'card/card.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      {
+        path: '/add/card',
+        name: 'addCard',
+        componentPath: 'pages',
+        component: 'card/addCard.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      {
+        path: '/edit/card',
+        name: 'editCard',
+        componentPath: 'pages',
+        component: 'card/editCard.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      // 团队
+      {
+        path: '/team',
+        name: 'team',
+        componentPath: 'pages',
+        component: 'team/team.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      {
+        path: '/benefit',
+        name: 'benefit',
+        componentPath: 'pages',
+        component: 'team/benefit.vue',
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
       // 帮助中心
       {
         path: '/help/center',

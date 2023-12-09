@@ -2,18 +2,14 @@
   <div class="row no-wrap">
     <menuBar></menuBar>
     <div class="calc">
-      <!-- 通用header(app.scss) -->
-      <div class="pageHeader">
-        My Wallet
-      </div>
       <div style="padding: 48px 100px;">
         <!-- 钱包余额 -->
         <div class="background row items-center justify-between radius-8 q-pa-lg q-pr-xl">
           <div class="row">
-            <q-img class="q-mr-lg" src="/images/pc/wallet/wallet.png" width="66px" height="66px"></q-img>
+            <q-img class="q-mr-lg" src="/images/pc/assets/btc.png" width="66px" height="66px"></q-img>
             <div class="q-pt-sm">
               <div class="row items-center">
-                <div class="text-white size16 q-mr-xs">Wallet Balance</div>
+                <div class="text-white size16 q-mr-xs">VTH</div>
                 <q-img @click="moneyShow=!moneyShow" class="cursor-pointer"
                   :src="`/images/pc/wallet/${moneyShow?'show':'noShow'}.png`" width="14px" height="14px"></q-img>
               </div>

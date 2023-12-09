@@ -31,12 +31,13 @@
 </script>
 
 <style lang="scss" scoped>
-  
-  html {
+
+  html body {
     min-width: 1100px !important;
     overflow: scroll;
   }
   .q-page-container {
+    min-width: 1100px !important;
     width: 100%;
   }
 </style>

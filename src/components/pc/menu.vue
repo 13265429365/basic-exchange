@@ -51,9 +51,9 @@
         activeList: [
           { name: 'Dashboard', url: '/dashboard', icon: 'dashboard' },
           { name: 'My Wallet', url: '/wallet', icon: 'MyWallet' },
-          { name: 'Assets', url: '', icon: 'Assets' },
-          { name: 'Card', url: '', icon: 'Card' },
-          { name: 'My Team', url: '', icon: 'MyTeam' },
+          { name: 'Assets', url: '/assets', icon: 'Assets' },
+          { name: 'Card', url: '/card', icon: 'Card' },
+          { name: 'My Team', url: '/team', icon: 'MyTeam' },
           {
             name: 'Account',
             icon: 'Account',

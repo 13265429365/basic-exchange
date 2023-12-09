@@ -7,7 +7,7 @@
             {{form.arguments}}
           </div>
           <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
+          <q-btn class="text-color-6" icon="close" flat round dense v-close-popup />
         </div>
         <div class="q-mt-lg">
           <q-form>

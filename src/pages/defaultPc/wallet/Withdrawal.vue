@@ -1,65 +1,102 @@
 <template>
-  <div class="column full-height full-width">
-    <navBar title="Withdrawal"></navBar>
-    <q-separator style="background: #F4F5FD;" />
-    <div class="col   q-pa-md full-width column justify-between">
-      <div class="col full-width">
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">Withdrawal to</div>
-        <!-- 卡类型选择 -->
-        <q-scroll-area style="height: 60px; width: 100%;" :visible="false">
-          <div class="row no-wrap">
-            <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex" style="width: 185px;height: 50px;"
-              :class="`q-pa-sm row page_bg radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
-              @click="typeDataIndex = typeIndex">
-              <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
-              <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
-            </div>
-          </div>
-        </q-scroll-area>
-        <div>
-          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">Withdrawal amount</div>
-          <q-input prefix="￥" type="number" standout v-model="money" class="q-mb-sm">
-            <template v-slot:append>
-              <div @click="money = Total" style="font-size: 14px" class="text-primary">全部提现</div>
-            </template>
-          </q-input>
-          <div class="text-color-6">available balance：￥{{Total}}</div>
+  <div class="column page_bg" style="padding: 48px 244px;">
+    <div class="col column justify-between bg-white radius-8">
+      <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
+        style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
+        <q-img src="/images/pc/recharge/withdrawal.png" width="40PX" height="40px"></q-img>
+        <div class="q-ml-md">Withdrawal</div>
+      </div>
+      <div class="col full-width q-pa-lg">
+        <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-sm q-px-md" style="border-radius: 2px;">
+          Withdrawal account
         </div>
+        <!-- 卡类型选择 -->
+        <div class="row q-mt-md">
+          <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex"
+            style="width: 214px;height: 50px;border-radius: 9px;"
+            :class="`q-pa-sm row page_bg q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
+            @click="typeDataIndex = typeIndex">
+            <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
+            <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
+            <q-img v-if="typeIndex == typeDataIndex" class="absolute" src="/images/pc/recharge/select.png" width="30PX"
+              height="30px" style="bottom: 0;right: 0;"></q-img>
+          </div>
+        </div>
+        <!-- 提现 -->
+        <div class="q-mt-lg">
+          <div class="row no-wrap items-center q-mb-md">
+            <div class="text-weight-medium q-mr-xs">
+              可用余额：
+            </div>
+            <div class="text-weight-medium size16" style="color: #F45E0C;">￥{{Total}}</div>
+          </div>
+          <div class="row no-wrap items-center q-mb-lg">
+            <div class="text-color-3 text-weight-medium q-mr-xs">充值金额：</div>
+            <q-input suffix="元" type="number" standout v-model="text" />
+            <div @click="text=Total" class="text-primary q-ml-sm cursor-pointer">全部提现</div>
+          </div>
+
+        </div>
+        <!-- 添加按钮 -->
+        <q-btn unelevated rounded color="primary" label="Submit" class="q-my-md" no-caps
+          style="height: 40px;width: 207px;" @click="alertPass = true" />
       </div>
 
-      <!-- 添加按钮 -->
-      <q-btn unelevated rounded color="primary" label="Withdrawal" class="full-width q-my-md" no-caps
-        style="height: 44px;" @click="alertPass = true" />
+
     </div>
 
-    <!-- 安全密码 -->
+    <!-- 成功-->
     <q-dialog v-model="alertPass">
-      <dialogAlert :isShowCloseBtn="false" title="Security Key" @eventDialogAlert="alertPass = false"
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <div class="bg-white q-pt-sm q-pa-xl  justify-between" style="width:475px">
+          <div class="row justify-center">
+            <q-img src="/images/pc/recharge/success.png" width="120px" height="120px" />
+
+          </div>
+          <div class="row justify-center">
+            <div class="text-color-3 text-h6 text-weight-medium q-mt-md">Submitted successfully</div>
+          </div>
+          <div class="text-color-9 text-body2 text-center q-mt-sm">
+            Please be patient and keep an eye on the progress at any time
+          </div>
+          <div class="row justify-center">
+            <q-btn unelevated rounded color="primary" label="OK" style="width: 260px;" class="q-mt-xl" no-caps
+              @click="alertPass=!alertPass" />
+          </div>
+        </div>
+      </q-card>
+    </q-dialog>
+    <!-- <q-dialog v-model="alertPass">
+      <dialogAlert style="width: 380px;" :isShowCloseBtn="false" title="Security Key" @eventDialogAlert="alertPass = false"
         @eventDialogAlertYesBtn="yesFun($router)">
         <template v-slot:body>
-          <div class="q-py-md">
-            <q-input type="password" standout placeholder="请输入" v-model="password" :dense="true" class="alertInput"
+          <div class="q-py-md row justify-center">
+            <q-input type="password" standout placeholder="请输入" v-model="password" :dense="true" class=""
               style="height: 48px;" />
           </div>
         </template>
       </dialogAlert>
-    </q-dialog>
+    </q-dialog> -->
   </div>
 </template>
 
 <script lang="ts">
   import { reactive, toRefs } from 'vue';
-  import navBar from 'src/components/mobile/navBar.vue';
-  import dialogAlert from 'src/components/mobile/dialogAlert.vue';
+  // import dialogAlert from 'src/components/mobile/dialogAlert.vue';
   export default {
     name: 'withdrawalIndex',
-    components: { navBar, dialogAlert },
+    // components: { dialogAlert },
     setup() {
       const state = reactive({
         alertPass: false,
+        text: '',
         password: '',
         money: '',
-        Total: 157,
+        Total: 2693.23,
         typeDataIndex: 0,
         typeArr: [{
           image: '/images/delete/USDT.png',
@@ -114,13 +151,24 @@
     background-color: rgba(241, 250, 246, 1) !important;
     border: 1px solid $primary;
   }
-  :deep .q-field  .q-field__append {
-    color: #01AC66 !important;
+
+  // pc版input样式
+  :deep .q-field--standout .q-field__native {
+    color: rgba(0, 0, 0, 0.87) !important;
   }
-  :deep .q-field .q-field__control:hover:before {
-    opacity: 0;
+
+  :deep .q-field--standout .q-field__suffix {
+    color: rgba(0, 0, 0, 0.87) !important;
   }
-  :deep(.q-scrollarea__thumb) {
-    display: none !important;
+
+  :deep .q-field--standout .q-field__control {
+    width: 230px;
+    background: #fff !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    outline: none !important;
+    border: 1px solid #DDDDDD;
+    box-shadow: none !important;
+    border-radius: 4px;
   }
 </style>
