@@ -1,7 +1,7 @@
 <template>
   <div class="column full-height">
     <navBar title="Team Management"></navBar>
-    <div class="col bg-grey-11 column ">
+    <div class="col page_bg column ">
       <div class="radius-8 q-px-md q-py-lg row justify-between q-ma-md "
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <div class="row">
@@ -84,6 +84,7 @@
   };
 </script>
 <style scoped>
+  @import url("../../../css/mobileCss.css");
   .radius-x {
     border-radius: 9999px;
     background: rgba(255, 255, 255, 0.12);

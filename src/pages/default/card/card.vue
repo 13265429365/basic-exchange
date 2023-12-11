@@ -2,7 +2,7 @@
   <div class="column full-height full-width">
     <navBar title="Card"></navBar>
     <q-separator style="background: #F4F5FD;" />
-    <div class="col  bg-grey-11 q-pa-md full-width column justify-between">
+    <div class="col  page_bg q-pa-md full-width column justify-between">
       <div class="col full-width">
         <div class="q-mb-md"
           style="height: 125px;background: linear-gradient(90deg, #1EC273 0%, #71D687 100%);border-radius: 14px;overflow: hidden;">
@@ -104,6 +104,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .cardTransparent {
   background: url('/images/default/cardTransparent.png') no-repeat;
   background-size: 100% 100%;

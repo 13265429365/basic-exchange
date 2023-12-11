@@ -6,8 +6,8 @@
       <div class="pageHeader">
         My Team
       </div>
-      <div style="padding: 48px 100px;">
-        <div class="bg-grey-11 q-pa-md radius-8 row no-wrap items-center" style="width: 220px;">
+      <div style="padding: 48px 100px;min-width: 1160px;">
+        <div class="page_bg q-pa-md radius-8 row no-wrap items-center" style="width: 220px;">
           <div class="text-primary text-weight-bold" style="font-size: 16px;">
             Team Benefit：$2659
           </div>
@@ -181,6 +181,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   .btn {
     height: 24px;
     border-radius: 12px 12px 12px 12px;

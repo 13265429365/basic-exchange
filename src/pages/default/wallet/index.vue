@@ -7,7 +7,7 @@
         </div>
       </template>
     </navBar>
-    <div class="col bg-grey-11 q-pa-md full-width">
+    <div class="col page_bg q-pa-md full-width">
       <div style="height: 112px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);padding: 0 20px;"
         class="row justify-between radius-8">
         <div class="column justify-center">
@@ -143,3 +143,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+  @import url("../../../css/mobileCss.css");
+</style>

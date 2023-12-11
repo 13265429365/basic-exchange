@@ -130,6 +130,7 @@
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
   /* 退出dialog */
   .q-dialog__inner>div {
     border-radius: 20px 20px 0 0;

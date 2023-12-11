@@ -147,6 +147,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../../css/pcCss.css");
   // 下拉选框样式
   :deep .q-select .q-field__control:hover:before {
     opacity: 0;

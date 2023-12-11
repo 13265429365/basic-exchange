@@ -53,6 +53,7 @@ export default {
 };
 </script>
 <style scoped>
+  @import url("../../../css/pcCss.css");
   .qrcode {
     width: 206px;
     height: 206px;

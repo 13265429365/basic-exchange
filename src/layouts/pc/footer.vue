@@ -111,6 +111,7 @@
 </script>
 
 <style scoped>
+  @import url("../../css/pcCss.css");
   .q-footer {
     min-width: 1100px;
     background: #021736;

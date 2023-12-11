@@ -460,62 +460,13 @@
 </script>
 
 <style lang="scss" scoped>
-  // 下拉选框样式
-  :deep .q-select .q-field__control:hover:before {
-    opacity: 0;
-  }
-  :deep .q-select .q-field__prepend {
-    padding-right: 0;
-    color: #8F959E;
-  }
-  :deep .q-select  .q-field__append {
-    padding-left: 4px;
-    font-size: 15px;
-    color: #8F959E;
-  }
-  :deep .q-select .q-field__native {
-    display: none;
-  }
-  :deep .q-select  .q-field__append .q-icon {
-    display: none;
-  }
-  // pc版input样式
-  :deep .q-field--standout .q-field__native {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
-
-  :deep .q-field--standout .q-field__prefix {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
-
-  :deep .q-field--standout .q-field__append {
-    color: rgba(0, 0, 0, 0.54) !important;
-  }
-
-  :deep .q-field--standout:before {
-    background: #fff !important;
-  }
-  :deep .q-field--standout .q-field__control {
-    background: #fff !important;
-    height: 56px !important;
-    min-height: 56px !important;
-    outline: none !important;
-    border: 1px solid #DDDDDD;
-    box-shadow: none !important;
-    border-radius: 4px;
-  }
-  :deep .q-field--highlighted .q-field__control {
-    background: #fff !important;
-    box-shadow: none !important;
-  }
+  @import url("../../css/pcCss.css");
   .q-header {
     min-width: 1100px;
     position: absolute;
   }
 
-  /* 头像下按钮 */
   .q-chip {
-    /* width: 44px; */
     height: 18px;
     font-size: 10px;
     color: #F7DEB6;
@@ -540,17 +491,4 @@
     right: -35%;
   }
 
-  :deep .q-field--outlined .q-field__control {
-    background: #fff !important;
-    border: 1px solid #DDDDDD !important;
-    border-radius: 20px !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    outline: none !important;
-  }
-
-  :deep .q-field--outlined .q-field__marginal {
-    height: 40px;
-    padding-right: 0 !important;
-  }
 </style>

@@ -9,7 +9,7 @@
         <q-scroll-area style="height: 60px; width: 100%;" :visible="false">
           <div class="row no-wrap">
             <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex" style="width: 185px;height: 50px;"
-              :class="`q-pa-sm row bg-grey-11 radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
+              :class="`q-pa-sm row page_bg radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
               @click="typeDataIndex = typeIndex">
               <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
               <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <!-- 数字货币类型 -->
-        <div v-else class="bg-grey-11 q-pa-md q-mb-md radius-8">
+        <div v-else class="page_bg q-pa-md q-mb-md radius-8">
           <div style="border-bottom: 1px dashed #DDDDDD" class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">Recharge Information</div>
           <div class="q-mt-md row justify-between no-wrap"
             style="width: 315px;border-radius: 10px;">
@@ -184,6 +184,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
   :deep .q-uploader__list {
     padding: 0;
   }

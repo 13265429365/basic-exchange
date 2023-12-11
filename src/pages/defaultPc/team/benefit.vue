@@ -157,6 +157,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   .separation {
     width: 1px;
     background: #DDDDDD;

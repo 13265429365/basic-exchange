@@ -55,4 +55,5 @@
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
 </style>

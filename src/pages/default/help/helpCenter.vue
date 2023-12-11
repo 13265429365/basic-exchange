@@ -1,6 +1,6 @@
 <template>
   <div class="column full-height" style="width: 100vw;">
-    <div class="col bg-grey-11 column full-width ">
+    <div class="col page_bg column full-width ">
       <div class="bg">
         <navBar title="Help Center" color="white" bgColor="#fff0"></navBar>
         <div class="q-pa-md">
@@ -82,6 +82,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
   .bg {
     background: linear-gradient(to right, #10BE70, #91DB82);
     height: 263px;

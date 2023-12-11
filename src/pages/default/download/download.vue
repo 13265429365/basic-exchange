@@ -39,6 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .logo {
   width: 80px;
   height: 80px;

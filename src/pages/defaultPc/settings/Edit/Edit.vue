@@ -53,6 +53,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../../css/pcCss.css");
   // 下拉选框样式
   :deep .q-select .q-field__control:hover:before {
     opacity: 0;
@@ -71,36 +72,5 @@ export default defineComponent({
   }
   :deep .q-select  .q-field__append .q-icon {
     display: none;
-  }
-  // pc版input样式
-  :deep .q-field--standout .q-field__native {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
-
-  :deep .q-field--standout .q-field__prefix {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
-
-  :deep .q-field--standout .q-field__append {
-    color: rgba(0, 0, 0, 0.54) !important;
-  }
-  :deep .q-field__marginal {
-    height: 40px !important;
-  }
-  :deep .q-field--standout:before {
-    background: #fff !important;
-  }
-  :deep .q-field--standout .q-field__control {
-    background: #fff !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    outline: none !important;
-    border: 1px solid #DDDDDD;
-    box-shadow: none !important;
-    border-radius: 4px;
-  }
-  :deep .q-field--highlighted .q-field__control {
-    background: #fff !important;
-    box-shadow: none !important;
   }
 </style>

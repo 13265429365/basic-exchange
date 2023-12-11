@@ -37,7 +37,7 @@
             }">
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
-                  class="radius-8 column justify-center bg-grey-11 fit">
+                  class="radius-8 column justify-center page_bg fit">
                   <q-img src="/images/default/add.png" width="29px" height="29px" class="self-center" />
                 </div>
               </template>
@@ -50,7 +50,7 @@
             }">
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
-                  class="radius-8 column justify-center bg-grey-11 fit">
+                  class="radius-8 column justify-center page_bg fit">
                   <q-img src="/images/default/add.png" width="29px" height="29px" class="self-center" />
                 </div>
               </template>
@@ -63,7 +63,7 @@
             }">
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
-                  class="radius-8 column justify-center bg-grey-11 fit">
+                  class="radius-8 column justify-center page_bg fit">
                   <q-img src="/images/default/add.png" width="29px" height="29px" class="self-center" />
                 </div>
               </template>
@@ -104,43 +104,39 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   // upload样式
   :deep .q-uploader__list {
     padding: 0;
   }
   // pc版input样式
-  :deep .q-field--standout .q-field__native {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
+  // :deep .q-field--standout .q-field__native {
+  //   color: rgba(0, 0, 0, 0.87) !important;
+  // }
 
-  :deep .q-field--standout .q-field__prefix {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
+  // :deep .q-field--standout .q-field__prefix {
+  //   color: rgba(0, 0, 0, 0.87) !important;
+  // }
 
-  :deep .q-field--standout .q-field__append {
-    color: rgba(0, 0, 0, 0.54) !important;
-  }
+  // :deep .q-field--standout .q-field__append {
+  //   color: rgba(0, 0, 0, 0.54) !important;
+  // }
 
-  :deep .q-field__marginal {
-    height: 40px !important;
-  }
+  // :deep .q-field__marginal {
+  //   height: 40px !important;
+  // }
 
-  :deep .q-field--standout:before {
-    background: #fff !important;
-  }
+  // :deep .q-field--standout:before {
+  //   background: #fff !important;
+  // }
 
   :deep .q-field--standout .q-field__control {
-    background: #fff !important;
     height: 40px !important;
     min-height: 40px !important;
-    outline: none !important;
-    border: 1px solid #DDDDDD;
-    box-shadow: none !important;
-    border-radius: 4px;
   }
 
-  :deep .q-field--highlighted .q-field__control {
-    background: #fff !important;
-    box-shadow: none !important;
-  }
+  // :deep .q-field--highlighted .q-field__control {
+  //   background: #fff !important;
+  //   box-shadow: none !important;
+  // }
 </style>

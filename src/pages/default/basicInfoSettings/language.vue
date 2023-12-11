@@ -70,6 +70,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
 .radioIcon {
   width: 20px;
   height: 20px;

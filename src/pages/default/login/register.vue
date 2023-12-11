@@ -180,6 +180,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 :deep .q-select .q-field__control:hover:before {
   opacity: 0;
 }

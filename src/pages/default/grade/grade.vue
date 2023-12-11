@@ -68,6 +68,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .vipCard {
   background-image: url('/images/default/vipCard.png');
   height: 80px;

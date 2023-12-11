@@ -71,6 +71,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
   .success {
     background: rgba(1,172,102,0.2) !important;
     color: #01AC66 !important;

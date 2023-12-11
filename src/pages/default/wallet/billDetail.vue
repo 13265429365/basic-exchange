@@ -7,7 +7,7 @@
         </div>
       </template>
     </navBar>
-    <div class="col bg-grey-11 q-pa-md full-width">
+    <div class="col page_bg q-pa-md full-width">
       <!-- 明细列表 -->
       <div v-for="item in 8" :key="item" class="radius-8 bg-white q-pa-md  q-mb-md">
         <div class="row justify-between">
@@ -29,7 +29,7 @@
           <div class="text-weight-bold q-mb-md size15">筛选</div>
           <div class="text-weight-bold q-mb-sm size15">Type</div>
           <div class="q-gutter-sm q-mb-md">
-            <q-btn @click="type=item.name" v-for="(item, i) in typeList" :key="i" :class="[{'text-white':item.name==type,'bg-primary':item.name==type,'text-grey-8':item.name!=type,'bg-grey-11':item.name!=type, }]" style="width: 90px;height: 36px;" unelevated rounded no-caps>
+            <q-btn @click="type=item.name" v-for="(item, i) in typeList" :key="i" :class="[{'text-white':item.name==type,'bg-primary':item.name==type,'text-grey-8':item.name!=type,'page_bg':item.name!=type, }]" style="width: 90px;height: 36px;" unelevated rounded no-caps>
               {{item.name}}
             </q-btn>
           </div>
@@ -101,6 +101,23 @@
   };
 </script>
 <style scoped>
+  .page_bg {
+    background-color: #f5f6fa;
+  }
+  .radius-8 {
+    border-radius: 8px;
+  }
+  .text-color-3 {
+    color: #333333 !important;
+  }
+
+  .text-color-6 {
+    color: #666666;
+  }
+
+  .text-color-9 {
+    color: #999999;
+  }
   .relative {
     position: relative;
   }

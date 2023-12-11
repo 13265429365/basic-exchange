@@ -116,6 +116,7 @@
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
   .relative {
     position: relative;
   }

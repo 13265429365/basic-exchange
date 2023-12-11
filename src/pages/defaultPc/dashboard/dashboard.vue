@@ -82,6 +82,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   .line {
     width: 150px;
     height: 73px;
