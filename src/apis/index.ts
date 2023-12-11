@@ -1,4 +1,4 @@
-import { api } from 'src/request/axios';
+import { api } from 'src/boot/axios';
 
 // 创建验证码
 export const CaptchaAPI = () => {

@@ -1,4 +1,4 @@
-import { api } from 'src/request/axios';
+import { api } from 'src/boot/axios';
 
 // 用户登录
 export const userLogin = (params: any) => {
