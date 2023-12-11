@@ -8,9 +8,6 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-//请求默认前缀
-const urlPrefix = '/api/v1';
-
 // 本地API接口
 const devBaseURL = 'http://192.168.5.40:3010';
 
@@ -32,7 +29,7 @@ module.exports = configure(function (ctx) {
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
-    preFetch: true,
+    // preFetch: true,
 
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
@@ -84,7 +81,7 @@ module.exports = configure(function (ctx) {
       // publicPath: '/',
       // analyze: true,
       env: {
-        baseURL: (ctx.dev ? devBaseURL : prodBaseURL) + urlPrefix,
+        baseURL: ctx.dev ? devBaseURL : prodBaseURL,
         url: ctx.dev ? devBaseURL : prodBaseURL,
       },
       // rawDefine: {}
@@ -136,7 +133,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Meta', 'Dialog', 'Loading', 'Notify'],
+      plugins: ['Meta', 'Loading', 'Notify'],
     },
 
     // animations: 'all', // --- includes all animations

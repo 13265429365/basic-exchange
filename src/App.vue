@@ -5,46 +5,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useMeta, useQuasar } from 'quasar';
-import { api } from 'src/boot/axios';
-import { initializationInitStore, useInitStore } from 'src/stores/init';
-import { initializationUserStore } from './stores/user';
+import { useInitStore } from 'src/stores/init';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/index';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'App',
-  preFetch: async ({ ssrContext }) => {
-    //  初始化 userStore
-    const $userStore = initializationUserStore({ ssrContext });
-    const initStore = useInitStore();
-
-    //  请求管理配置文件
-    // const initPath =
-    //   '/init?domain=' +
-    //   ssrContext?.req.headers.host +
-    //   '&lang=' +
-    //   $userStore.userLang;
-    // await api.get(initPath).then((res: any) => {
-    //   if (res != null) {
-
-    //     //  初始化管理配置信息
-    //     initializationInitStore({
-    //       config: res.config,
-    //       translate: res.translate,
-    //       countryList: res.countryList,
-    //       languageList: res.languageList,
-    //     });
-    //     initStore.newInitializationInitStore({
-    //       config: res.config,
-    //       translate: res.translate,
-    //       countryList: res.countryList,
-    //       languageList: res.languageList,
-    //     });
-    //   }
-    // });
-  },
-
   created: () => {
     const $initStore = useInitStore();
     const $router = useRouter();
