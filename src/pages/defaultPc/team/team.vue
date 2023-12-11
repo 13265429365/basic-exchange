@@ -7,73 +7,96 @@
         My Team
       </div>
       <div style="padding: 48px 100px;">
-        <div class="row">
-          <!-- 银行卡 -->
-          <div class="q-mb-md q-mr-md radius-8"
-            style="height: 132px;width: 360px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);overflow: hidden;">
-            <div class="cardTransparent row " style="padding: 15px 20px;">
-              <q-img src="/images/delete/USDT.png" width="40px" height="40px" />
-              <div class="col column justify-between">
-                <div class="row justify-between q-pl-sm">
-                  <div>
-                    <div class="row items-center">
-                      <div class="text-white size16">
-                        兴业银行·厦门支行
-                      </div>
-                      <div @click="to('/edit/card')" class="row btn justify-center items-center q-ml-md">Edit</div>
-                    </div>
-                    <div class="text-white" style="font-size: 12px;">Josh Daniel</div>
-                  </div>
-                  <div class="row">
-                    <q-img src="/images/pc/card/delete.png" class="cursor-pointer" width="20px" height="20px"></q-img>
-                  </div>
-                </div>
-
-                <div class="q-pl-sm  q-mt-md">
-                  <div style="font-size: 10px;color: rgba(255,255,255,0.7);">Card Number</div>
-                  <div class="text-white text-weight-medium ellipsis" style="font-size: 18px;width: 272px;">6986 3652
-                    9868 2636</div>
-                </div>
-              </div>
-            </div>
+        <div class="page_bg q-pa-md radius-8 row items-center" style="width: 220px;">
+          <div class="text-primary size16 text-weight-bold">
+            Team Benefit：$2659
           </div>
-          <!-- 银行卡 -->
-          <div class="q-mb-md q-mr-md radius-8"
-            style="height: 132px;width: 360px;background: linear-gradient(90deg, #7474BF 0%, #348AC7 100%);overflow: hidden;">
-            <div class="cardTransparent row " style="padding: 15px 20px;">
-              <q-img src="/images/delete/USDT.png" width="40px" height="40px" />
-              <div class="col column justify-between">
-                <div class="row justify-between q-pl-sm">
-                  <div>
-                    <div class="row items-center">
-                      <div class="text-white size16">
-                        USDT-ERC20
-                      </div>
-                      <div @click="to('/edit/card')" class="row btn justify-center items-center q-ml-md">Edit</div>
-                    </div>
-                    <div class="text-white" style="font-size: 12px;">Digital Currency</div>
-                  </div>
-                  <div class="row">
-                    <q-img src="/images/pc/card/delete.png" class="cursor-pointer" width="20px" height="20px"></q-img>
-                  </div>
-                </div>
-
-                <div class="q-pl-sm  q-mt-md">
-                  <div style="font-size: 10px;color: rgba(255,255,255,0.7);">Address</div>
-                  <div class="text-white text-weight-medium ellipsis" style="font-size: 18px;width: 272px;">
-                    dfjskdishfsdjkhfhfjdsfhsdadfjskdishfsdjkhfhfjdsfhsda</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- 添加按钮 (本页定义css) -->
-          <div @click="to('/add/card')" class="column justify-center row add-btn cursor-pointer">
-            <div class="text-center text-color-9">
-              <q-icon size="28px" name="add" class="self-center" />
-              <div>Add Card</div>
-            </div>
-          </div>
+          <q-icon class="q-ml-sm" name="arrow_forward_ios"></q-icon>
         </div>
+        <q-list class="rounded-borders team">
+          <q-expansion-item v-for="(item,i) in customize" :key="i" expand-icon-toggle hide-expand-icon v-model="item.expanded">
+            <template  v-slot:header>
+              <q-item-section avatar>
+                <q-avatar style="width: 40;height: 40px;">
+                  <q-img :src="`/images/default/${item.img}.png`"></q-img>
+                </q-avatar>
+              </q-item-section>
+              <q-item-section style="justify-content:start">
+                <div>{{item.name}}</div>
+                <q-chip v-if="item.lv" class="text-primary q-ml-lg" style="background: rgba(1,172,102,0.1);font-size: 10px;">
+                  {{item.lv}}
+                </q-chip>
+              </q-item-section>
+              <q-item-section class="text-color-6" style="min-width: 215px;">
+                {{item.date}}
+              </q-item-section>
+              <q-item-section class="text-primary" style="min-width: 215px;">
+                {{item.money}}
+              </q-item-section>
+              <q-item-section style="justify-content:end;min-width: 215px;">
+                <div v-if="item.children.length>0" @click="item.expanded = !item.expanded" class="btn row justify-center items-center q-mr-sm cursor-pointer">
+                  <div>下一级</div>
+                  <q-icon class="q-ml-xs" :name="item.expanded?'expand_less':'expand_more'"></q-icon>
+                </div>
+                <div @click="to('/benefit')" class="btn row justify-center items-center cursor-pointer">详情</div>
+              </q-item-section>
+            </template>
+            <!-- 第二级 -->
+            <q-expansion-item header-inset-level="0.6" v-for="(str,s) in item.children" :key="s" expand-icon-toggle hide-expand-icon v-model="str.expanded">
+              <template  v-slot:header>
+                <q-item-section avatar>
+                  <q-avatar style="width: 40;height: 40px;">
+                    <q-img :src="`/images/default/${str.img}.png`"></q-img>
+                  </q-avatar>
+                </q-item-section>
+                <q-item-section style="justify-content:start">
+                  <div>{{str.name}}</div>
+                  <q-chip v-if="str.lv" class="text-primary q-ml-lg" style="background: rgba(1,172,102,0.1);font-size: 10px;">
+                    {{str.lv}}
+                  </q-chip>
+                </q-item-section>
+                <q-item-section class="text-color-6" style="min-width: 215px;">
+                  {{str.date}}
+                </q-item-section>
+                <q-item-section class="text-primary" style="min-width: 215px;">
+                  {{str.money}}
+                </q-item-section>
+                <q-item-section style="min-width: 215px;justify-content:end">
+                  <div v-if="str.children.length>0" @click="str.expanded = !str.expanded" class="btn row justify-center items-center q-mr-sm cursor-pointer">
+                    <div>下一级</div>
+                    <q-icon class="q-ml-xs" :name="str.expanded?'expand_less':'expand_more'"></q-icon>
+                  </div>
+                  <div @click="to('/benefit')" class="btn row justify-center items-center cursor-pointer">详情</div>
+                </q-item-section>
+              </template>
+              <!-- 第三级 -->
+              <q-expansion-item header-inset-level="1.2" v-for="(el,e) in str.children" :key="e" expand-icon-toggle hide-expand-icon v-model="str.expanded">
+                <template  v-slot:header>
+                  <q-item-section avatar>
+                    <q-avatar style="width: 40;height: 40px;">
+                      <q-img :src="`/images/default/${el.img}.png`"></q-img>
+                    </q-avatar>
+                  </q-item-section>
+                  <q-item-section style="justify-content:start">
+                    <div>{{el.name}}</div>
+                    <q-chip v-if="el.lv" class="text-primary q-ml-lg" style="background: rgba(1,172,102,0.1);font-size: 10px;">
+                      {{el.lv}}
+                    </q-chip>
+                  </q-item-section>
+                  <q-item-section class="text-color-6" style="min-width: 215px;">
+                    {{el.date}}
+                  </q-item-section>
+                  <q-item-section class="text-primary" style="min-width: 215px;">
+                    {{el.money}}
+                  </q-item-section>
+                  <q-item-section style="min-width: 215px;justify-content:end">
+                    <div @click="to('/benefit')" class="btn row justify-center items-center cursor-pointer">详情</div>
+                  </q-item-section>
+                </template>
+              </q-expansion-item>
+            </q-expansion-item>
+          </q-expansion-item>
+        </q-list>
       </div>
     </div>
   </div>
@@ -90,7 +113,62 @@
     name: 'teamView',
     setup() {
       const router = useRouter();
-      let store = reactive({});
+      let store = reactive({
+        customize: [
+          {
+            img: 'head',
+            name: 'Carla Schoen',
+            date: '2023-11-03 12:30',
+            money: '+150',
+            expanded: false,
+            children: [],
+          },
+          {
+            img: '/pc/avatar',
+            name: 'Carla Schoen',
+            date: '2023-11-03 12:30',
+            money: '+236',
+            expanded: false,
+            children: [
+              {
+                img: 'head',
+                name: 'Carla Schoen',
+                date: '2023-11-05 12:30',
+                money: '+200',
+                expanded: false,
+                children: [
+                  {
+                    img: '/pc/avatar',
+                    name: 'Carla Schoen',
+                    date: '2023-11-03 12:30',
+                    money: '+150',
+                    expanded: false,
+                    lv: 'LV3',
+                    children: [],
+                  },
+                  {
+                    img: 'head',
+                    name: 'Carla Schoen',
+                    date: '2023-11-03 12:30',
+                    money: '+150',
+                    expanded: false,
+                    lv: 'LV2',
+                    children: [],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            img: '/pc/avatar',
+            name: 'Carla Schoen',
+            date: '2023-11-03 12:30',
+            money: '+150',
+            expanded: false,
+            children: [],
+          },
+        ],
+      });
       return {
         ...toRefs(store),
         to(url : string) {
@@ -104,21 +182,21 @@
 </script>
 <style lang="scss" scoped>
   .btn {
-    width: 46px;
-    height: 22px;
-    border-radius: 29px 29px 29px 29px;
-    opacity: 1;
-    border: 1px solid #FFFFFF;
-    cursor: pointer;
-    color: #FFFFFF;
-    font-size: 12px;
+    height: 24px;
+    border-radius: 12px 12px 12px 12px;
+    border: 1px solid #666666;
+    color: #666;
+    padding: 2px 10px;
   }
-
-  .add-btn {
-    border: 1px dashed rgba(221, 221, 221, 0.8);
-    height: 132px;
-    width: 132px;
-    background: rgba(221, 221, 221, 0.16);
-    border-radius: 6px;
+  :deep .team .q-item .q-item__section {
+    flex-direction: row;
+    align-items: center;
+  }
+  :deep .team .q-item {
+    border-bottom: 1px solid #DDDDDD;
+    padding: 20px 3px;
+  }
+  :deep .team .q-expansion-item .q-expansion-item__content {
+    background: #F9F9F9;
   }
 </style>

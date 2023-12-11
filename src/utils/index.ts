@@ -1,6 +1,5 @@
 import { useInitStore } from 'src/stores/init';
-import { Notify } from 'quasar';
-
+import { Notify, Dialog } from 'quasar';
 // 图片处理方法
 export const imageSrc = (url: string, isUrlPrefix?: boolean) => {
   const initStore = useInitStore();
@@ -41,3 +40,24 @@ export const NotifyPositive = (msg: string) => {
     message: msg,
   });
 };
+
+// 确认框
+export const customBtn = (message: string) => {
+  Dialog.create({
+    title: '提示',
+    message,
+    ok: {
+      push: true,
+    },
+    cancel: {
+      push: true,
+      color: 'negative',
+    },
+  }).onOk(() => {
+    console.log('>>>> OK')
+  }).onCancel(() => {
+    console.log('>>>> Cancel')
+  }).onDismiss(() => {
+    // console.log('I am triggered on both OK and Cancel')
+  })
+}

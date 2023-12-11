@@ -15,7 +15,7 @@
               <q-icon name="event" color="orange" />
             </template>
           </q-input> -->
-          <q-input standout class="q-mb-md" v-model="userParams.username" placeholder="username">
+          <q-input standout class="q-mb-md" v-model="userParams.username" placeholder="Username">
 
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/email.png" />
@@ -81,7 +81,6 @@
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>{{ scope.opt.label }}</q-item-label>
-                    <!-- <q-item-label caption>{{ scope.opt.value }}</q-item-label> -->
                   </q-item-section>
                 </q-item>
               </template>
@@ -91,6 +90,7 @@
             </q-select>
             <q-input class="q-mb-lg full-width" standout v-model="userParams.telephone" placeholder="Telphone" />
           </div>
+          <!-- 点击注册 -->
           <q-btn @click="toMypage()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;"
             color="primary" label="Signup" />
           <div class="size14 text-center q-pb-xl">
@@ -107,6 +107,7 @@
 import lang from 'src/components/mobile/lang.vue';
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+// 注册相关
 import { CaptchaAPI } from 'src/api';
 import { userRegister } from 'src/api/user';
 import { imageSrc } from 'src/utils';
@@ -130,7 +131,6 @@ export default defineComponent({
         { label: '+86', value: '中国' },
         { label: '+866', value: '香港' },
       ],
-      text: '',
       password: '',
       areaCode: '+86',
       userParams: {

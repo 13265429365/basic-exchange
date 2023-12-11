@@ -22,7 +22,7 @@
     </div>
     <div class="row items-center no-wrap">
       <!-- 搜索框 -->
-      <q-input placeholder="searching..." rounded outlined v-model="text">
+      <q-input placeholder="searching..." rounded outlined v-model="search">
         <template v-slot:prepend>
           <q-img class="q-mr-sm" src="/images/default/pc/search.png" width="20px" height="20px" />
         </template>
@@ -80,7 +80,7 @@
                 <div>{{item.name}}</div>
               </q-item>
               <q-separator class="q-mt-md" style="background: #F1F1F1;" />
-              <q-item @click="isLogin=false" clickable class="row no-wrap items-center q-py-xs q-px-xs">
+              <q-item @click="logOut()" clickable class="row no-wrap items-center q-py-xs q-px-xs">
                 <q-img class="q-mr-sm" src="/images/default/pc/LogOut.png" width="20px" height="20px" />
                 <div>Log out</div>
               </q-item>
@@ -103,7 +103,7 @@
       </div>
       <q-img class="q-ml-md iconLogo cursor-pointer" src="/images/default/darkness/language.png" />
     </div>
-    
+
     <!-- 登录 -->
     <q-dialog v-model="LoginShow">
       <q-card style="width: 410px;">
@@ -116,12 +116,12 @@
           </div>
           <div class="q-mt-lg">
             <q-form>
-              <q-input class="q-mb-md" standout v-model="text" placeholder="Username">
+              <q-input class="q-mb-md" standout v-model="userParams.username" placeholder="Username">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/user.png" />
                 </template>
               </q-input>
-              <q-input class="q-mb-md" v-model="password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
+              <q-input class="q-mb-md" v-model="userParams.password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/password.png" />
                 </template>
@@ -130,10 +130,23 @@
                     @click="isPwd = !isPwd" />
                 </template>
               </q-input>
+              <q-input class="q-mb-md" v-model="userParams.captchaVal" standout placeholder="Password">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/code.png" />
+                </template>
+                <template v-slot:append>
+                  <q-img no-spinner v-if="userParams.captchaId !== ''" :src="imageSrc(
+                    '/captcha/' + userParams.captchaId + '/200-50', true
+                  )
+                    " width="120px" height="32px" @click="refreshCaptchaFunc"></q-img>
+                </template>
+              </q-input>
               <div @click="toForgot()" class="text-right q-mb-lg" style="font-size: 14px;color:#999999">
                 Forgot Password?
               </div>
-              <q-btn @click="LoginShow=false" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;" color="primary" label="Login" />
+              <!-- 登录按钮 -->
+              <q-btn @click="toMypage()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;" color="primary" label="Login" />
+              <!-- 前往注册 -->
               <div class="text-center" style="font-size: 14px;">
                 First time here?
                 <span @click="toRegister()" class="login">Signup</span>
@@ -143,7 +156,7 @@
         </q-card-section>
       </q-card>
     </q-dialog>
-    
+
     <!-- 注册 -->
     <q-dialog v-model="registerShow">
       <q-card style="width: 410px;">
@@ -156,12 +169,17 @@
           </div>
           <div class="q-mt-lg">
             <q-form>
-              <q-input standout class="q-mb-md" v-model="text" placeholder="Email">
+              <q-input standout class="q-mb-md" v-model="registerParams.username" placeholder="Username">
+                <template v-slot:prepend>
+                  <q-img class="iconLogo" src="/images/default/user.png" />
+                </template>
+              </q-input>
+              <q-input standout class="q-mb-md" v-model="registerParams.email" placeholder="Email">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/email.png" />
                 </template>
               </q-input>
-              <q-input class="q-mb-md" v-model="password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
+              <q-input class="q-mb-md" v-model="registerParams.password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/password.png" />
                 </template>
@@ -170,22 +188,32 @@
                     @click="isPwd = !isPwd" />
                 </template>
               </q-input>
-              <q-input class="q-mb-md" standout v-model="text" placeholder="Confirm Password">
+              <q-input class="q-mb-md" standout v-model="password" :type="isPwd2 ? 'password' : 'text'" placeholder="Confirm Password">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/password.png" />
                 </template>
+                <template v-slot:append>
+                  <q-icon style="color: #999999;" :name="isPwd2 ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                    @click="isPwd2 = !isPwd2" />
+                </template>
               </q-input>
-              <q-input class="q-mb-md" standout v-model="text" placeholder="Code">
+              <q-input class="q-mb-md" standout v-model="registerParams.captchaVal" placeholder="Code">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/code.png" />
                 </template>
+                <template v-slot:append>
+                  <q-img no-spinner v-if="userParams.captchaId !== ''" :src="imageSrc(
+                    '/captcha/' + userParams.captchaId + '/200-50', true
+                  )
+                    " width="120px" height="32px" @click="refreshCaptchaFunc"></q-img>
+                </template>
               </q-input>
-              <q-input class="q-mb-md" standout v-model="text" placeholder="Secret Key">
+              <q-input class="q-mb-md" standout v-model="registerParams.securityKey" placeholder="Secret Key">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/key.png" />
                 </template>
               </q-input>
-              <q-input class="q-mb-md" standout v-model="text" placeholder="Invite Code">
+              <q-input class="q-mb-md" standout v-model="registerParams.code" placeholder="Invite Code">
                 <template v-slot:prepend>
                   <q-img class="iconLogo" src="/images/default/user.png" />
                 </template>
@@ -204,7 +232,6 @@
                       </q-item-section>
                       <q-item-section>
                         <q-item-label>{{ scope.opt.label }}</q-item-label>
-                        <!-- <q-item-label caption>{{ scope.opt.value }}</q-item-label> -->
                       </q-item-section>
                     </q-item>
                   </template>
@@ -212,10 +239,12 @@
                     <div>+86</div>
                   </template>
                 </q-select>
-                <q-input class="q-mb-lg full-width" standout v-model="text" placeholder="Telphone" />
+                <q-input class="q-mb-lg full-width" standout v-model="registerParams.telephone" placeholder="Telphone" />
               </div>
-              <q-btn @click="registerShow=false" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;"
+              <!-- 点击注册 -->
+              <q-btn @click="register()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;"
                 color="primary" label="Signup" />
+              <!-- 前往登录 -->
               <div class="size14 text-center">
                 Already have an account?
                 <span @click="toLogin()" class="login">Login</span>
@@ -230,26 +259,62 @@
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs } from 'vue';
+  import { reactive, toRefs, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
+  // 登录、注册相关
+  import { CaptchaAPI } from 'src/api';
+  import { userLogin, userRegister } from 'src/api/user';
+  import { imageSrc } from 'src/utils';
+  import { useUserStore } from 'src/stores/user';
+  import { NotifyNegative, NotifyPositive } from 'src/utils';
   export default {
     name: 'headerBar',
     setup() {
+      const userStore = useUserStore();
       const router = useRouter();
-      let state = reactive({
-        //
-        isPwd: false,
+      let store = reactive({
+        // 是否显示密码
+        isPwd: true,
+        isPwd2: true,
+
+        //登录input数据
+        userParams: {
+          username: '',
+          password: '',
+          captchaId: '', //验证id
+          captchaVal: '', // 验证码
+        },
+
+        // 登录弹窗
         LoginShow: false,
+
+        //注册弹窗
         registerShow: false,
+
+        // 注册区号选择
         options: [
           { label: '+86', value: '中国' },
           { label: '+866', value: '香港' },
         ],
-        text: '',
+        // 注册input数据
+        registerParams: {
+          username: '',
+          password: '',
+          captchaId: '', //验证id
+          captchaVal: '', // 验证码
+          email: '',
+          telephone: '',
+          securityKey: '',
+          code: ''
+        },
+        // 确认密码
         password: '',
         areaCode: '+86',
         // 判断是否登录
         isLogin: false,
+        // 搜索框
+        search: '',
+        // more下拉框数据
         moreList: [
           {
             name: 'Title',
@@ -267,6 +332,7 @@
             url: 'cashOut',
           },
         ],
+        // deposit下拉框数据
         depositList: [
           {
             name: 'Card Management',
@@ -281,6 +347,7 @@
             url: 'MyProperty',
           },
         ],
+        // 头像下拉框数据
         infoList: [
           {
             name: 'Profile',
@@ -303,22 +370,80 @@
             url: 'vip',
           },
         ],
+      });
+      // 检查是否登录状态
+      const getToken = () => {
+        // 获取token，判断是否登录状态
+        const token = userStore.getUserToken()
+        if (token&&token!='') {
+          store.isLogin = true
+        } else {
+          store.isLogin = false
+        }
+      };
+      onMounted(() => {
+        getToken()
+        // 生命周期获取验证码
+        refreshCaptchaFunc();
       })
+      // 获取验证码
+      const refreshCaptchaFunc = () => {
+        CaptchaAPI().then((res: any) => {
+          store.userParams.captchaId = res;
+          store.registerParams.captchaId = res;
+        })
+      };
       return {
-        ...toRefs(state),
+        ...toRefs(store),
         to(url: string) {
           if (url) {
             router.push(url)
           }
         },
+        // 点击注册
+        register() {
+          refreshCaptchaFunc();
+          // 判断两次密码是否一致
+          if (store.registerParams.password !== store.password) {
+            NotifyNegative('判断两次密码不一致');
+            return
+          };
+          userRegister(store.registerParams).then((res: any) => {
+            NotifyPositive('注册成功')
+            userStore.updateUserToken(res.token);
+            router.push('/dashboard')
+          })
+        },
+        // 点击登录
+        toMypage() {
+          refreshCaptchaFunc();
+          userLogin(store.userParams).then((res: any) => {
+            NotifyPositive('登录成功')
+            userStore.updateUserToken(res.token);
+            getToken()
+            router.push('/dashboard')
+          })
+        },
+        // 退出登录
+        logOut() {
+          console.log('退出')
+          // customBtn('确认退出账号?', )
+          userStore.removeUserToken();
+          getToken()
+          router.push('/')
+        },
+        // 登录弹窗
         toLogin() {
-          state.registerShow = false
-          state.LoginShow = true
+          store.registerShow = false
+          store.LoginShow = true
         },
+        // 注册弹窗
         toRegister() {
-          state.LoginShow = false
-          state.registerShow = true
+          store.LoginShow = false
+          store.registerShow = true
         },
+        refreshCaptchaFunc,
+        imageSrc,
       }
     }
   }

@@ -8,47 +8,49 @@
         </div>
         <!-- 头像 -->
         <div class="radius-8 q-pa-lg" style="border: 1px solid #DDDDDD;">
-          <div class="row no-wrap items-center">
-            <div class="row no-wrap items-center q-mr-xl">
-              <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
-                <q-img src="/images/default/head.png"></q-img>
-              </q-avatar>
-              <div>
-                <div class="size16 text-weight-medium">Jessica</div>
-                <div class="text-weight-medium text-primary" style="font-size: 17px;">+$2659</div>
+          <q-scroll-area style="max-width: 942px;height: 60px;">
+              <div class="row no-wrap items-center">
+                <div class="row no-wrap items-center q-mr-xl">
+                  <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
+                    <q-img src="/images/default/head.png"></q-img>
+                  </q-avatar>
+                  <div>
+                    <div class="size16 text-weight-medium">Jessica</div>
+                    <div class="text-weight-medium text-primary" style="font-size: 17px;">+$2659</div>
+                  </div>
+                </div>
+                <div class="separation"></div>
+                <div>
+                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-color-6 text-center noWrap">邀请人数</div>
+                </div>
+                <div class="separation"></div>
+                <div>
+                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-color-6 text-center noWrap">邀请收益</div>
+                </div>
+                <div class="separation"></div>
+                <div>
+                  <div class="size22 text-center text-weight-medium noWrap">696.23</div>
+                  <div class="text-color-6 text-center noWrap">购买总金额</div>
+                </div>
+                <div class="separation"></div>
+                <div>
+                  <div class="size22 text-center text-weight-medium noWrap">9623.2</div>
+                  <div class="text-color-6 text-center noWrap">购买收益</div>
+                </div>
+                <div class="separation"></div>
+                <div>
+                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-color-6 text-center noWrap">利润总金额</div>
+                </div>
+                <div class="separation"></div>
+                <div>
+                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-color-6 text-center noWrap">利润收益</div>
+                </div>
               </div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="size22 text-center text-weight-medium">26</div>
-              <div class="text-color-6 text-center">邀请人数</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="size22 text-center text-weight-medium">26</div>
-              <div class="text-color-6 text-center">邀请收益</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="size22 text-center text-weight-medium">696.23</div>
-              <div class="text-color-6 text-center">购买总金额</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="size22 text-center text-weight-medium">9623.2</div>
-              <div class="text-color-6 text-center">购买收益</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="size22 text-center text-weight-medium">26</div>
-              <div class="text-color-6 text-center">利润总金额</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="size22 text-center text-weight-medium">26</div>
-              <div class="text-color-6 text-center">利润收益</div>
-            </div>
-          </div>
+          </q-scroll-area>
         </div>
         <!-- 表格 -->
         <q-table class="q-mt-lg q-pa-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="i" hide-bottom hide-header>
@@ -93,7 +95,7 @@
     components: {
       menuBar,
     },
-    name: 'teamView',
+    name: 'benefitView',
     setup() {
       const router = useRouter();
       let store = reactive({});
@@ -160,5 +162,8 @@
     background: #DDDDDD;
     height: 42px;
     margin: 0 27px;
+  }
+  .noWrap {
+    white-space: nowrap;
   }
 </style>

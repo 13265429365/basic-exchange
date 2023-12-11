@@ -79,12 +79,36 @@
         <!-- 表格 horizontal -->
         <q-table class="q-mt-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="i" hide-header>
           <template v-slot:top>
-            <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-              <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Transactions"
-                label="Transactions" />
-              <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Bill Detail"
-                label="Bill Detail" />
-            </q-tabs>
+            <div class="row justify-between full-width">
+              <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
+                <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;"
+                  name="Transactions" label="Transactions" />
+                <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Bill Detail"
+                  label="Bill Detail" />
+              </q-tabs>
+              <div class="q-pr-md">
+                <q-btn class="bg-grey-1 text-color-6" no-caps rounded style="border: 1px solid #DDDDDD">
+                  <div class="q-mr-xs">全部</div>
+                  <q-icon name="expand_more"></q-icon>
+                </q-btn>
+                <q-btn class="bg-grey-1 text-color-6 q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
+                  <div class="row items-center">
+                    <div class="q-mr-xs">{{date.from}}</div>
+                    <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
+                    <div class="q-mr-xs">{{date.to}}</div>
+                    <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
+                  </div>
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="date" range>
+                      <div class="row items-center justify-end q-gutter-sm">
+                        <q-btn label="Cancel" color="primary" flat v-close-popup />
+                        <q-btn label="OK" color="primary" flat @click="save" v-close-popup />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-btn>
+              </div>
+            </div>
           </template>
           <template v-slot:body="props">
             <q-tr :props="props">
@@ -149,6 +173,11 @@
     setup() {
       const router = useRouter();
       let store = reactive({
+        //
+        date: {
+          from: '2023-10-11',
+          to: '2023-10-16',
+        },
         tab: 'Transactions',
         // 是否显示余额
         moneyShow: true,
@@ -269,7 +298,7 @@
         // 切换折线图
         switchDate(name : string) {
           store.lineType = name
-          if (name=='近7日') {
+          if (name == '近7日') {
             store.lineOption = lineOption
             const lineChart = echarts.init(document.getElementById('lineChart'))
             lineChart.setOption(store.lineOption)

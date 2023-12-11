@@ -43,6 +43,11 @@ export const useUserStore = defineStore('user', {
     //   this.isLogin = token;
     //   Cookies.set(UserTokenKey, token, cookiesOptions());
     // },
+    //  获取Token
+    getUserToken() {
+      const token = Cookies.get(UserTokenKey)
+      return token
+    },
     //  更新用户Token
     updateUserToken(token: string) {
       this.userToken = token;
@@ -54,6 +59,11 @@ export const useUserStore = defineStore('user', {
     updateUserLang(lang: string) {
       this.userLang = lang;
       Cookies.set(UserLangKey, lang, cookiesOptions());
+    },
+    removeUserToken() {
+      this.userToken = '';
+      console.log(Cookies)
+      Cookies.remove(UserTokenKey);
     },
   },
 });
