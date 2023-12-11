@@ -7,7 +7,7 @@
         Security
       </div>
       <div style="padding: 48px 100px;">
-        <div class="text-weight-bold size20">My Profile</div>
+        <!-- <div class="text-weight-bold size20">My Profile</div> -->
         <!-- row -->
         <div v-for="(item, i) in list" :key="i" class="q-mt-lg">
           <div class="row no-wrap justify-between">

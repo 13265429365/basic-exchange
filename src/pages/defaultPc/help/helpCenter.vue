@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 80vh;">
     <div style="position: relative;">
       <q-img src="/images/pc/help/bg.png" width="100%" height="240px" fit="fill" />
       <div class="column justify-center text-center" style="position: absolute;top: 0;width: 100%;height: 100%;">
@@ -77,6 +77,7 @@ export default {
 
 <style lang="scss" scoped>
 ::v-deep(.q-expansion-item) {
+  padding-left: 9px;
   border-bottom: 1px solid #F4F5FD;
 }
 </style>

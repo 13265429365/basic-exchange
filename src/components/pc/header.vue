@@ -3,7 +3,7 @@
   <q-header reveal class="bg-white text-color-3 row justify-between q-py-md q-pl-xl q-pr-lg no-wrap">
     <div class="row items-center no-wrap">
       <q-img @click="to('/')" class="q-mr-lg cursor-pointer" src="/images/default/pc/logo.png" width="172px" height="42px" />
-      <span class="text-color-3 q-ml-sm q-mr-xl cursor-pointer">Support Center</span>
+      <span @click="to('/help/center')" class="text-color-3 q-ml-sm q-mr-xl cursor-pointer">Support Center</span>
       <div class="row no-wrap items-center cursor-pointer">
         <span>more</span>
         <q-icon name="keyboard_arrow_down" />
@@ -34,7 +34,7 @@
           rounded no-caps color="primary" label="Deposit">
           <q-menu :offset="[140, 22]" auto-close transition-show="jump-down" transition-hide="jump-up">
             <q-list style="min-width: 214px" class="q-px-sm">
-              <q-item v-for="(item,i) in depositList" :key="i" clickable class="row no-wrap items-center">
+              <q-item @click="to(item.url)" v-for="(item,i) in depositList" :key="i" clickable class="row no-wrap items-center">
                 <q-img class="q-mr-sm" :src="`/images/default/pc/${item.url}.png`" width="20px" height="20px" />
                 <div style="font-size: 16px;">{{item.name}}</div>
               </q-item>
@@ -76,7 +76,7 @@
               </q-item>
               <q-separator class="q-mt-lg" style="background: #F1F1F1;" />
               <q-item @click="to(item.url)" v-for="(item,i) in infoList" :key="i" clickable class="row no-wrap items-center q-py-md q-px-xs">
-                <q-img class="q-mr-sm" :src="`/images/default/pc/${item.url}.png`" width="20px" height="20px" />
+                <q-img class="q-mr-sm" :src="`/images/default/pc/${item.img}.png`" width="20px" height="20px" />
                 <div>{{item.name}}</div>
               </q-item>
               <q-separator class="q-mt-md" style="background: #F1F1F1;" />
@@ -336,38 +336,43 @@
         depositList: [
           {
             name: 'Card Management',
-            url: 'CardManagement',
+            url: '/card',
           },
           {
             name: 'My Wallet',
-            url: 'MyWallet',
+            url: '/wallet',
           },
           {
             name: 'My Property',
-            url: 'MyProperty',
+            url: '/assets',
           },
         ],
         // 头像下拉框数据
         infoList: [
           {
             name: 'Profile',
-            url: 'Profile',
+            img: 'Profile',
+            url: '/settings',
           },
           {
             name: 'Security',
-            url: 'Security',
+            img: 'Security',
+            url: '/security',
           },
           {
             name: 'Share',
-            url: 'Share',
+            img: 'Share',
+            url: '/share',
           },
           {
             name: 'Team Management',
-            url: 'TeamManagement',
+            img: 'TeamManagement',
+            url: '/team',
           },
           {
             name: 'Vip',
-            url: 'vip',
+            img: 'vip',
+            url: '/vip',
           },
         ],
       });
@@ -409,6 +414,7 @@
             return
           };
           userRegister(store.registerParams).then((res: any) => {
+            store.registerShow = false
             NotifyPositive('注册成功')
             userStore.updateUserToken(res.token);
             router.push('/dashboard')
@@ -418,6 +424,7 @@
         toMypage() {
           refreshCaptchaFunc();
           userLogin(store.userParams).then((res: any) => {
+            store.LoginShow = false
             NotifyPositive('登录成功')
             userStore.updateUserToken(res.token);
             getToken()
@@ -431,6 +438,9 @@
           userStore.removeUserToken();
           getToken()
           router.push('/')
+          if (router.currentRoute.value.path=='/') {
+            location.reload()
+          }
         },
         // 登录弹窗
         toLogin() {

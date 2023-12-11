@@ -42,7 +42,7 @@
               </q-item-section>
             </template>
             <!-- 第二级 -->
-            <q-expansion-item header-inset-level="0.6" v-for="(str,s) in item.children" :key="s" expand-icon-toggle hide-expand-icon v-model="str.expanded">
+            <q-expansion-item :header-inset-level="0.6" v-for="(str,s) in item.children" :key="s" expand-icon-toggle hide-expand-icon v-model="str.expanded">
               <template  v-slot:header>
                 <q-item-section avatar>
                   <q-avatar style="width: 40;height: 40px;">
@@ -70,7 +70,7 @@
                 </q-item-section>
               </template>
               <!-- 第三级 -->
-              <q-expansion-item header-inset-level="1.2" v-for="(el,e) in str.children" :key="e" expand-icon-toggle hide-expand-icon v-model="str.expanded">
+              <q-expansion-item :header-inset-level="1.2" v-for="(el,e) in str.children" :key="e" expand-icon-toggle hide-expand-icon v-model="str.expanded">
                 <template  v-slot:header>
                   <q-item-section avatar>
                     <q-avatar style="width: 40;height: 40px;">

@@ -11,7 +11,7 @@
           height="48px"></q-img>
       </div>
       <!-- 登录后隐藏 -->
-      <div v-if="isLogin">
+      <div v-if="!isLogin">
         <div class="row justify-center q-mt-xl">
           <div class="text-center size36 text-weight-bold q-mt-lg" style="width: 542px;">
             Manage your entire community in a single system
@@ -73,7 +73,7 @@
       </div>
     </div>
     <!-- ready to start -->
-    <div v-if="isLogin" class="q-pt-xl q-pb-xl" style="background: #F5F7FA;height: 200px;">
+    <div v-if="!isLogin" class="q-pt-xl q-pb-xl" style="background: #F5F7FA;height: 200px;">
       <div class="size36 text-center text-weight-medium text-color-3">ready to start</div>
       <div class="row justify-center q-mt-md">
         <q-btn class="text-weight-regular" style="width: 178px;min-height: 52px"
@@ -87,11 +87,13 @@
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs } from 'vue';
+  import { reactive, toRefs, onMounted } from 'vue';
+  import { useUserStore } from 'src/stores/user';
   export default {
     name: 'homeIndex',
     setup() {
-      const state = reactive({
+      const userStore = useUserStore();
+      const store = reactive({
         // 是否登录状态
         isLogin: false,
         // cardList
@@ -108,8 +110,22 @@
           { title: 'How to change my account', content: 'Donec a eros justo. Fusce egestas tristique ultrices. Nam tempor, augue nec tincidunt molestie, massa nunc varius arcu, at scelerisque elit erat a magna. Donec quis erat at libero ultrices mollis. In hac habitasse platea dictumst.' },
         ],
       });
+      onMounted(() => {
+        getToken()
+      })
+      // 检查是否登录状态
+      const getToken = () => {
+        // 获取token，判断是否登录状态
+        const token = userStore.getUserToken()
+        if (token&&token!='') {
+          store.isLogin = true
+        } else {
+          store.isLogin = false
+        }
+      };
       return {
-        ...toRefs(state),
+        ...toRefs(store),
+        getToken,
       }
     }
   }
