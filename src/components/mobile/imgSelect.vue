@@ -6,7 +6,7 @@
         <q-img :src="list[value].image" width="26px" height="26px" />
         <div class="self-center q-ml-sm">{{ list[value].value }}</div>
       </div>
-      <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+      <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" />
     </div>
   </div>
 

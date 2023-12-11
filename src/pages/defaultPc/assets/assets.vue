@@ -15,7 +15,7 @@
               <div>
                 <div class="row items-center" style="height: 49px;">
                   <div class="text-white text-h5">Total Assets</div>
-                  <q-img @click="moneyShow = !moneyShow" src="/images/default/eyes.png" class="q-ml-xs cursor-pointer"
+                  <q-img @click="moneyShow = !moneyShow" src="page_bg/eyes.png" class="q-ml-xs cursor-pointer"
                     width="16px" height="16px" />
                 </div>
                 <!-- 点击显示、隐藏金额 -->

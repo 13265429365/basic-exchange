@@ -1,5 +1,5 @@
 <template>
-  <div class="column full-height" style="width: 100vw;">
+  <div class="column" style="width: 100vw;height: 100vh;">
     <div class="col page_bg column full-width ">
       <div class="bg">
         <navBar title="Help Center" color="white" bgColor="#fff0"></navBar>
@@ -12,24 +12,24 @@
               <div class="radius-x text-center text-white ellipsis">24hours
                 online</div>
             </div>
-            <q-img src="/images/default/helpFAQ.png" width="62px" height="79px" />
+            <q-img src="/images/mobile/help/helpFAQ.png" width="62px" height="79px" />
           </div>
           <div class="row q-col-gutter-md q-mt-xs">
             <div class="col-4">
               <div class="radius-8 bg-white column items-center" style="padding: 25px 0;">
-                <q-img src="/images/default/line.png" width="41px" height="41px" />
+                <q-img src="/images/mobile/help/line.png" width="41px" height="41px" />
                 <div class="text-color-3 text-body2 text-weight-medium q-mt-sm">Line</div>
               </div>
             </div>
             <div class="col-4">
               <div class="radius-8 bg-white column items-center" style="padding: 25px 0;">
-                <q-img src="/images/default/telegram.png" width="41px" height="41px" />
+                <q-img src="/images/mobile/help/telegram.png" width="41px" height="41px" />
                 <div class="text-color-3 text-body2 text-weight-medium q-mt-sm">Telegram</div>
               </div>
             </div>
             <div class="col-4">
               <div class="radius-8 bg-white column items-center" style="padding: 25px 0;">
-                <q-img src="/images/default/whatsapp.png" width="41px" height="41px" />
+                <q-img src="/images/mobile/help/whatsapp.png" width="41px" height="41px" />
                 <div class="text-color-3 text-body2 text-weight-medium q-mt-sm">Whatsapp</div>
               </div>
             </div>

@@ -37,7 +37,7 @@
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
               </div>
-              <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+              <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" />
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
@@ -73,7 +73,7 @@
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
               </div>
-              <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+              <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" />
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
@@ -96,7 +96,7 @@
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
               </div>
-              <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+              <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" />
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
@@ -200,7 +200,7 @@
               title: 'Created Successfully',
               content: '',
               yesBtn: 'OK',
-              logo: '/images/default/success.png',
+              logo: 'page_bg/success.png',
               backUrl: ''
             })
           }

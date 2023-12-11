@@ -17,7 +17,7 @@
         <template v-slot:noneAdd>
           <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
             class="radius-8 column justify-center">
-            <q-img src="/images/default/add.png" width="24px" height="24px" class="self-center" />
+            <q-img src="page_bg/add.png" width="24px" height="24px" class="self-center" />
             <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证正面</div>
           </div>
         </template>
@@ -28,7 +28,7 @@
         <template v-slot:noneAdd>
           <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
             class="radius-8 column justify-center">
-            <q-img src="/images/default/add.png" width="24px" height="24px" class="self-center" />
+            <q-img src="page_bg/add.png" width="24px" height="24px" class="self-center" />
             <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证背面</div>
           </div>
         </template>
@@ -63,7 +63,7 @@ export default {
             title: 'Submitted successfully',
             content: 'Please be patient and keep an eye on the progress at any time',
             yesBtn: 'OK',
-            logo: '/images/default/success.png',
+            logo: '/images/mobile/success.png',
             backUrl: ''
           })
         }

@@ -105,7 +105,7 @@
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 120px;height: 120px;background-color: #F5F6FA;"
                   class="radius-8 column justify-center">
-                  <q-img src="/images/default/add.png" width="24px" height="24px" class="self-center" />
+                  <q-img src="page_bg/add.png" width="24px" height="24px" class="self-center" />
                 </div>
               </template>
             </uploader>
@@ -204,7 +204,7 @@
               title: 'Created Successfully',
               content: '',
               yesBtn: 'OK',
-              logo: '/images/default/success.png',
+              logo: 'page_bg/success.png',
               backUrl: ''
             })
           }

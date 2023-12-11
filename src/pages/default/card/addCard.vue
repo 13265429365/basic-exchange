@@ -26,7 +26,7 @@
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Owner</div>
@@ -44,7 +44,7 @@
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Name</div>
@@ -54,7 +54,7 @@
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Address</div>
@@ -110,28 +110,28 @@ export default {
       model: 0,
       typeDataIndex: 0,
       typeArr: [{
-        image: '/images/delete/USDT.png',
+        image: '/images/mobile/card/USDT.png',
         value: 'Card',
         type: 1
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: 'TRC20',
         type: 2
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: 'TRC20',
         type: 2
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: 'TRC20',
         type: 2
       }],
       options: [
         {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: '农业银行'
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: '建设银行'
         },
       ]
@@ -147,7 +147,7 @@ export default {
             title: 'Created Successfully',
             content: '',
             yesBtn: 'OK',
-            logo: '/images/default/success.png',
+            logo: '/images/mobile/success.png',
             backUrl: ''
           })
         }
@@ -172,7 +172,7 @@ export default {
 <style lang="scss" scoped>
   @import url("../../../css/mobileCss.css");
 .cardTransparent {
-  background: url('/images/default/cardTransparent.png') no-repeat;
+  background: url('page_bg/cardTransparent.png') no-repeat;
   background-size: 100% 100%;
   height: 125px;
   width: 100%;

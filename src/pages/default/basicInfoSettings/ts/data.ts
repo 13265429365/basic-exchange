@@ -4,15 +4,15 @@ export const infoList = [
     element: [
       {
         name: 'Card Management',
-        avatar: 'info/card.png',
+        avatar: 'card.png',
         url: 'card'
       }, {
         name: 'My Wallet',
-        avatar: 'info/wallet.png',
+        avatar: 'wallet.png',
         url: 'wallet/index'
       }, {
         name: 'My property',
-        avatar: 'info/property.png',
+        avatar: 'property.png',
         url: 'property',
       }
     ],
@@ -21,15 +21,15 @@ export const infoList = [
     element: [
       {
         name: 'Share',
-        avatar: 'info/share.png',
+        avatar: 'share.png',
         url: 'share'
       }, {
         name: 'Team Management',
-        avatar: 'info/Management.png',
+        avatar: 'Management.png',
         url: 'team/management'
       }, {
         name: 'Team Benefits',
-        avatar: 'info/Benefits.png',
+        avatar: 'Benefits.png',
         url: '/team/benefits'
       }
     ],
@@ -38,23 +38,23 @@ export const infoList = [
     element: [
       {
         name: 'VIP',
-        avatar: 'info/vip.png',
+        avatar: 'vip.png',
         url: '/grade',
       }, {
         name: 'Identification',
-        avatar: 'info/Identification.png',
+        avatar: 'Identification.png',
         url: 'identification'
       }, {
         name: 'Help Center',
-        avatar: 'info/help.png',
+        avatar: 'help.png',
         url: 'help/center'
       }, {
         name: 'Settings',
-        avatar: 'info/settings.png',
+        avatar: 'settings.png',
         url: 'setting'
       }, {
         name: 'Download',
-        avatar: 'info/download.png',
+        avatar: 'download.png',
         url: 'download'
       }
     ],
@@ -64,36 +64,36 @@ export const infoList = [
 export const settingList = [
   {
     name: 'Notification Settings',
-    avatar: 'darkness/user.png',
-    url: 'info/edit'
+    avatar: 'user.png',
+    url: 'edit'
   }, {
     name: 'Login Password',
-    avatar: 'darkness/password.png',
+    avatar: 'password.png',
     url: 'new/password',
   }, {
     name: 'Secret Key',
-    avatar: 'darkness/key.png',
+    avatar: 'key.png',
     url: 'new/code'
   }, {
     name: 'Blind Phone Number',
-    avatar: 'darkness/phone.png',
+    avatar: 'phone.png',
     url: 'authentication'
   }, {
     name: 'Email',
-    avatar: 'darkness/email.png',
+    avatar: 'email.png',
     url: 'enter/email'
   }, {
     name: 'Language',
-    avatar: 'darkness/language.png',
+    avatar: 'language.png',
     url: 'language'
   }, {
     name: 'New Notices',
-    avatar: 'darkness/message.png',
+    avatar: 'message.png',
     url: '',
     toggle: true
   }, {
     name: 'About',
-    avatar: 'darkness/about.png',
+    avatar: 'about.png',
     url: 'about',
     version: 'V1.1.1',
   }

@@ -131,7 +131,7 @@
               title: 'Submitted successfully',
               content: 'Please be patient and keep an eye on the progress at any time',
               yesBtn: 'OK',
-              logo: '/images/default/wait.png',
+              logo: 'page_bg/wait.png',
               backUrl: '/info'
             })
           }

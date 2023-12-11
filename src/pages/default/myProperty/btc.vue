@@ -3,7 +3,7 @@
     <navBar title="BTC">
       <template v-slot:right>
         <div>
-          <q-img src="/images/default/walletList.png" width="22px" height="22px" />
+          <q-img src="page_bg/walletList.png" width="22px" height="22px" />
         </div>
       </template>
     </navBar>
@@ -13,7 +13,7 @@
         <div class="column justify-center">
           <div class="row">
             <div class="text-white text-weight-bold">BTC</div>
-            <q-img @click="moneyShow = !moneyShow" src="/images/default/eyes.png" class="q-ml-sm" width="18px" height="18px" />
+            <q-img @click="moneyShow = !moneyShow" src="/images/mobile/wallet/eyes.png" class="q-ml-sm" width="18px" height="18px" />
           </div>
           <!-- 点击显示、隐藏金额 -->
           <div v-if="moneyShow" class="text-white row items-center">
@@ -22,21 +22,21 @@
           </div>
           <div v-else class="text-white text-weight-bold " style="font-size: 22px;">**** </div>
         </div>
-        <q-img src="/images/default/btc.png" class="self-center" width="50px" height="50px" />
+        <q-img src="/images/mobile/btc/btc.png" class="self-center" width="50px" height="50px" />
 
       </div>
 
       <div class="row q-col-gutter-md q-mt-sm">
         <div class="col-6">
           <div class="bg-white radius-8 row q-pa-sm row" style="height: 60px;">
-            <q-img src="/images/default/recharge.png" class="self-center q-mx-sm" width="42px" height="42px" />
+            <q-img src="/images/mobile/wallet/shop.png" class="self-center q-mx-sm" width="42px" height="42px" />
             <div class="text-color-3 text-weight-bold self-center ellipsis col">
               Recharge</div>
           </div>
         </div>
         <div class="col-6">
           <div class="bg-white radius-8 row q-pa-sm row" style="height: 60px;">
-            <q-img src="/images/default/cashOut.png" class="self-center q-mx-sm" width="42px" height="42px" />
+            <q-img src="/images/mobile/wallet/cashOut.png" class="self-center q-mx-sm" width="42px" height="42px" />
             <div class="text-color-3 text-weight-bold self-center ellipsis col">
               Cash Out</div>
           </div>

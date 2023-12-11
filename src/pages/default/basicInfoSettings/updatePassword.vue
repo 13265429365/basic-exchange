@@ -10,7 +10,7 @@
         <q-form>
           <q-input class="q-mb-md" v-model="oldPassword" standout :type="isPwd ? 'password' : 'text'" placeholder="Old Password">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/password.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -19,7 +19,7 @@
           </q-input>
           <q-input class="q-mb-md" v-model="password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/password.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -28,7 +28,7 @@
           </q-input>
           <q-input class="q-mb-md" v-model="ConfirmPassword" standout :type="isPwd ? 'password' : 'text'" placeholder="Confirm Password">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/password.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"

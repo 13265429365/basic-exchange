@@ -38,7 +38,7 @@
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
                   class="radius-8 column justify-center page_bg fit">
-                  <q-img src="/images/default/add.png" width="29px" height="29px" class="self-center" />
+                  <q-img src="page_bg/add.png" width="29px" height="29px" class="self-center" />
                 </div>
               </template>
             </uploader>
@@ -51,7 +51,7 @@
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
                   class="radius-8 column justify-center page_bg fit">
-                  <q-img src="/images/default/add.png" width="29px" height="29px" class="self-center" />
+                  <q-img src="page_bg/add.png" width="29px" height="29px" class="self-center" />
                 </div>
               </template>
             </uploader>
@@ -64,7 +64,7 @@
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
                   class="radius-8 column justify-center page_bg fit">
-                  <q-img src="/images/default/add.png" width="29px" height="29px" class="self-center" />
+                  <q-img src="page_bg/add.png" width="29px" height="29px" class="self-center" />
                 </div>
               </template>
             </uploader>

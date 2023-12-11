@@ -11,7 +11,7 @@
           <div class="row no-wrap q-mb-lg">
             <q-input placeholder="Email" standout v-model="text">
               <template v-slot:prepend>
-                <q-img width="24px" height="24px" src="/images/default/email.png" />
+                <q-img width="24px" height="24px" src="/images/mobile/login/email.png" />
               </template>
             </q-input>
             <q-btn @click="countdown()" :disable="sendCode" :class="['q-ml-md rounded-borders Code', {success: sendCode}]" unelevated no-caps
@@ -19,7 +19,7 @@
           </div>
           <q-input placeholder="Code" class="q-mb-lg" standout v-model="text">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/code.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/code.png" />
             </template>
           </q-input>
           <q-btn class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;" color="primary"

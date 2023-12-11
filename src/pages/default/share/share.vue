@@ -4,11 +4,11 @@
       <navBar title="share" color="white" bgColor="#fff0"></navBar>
       <div class="radius-8 bg-white column items-center q-py-md" style="width: 90%;margin: 36px auto;">
 
-        <q-img src="/images/delete/logo.png" width="60px" height="60px" />
+        <q-img src="/images/mobile/share/logo.png" width="60px" height="60px" />
 
         <div class="text-color-3 text-h6 q-mt-md">Internet Company</div>
 
-        <q-img src="/images/delete/M.png" style="margin-top: 20px;" width="224px" height="224px" fit="fill" />
+        <q-img src="/images/mobile/share/M.png" style="margin-top: 20px;" width="224px" height="224px" fit="fill" />
 
         <div class="text-color-6 text-weight-medium text-body1" style="margin: 20px 0 10px 0;">Copy invitation link</div>
 
@@ -28,7 +28,7 @@
 import { reactive, toRefs } from 'vue';
 import navBar from 'src/layouts/mobile/header.vue';
 import { copyToClipboard } from 'quasar';
-import { NotifyNegative, NotifyPositive } from 'src/utils';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 
 
 export default {

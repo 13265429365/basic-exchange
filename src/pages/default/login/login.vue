@@ -3,7 +3,7 @@
     <lang></lang>
     <div>
       <div class="row justify-center">
-        <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/default/logo.png" :ratio="1" />
+        <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/mobile/login/logo.png" :ratio="1" />
       </div>
       <div class="row justify-center">
         <div class="text-weight-bold" style="font-size: 24px;">Welcome Back</div>
@@ -12,13 +12,13 @@
         <q-form>
           <q-input class="q-mb-md" standout v-model="userParams.username" placeholder="Name">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/user.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/user.png" />
             </template>
           </q-input>
           <q-input class="q-mb-md" v-model="userParams.password" standout :type="isPwd ? 'password' : 'text'"
             placeholder="Password">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/password.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -27,7 +27,7 @@
           </q-input>
           <q-input class="q-mb-sm" standout v-model="userParams.captchaVal" placeholder="Code">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/code.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/code.png" />
             </template>
             <template v-slot:append>
               <q-img no-spinner v-if="userParams.captchaId !== ''" :src="imageSrc(

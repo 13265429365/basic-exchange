@@ -3,7 +3,7 @@
     <navBar title="About" height="49px"></navBar>
     <q-separator class="q-mt-sm q-mb-md" color="grey-2" />
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/default/logo.png" :ratio="1" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/mobile/login/logo.png" :ratio="1" />
     </div>
     <div class="row justify-center">
       <div class="text-grey-10" style="font-size: 16px;">10.2.36</div>
@@ -16,7 +16,7 @@
             <q-item-label avatar class="text-weight-bold">{{item.name}}</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-img width="24px" height="24px" src="/images/default/right_arrow.png" />
+            <q-icon name="chevron_right" size="24px"></q-icon>
           </q-item-section>
         </q-item>
         <q-separator style="background: #F4F5FD;" inset />

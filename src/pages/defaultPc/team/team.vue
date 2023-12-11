@@ -18,7 +18,7 @@
             <template  v-slot:header>
               <q-item-section avatar>
                 <q-avatar style="width: 40;height: 40px;">
-                  <q-img :src="`/images/default/${item.img}.png`"></q-img>
+                  <q-img :src="`page_bg/${item.img}.png`"></q-img>
                 </q-avatar>
               </q-item-section>
               <q-item-section style="justify-content:start">
@@ -46,7 +46,7 @@
               <template  v-slot:header>
                 <q-item-section avatar>
                   <q-avatar style="width: 40;height: 40px;">
-                    <q-img :src="`/images/default/${str.img}.png`"></q-img>
+                    <q-img :src="`page_bg/${str.img}.png`"></q-img>
                   </q-avatar>
                 </q-item-section>
                 <q-item-section style="justify-content:start">
@@ -74,7 +74,7 @@
                 <template  v-slot:header>
                   <q-item-section avatar>
                     <q-avatar style="width: 40;height: 40px;">
-                      <q-img :src="`/images/default/${el.img}.png`"></q-img>
+                      <q-img :src="`page_bg/${el.img}.png`"></q-img>
                     </q-avatar>
                   </q-item-section>
                   <q-item-section style="justify-content:start">

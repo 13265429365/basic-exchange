@@ -7,7 +7,7 @@
         <div class="q-mb-md"
           :style="`height: 125px;background: linear-gradient(90deg, ${type == 1 ? '#1EC273' : '#7475BF'} 0%, ${type == 1 ? '#71D687' : '#3D8FC9'} 100%);border-radius: 14px;overflow: hidden;`">
           <div class="cardTransparent row " style="padding: 15px 20px;">
-            <q-img src="/images/delete/USDT.png" width="34px" height="34px" />
+            <q-img src="/images/mobile/card/USDT.png" width="34px" height="34px" />
             <div class="col column justify-between">
               <div class="row justify-between q-pl-sm">
                 <div>
@@ -32,7 +32,7 @@
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Owner</div>
@@ -49,7 +49,7 @@
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Name</div>
@@ -59,7 +59,7 @@
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Address</div>
@@ -119,10 +119,10 @@ export default {
       type: 1, //钱包类型
       options: [
         {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: 'USDT'
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: 'BTC'
         },
       ]
@@ -155,7 +155,7 @@ export default {
 <style lang="scss" scoped>
   @import url("../../../css/mobileCss.css");
 .cardTransparent {
-  background: url('/images/default/cardTransparent.png') no-repeat;
+  background: url('page_bg/cardTransparent.png') no-repeat;
   background-size: 100% 100%;
   height: 125px;
   width: 100%;

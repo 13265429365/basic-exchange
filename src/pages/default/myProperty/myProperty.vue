@@ -7,7 +7,7 @@
         <div class="column justify-center">
           <div class="row items-center">
             <div class="text-white">Total Assets</div>
-            <q-img @click="moneyShow = !moneyShow" src="/images/default/eyes.png" class="q-ml-sm" width="18px" height="18px" />
+            <q-img @click="moneyShow = !moneyShow" src="/images/mobile/wallet/eyes.png" class="q-ml-sm" width="18px" height="18px" />
           </div>
           <!-- 点击显示、隐藏金额 -->
           <div v-if="moneyShow" class="text-white row items-center">
@@ -21,11 +21,11 @@
       <div class="row q-my-sm btn">
         <q-btn @click="to('recharge')" no-caps style="padding: 9px 15px;border-radius: 8px"
           class="bg-white col q-mr-md justify-start">
-          <q-img class="manage" src="/images/default/shop.png" />
+          <q-img class="manage" src="/images/mobile/wallet/shop.png" />
           <div>Recharge</div>
         </q-btn>
         <q-btn @click="to('withdrawal')" no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col">
-          <q-img class="manage" src="/images/default/transaction.png" />
+          <q-img class="manage" src="/images/mobile/wallet/cashOut.png" />
           <div>Cash Out</div>
         </q-btn>
       </div>
@@ -79,7 +79,7 @@
       <div v-for="(item, i) in accountList" :key="i"
         class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm radius-8">
         <div class="row items-center">
-          <q-img class="q-mr-sm" width="26px" height="26px" :src="`/images/delete/${item.icon}.png`" />
+          <q-img class="q-mr-sm" width="26px" height="26px" :src="`/images/mobile/property/${item.icon}.png`" />
           <div class="text-weight-bold">{{item.name}}</div>
         </div>
         <div>
@@ -103,9 +103,9 @@ import { lineOption, lineThirty, option } from './ts/data';
     setup() {
       const router = useRouter();
       const state = reactive({
-        // 点击显示、隐藏金额 
+        // 点击显示、隐藏金额
         moneyShow: false,
-        
+
         // 饼状图下的列表
         list: [
           {

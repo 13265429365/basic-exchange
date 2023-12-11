@@ -10,7 +10,7 @@
         <q-form>
           <q-input class="q-mb-md" v-model="code" placeholder="Code" standout :type="isPwd ? 'password' : 'text'">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/key.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/key.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -19,7 +19,7 @@
           </q-input>
           <q-input class="q-mb-md" v-model="ConfirmCode" placeholder="Confirm Code" standout :type="isPwd ? 'password' : 'text'">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/key.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/key.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
