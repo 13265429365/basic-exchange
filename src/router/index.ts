@@ -1,5 +1,5 @@
 import { route } from 'quasar/wrappers';
-import { UserTokenKey } from 'src/stores/user';
+// import { UserTokenKey } from 'src/stores/user';
 import { Cookies } from 'quasar';
 import {
   createMemoryHistory,
@@ -47,24 +47,25 @@ export default route(function ({ /* store, */ ssrContext }) {
   const $cookies = ssrContext ? Cookies.parseSSR(ssrContext) : Cookies;
 
   Router.beforeEach((to, form, next) => {
-    const userToken = <string>$cookies.get(UserTokenKey);
-    if (
-      (to.name === 'Login' || to.name === 'Register') &&
-      userToken != null &&
-      userToken.length > 0
-    ) {
-      next({ name: 'home' });
-    } else {
-      // 验证是否跳转到登录页面
-      if (
-        to.matched.some((record) => record.meta.requireAuth) &&
-        (userToken == null || userToken.length === 0)
-      ) {
-        next({ name: 'Login', query: { next: to.fullPath } });
-      } else {
-        next();
-      }
-    }
+    next()
+    // const userToken = <string>$cookies.get(UserTokenKey);
+    // if (
+    //   (to.name === 'Login' || to.name === 'Register') &&
+    //   userToken != null &&
+    //   userToken.length > 0
+    // ) {
+    //   next({ name: 'home' });
+    // } else {
+    //   // 验证是否跳转到登录页面
+    //   if (
+    //     to.matched.some((record) => record.meta.requireAuth) &&
+    //     (userToken == null || userToken.length === 0)
+    //   ) {
+    //     next({ name: 'Login', query: { next: to.fullPath } });
+    //   } else {
+    //     next();
+    //   }
+    // }
   });
 
   return Router;

@@ -111,8 +111,8 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useUserStore } from 'src/stores/user';
-import { NotifyNegative } from 'src/utils';
+// import { useUserStore } from 'src/stores/user';
+// import { NotifyNegative } from 'src/utils';
 
 
 // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
@@ -122,7 +122,7 @@ export default defineComponent({
   },
   name: 'indexView',
   setup() {
-    const userStore = useUserStore();
+    // const userStore = useUserStore();
     const router = useRouter();
     let store = reactive({
       isPwd: true,
@@ -165,11 +165,11 @@ export default defineComponent({
         refreshCaptchaFunc();
         // 判断两次密码是否一致
         if (store.userParams.password !== store.password) {
-          NotifyNegative('判断两次密码不一致');
+          // NotifyNegative('判断两次密码不一致');
           return
         };
         userRegister(store.userParams).then((res: any) => {
-          userStore.updateUserToken(res);
+          // userStore.updateUserToken(res);
           router.push('info')
         })
       },

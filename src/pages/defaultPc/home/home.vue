@@ -88,11 +88,11 @@
 
 <script lang="ts">
   import { reactive, toRefs, onMounted } from 'vue';
-  import { useUserStore } from 'src/stores/user';
+  // import { useUserStore } from 'src/stores/user';
   export default {
     name: 'homeIndex',
     setup() {
-      const userStore = useUserStore();
+      // const userStore = useUserStore();
       const store = reactive({
         // 是否登录状态
         isLogin: false,
@@ -116,12 +116,12 @@
       // 检查是否登录状态
       const getToken = () => {
         // 获取token，判断是否登录状态
-        const token = userStore.getUserToken()
-        if (token&&token!='') {
-          store.isLogin = true
-        } else {
-          store.isLogin = false
-        }
+        // const token = userStore.getUserToken()
+        // if (token&&token!='') {
+        //   store.isLogin = true
+        // } else {
+        //   store.isLogin = false
+        // }
       };
       return {
         ...toRefs(store),

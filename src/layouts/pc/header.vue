@@ -265,12 +265,12 @@
   import { CaptchaAPI } from 'src/apis';
   import { userLogin, userRegister } from 'src/apis/user';
   import { imageSrc } from 'src/utils';
-  import { useUserStore } from 'src/stores/user';
-  import { NotifyNegative, NotifyPositive } from 'src/utils';
+  // import { useUserStore } from 'src/stores/user';
+  // import { NotifyNegative, NotifyPositive } from 'src/utils';
   export default {
     name: 'headerBar',
     setup() {
-      const userStore = useUserStore();
+      // const userStore = useUserStore();
       const router = useRouter();
       let store = reactive({
         // 是否显示密码
@@ -379,12 +379,12 @@
       // 检查是否登录状态
       const getToken = () => {
         // 获取token，判断是否登录状态
-        const token = userStore.getUserToken()
-        if (token&&token!='') {
-          store.isLogin = true
-        } else {
-          store.isLogin = false
-        }
+        // const token = userStore.getUserToken()
+        // if (token&&token!='') {
+        //   store.isLogin = true
+        // } else {
+        //   store.isLogin = false
+        // }
       };
       onMounted(() => {
         getToken()
@@ -410,13 +410,13 @@
           refreshCaptchaFunc();
           // 判断两次密码是否一致
           if (store.registerParams.password !== store.password) {
-            NotifyNegative('判断两次密码不一致');
+            // NotifyNegative('判断两次密码不一致');
             return
           };
           userRegister(store.registerParams).then((res: any) => {
             store.registerShow = false
-            NotifyPositive('注册成功')
-            userStore.updateUserToken(res.token);
+            // NotifyPositive('注册成功')
+            // userStore.updateUserToken(res.token);
             router.push('/dashboard')
           })
         },
@@ -425,8 +425,8 @@
           refreshCaptchaFunc();
           userLogin(store.userParams).then((res: any) => {
             store.LoginShow = false
-            NotifyPositive('登录成功')
-            userStore.updateUserToken(res.token);
+            // NotifyPositive('登录成功')
+            // userStore.updateUserToken(res.token);
             getToken()
             router.push('/dashboard')
           })
@@ -435,7 +435,7 @@
         logOut() {
           console.log('退出')
           // customBtn('确认退出账号?', )
-          userStore.removeUserToken();
+          // userStore.removeUserToken();
           getToken()
           router.push('/')
           if (router.currentRoute.value.path=='/') {

@@ -53,9 +53,9 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import { imageSrc, NotifyNegative } from 'src/utils';
+import { imageSrc } from 'src/utils';
 import { Loading, QSpinnerBars } from 'quasar';
-import { useUserStore } from 'src/stores/user';
+// import { useUserStore } from 'src/stores/user';
 
 export default {
   name: 'UploaderComponents',
@@ -85,9 +85,9 @@ export default {
     type: { type: String, default: 'avatar' },
   },
   setup(props: any, context: any) {
-    const userStore = useUserStore();
+    // const userStore = useUserStore();
     const state = reactive({
-      userToken: userStore.userToken,
+      // userToken: userStore.userToken,
       baseURL: process.env.baseURL,
       respValue: props.value,
       barStyle: {
@@ -141,7 +141,7 @@ export default {
 
     // 检查格式是否正确
     const uploaderRejectedFunc = () => {
-      NotifyNegative('accept, max-file-size, max-total-size, filter, etc check please')
+      // NotifyNegative('accept, max-file-size, max-total-size, filter, etc check please')
     }
 
     return {

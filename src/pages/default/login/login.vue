@@ -56,10 +56,10 @@
 import lang from 'src/components/mobile/lang.vue';
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { CaptchaAPI } from 'src/api';
-import { userLogin } from 'src/api/user';
+import { CaptchaAPI } from 'src/apis';
+import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useUserStore } from 'src/stores/user';
+// import { useUserStore } from 'src/stores/user';
 
 // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
 export default defineComponent({
@@ -68,7 +68,7 @@ export default defineComponent({
   },
   name: 'loginView',
   setup() {
-    const userStore = useUserStore();
+    // const userStore = useUserStore();
     const router = useRouter();
     let store = reactive({
       isPwd: true,
@@ -100,7 +100,7 @@ export default defineComponent({
       toMypage() {
         refreshCaptchaFunc();
         userLogin(store.userParams).then((res: any) => {
-          userStore.updateUserToken(res);
+          // userStore.updateUserToken(res);
           router.push('info')
         })
 
