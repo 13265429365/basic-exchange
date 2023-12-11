@@ -1,63 +1,12 @@
-import { useInitStore } from 'src/stores/init';
-import { Notify, Dialog } from 'quasar';
 // 图片处理方法
-export const imageSrc = (url: string, isUrlPrefix?: boolean) => {
-  const initStore = useInitStore();
-  if (url === '' || url === null || url === undefined) {
-    url = initStore.config.logo;
+export const imageSrc = (url: string) => {
+  if (url === '') {
+    url = '/images/logo.png';
   }
   if (url.indexOf('http') > -1) {
     return url;
   }
 
-  const baseURL = isUrlPrefix
-    ? new URL(<string>process.env.baseURL)
-    : new URL(<string>process.env.url);
-  return baseURL + url;
+  const baseURL = new URL(<string>process.env.baseURL);
+  return baseURL.origin + url;
 };
-
-// cookiesOptions cookies 额外参数
-export const cookiesOptions = () => {
-  return { expires: '30d 3h 5m' };
-};
-
-// 错误提示
-export const NotifyNegative = (msg: string) => {
-  Notify.create({
-    type: 'negative',
-    position: 'top',
-    timeout: 3000,
-    message: msg,
-  });
-};
-
-// 成功提示
-export const NotifyPositive = (msg: string) => {
-  Notify.create({
-    type: 'positive',
-    position: 'top',
-    timeout: 3000,
-    message: msg,
-  });
-};
-
-// 确认框
-export const customBtn = (message: string) => {
-  Dialog.create({
-    title: '提示',
-    message,
-    ok: {
-      push: true,
-    },
-    cancel: {
-      push: true,
-      color: 'negative',
-    },
-  }).onOk(() => {
-    console.log('>>>> OK')
-  }).onCancel(() => {
-    console.log('>>>> Cancel')
-  }).onDismiss(() => {
-    // console.log('I am triggered on both OK and Cancel')
-  })
-}

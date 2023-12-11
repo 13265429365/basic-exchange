@@ -1,23 +1,21 @@
 import { defineStore } from 'pinia';
+import { Cookies } from 'quasar';
 
-// 初始化管理配置
-export const initializationInitStore = ({
-  config,
-  translate,
-  countryList,
-  languageList,
-}: any) => {
-  const $initStore = useInitStore();
-  $initStore.config = config;
-  $initStore.translate = translate;
-  $initStore.countryList = countryList;
-  $initStore.languageList = languageList;
-  return $initStore;
-};
+export const UserTokenKey = '_UserToken';
+export const UserLangKey = '_UserLang';
 
 // 初始化数据
 export const useInitStore = defineStore('init', {
   state: () => ({
+    //  用户Token
+    userToken: '',
+
+    //  用户语言
+    userLang: '',
+
+    //  用户信息
+    userInfo: {} as any,
+
     //  tabbars 菜单
     tabbars: [] as tabbarInterface[],
 
@@ -34,12 +32,7 @@ export const useInitStore = defineStore('init', {
     countryList: [] as countryInterface[],
 
     //  语言列表
-    languageList: [
-      {
-        id: 1,
-        name: '中文',
-      },
-    ] as LanguageInterface[],
+    languageList: [] as LanguageInterface[],
 
     //  配置文件
     config: {
@@ -111,16 +104,11 @@ export const useInitStore = defineStore('init', {
   }),
   getters: {},
   actions: {
-    newInitializationInitStore({
-      config,
-      translate,
-      countryList,
-      languageList,
-    }: any) {
-      this.config = config;
-      this.translate = translate;
-      this.countryList = countryList;
-      this.languageList = languageList;
+    //  更新用户Token
+    updateUserToken(token: string) {
+      this.userToken = token;
+      console.log('更新了token');
+      Cookies.set(UserTokenKey, token, { expires: '30d 3h 5m' });
     },
   },
 });
