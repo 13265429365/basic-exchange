@@ -1,20 +1,20 @@
 <template>
-  <div class="column page_bg" style="padding: 48px 244px;">
+  <div class="column bg-grey-11" style="padding: 48px 244px;">
     <div class="col column justify-between bg-white radius-8">
-      <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
+      <div class="q-py-md q-px-lg row items-center no-wrap text-h5 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img src="/images/pc/recharge/withdrawal.png" width="40PX" height="40px"></q-img>
         <div class="q-ml-md">Withdrawal</div>
       </div>
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-sm q-px-md" style="border-radius: 2px;">
+        <div class="text-color-3 text-subtitle1 text-weight-medium bg-grey-11 q-py-sm q-px-md" style="border-radius: 2px;">
           Withdrawal account
         </div>
         <!-- 卡类型选择 -->
         <div class="row q-mt-md">
           <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex"
             style="width: 214px;height: 50px;border-radius: 9px;"
-            :class="`q-pa-sm row page_bg q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
+            :class="`q-pa-sm row bg-grey-11 q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
             @click="typeDataIndex = typeIndex">
             <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
             <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -28,7 +28,7 @@
             <div class="text-weight-medium q-mr-xs">
               可用余额：
             </div>
-            <div class="text-weight-medium size16" style="color: #F45E0C;">￥{{Total}}</div>
+            <div class="text-weight-medium text-h6" style="color: #F45E0C;">￥{{Total}}</div>
           </div>
           <div class="row no-wrap items-center q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mr-xs">充值金额：</div>

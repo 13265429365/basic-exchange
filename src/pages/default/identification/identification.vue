@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import uploader from 'src/components/mobile/uploader.vue';
 export default {
   name: 'defaultIdentification',

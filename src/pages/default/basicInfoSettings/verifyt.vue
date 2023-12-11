@@ -4,7 +4,7 @@
     <q-separator class="q-mt-sm q-mb-lg" color="grey-2" />
     <div>
       <div class="row justify-center q-mb-sm">
-        <div class="size24 text-weight-bold">Verify Account</div>
+        <div class="text-h5 text-weight-bold">Verify Account</div>
       </div>
       <div class="row justify-center q-px-lg">
         Enter 4-digit Code
@@ -21,7 +21,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/mobile/navBar.vue';
+  import navBar from 'src/layouts/mobile/header.vue';
   import fCode from 'src/components/mobile/fCode.vue';
   import { NotifyPositive } from 'src/utils/index';
   // 列表

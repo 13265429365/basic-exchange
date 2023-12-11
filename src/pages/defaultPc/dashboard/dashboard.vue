@@ -33,19 +33,19 @@
       <div class="radius-8 q-pa-md full-width row q-pb-lg justify-between" style="border: 1px solid #DDDDDD;">
         <!-- left -->
         <div>
-          <div class="size22 text-weight-medium q-mb-xl">
+          <div class="text-h5 text-weight-medium q-mb-xl">
             <span class="q-mr-sm">Estimated Balance</span>
             <q-img @click="moneyShow=!moneyShow" src="/images/default/eye@2x.png" class="cursor-pointer" width="18px" height="18px"></q-img>
           </div>
           <div v-if="moneyShow">
-            <div class="size22">
+            <div class="text-h5">
               $8,692.000
             </div>
-            <div class="size16">
+            <div class="text-h6">
               ≈￥20,21
             </div>
           </div>
-          <div v-else class="size22">****</div>
+          <div v-else class="text-h5">****</div>
         </div>
         <!-- right -->
         <div class=" q-mr-sm">
@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-import menuBar from 'src/components/pc/menu.vue';
+import menuBar from 'src/layouts/pc/settingLayouts.vue';
 import { defineComponent, reactive, toRefs } from 'vue';
 // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
 export default defineComponent({

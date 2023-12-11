@@ -4,7 +4,7 @@
     <q-separator class="q-mt-sm q-mb-lg" color="grey-2" />
     <div>
       <div class="row justify-center q-mb-sm">
-        <div class="size24 text-weight-bold">Bind Phone Number</div>
+        <div class="text-h5 text-weight-bold">Bind Phone Number</div>
       </div>
       <div class="row justify-center q-px-lg">
         Please enter your valid phone number. We will send you 4-digit code to verify account.
@@ -15,13 +15,13 @@
             <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
               class="q-mb-md q-mr-sm select" standout>
               <template v-slot:prepend>
-                <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
+                <q-img width="24px" height="16px" src="/images/default/china.png" @click.stop.prevent />
                 <q-icon name="keyboard_arrow_down" />
               </template>
               <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps">
                   <q-item-section avatar>
-                    <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
+                    <q-img width="24px" height="16px" src="/images/default/china.png" @click.stop.prevent />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>{{ scope.opt.label }}</q-item-label>
@@ -46,7 +46,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/mobile/navBar.vue';
+  import navBar from 'src/layouts/mobile/header.vue';
   // 列表
   export default defineComponent({
     name: 'phoneAuthentication',

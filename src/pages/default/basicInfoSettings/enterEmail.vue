@@ -4,7 +4,7 @@
     <q-separator class="q-mt-sm q-mb-lg" color="grey-2" />
     <div>
       <div class="row justify-center">
-        <div class="size24 text-weight-bold">Enter Email</div>
+        <div class="text-h5 text-weight-bold">Enter Email</div>
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
@@ -20,7 +20,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/mobile/navBar.vue';
+  import navBar from 'src/layouts/mobile/header.vue';
   // 列表
   export default defineComponent({
     name: 'enterEmail',

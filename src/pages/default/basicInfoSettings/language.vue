@@ -29,7 +29,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import { NotifyPositive } from 'src/utils/index';
 import { useInitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils';

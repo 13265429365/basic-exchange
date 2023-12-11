@@ -1,7 +1,7 @@
 <template>
   <div class="column full-height">
     <navBar title="Team Benefits"></navBar>
-    <div class="col page_bg q-pa-md ">
+    <div class="col bg-grey-11 q-pa-md ">
       <div class="radius-8 q-px-md q-py-lg row" style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <q-avatar size="50px">
           <img src="https://cdn.quasar.dev/img/avatar.png">
@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import { date } from 'quasar';
 
 export default {

@@ -15,38 +15,38 @@
                     <q-img src="/images/default/head.png"></q-img>
                   </q-avatar>
                   <div>
-                    <div class="size16 text-weight-medium">Jessica</div>
+                    <div class="text-h6 text-weight-medium">Jessica</div>
                     <div class="text-weight-medium text-primary" style="font-size: 17px;">+$2659</div>
                   </div>
                 </div>
                 <div class="separation"></div>
                 <div>
-                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-h5 text-center text-weight-medium noWrap">26</div>
                   <div class="text-color-6 text-center noWrap">邀请人数</div>
                 </div>
                 <div class="separation"></div>
                 <div>
-                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-h5 text-center text-weight-medium noWrap">26</div>
                   <div class="text-color-6 text-center noWrap">邀请收益</div>
                 </div>
                 <div class="separation"></div>
                 <div>
-                  <div class="size22 text-center text-weight-medium noWrap">696.23</div>
+                  <div class="text-h5 text-center text-weight-medium noWrap">696.23</div>
                   <div class="text-color-6 text-center noWrap">购买总金额</div>
                 </div>
                 <div class="separation"></div>
                 <div>
-                  <div class="size22 text-center text-weight-medium noWrap">9623.2</div>
+                  <div class="text-h5 text-center text-weight-medium noWrap">9623.2</div>
                   <div class="text-color-6 text-center noWrap">购买收益</div>
                 </div>
                 <div class="separation"></div>
                 <div>
-                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-h5 text-center text-weight-medium noWrap">26</div>
                   <div class="text-color-6 text-center noWrap">利润总金额</div>
                 </div>
                 <div class="separation"></div>
                 <div>
-                  <div class="size22 text-center text-weight-medium noWrap">26</div>
+                  <div class="text-h5 text-center text-weight-medium noWrap">26</div>
                   <div class="text-color-6 text-center noWrap">利润收益</div>
                 </div>
               </div>
@@ -55,27 +55,27 @@
         <!-- 表格 -->
         <q-table class="q-mt-lg q-pa-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="i" hide-bottom hide-header>
           <template v-slot:top>
-            <div class="size20 text-weight-medium">Transactions</div>
+            <div class="text-h5 text-weight-medium">Transactions</div>
           </template>
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td>
-                <div class="size16">
+                <div class="text-h6">
                   {{ props.row.name }}
                 </div>
               </q-td>
               <q-td>
-                <div class="size16">
+                <div class="text-h6">
                   {{ props.row.calories }}
                 </div>
               </q-td>
               <q-td>
-                <div class="size16">
+                <div class="text-h6">
                   {{ props.row.fat }}
                 </div>
               </q-td>
               <q-td class="row justify-between items-center">
-                <div :class="['size16',{'text-primary':props.row.fat=='Recharge'}]">
+                <div :class="['text-h6',{'text-primary':props.row.fat=='Recharge'}]">
                   {{ props.row.carbs }}
                 </div>
               </q-td>
@@ -88,7 +88,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/components/pc/menu.vue';
+  import menuBar from 'src/layouts/pc/settingLayouts.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
   export default defineComponent({

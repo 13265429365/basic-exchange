@@ -9,7 +9,7 @@
         <q-scroll-area style="height: 60px; width: 100%;" :visible="false">
           <div class="row no-wrap">
             <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex" style="width: 185px;height: 50px;"
-              :class="`q-pa-sm row page_bg radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
+              :class="`q-pa-sm row bg-grey-11 radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
               @click="typeDataIndex = typeIndex">
               <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
               <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -49,7 +49,7 @@
 
 <script lang="ts">
   import { reactive, toRefs } from 'vue';
-  import navBar from 'src/components/mobile/navBar.vue';
+  import navBar from 'src/layouts/mobile/header.vue';
   import dialogAlert from 'src/components/mobile/dialogAlert.vue';
   export default {
     name: 'withdrawalIndex',

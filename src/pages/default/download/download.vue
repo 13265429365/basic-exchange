@@ -4,7 +4,7 @@
     <q-separator style="background: #F4F5FD;" />
     <div class="col q-mb-xl">
       <div class="text-color-3  column justify-between items-center">
-        <div class="logo column justify-center ">
+        <div class="logo column justify-center">
           <!-- <q-img class="self-center" src="/images/delete/download.png" width="56px" height="56px" /> -->
           <q-img class="self-center" src="/images/default/logo.png" width="56px" height="56px" />
 
@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import { date } from 'quasar';
 
 export default {

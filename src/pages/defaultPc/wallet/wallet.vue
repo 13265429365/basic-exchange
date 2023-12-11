@@ -13,11 +13,11 @@
             <q-img class="q-mr-lg" src="/images/pc/wallet/wallet.png" width="66px" height="66px"></q-img>
             <div class="q-pt-sm">
               <div class="row items-center">
-                <div class="text-white size16 q-mr-xs">Wallet Balance</div>
+                <div class="text-white text-h6 q-mr-xs">Wallet Balance</div>
                 <q-img @click="moneyShow=!moneyShow" class="cursor-pointer"
                   :src="`/images/pc/wallet/${moneyShow?'show':'noShow'}.png`" width="14px" height="14px"></q-img>
               </div>
-              <div class="size22 text-white text-weight-bold">{{moneyShow?'$8,692.000':'****'}}</div>
+              <div class="text-h5 text-white text-weight-bold">{{moneyShow?'$8,692.000':'****'}}</div>
             </div>
           </div>
           <!-- btn -->
@@ -86,7 +86,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/components/pc/menu.vue';
+  import menuBar from 'src/layouts/pc/settingLayouts.vue';
   import { defineComponent, reactive, toRefs, ref } from 'vue';
   import { useRouter } from 'vue-router';
   export default defineComponent({

@@ -11,7 +11,7 @@
           <div class="row no-wrap q-mb-lg">
             <q-input placeholder="Email" standout v-model="text">
               <template v-slot:prepend>
-                <q-img class="iconLogo" src="/images/default/email.png" />
+                <q-img width="24px" height="24px" src="/images/default/email.png" />
               </template>
             </q-input>
             <q-btn @click="countdown()" :disable="sendCode" :class="['q-ml-md rounded-borders Code', {success: sendCode}]" unelevated no-caps
@@ -19,7 +19,7 @@
           </div>
           <q-input placeholder="Code" class="q-mb-lg" standout v-model="text">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/code.png" />
+              <q-img width="24px" height="24px" src="/images/default/code.png" />
             </template>
           </q-input>
           <q-btn class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;" color="primary"
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-  import navBar from 'src/components/mobile/navBar.vue';
+  import navBar from 'src/layouts/mobile/header.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
   // import { useRouter } from 'vue-router';
   // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复

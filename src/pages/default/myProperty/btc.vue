@@ -7,7 +7,7 @@
         </div>
       </template>
     </navBar>
-    <div class="col page_bg q-pa-md full-width">
+    <div class="col bg-grey-11 q-pa-md full-width">
       <div style="height: 112px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);padding: 0 20px;"
         class="row justify-between radius-8">
         <div class="column justify-center">
@@ -71,7 +71,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import { walletList } from './ts/data';
 export default {
   name: 'btcIndex',

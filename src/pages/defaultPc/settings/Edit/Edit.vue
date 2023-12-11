@@ -3,7 +3,7 @@
     <q-card style="width: 380px;">
       <q-card-section style="padding: 20px;">
         <div class="row no-wrap">
-          <div class="text-weight-bold text-color-3 size20">
+          <div class="text-weight-bold text-color-3 text-h5">
             {{form.arguments}}
           </div>
           <q-space />

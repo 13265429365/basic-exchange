@@ -14,14 +14,14 @@
               style="height: 208px;width: 287px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
               <div>
                 <div class="row items-center" style="height: 49px;">
-                  <div class="text-white size22">Total Assets</div>
+                  <div class="text-white text-h5">Total Assets</div>
                   <q-img @click="moneyShow = !moneyShow" src="/images/default/eyes.png" class="q-ml-xs cursor-pointer"
                     width="16px" height="16px" />
                 </div>
                 <!-- 点击显示、隐藏金额 -->
                 <div v-if="moneyShow" class="text-white">
-                  <div class="size20">$1200.00</div>
-                  <div class="size16">≈￥69865,21 </div>
+                  <div class="text-h5">$1200.00</div>
+                  <div class="text-h6">≈￥69865,21 </div>
                 </div>
                 <div v-else class="text-white text-weight-bold " style="font-size: 22px;height: 54px;">**** </div>
                 <div class="row justify-between q-mt-md">
@@ -36,13 +36,13 @@
               style="height: 208px;width: 287px;background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%);">
               <div>
                 <div class="row justify-between" style="height: 49px;">
-                  <div class=" size22">{{item.name}}</div>
+                  <div class=" text-h5">{{item.name}}</div>
                   <q-img :src="`/images/pc/assets/${item.icon}.png`" class="q-ml-xs" width="50px" height="50px" />
                 </div>
                 <!-- 点击显示、隐藏金额 -->
                 <div v-if="moneyShow">
-                  <div class="size20">{{item.money}}</div>
-                  <div class="size16 text-color-9">{{item.approx}}</div>
+                  <div class="text-h5">{{item.money}}</div>
+                  <div class="text-h6 text-color-9">{{item.approx}}</div>
                 </div>
                 <div v-else class="text-weight-bold text-color-9" style="font-size: 22px;height: 54px;">**** </div>
                 <div class="row justify-between q-mt-md">
@@ -57,7 +57,7 @@
         <!-- 折线图 -->
         <div class="radius-8 q-mt-lg q-pt-lg q-px-md border">
           <div class="row no-wrap justify-between">
-            <div class="size22 text-weight-bold q-px-xl">
+            <div class="text-h5 text-weight-bold q-px-xl">
               Asset Allocation
             </div>
             <div class="row justify-end q-mb-md">
@@ -160,7 +160,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/components/pc/menu.vue';
+  import menuBar from 'src/layouts/pc/settingLayouts.vue';
   import { defineComponent, reactive, toRefs, ref, onMounted, onUnmounted } from 'vue';
   import { useRouter } from 'vue-router';
   import * as echarts from 'echarts'

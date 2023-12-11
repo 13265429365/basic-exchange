@@ -17,7 +17,7 @@
                 <div class="row justify-between q-pl-sm">
                   <div>
                     <div class="row items-center">
-                      <div class="text-white size16">
+                      <div class="text-white text-h6">
                         兴业银行·厦门支行
                       </div>
                       <div @click="to('/edit/card')" class="row btn justify-center items-center q-ml-md">Edit</div>
@@ -46,7 +46,7 @@
                 <div class="row justify-between q-pl-sm">
                   <div>
                     <div class="row items-center">
-                      <div class="text-white size16">
+                      <div class="text-white text-h6">
                         USDT-ERC20
                       </div>
                       <div @click="to('/edit/card')" class="row btn justify-center items-center q-ml-md">Edit</div>
@@ -80,7 +80,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/components/pc/menu.vue';
+  import menuBar from 'src/layouts/pc/settingLayouts.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
   export default defineComponent({

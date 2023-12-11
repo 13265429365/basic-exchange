@@ -7,8 +7,8 @@
         My Team
       </div>
       <div style="padding: 48px 100px;">
-        <div class="page_bg q-pa-md radius-8 row items-center" style="width: 220px;">
-          <div class="text-primary size16 text-weight-bold">
+        <div class="bg-grey-11 q-pa-md radius-8 row no-wrap items-center" style="width: 220px;">
+          <div class="text-primary text-weight-bold" style="font-size: 16px;">
             Team Benefit：$2659
           </div>
           <q-icon class="q-ml-sm" name="arrow_forward_ios"></q-icon>
@@ -103,7 +103,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/components/pc/menu.vue';
+  import menuBar from 'src/layouts/pc/settingLayouts.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
   export default defineComponent({

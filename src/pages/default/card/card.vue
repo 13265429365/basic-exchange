@@ -2,7 +2,7 @@
   <div class="column full-height full-width">
     <navBar title="Card"></navBar>
     <q-separator style="background: #F4F5FD;" />
-    <div class="col  page_bg q-pa-md full-width column justify-between">
+    <div class="col  bg-grey-11 q-pa-md full-width column justify-between">
       <div class="col full-width">
         <div class="q-mb-md"
           style="height: 125px;background: linear-gradient(90deg, #1EC273 0%, #71D687 100%);border-radius: 14px;overflow: hidden;">
@@ -62,7 +62,8 @@
       <!-- 添加按钮 -->
       <div style="border: 1px dashed #01AC66;height: 54px;background-color: rgba(1, 172, 102, 0.05);"
         class="radius-8  column justify-center row" @click="$router.push({ name: 'addCard' })">
-        <div class="text-center text-primary text-weight-bold self-center row"> <q-icon size="20px" name="add"
+        <div class="text-center text-primary text-weight-bold self-center row">
+          <q-icon size="20px" name="add"
             class="self-center" />Add Card
         </div>
       </div>
@@ -81,7 +82,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 
 export default {

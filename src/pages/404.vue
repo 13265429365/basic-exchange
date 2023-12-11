@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import footerBar from 'src/components/pc/footer.vue';
-import headerBar from 'src/components/pc/header.vue';
+import footerBar from 'src/layouts/pc/footer.vue';
+import headerBar from 'src/layouts/pc/header.vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 // 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
@@ -63,11 +63,6 @@ export default defineComponent({
   height: 70px;
   margin-top: 30px;
   margin-bottom: 20px;
-}
-
-.iconLogo {
-  width: 24px;
-  height: 24px;
 }
 
 .countryLogo {

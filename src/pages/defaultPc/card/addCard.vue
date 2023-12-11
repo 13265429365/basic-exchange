@@ -1,19 +1,19 @@
 <template>
-  <div class="column page_bg" style="padding: 48px 244px;">
+  <div class="column bg-grey-11" style="padding: 48px 244px;">
     <div class="col column justify-between bg-white radius-8">
-      <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
+      <div class="q-py-md q-px-lg row items-center no-wrap text-h5 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img src="/images/pc/card/add.png" width="40PX" height="28px"></q-img>
         <div class="q-ml-md">Add New Card</div>
       </div>
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-xs q-px-md" style="border-radius: 2px;">
+        <div class="text-color-3 text-subtitle1 text-weight-medium bg-grey-11 q-py-xs q-px-md" style="border-radius: 2px;">
           Account Type
         </div>
         <!-- 卡类型选择 -->
         <div class="row q-mt-md">
           <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex" style="width: 214px;height: 60px"
-            :class="`q-pa-sm row page_bg q-mr-md q-mb-md radius-8 justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
+            :class="`q-pa-sm row bg-grey-11 q-mr-md q-mb-md radius-8 justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
             @click="typeDataIndex = typeIndex">
             <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
             <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -22,7 +22,7 @@
           </div>
         </div>
         <!--  -->
-        <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-xs q-mt-lg q-px-md"
+        <div class="text-color-3 text-subtitle1 text-weight-medium bg-grey-11 q-py-xs q-mt-lg q-px-md"
           style="border-radius: 2px;">
           Basic Information
         </div>
@@ -125,7 +125,7 @@
         <q-card style="width: 380px;">
           <q-card-section style="padding: 20px;">
             <div class="row no-wrap">
-              <div class="text-weight-bold text-color-3 size20">
+              <div class="text-weight-bold text-color-3 text-h5">
                 Enter Security Key
               </div>
               <q-space />

@@ -3,7 +3,7 @@
     <navBar title="About" height="49px"></navBar>
     <q-separator class="q-mt-sm q-mb-md" color="grey-2" />
     <div class="row justify-center">
-      <q-img class="logo" src="/images/default/logo.png" :ratio="1" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/default/logo.png" :ratio="1" />
     </div>
     <div class="row justify-center">
       <div class="text-grey-10" style="font-size: 16px;">10.2.36</div>
@@ -16,7 +16,7 @@
             <q-item-label avatar class="text-weight-bold">{{item.name}}</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-img class="iconLogo" src="/images/default/right_arrow.png" />
+            <q-img width="24px" height="24px" src="/images/default/right_arrow.png" />
           </q-item-section>
         </q-item>
         <q-separator style="background: #F4F5FD;" inset />
@@ -28,7 +28,7 @@
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
-  import navBar from 'src/components/mobile/navBar.vue';
+  import navBar from 'src/layouts/mobile/header.vue';
   // 列表
   import { aboutList } from './ts/data';
   export default defineComponent({

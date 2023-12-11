@@ -17,7 +17,8 @@
             <div class="col-8 q-px-md q-py-lg row radius-8" style="background: #F5FAF8;position: relative;">
               <div class="col-9">
                 <div class="text-color-3 text-h6 text-weight-bold">After talks ？</div>
-                <div class="ellipsis-2-lines text-color-6 text-subtitle2 text-weight-regular q-my-lg">President Biden held
+                <div class="ellipsis-2-lines text-color-6 text-subtitle2 text-weight-regular q-my-lg">President Biden
+                  held
                   a press
                   conference after meeting with
                   Chinese
@@ -34,15 +35,14 @@
             <div class="col-6" v-for="n in 4" :key="`none-${n}`">
               <div
                 style="border-bottom: 1px solid #DDDDDD; border-right: 1px solid #DDDDDD;position: relative;overflow: hidden;"
-                class="q-px-md q-pt-md q-pb-xl pc-hover show">
+                class="q-px-md q-pt-md q-pb-xl show cursor-pointer">
                 <div class="ellipsis text-color-3 text-subtitle1 text-weight-medium">ATCH LIVE: President Biden delxATCH
                   LIVE: President
                   Biden delxATCH
                   LIVE: President
                   Biden delx</div>
                 <div class="text-weight-medium text-color-6 text-body2">2023-11-30</div>
-                <div class="radius-x q-pl-lg q-pt-md hide"
-                  style="background-color: #01AC66;width: 98.72px;height: 98.72px;position: absolute;right: -44px;bottom: -50px;">
+                <div class="radius-x q-pl-lg q-pt-md hide">
                   <q-img src="/images/pc/article/right.png" width="19px" height="14px" />
                 </div>
               </div>
@@ -76,34 +76,44 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
+  import { reactive, toRefs } from 'vue'
 
-export default {
-  name: 'articleNews',
-  setup() {
-    const state = reactive({
-      count: 0,
+  export default {
+    name: 'articleNews',
+    setup() {
+      const state = reactive({
+        count: 0,
 
-    })
+      })
 
-    return {
-      ...toRefs(state),
+      return {
+        ...toRefs(state),
+      }
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>
-::v-deep(.q-expansion-item) {
-  border-bottom: 1px solid #F4F5FD;
-}
+  ::v-deep(.q-expansion-item) {
+    border-bottom: 1px solid #F4F5FD;
+  }
 
-.show:hover .hide {
-  display: block;
-}
+  .show:hover .hide {
+    display: block;
+  }
 
-.hide {
-  animation: all 1s ease;
-  display: none;
-}
+  .hide {
+    animation: all 1s ease;
+    display: none;
+  }
+
+  .radius-x {
+    border-radius: 9999px;
+    background-color: #01AC66;
+    width: 98.72px;
+    height: 98.72px;
+    position: absolute;
+    right: -44px;
+    bottom: -50px;
+  }
 </style>

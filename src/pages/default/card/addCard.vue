@@ -8,7 +8,7 @@
         <q-scroll-area style="height: 60px; width: 100%;" :visible="false">
           <div class="row no-wrap">
             <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex" style="width: 120px;height: 50px;"
-              :class="`q-pa-sm row page_bg radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
+              :class="`q-pa-sm row bg-grey-11 radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
               @click="typeDataIndex = typeIndex">
               <q-img class="self-center q-mr-sm" :src="typeI.image" width="26px" height="26px" />
               <div class="text-color-3 text-body1 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -20,7 +20,7 @@
         <!-- 银行卡类型 -->
         <div v-if="typeArr[typeDataIndex].type == 1">
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Bank Name</div>
-          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
@@ -38,7 +38,7 @@
         <div v-else>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Public Blockchain</div>
-          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
@@ -48,7 +48,7 @@
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Name</div>
-          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
@@ -94,7 +94,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 // import { useRoute } from 'vue-router';
 

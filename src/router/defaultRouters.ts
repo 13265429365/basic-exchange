@@ -5,7 +5,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     path: '/',
     name: 'Layouts',
     componentPath: 'layouts',
-    component: 'default.vue',
+    component: '/mobile/full.vue',
     children: [
       // 登录注册、忘记密码
       {

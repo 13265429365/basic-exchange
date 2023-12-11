@@ -25,7 +25,7 @@
         </div>
         <!-- 银行卡类型 -->
         <div class="col full-width" v-if="type == 1">
-          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
@@ -42,7 +42,7 @@
         <!-- 数字货币类型 -->
         <div v-else>
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Public Blockchain</div>
-          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
@@ -52,7 +52,7 @@
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Name</div>
-          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
@@ -100,7 +100,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 import { useRoute } from 'vue-router';
 

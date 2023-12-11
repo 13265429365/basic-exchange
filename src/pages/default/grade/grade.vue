@@ -23,8 +23,9 @@
           <div :style="{
             border: `2px solid ${n == select ? '#01AC66' : '#F5F6FA'}`,
             backgroundColor: n == select ? 'rgba(1, 172, 102, 0.05)' : '#fff',
-            height: '140px'
-          }" class="my-content radius-10 column justify-center items-center" @click="select = n">
+            height: '140px',
+            borderRadius: '10px',
+          }" class="my-content column justify-center items-center" @click="select = n">
             <div class="text-color-3 text-h6">Level{{ n }}</div>
             <div class="self-cneter text-primary text-h5 text-weight-bold"><span class="text-h6 "> $</span>{{ 120 * n }}
             </div>
@@ -51,7 +52,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 export default {
   name: 'defaultGrade',
   components: { navBar },

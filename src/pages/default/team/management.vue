@@ -1,7 +1,7 @@
 <template>
   <div class="column full-height">
     <navBar title="Team Management"></navBar>
-    <div class="col page_bg column ">
+    <div class="col bg-grey-11 column ">
       <div class="radius-8 q-px-md q-py-lg row justify-between q-ma-md "
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <div class="row">
@@ -11,8 +11,7 @@
           <div class="q-ml-md text-subtitle1">
             <div class="text-white">
               <span class="text-weight-medium">Carla Schoen</span>
-              <span style="background: rgba(255, 255, 255, 0.12);padding: 3px 10px;"
-                class="radius-x text-caption q-ml-sm">LV6</span>
+              <span class="radius-x text-caption q-ml-sm">LV6</span>
             </div>
             <div class="text-white text-weight-medium">Team Benefits: +8626</div>
           </div>
@@ -47,40 +46,47 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
-import { date } from 'quasar';
+  import { reactive, toRefs } from 'vue';
+  import navBar from 'src/layouts/mobile/header.vue';
+  import { date } from 'quasar';
 
-export default {
-  name: 'teamBenefits',
-  components: { navBar },
-  setup() {
-    const state = reactive({
-      tab: 'mails',
-      list: [
-        {
-          time: 1626355200,
-          name: 'Carla Schoen',
-          num: 16
-        }, {
-          time: 1626355200,
-          name: 'Carla Schoen',
-          num: 16
-        }, {
-          time: 1626355200,
-          name: 'Carla Schoen',
-          num: 16
-        }, {
-          time: 1626355200,
-          name: 'Carla Schoen',
-          num: 16
-        }
-      ],
+  export default {
+    name: 'teamBenefits',
+    components: { navBar },
+    setup() {
+      const state = reactive({
+        tab: 'mails',
+        list: [
+          {
+            time: 1626355200,
+            name: 'Carla Schoen',
+            num: 16
+          }, {
+            time: 1626355200,
+            name: 'Carla Schoen',
+            num: 16
+          }, {
+            time: 1626355200,
+            name: 'Carla Schoen',
+            num: 16
+          }, {
+            time: 1626355200,
+            name: 'Carla Schoen',
+            num: 16
+          }
+        ],
 
-    });
-    return {
-      ...toRefs(state), date
+      });
+      return {
+        ...toRefs(state), date
+      }
     }
-  }
-};
+  };
 </script>
+<style scoped>
+  .radius-x {
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 3px 10px;
+  }
+</style>

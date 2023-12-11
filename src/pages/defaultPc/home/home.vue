@@ -3,7 +3,7 @@
     <div class="homeBack"></div>
     <div style="padding: 120px 165px 70px 165px;">
       <div class="text-center size36 text-weight-bold">Our Clients</div>
-      <div class="text-center text-color-3 size16 q-mt-xs">
+      <div class="text-center text-color-3 text-h6 q-mt-xs">
         We have been working with some Fortune 500+ clients
       </div>
       <div class="row no-wrap justify-between q-mt-md q-py-lg q-mb-xl">
@@ -17,7 +17,7 @@
             Manage your entire community in a single system
           </div>
         </div>
-        <div class="text-center text-color-3 size16 q-my-sm">
+        <div class="text-center text-color-3 text-h6 q-my-sm">
           Who is Nextcent suitable for?
         </div>
         <!-- card -->
@@ -36,7 +36,7 @@
             <div class="size36 text-weight-bold q-mb-md">
               How to design your site footer like we did
             </div>
-            <div class="text-color-6 size16 q-mb-lg">
+            <div class="text-color-6 text-h6 q-mb-lg">
               Donec a eros justo. Fusce egestas tristique ultrices. Nam tempor, augue nec tincidunt molestie, massa nunc varius arcu, at scelerisque elit erat a magna. Donec quis erat at libero ultrices mollis. In hac habitasse platea dictumst. Vivamus vehicula leo dui, at porta
             </div>
             <q-btn class="text-weight-regular" style="width: 152px;min-height: 52px"
@@ -48,7 +48,7 @@
             <div class="size36 text-weight-bold q-mb-md">
               How to design your site footer like we did
             </div>
-            <div class="text-color-6 size16 q-mb-lg">
+            <div class="text-color-6 text-h6 q-mb-lg">
               Donec a eros justo. Fusce egestas tristique ultrices. Nam tempor, augue nec tincidunt molestie, massa nunc varius arcu, at scelerisque elit erat a magna. Donec quis erat at libero ultrices mollis. In hac habitasse platea dictumst. Vivamus vehicula leo dui, at porta
             </div>
             <q-btn class="text-weight-regular" style="width: 152px;min-height: 52px"
@@ -60,7 +60,7 @@
         <q-list class="q-mt-lg text-black q-py-xl" style="border-radius: 8px" v-if="FAQ.length > 0">
           <div class="size36 q-mb-lg text-color-3 text-weight-bold">FAQ</div>
           <div v-for="( item, i ) in  FAQ " :key="i">
-            <q-expansion-item class="q-ma-none size24" :label="item.title">
+            <q-expansion-item class="q-ma-none text-h5" :label="item.title">
               <q-card flat>
                 <q-card-section>
                   <div class="text-color-6 text-body2" v-html="item.content"></div>

@@ -5,7 +5,7 @@
       <div class="row justify-center">
         <div class="relative-position">
           <div class="qrcode bg-white" style="z-index: 999;">
-            <q-img class="radius-10" src="/images/delete/M.png" style="z-index: 999;"></q-img>
+            <q-img src="/images/delete/M.png" style="z-index: 999;border-radius: 10px;"></q-img>
           </div>
           <q-img class="absolute" width="133px" height="225px" style="left: -103px;top:0" src="/images/pc/share/qrcode-left.png"></q-img>
           <q-img class="absolute" width="115px" height="229px" style="right: -90px;top:0;z-index: -1;" src="/images/pc/share/qrcode-right.png"></q-img>

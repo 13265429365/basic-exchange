@@ -1,7 +1,7 @@
 <template>
   <div class="column full-width" style="min-height: 100vh;">
     <navBar title="My Property"></navBar>
-    <div class="col page_bg q-pa-md full-width">
+    <div class="col bg-grey-11 q-pa-md full-width">
       <div style="height: 112px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);padding: 0 20px;"
         class="row justify-between radius-8">
         <div class="column justify-center">
@@ -34,7 +34,7 @@
         <div class="text-weight-bold q-mb-lg">资产分布</div>
         <div class="row justify-center q-mb-lg">
           <div @click="init(item.name)" v-for="(item, i) in typeList" :key="i"
-            :class="['q-mx-xs q-px-md q-py-xs',{'text-white':item.name==type,'bg-primary':item.name==type,'text-grey-8':item.name!=type,'page_bg':item.name!=type, }]"
+            :class="['q-mx-xs q-px-md q-py-xs',{'text-white':item.name==type,'bg-primary':item.name==type,'text-grey-8':item.name!=type,'bg-grey-11':item.name!=type, }]"
             style="border-radius: 18px;">
             {{item.name}}
           </div>
@@ -93,7 +93,7 @@
 
 <script lang="ts">
   import { reactive, toRefs, onMounted } from 'vue';
-  import navBar from 'src/components/mobile/navBar.vue';
+  import navBar from 'src/layouts/mobile/header.vue';
   import { useRouter } from 'vue-router';
   import * as echarts from 'echarts'
 import { lineOption, lineThirty, option } from './ts/data';

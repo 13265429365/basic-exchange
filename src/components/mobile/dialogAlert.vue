@@ -3,7 +3,7 @@
     <div>
       <div :class="`text-color-3 text-body1  text-${titleAlign} text-weight-bolder`" style="position: relative">
         {{ title }}
-        <q-img src="/images/default/xx.png" v-if="isShowCloseBtn" class="pc-hover xxImg self-center" width="18.86px"
+        <q-img src="/images/default/xx.png" v-if="isShowCloseBtn" class="xxImg self-center cursor-pointer" width="18.86px"
           height="18.86px" @click="changedialogAlert" />
       </div>
       <slot name="body"></slot>

@@ -10,9 +10,9 @@
           <q-img class="absolute" src="/images/pc/vip/icon.png" width="66px" height="64px" style="top: 0; left: 50%; transform: translate(-50%, -36%);z-index: 999;"></q-img>
           <!-- 占位符 -->
           <div style="height: 64px;"></div>
-          <div class="text-center size20">{{item.name}}</div>
+          <div class="text-center text-h5">{{item.name}}</div>
           <div class="text-center" style="font-size: 28px;">
-            <span class="size20">$</span>
+            <span class="text-h5">$</span>
             <span>120</span>
           </div>
         </div>
@@ -67,7 +67,7 @@
     border-radius: 8px;
     box-shadow: 0px 4px 30px 0px rgba(192,192,192,0.3);
   }
-  .size20 {
+  .text-h5 {
     font-size: 20px;
   }
   .background {

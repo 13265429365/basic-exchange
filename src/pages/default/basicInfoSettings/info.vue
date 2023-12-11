@@ -33,7 +33,7 @@
         </div>
       </div>
       <div>
-        <q-img class="iconLogo" src="/images/default/right_arrow.png" />
+        <q-img width="24px" height="24px" src="/images/default/right_arrow.png" />
       </div>
     </div>
     <div class="bg-grey-1 q-px-md q-py-md full-width">
@@ -54,7 +54,7 @@
         <div v-for="(str, s) in item.element" :key="s" class="bg-white">
           <q-item @click="to(str.url)" v-ripple class="q-pa-md" clickable>
             <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-              <img :src="`/images/default/${str.avatar}`" class="iconLogo">
+              <q-img :src="`/images/default/${str.avatar}`" width="24px" height="24px" />
             </q-item-section>
 
             <q-item-section>
@@ -62,7 +62,7 @@
             </q-item-section>
 
             <q-item-section side>
-              <q-img class="iconLogo" src="/images/default/right_arrow.png" />
+              <q-img width="24px" height="24px" src="/images/default/right_arrow.png" />
             </q-item-section>
           </q-item>
           <q-separator style="background: #F4F5FD;" inset />

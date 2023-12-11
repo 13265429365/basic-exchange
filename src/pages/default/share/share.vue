@@ -1,6 +1,6 @@
 <template>
   <div class="column full-height" style="width: 100vw;">
-    <div class="col page_bg column full-width " style=" background: linear-gradient(to right,  #14BF71,#82D880);">
+    <div class="col bg-grey-11 column full-width " style=" background: linear-gradient(to right,  #14BF71,#82D880);">
       <navBar title="share" color="white" bgColor="#fff0"></navBar>
       <div class="radius-8 bg-white column items-center q-py-md" style="width: 90%;margin: 36px auto;">
 
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import navBar from 'src/components/mobile/navBar.vue';
+import navBar from 'src/layouts/mobile/header.vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils';
 

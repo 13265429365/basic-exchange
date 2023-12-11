@@ -31,7 +31,7 @@
             <div class="text-color-6 ellipsis">
               President Biden held a press conference after meeting with Chinese
             </div>
-            <div style="color: #01AC66;" class="q-mt-md text-weight-medium pc-hover" @click="goWhere(index)">
+            <div style="color: #01AC66;" class="q-mt-md text-weight-medium cursor-pointer" @click="goWhere(index)">
               查看详情
             </div>
           </div>
