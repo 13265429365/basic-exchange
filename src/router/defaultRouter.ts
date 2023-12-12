@@ -26,7 +26,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       {
         name: 'MarketIndex',
-        route: '/',
+        route: '/market',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'market.vue'),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'market.vue'),
         children: [],
@@ -34,7 +34,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       {
         name: 'ContactIndex',
-        route: '/',
+        route: '/contact',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'contact.vue'),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'contact.vue'),
         children: [],
@@ -42,7 +42,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       {
         name: 'FuturesIndex',
-        route: '/',
+        route: '/futures',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'futures.vue'),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'futures.vue'),
         children: [],
@@ -50,11 +50,11 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       {
         name: 'UserIndex',
-        route: '/user/index',
+        route: '/user',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'user.vue'),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user.vue'),
         children: [],
-        meta: {},
+        meta: { requireAuth: true, keepAlive: true },
       },
     ],
     meta: {},
@@ -69,13 +69,36 @@ export const defaultRouter: TemplateRouteInterface[] = [
   //   meta: {},
   // },
 
-  // //  全屏的布局文件
-  // {
-  //   name: 'Layouts',
-  //   route: '',
-  //   componentMobile: '',
-  //   componentDesktop: '',
-  //   children: [],
-  //   meta: {},
-  // },
+  //  全屏的布局文件
+  {
+    name: 'LayoutsFull',
+    route: '/',
+    componentMobile: LayoutsMobilePath('full.vue'),
+    componentDesktop: LayoutsMobilePath('main.vue'),
+    children: [
+      {
+        name: 'UserLogin',
+        route: '/login',
+        componentMobile: PagesTemplateMobilePath(TemplateName, 'login.vue'),
+        componentDesktop: PagesTemplateDesktopPath(
+          TemplateName,
+          'register.vue'
+        ),
+        children: [],
+        meta: { requireAuth: true, keepAlive: true },
+      },
+      {
+        name: 'UserRegister',
+        route: '/register',
+        componentMobile: PagesTemplateMobilePath(TemplateName, 'login.vue'),
+        componentDesktop: PagesTemplateDesktopPath(
+          TemplateName,
+          'register.vue'
+        ),
+        children: [],
+        meta: { requireAuth: true, keepAlive: true },
+      },
+    ],
+    meta: {},
+  },
 ];

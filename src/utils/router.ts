@@ -13,7 +13,7 @@ export const PagesTemplateDesktopPath = (
   templabe: string,
   name: string
 ): string => {
-  return '../pages/' + templabe + 'desktop/' + name;
+  return '../pages/' + templabe + '/desktop/' + name;
 };
 
 // PagesTemplateMobilePath 手机端页面文件
@@ -21,5 +21,5 @@ export const PagesTemplateMobilePath = (
   templabe: string,
   name: string
 ): string => {
-  return '../pages/' + templabe + 'mobile/' + name;
+  return '../pages/' + templabe + '/mobile/' + name;
 };
