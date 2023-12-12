@@ -1,13 +1,13 @@
+import { TemplateRouteInterface } from 'src/router';
+
 import {
-  TemplateRouteInterface,
   LayoutsDesktopPath,
   LayoutsMobilePath,
   PagesTemplateDesktopPath,
   PagesTemplateMobilePath,
-} from 'src/router';
+} from 'src/utils/router';
 
 export const TemplateName = 'default';
-
 export const defaultRouter: TemplateRouteInterface[] = [
   //  主体布局文件 Tabbar + 桌面端头部尾部
   {
