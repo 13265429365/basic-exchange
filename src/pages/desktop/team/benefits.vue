@@ -88,7 +88,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/layouts/desktop/settingLayouts.vue';
+  import menuBar from 'src/layouts/desktop/setting.vue';
   import { defineComponent, reactive, toRefs } from 'vue';
   import { useRouter } from 'vue-router';
   export default defineComponent({

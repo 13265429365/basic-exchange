@@ -12,7 +12,6 @@
   import { reactive, toRefs } from 'vue';
   import headerBar from './header.vue';
   import footerBar from './footer.vue';
-
   // import { useRouter } from 'vue-router';
 
   export default {
@@ -43,7 +42,7 @@
 
   :deep .calc {
     width: calc(100% - 268px);
-    min-width: 1100px - 268px;
+    min-width: 1100px - 278px;
     padding-left: 10px;
   }
   :deep .conent {

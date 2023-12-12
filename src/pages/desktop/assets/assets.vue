@@ -160,7 +160,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/layouts/desktop/settingLayouts.vue';
+  import menuBar from 'src/layouts/desktop/setting.vue';
   import { defineComponent, reactive, toRefs, ref, onMounted, onUnmounted } from 'vue';
   import { useRouter } from 'vue-router';
   import * as echarts from 'echarts'
@@ -232,8 +232,8 @@
           name: 'name',
           required: true,
           align: 'left',
-          field: row => row.name,
-          format: val => `${val}`,
+          // field: row => row.name,
+          // format: val => `${val}`,
           sortable: true
         },
         { name: 'calories', align: 'center', field: 'calories', sortable: true },
@@ -257,29 +257,30 @@
           i: 1,
         },
       ];
-      let ro = new ResizeObserver(entries => {
-        for (let entry of entries) {
-          entry
-          // const { width, height } = entry.contentRect
-          // console.log('窗口大小变化为：', width, height)
-        }
-      })
+      // let ro = new ResizeObserver(entries => {
+      //   for (let entry of entries) {
+      //     entry
+      //     // const { width, height } = entry.contentRect
+      //     // console.log('窗口大小变化为：', width, height)
+      //   }
+      // })
 
       onMounted(() => {
-        ro.observe(document.body)
+        // ro.observe(document.body)
+        
         // 生成7日折线图
         const lineChart = echarts.init(document.getElementById('lineChart'))
         lineChart.setOption(store.lineOption)
         // 生成30日折线图
         // const lineType = echarts.init(document.getElementById('lineThirty'))
         // lineType.setOption(store.lineThirty)
-        window.addEventListener('resize', lineChart.resize) // 添加窗口自适应事件监听
+        // window.addEventListener('resize', lineChart.resize) // 添加窗口自适应事件监听
         // window.addEventListener('resize', lineType.resize) // 添加窗口自适应事件监听
       })
 
-      onUnmounted(() => {
-        ro.unobserve(document.body)
-      });
+      // onUnmounted(() => {
+            // ro.unobserve(document.body)
+      // });
       return {
         ...toRefs(store),
         columns,
@@ -302,12 +303,12 @@
             store.lineOption = lineOption
             const lineChart = echarts.init(document.getElementById('lineChart'))
             lineChart.setOption(store.lineOption)
-            window.addEventListener('resize', lineChart.resize) // 添加窗口自适应事件监听
+            // window.addEventListener('resize', lineChart.resize) // 添加窗口自适应事件监听
           } else {
             store.lineOption = lineThirty
             const lineChart = echarts.init(document.getElementById('lineChart'))
             lineChart.setOption(store.lineOption)
-            window.addEventListener('resize', lineChart.resize) // 添加窗口自适应事件监听
+            // window.addEventListener('resize', lineChart.resize) // 添加窗口自适应事件监听
           }
 
         },
