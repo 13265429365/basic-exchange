@@ -10,16 +10,14 @@ export const LayoutsMobilePath = (name: string): string => {
 
 // PagesTemplateDesktopPath 桌面端页面文件
 export const PagesTemplateDesktopPath = (
-  template: string,
   name: string
 ): string => {
-  return 'pages/' + template + '/desktop/' + name;
+  return '../pages/desktop/' + name;
 };
 
 // PagesTemplateMobilePath 手机端页面文件
 export const PagesTemplateMobilePath = (
-  template: string,
   name: string
 ): string => {
-  return 'pages/' + template + '/mobile/' + name;
+  return '../pages/mobile/' + name;
 };

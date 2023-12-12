@@ -6,11 +6,12 @@
 import { defineComponent } from 'vue';
 import { useMeta } from 'quasar';
 import { useInitStore } from 'src/stores/init';
-
+// import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'App',
   created: () => {
     const $initStore = useInitStore();
+    // console.log(useRouter());
     //  设置客户端Meta信息
     const metaData = {
       title: $initStore.config.name,

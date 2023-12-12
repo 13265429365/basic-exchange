@@ -9,7 +9,6 @@ const componentPathList = Object.assign(
   import.meta.glob('src/layouts/**/*.vue'),
   import.meta.glob('src/pages/**/*.vue')
 );
-console.log(componentPathList);
 // 动态加载路由
 export const dynamicRouterFunc = (
   router: Router, //  路由对象
@@ -18,6 +17,7 @@ export const dynamicRouterFunc = (
   isMobile: boolean, //  是否手机端
   parent = '', //  父级路由
 ) => {
+  console.log(routerList);
   if (routerList && routerList.length > 0 && template !== '') {
     routerList.forEach((item) => {
       //  动态添加路由

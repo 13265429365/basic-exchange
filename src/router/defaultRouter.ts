@@ -12,15 +12,15 @@ export const defaultRouter: TemplateRouteInterface[] = [
   //  主体布局文件 Tabbar + 桌面端头部尾部
   {
     name: 'Layouts',
-    route: '',
-    componentMobile: LayoutsMobilePath('tabbar.vue'),
+    route: '/',
+    componentMobile: LayoutsMobilePath('full.vue'),
     componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
       {
         name: 'Home',
         route: '/',
-        componentMobile: PagesTemplateDesktopPath(TemplateName, 'index.vue'),
-        componentDesktop: PagesTemplateMobilePath(TemplateName, 'index.vue'),
+        componentMobile: PagesTemplateDesktopPath('home/home.vue'),
+        componentDesktop: PagesTemplateMobilePath('login/login.vue'),
         children: [],
         meta: {},
       },

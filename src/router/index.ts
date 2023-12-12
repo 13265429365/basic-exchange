@@ -1,6 +1,9 @@
 import { route } from 'quasar/wrappers';
 import { UserTokenKey, InitStoreState } from 'src/stores/init';
-import { Cookies } from 'quasar';
+import { Cookies, Platform  } from 'quasar';
+import { dynamicRouterFunc } from 'src/router/routes';
+import { templateRoutes } from 'src/router/routes';
+
 import {
   createMemoryHistory,
   createRouter,
@@ -19,7 +22,7 @@ export interface TemplateRouteInterface {
 }
 
 import routes from 'src/router/routes';
-
+console.log(routes);
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -45,11 +48,17 @@ export default route(async function ({ store, ssrContext }) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
-
+  dynamicRouterFunc(
+    Router,
+    templateRoutes.get('default'),
+    'default',
+    true,
+  )
   // 请求初始化数据
   const $cookies = ssrContext ? Cookies.parseSSR(ssrContext) : Cookies;
   store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
   store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
+
 
   Router.beforeEach((to, form, next) => {
     if (
