@@ -22,7 +22,7 @@ export interface TemplateRouteInterface {
 }
 
 import routes from 'src/router/routes';
-console.log(routes);
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -64,6 +64,7 @@ export default route(async function ({ store, ssrContext }) {
     <boolean>$platform.is.mobile
   );
 
+  //  路由守卫
   Router.beforeEach((to, form, next) => {
     if (
       (to.name === 'Login' || to.name === 'Register') &&
