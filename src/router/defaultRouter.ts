@@ -19,8 +19,8 @@ export const defaultRouter: TemplateRouteInterface[] = [
       {
         name: 'Home',
         route: '/',
-        componentMobile: PagesTemplateMobilePath('login/login.vue'),
-        componentDesktop: PagesTemplateDesktopPath('home/home.vue'),
+        componentMobile: PagesTemplateDesktopPath('home/home.vue'),
+        componentDesktop: PagesTemplateMobilePath('index.vue'),
         children: [],
         meta: {},
       },
