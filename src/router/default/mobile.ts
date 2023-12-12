@@ -5,7 +5,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     path: '/',
     name: 'Layouts',
     componentPath: 'layouts',
-    component: '/mobile/full.vue',
+    component: 'mobile/full.vue',
     children: [],
     meta: {},
   },
