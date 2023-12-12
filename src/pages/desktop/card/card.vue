@@ -12,7 +12,7 @@
           <div class="q-mb-md q-mr-md radius-8"
             style="height: 132px;width: 360px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);overflow: hidden;">
             <div class="cardTransparent row " style="padding: 15px 20px;">
-              <q-img src="/images/delete/USDT.png" width="40px" height="40px" />
+              <q-img src="/images/mobile/card/USDT.png" width="40px" height="40px" />
               <div class="col column justify-between">
                 <div class="row justify-between q-pl-sm">
                   <div>
@@ -41,7 +41,7 @@
           <div class="q-mb-md q-mr-md radius-8"
             style="height: 132px;width: 360px;background: linear-gradient(90deg, #7474BF 0%, #348AC7 100%);overflow: hidden;">
             <div class="cardTransparent row " style="padding: 15px 20px;">
-              <q-img src="/images/delete/USDT.png" width="40px" height="40px" />
+              <q-img src="/images/mobile/card/USDT.png" width="40px" height="40px" />
               <div class="col column justify-between">
                 <div class="row justify-between q-pl-sm">
                   <div>

@@ -26,7 +26,7 @@
         <div class="q-mb-xl" v-if="typeArr[typeDataIndex].type == 1">
           <div class="text-center text-color-6 text-weight-medium" style="margin: 60px 0 16px 0;">充币地址二维码</div>
           <div class="row justify-center">
-            <q-img src="/images/delete/M.png" width="170px" height="170px" />
+            <q-img src="/images/mobile/share/M.png" width="170px" height="170px" />
           </div>
 
           <div class="row justify-center q-mt-lg">
@@ -104,8 +104,8 @@
             }">
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 120px;height: 120px;background-color: #F5F6FA;"
-                  class="radius-8 column justify-center">
-                  <q-img src="page_bg/add.png" width="24px" height="24px" class="self-center" />
+                  class="radius-8 row items-center justify-center">
+                  <q-icon name="add" size="28px" style="color: #D9D9D9;"></q-icon>
                 </div>
               </template>
             </uploader>
@@ -166,19 +166,19 @@
         imgUrl: '',
         inviteUrl: '09z8we73847zusyd873ezs88d009z8we73847zusyd873ezs88d0',
         typeArr: [{
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: '农业银行(9632)',
           type: 2
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: '建设银行(9232)',
           type: 1
         }, {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: '农业银行(9631)',
           type: 2
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: '建设银行(7232)',
           type: 1
         }],

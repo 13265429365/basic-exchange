@@ -12,7 +12,7 @@
               <div class="row no-wrap items-center">
                 <div class="row no-wrap items-center q-mr-xl">
                   <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
-                    <q-img src="page_bg/head.png"></q-img>
+                    <q-img src="/images/pc/header/avatar.png"></q-img>
                   </q-avatar>
                   <div>
                     <div class="text-h6 text-weight-medium">Jessica</div>
@@ -60,22 +60,22 @@
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td>
-                <div class="text-h6">
+                <div class="text-body1">
                   {{ props.row.name }}
                 </div>
               </q-td>
               <q-td>
-                <div class="text-h6">
+                <div class="text-body1">
                   {{ props.row.calories }}
                 </div>
               </q-td>
               <q-td>
-                <div class="text-h6">
+                <div class="text-body1">
                   {{ props.row.fat }}
                 </div>
               </q-td>
               <q-td class="row justify-between items-center">
-                <div :class="['text-h6',{'text-primary':props.row.fat=='Recharge'}]">
+                <div :class="['text-body1',{'text-primary':props.row.fat=='Recharge'}]">
                   {{ props.row.carbs }}
                 </div>
               </q-td>

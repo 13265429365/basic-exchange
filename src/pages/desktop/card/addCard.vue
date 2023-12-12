@@ -37,7 +37,8 @@
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
               </div>
-              <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" />
+              <q-icon size="24px" name="expand_more"></q-icon>
+              <!-- <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" /> -->
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
@@ -73,7 +74,8 @@
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
               </div>
-              <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" />
+              <!-- <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" /> -->
+              <q-icon size="24px" name="expand_more"></q-icon>
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
@@ -96,7 +98,8 @@
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
               </div>
-              <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" />
+              <q-icon size="24px" name="expand_more"></q-icon>
+              <!-- <q-img class="self-center" src="page_bg/chevron.png" width="24px" height="24px" /> -->
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
@@ -163,28 +166,28 @@
         imgUrl: '',
         inviteUrl: '09z8we73847zusyd873ezs88d009z8we73847zusyd873ezs88d0',
         typeArr: [{
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: 'Card',
           type: 2
         }, {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/BTC.png',
           value: 'TRC20',
           type: 1
         }, {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/BTC.png',
           value: 'TRC20',
           type: 1
         }, {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/BTC.png',
           value: 'TRC20',
           type: 1
         }],
         options: [
           {
-            image: '/images/delete/USDT.png',
+            image: '/images/mobile/card/USDT.png',
             value: '农业银行'
           }, {
-            image: '/images/delete/BTC.png',
+            image: '/images/mobile/card/BTC.png',
             value: '建设银行'
           },
         ],

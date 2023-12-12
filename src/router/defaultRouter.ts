@@ -154,6 +154,53 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: {},
       },
+      // pc dashboard、mobile info
+      {
+        name: 'dashboard',
+        route: '/dashboard',
+        componentMobile: PagesTemplateMobilePath('basicInfoSettings/info.vue'),
+        componentDesktop: PagesTemplateDesktopPath('dashboard/dashboard.vue'),
+        children: [],
+        meta: {},
+      },
+      //
+      {
+        name: 'security',
+        route: '/security',
+        componentMobile: PagesTemplateMobilePath(''),
+        componentDesktop: PagesTemplateDesktopPath('account/security.vue'),
+        children: [],
+        meta: {},
+      },
+      // 以上相同路由--------------------------------
+      
+      // 公告
+      {
+        name: 'announcements',
+        route: '/announcements',
+        componentMobile: PagesTemplateMobilePath(''),
+        componentDesktop: PagesTemplateDesktopPath('article/announcements.vue'),
+        children: [],
+        meta: {},
+      },
+      // 公告文章
+      {
+        name: 'details',
+        route: '/details',
+        componentMobile: PagesTemplateMobilePath(''),
+        componentDesktop: PagesTemplateDesktopPath('article/details.vue'),
+        children: [],
+        meta: {},
+      },
+      // 新闻
+      {
+        name: 'news',
+        route: '/news',
+        componentMobile: PagesTemplateMobilePath(''),
+        componentDesktop: PagesTemplateDesktopPath('article/news.vue'),
+        children: [],
+        meta: {},
+      },
     ],
     meta: {},
   },

@@ -26,7 +26,7 @@
                 <q-separator style="background: #666666;margin: 0;height: 2px;" inset />
                 <div class="text-color-3 text-h5 text-weight-bold q-my-lg">11/30</div>
               </div>
-              <q-img src="/images/delete/articleListImg.png" width="300px" height="170px"
+              <q-img src="/images/pc/news/articleListImg.png" class="radius-8" width="300px" height="170px"
                 style="position: absolute; right: -210px;top: 0;" />
             </div>
           </div>
@@ -59,12 +59,12 @@
             </div>
             <div class="q-pt-md" v-for="n in 5" :key="`none2-${n}`">
               <div class="row">
-                <div class="col">
+                <div class="col q-pr-xl row items-center">
                   <div class="ellipsis text-color-3 text-subtitle1 text-weight-regular">After talks with Xi, Biden
                     saysBiden 666666666666666666</div>
                   <div class="text-weight-medium text-color-6 text-body2">2023-11-30</div>
                 </div>
-                <q-img src="/images/delete/articleListImg.png" width="130px" height="76px" />
+                <q-img class="radius-8" src="/images/pc/news/articleListImg.png" width="130px" height="76px" />
               </div>
               <q-separator style="height: 2px;background: #DDDDDD;" inset class="q-my-md q-mx-none" />
             </div>

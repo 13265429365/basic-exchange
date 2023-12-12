@@ -18,7 +18,7 @@
             <template  v-slot:header>
               <q-item-section avatar>
                 <q-avatar style="width: 40;height: 40px;">
-                  <q-img :src="`page_bg/${item.img}.png`"></q-img>
+                  <q-img :src="`/images/pc/header/${item.img}.png`"></q-img>
                 </q-avatar>
               </q-item-section>
               <q-item-section style="justify-content:start">
@@ -46,7 +46,7 @@
               <template  v-slot:header>
                 <q-item-section avatar>
                   <q-avatar style="width: 40;height: 40px;">
-                    <q-img :src="`page_bg/${str.img}.png`"></q-img>
+                    <q-img :src="`/images/pc/header/${str.img}.png`"></q-img>
                   </q-avatar>
                 </q-item-section>
                 <q-item-section style="justify-content:start">
@@ -74,7 +74,7 @@
                 <template  v-slot:header>
                   <q-item-section avatar>
                     <q-avatar style="width: 40;height: 40px;">
-                      <q-img :src="`page_bg/${el.img}.png`"></q-img>
+                      <q-img :src="`/images/pc/header/${el.img}.png`"></q-img>
                     </q-avatar>
                   </q-item-section>
                   <q-item-section style="justify-content:start">
@@ -116,7 +116,7 @@
       let store = reactive({
         customize: [
           {
-            img: 'head',
+            img: 'avatar',
             name: 'Carla Schoen',
             date: '2023-11-03 12:30',
             money: '+150',
@@ -124,21 +124,21 @@
             children: [],
           },
           {
-            img: '/pc/avatar',
+            img: 'avatar',
             name: 'Carla Schoen',
             date: '2023-11-03 12:30',
             money: '+236',
             expanded: false,
             children: [
               {
-                img: 'head',
+                img: 'avatar',
                 name: 'Carla Schoen',
                 date: '2023-11-05 12:30',
                 money: '+200',
                 expanded: false,
                 children: [
                   {
-                    img: '/pc/avatar',
+                    img: 'avatar',
                     name: 'Carla Schoen',
                     date: '2023-11-03 12:30',
                     money: '+150',
@@ -147,7 +147,7 @@
                     children: [],
                   },
                   {
-                    img: 'head',
+                    img: 'avatar',
                     name: 'Carla Schoen',
                     date: '2023-11-03 12:30',
                     money: '+150',
@@ -160,7 +160,7 @@
             ],
           },
           {
-            img: '/pc/avatar',
+            img: 'avatar',
             name: 'Carla Schoen',
             date: '2023-11-03 12:30',
             money: '+150',

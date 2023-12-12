@@ -6,7 +6,7 @@
       <div class="row q-mb-xl">
         <div class="q-mr-md avatar">
           <q-avatar class="q-mr-md avatar" style="width: 64px;height: 64px;">
-            <q-img src="page_bg/head.png"></q-img>
+            <q-img src="/images/pc/header/avatar.png"></q-img>
           </q-avatar>
         </div>
         <div>
@@ -14,7 +14,7 @@
             Paul K. Jensen
           </div>
           <q-chip class="q-chip row justify-center items-center">
-            <q-img style="width: 11px;height: 10px;" src="page_bg/Vip_icon.png" />
+            <q-img style="width: 11px;height: 10px;" src="/images/pc/header/Vip_icon.png" />
             <span class="q-mx-xs">Lv.3</span>
             <q-icon name="arrow_forward_ios"></q-icon>
           </q-chip>

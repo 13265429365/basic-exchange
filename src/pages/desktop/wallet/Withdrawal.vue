@@ -99,19 +99,19 @@
         Total: 2693.23,
         typeDataIndex: 0,
         typeArr: [{
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: '农业银行(9632)',
           type: 2
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: '建设银行(9232)',
           type: 1
         }, {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: '农业银行(9631)',
           type: 2
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: '建设银行(7232)',
           type: 1
         }],
