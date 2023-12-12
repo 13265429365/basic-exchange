@@ -1,20 +1,105 @@
 <template>
-  <div>
-    <div>Login</div>
+  <div class="register">
+    <div>
+      <!-- logo -->
+      <div class="row justify-center">
+        <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/logo.png" :ratio="1" />
+      </div>
+      <div class="row justify-center">
+        <div class="text-weight-bold" style="font-size: 24px;">Welcome Back</div>
+      </div>
+
+      <q-form class="q-mt-lg q-px-lg">
+        <!-- 账号 -->
+        <q-input class="q-mb-md" standout v-model="userParams.username" placeholder="Name">
+          <template v-slot:prepend>
+            <q-img width="24px" height="24px" src="/images/mobile/login/user.png" />
+          </template>
+        </q-input>
+
+        <!-- 密码 -->
+        <q-input class="q-mb-md" v-model="userParams.password" standout :type="isPwd ? 'password' : 'text'"
+          placeholder="Password">
+          <template v-slot:prepend>
+            <q-img width="24px" height="24px" src="/images/mobile/login/password.png" />
+          </template>
+          <template v-slot:append>
+            <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+              @click="isPwd = !isPwd" />
+          </template>
+        </q-input>
+
+        <!-- 验证码 -->
+        <q-input class="q-mb-sm" standout v-model="userParams.captchaVal" placeholder="Code">
+          <template v-slot:prepend>
+            <q-img width="24px" height="24px" src="/images/mobile/login/code.png" />
+          </template>
+          <template v-slot:append>
+            <q-img no-spinner v-if="userParams.captchaId !== ''" :src="imageSrc(
+                '/captcha/' + userParams.captchaId + '/200-50', true
+              )
+                " width="120px" height="32px" @click="refreshCaptchaFunc"></q-img>
+          </template>
+        </q-input>
+
+        <!-- 忘记密码、登录、注册 -->
+        <div class="text-right q-mb-lg text-grey-7">
+          Forgot Password?
+        </div>
+        <q-btn @click="$router.push('/user')" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;"
+          color="primary" label="Login" />
+        <div class="text-center q-mb-xl" style="font-size: 14px;">
+          First time here?
+          <span @click="$router.push('/register')" class="text-primary cursor-pointer">Signup</span>
+        </div>
+      </q-form>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+  import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { CaptchaAPI } from 'src/apis';
+  import { userLogin } from 'src/apis/user';
+  import { imageSrc } from 'src/utils';
+  export default defineComponent({
+    name: 'userLogin',
+    setup() {
+      const router = useRouter();
+      let store = reactive({
+        isPwd: true,
+        userParams: {
+          username: '',
+          password: '',
+          captchaId: '', //验证id
+          captchaVal: '', // 验证码
+        }
 
-export default {
-  name: 'UserLogin',
-  setup() {
-    const state = reactive({});
+      });
+      onMounted(() => {
+        refreshCaptchaFunc();
+      })
+      // 获取验证码
+      const refreshCaptchaFunc = () => {
+        CaptchaAPI().then((res : any) => {
+          store.userParams.captchaId = res;
+        })
+      };
+      return {
+        ...toRefs(store),
+        toMypage() {
+          refreshCaptchaFunc();
+          userLogin(store.userParams).then((res : any) => {
+            // userStore.updateUserToken(res);
+            router.push('info')
+          })
 
-    return {
-      ...toRefs(state),
-    };
-  },
-};
+        },
+        imageSrc,
+        refreshCaptchaFunc
+      }
+    }
+  });
 </script>
+<style lang="scss" scoped></style>

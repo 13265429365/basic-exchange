@@ -167,7 +167,33 @@
           },
         ],
         // 头像下拉框数据
-        infoList: [],
+        infoList: [
+          {
+            name: 'Dashboard',
+            img: 'Dashboard',
+            url: '/dashboard',
+          },
+          {
+            name: 'Security',
+            img: 'Security',
+            url: '/security',
+          },
+          {
+            name: 'Share',
+            img: 'Share',
+            url: '/share',
+          },
+          {
+            name: 'My Team',
+            img: 'TeamManagement',
+            url: '/team',
+          },
+          {
+            name: 'Vip',
+            img: 'vip',
+            url: '/vip',
+          },
+        ],
       });
 
       // 登录弹窗ref
