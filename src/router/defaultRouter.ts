@@ -1,4 +1,10 @@
-import { TemplateRouteInterface } from 'src/router';
+import {
+  TemplateRouteInterface,
+  LayoutsDesktopPath,
+  LayoutsMobilePath,
+  PagesTemplateDesktopPath,
+  PagesTemplateMobilePath,
+} from 'src/router';
 
 export const TemplateName = 'default';
 
@@ -7,14 +13,14 @@ export const defaultRouter: TemplateRouteInterface[] = [
   {
     name: 'Layouts',
     route: '',
-    componentMobile: 'layouts/mobile/tabbar.vue',
-    componentDesktop: 'layouts/desktop/main.vue',
+    componentMobile: LayoutsMobilePath('tabbar.vue'),
+    componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
       {
         name: 'Home',
         route: '/',
-        componentMobile: 'pages/' + TemplateName + '/mobile/index.vue',
-        componentDesktop: 'pages/' + TemplateName + '/desktop/index.vue',
+        componentMobile: PagesTemplateDesktopPath(TemplateName, 'index.vue'),
+        componentDesktop: PagesTemplateMobilePath(TemplateName, 'index.vue'),
         children: [],
         meta: {},
       },
