@@ -1,4 +1,10 @@
-import { TemplateRouteInterface } from 'src/router';
+import {
+  TemplateRouteInterface,
+  LayoutsDesktopPath,
+  LayoutsMobilePath,
+  PagesTemplateDesktopPath,
+  PagesTemplateMobilePath,
+} from 'src/router';
 
 export const TemplateName = 'default';
 
@@ -6,16 +12,14 @@ export const defaultRouter: TemplateRouteInterface[] = [
   //  主体布局文件 Tabbar + 桌面端头部尾部
   {
     name: 'Layouts',
-    route: '/',
-    componentMobile: 'layouts/mobile/tabbar.vue',
-    componentDesktop: 'layouts/desktop/main.vue',
+    route: '',
+    componentMobile: LayoutsMobilePath('tabbar.vue'),
+    componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
       {
         route: '/',
-        name: 'Home',
-        // routes.ts判断是否手机端，手机端使用componentMobile，否则使用componentDesktop
-        componentMobile: '../pages/default/mobile/login/login.vue',
-        componentDesktop: '../pages/desktop/home/home.vue',
+        componentMobile: PagesTemplateDesktopPath(TemplateName, 'index.vue'),
+        componentDesktop: PagesTemplateMobilePath(TemplateName, 'index.vue'),
         children: [],
         meta: {},
       },

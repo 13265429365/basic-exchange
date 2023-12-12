@@ -2,8 +2,8 @@ import { RouteRecordRaw, Router } from 'vue-router';
 import { TemplateRouteInterface } from 'src/router';
 import { defaultRouter, TemplateName } from 'src/router/defaultRouter';
 
-// 所有模版路由信息 桌面端必须带上 Desktop
-export const templateRoutes: any = new Map([[TemplateName, defaultRouter],]);
+export const templateRoutes: any = new Map([[TemplateName, defaultRouter]]);
+
 // componentPathList 获取文件路径文件
 const componentPathList = Object.assign(
   import.meta.glob('src/layouts/**/*.vue'),
@@ -19,7 +19,6 @@ export const dynamicRouterFunc = (
   parent = '', //  父级路由
 ) => {
   if (routerList && routerList.length > 0 && template !== '') {
-    console.log();
     routerList.forEach((item) => {
       //  动态添加路由
       router.addRoute(parent, {
