@@ -1,61 +1,44 @@
 import { RouteRecordRaw, Router } from 'vue-router';
-import { defaultRouter } from 'src/router/default/mobile';
-import { defaultDesktopRouter } from 'src/router/default/desktop';
-
-export interface TemplateRouteInterface {
-  path: string;
-  name: string;
-  component: string;
-  componentPath: string;
-  meta: any;
-  children: TemplateRouteInterface[];
-}
+import { TemplateRouteInterface } from 'src/router';
+import { defaultRouter, TemplateName } from 'src/router/defaultRouter';
 
 // 所有模版路由信息 桌面端必须带上 Desktop
-export const templateRoutes: any = new Map([
-  ['default', defaultRouter],
-  ['defaultDesktop', defaultDesktopRouter],
-]);
+export const templateRoutes: any = new Map([[TemplateName, defaultRouter]]);
 
 // componentPathList 获取文件路径文件
-const componentPathList = {
-  layouts: import.meta.glob('../layouts/**/*.vue'),
-  pages: import.meta.glob('../pages/**/*.vue'),
-} as any;
+const componentPathList = Object.assign(
+  import.meta.glob('src/layouts/**/*.vue'),
+  import.meta.glob('src/pages/**/*.vue')
+);
 
 // 动态加载路由
 export const dynamicRouterFunc = (
   router: Router, //  路由对象
-  routerList: TemplateRouteInterface[], //  载入的路由
+  parent = '', //  父级路由
   template: string, //  模版文件
-  isMobile: boolean, //  是否手机端
-  parent = '' //  父级路由
+  routerList: TemplateRouteInterface[], //  载入的路由
+  isMobile: boolean //  是否手机端
 ) => {
   if (routerList && routerList.length > 0 && template !== '') {
     routerList.forEach((item) => {
-      template = isMobile ? template : template + 'Desktop';
-      //  获取路径
-      let vuePath = '../' + item.componentPath + '/' + item.component;
-      if (item.componentPath === 'pages') {
-        vuePath = '../pages';
-        vuePath +=
-          item.component.indexOf('/') === 0
-            ? item.component
-            : '/' + template + '/' + item.component;
-      }
+      //  动态添加路由
       router.addRoute(parent, {
-        path: item.path,
+        path: item.route,
         name: item.name,
-        component: componentPathList[item.componentPath][vuePath],
+        component:
+          componentPathList[
+            isMobile ? item.componentMobile : item.componentDesktop
+          ],
         meta: item.meta,
       });
-      //  递归加载路由
+
+      //  是否需要递归子级, 动态添加路由
       if (
         item.hasOwnProperty('children') &&
         item.children !== null &&
         item.children.length > 0
       ) {
-        dynamicRouterFunc(router, item.children, template, isMobile, item.name);
+        dynamicRouterFunc(router, item.name, template, item.children, isMobile);
       }
     });
   }
