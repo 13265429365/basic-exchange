@@ -22,7 +22,6 @@ export interface TemplateRouteInterface {
 }
 
 import routes from 'src/router/routes';
-console.log(routes);
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -42,7 +41,6 @@ export default route(async function ({ store, ssrContext }) {
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
-
     // Leave this as is and make changes in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
@@ -52,8 +50,9 @@ export default route(async function ({ store, ssrContext }) {
     Router,
     templateRoutes.get('default'),
     'default',
-    true,
+    false,
   )
+  console.log(routes);
   // 请求初始化数据
   const $cookies = ssrContext ? Cookies.parseSSR(ssrContext) : Cookies;
   store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));

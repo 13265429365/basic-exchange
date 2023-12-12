@@ -18,8 +18,10 @@ export const dynamicRouterFunc = (
   parent = '', //  父级路由
 ) => {
   console.log(routerList);
+  console.log(parent);
   if (routerList && routerList.length > 0 && template !== '') {
     routerList.forEach((item) => {
+    // console.log(isMobile ? item.componentMobile : item.componentDesktop);
       //  动态添加路由
       router.addRoute(parent, {
         path: item.route,
@@ -42,6 +44,7 @@ export const dynamicRouterFunc = (
       }
     });
   }
+  // console.log(parent);
 };
 
 const routes: RouteRecordRaw[] = [
