@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>Home</div>
+    <div>Profile</div>
   </div>
 </template>
 
@@ -8,8 +8,10 @@
 import { reactive, toRefs } from 'vue';
 
 export default {
-  name: 'HomeIndex',
-  setup() {
+  name: 'UserSettingsProfile',
+  setup(props: any, context: any) {
+    context.emit('update', { title: 'xxxx' });
+
     const state = reactive({});
 
     return {

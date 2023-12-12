@@ -1,64 +1,71 @@
 <template>
-  <div class="row justify-between items-center" :style="style">
-    <q-icon
-      :name="leftButton.name"
-      :size="leftButton.size"
-      @click="
-        leftButton.route == '' ? $router.back() : $router.push(leftButton.route)
-      "
-    ></q-icon>
-  </div>
-  <div :class="titleClass">{{ title }}</div>
-  <div>
-    <q-icon
-      v-if="rightButton.icon != ''"
-      :name="rightButton.name"
-      :size="rightButton.size"
-      @click="$router.push(rightButton.route)"
-    ></q-icon>
-  </div>
+  <q-layout view="hhh LpR fFf" class="bg-grey-1">
+    <q-header bordered class="bg-white text-black">
+      <q-toolbar>
+        <q-btn
+          dense
+          flat
+          round
+          :icon="data.leftBtn.icon"
+          color="grey-8"
+          @click="data.leftBtn.callback"
+        />
+
+        <q-toolbar-title class="text-center">
+          {{ data.title }}
+        </q-toolbar-title>
+
+        <q-btn
+          dense
+          flat
+          round
+          :icon="data.rightBtn.icon"
+          @click="data.rightBtn.callback"
+        />
+      </q-toolbar>
+    </q-header>
+    <q-page-container>
+      <router-view @update="updateHeaderDataFunc" />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
+import { useRouter } from 'vue-router';
+import { assiginRecursion } from 'src/utils/object';
 
 export default {
   name: 'LayoutsHeader',
-  props: {
-    //  主体 style
-    style: {
-      type: Object,
-      defualt: { height: '60px' },
-    },
-    //  标题
-    title: {
-      type: String,
-      default: '',
-    },
-    titleClass: {
-      type: String,
-      default: 'text-body1 text-bold',
-    },
-    //  左侧按钮图标
-    leftButton: {
-      type: Object,
-      default: () => {
-        return { icon: 'arrow_back', size: '24px', route: '' };
-      },
-    },
-    //  右侧按钮图标
-    rightButton: {
-      type: Object,
-      default: () => {
-        return { icon: '', size: '24px', route: '' };
-      },
-    },
-  },
   setup() {
-    const state = reactive({});
+    const $router = useRouter();
+
+    const state = reactive({
+      data: {
+        title: ' ',
+        leftBtn: {
+          icon: 'arrow_back',
+          callback: () => {
+            $router.back();
+          },
+        },
+        rightBtn: {
+          icon: '',
+          callback: () => {
+            return;
+          },
+        },
+      },
+    });
+
+    //  更新Header数据方法
+    const updateHeaderDataFunc = (data: any) => {
+      state.data = assiginRecursion(state.data, data);
+    };
 
     return {
       ...toRefs(state),
+      updateHeaderDataFunc,
     };
   },
 };

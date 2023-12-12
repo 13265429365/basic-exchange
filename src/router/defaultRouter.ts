@@ -59,44 +59,51 @@ export const defaultRouter: TemplateRouteInterface[] = [
     ],
     meta: {},
   },
-  // //  带头部的返回布局文件
-  // {
-  //   name: 'Layouts',
-  //   route: '',
-  //   componentMobile: '',
-  //   componentDesktop: '',
-  //   children: [],
-  //   meta: {},
-  // },
+
+  //  带头部的返回布局文件
+  {
+    name: 'LayoutsHeader',
+    route: '/',
+    componentMobile: LayoutsMobilePath('header.vue'),
+    componentDesktop: LayoutsDesktopPath('main.vue'),
+    children: [
+      {
+        name: 'UserSettingsProfile',
+        route: '/user/profile',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'user/settings/profile.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+    ],
+    meta: {},
+  },
 
   //  全屏的布局文件
   {
     name: 'LayoutsFull',
     route: '/',
     componentMobile: LayoutsMobilePath('full.vue'),
-    componentDesktop: LayoutsMobilePath('main.vue'),
+    componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
       {
         name: 'UserLogin',
         route: '/login',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'login.vue'),
-        componentDesktop: PagesTemplateDesktopPath(
-          TemplateName,
-          'register.vue'
-        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
         children: [],
-        meta: { requireAuth: true, keepAlive: true },
+        meta: { requireAuth: false, keepAlive: false },
       },
       {
         name: 'UserRegister',
         route: '/register',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'login.vue'),
-        componentDesktop: PagesTemplateDesktopPath(
-          TemplateName,
-          'register.vue'
-        ),
+        componentMobile: PagesTemplateMobilePath(TemplateName, 'register.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
         children: [],
-        meta: { requireAuth: true, keepAlive: true },
+        meta: { requireAuth: false, keepAlive: false },
       },
     ],
     meta: {},
