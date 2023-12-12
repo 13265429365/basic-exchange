@@ -6,7 +6,7 @@
       <div class="text-color-3  column justify-between items-center">
         <div class="logo column justify-center">
           <!-- <q-img class="self-center" src="/images/delete/download.png" width="56px" height="56px" /> -->
-          <q-img class="self-center" src="/images/default/logo.png" width="56px" height="56px" />
+          <q-img class="self-center" src="/images/mobile/login/logo.png" width="56px" height="56px" />
 
         </div>
         <div class="text-h6 text-weight-bold">Solo App</div>
@@ -16,7 +16,7 @@
       </div>
 
     </div>
-    <q-img src="/images/default/downloadImg.png" width="240px" height="163px" class="self-center q-mt-xl q-mb-sm" />
+    <q-img src="/images/mobile/download/downloadImg.png" width="240px" height="163px" class="self-center q-mt-xl q-mb-sm" />
   </div>
 </template>
 
@@ -39,6 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .logo {
   width: 80px;
   height: 80px;

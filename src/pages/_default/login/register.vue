@@ -3,7 +3,7 @@
     <lang></lang>
     <div>
       <div class="row justify-center">
-        <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/default/logo.png" :ratio="1" />
+        <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" src="/images/mobile/login/logo.png" :ratio="1" />
       </div>
       <div class="row justify-center">
         <div class="text-h5 text-weight-bold">Create New Account</div>
@@ -18,18 +18,18 @@
           <q-input standout class="q-mb-md" v-model="userParams.username" placeholder="Username">
 
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/email.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/email.png" />
             </template>
           </q-input>
           <q-input standout class="q-mb-md" v-model="userParams.email" placeholder="email">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/email.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/email.png" />
             </template>
           </q-input>
           <q-input class="q-mb-md" v-model="userParams.password" standout :type="isPwd ? 'password' : 'text'"
             placeholder="Password">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/password.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -39,7 +39,7 @@
           <q-input class="q-mb-md" v-model="password" standout :type="isPwd2 ? 'password' : 'text'"
             placeholder="Password">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/password.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999;" :name="isPwd2 ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -48,7 +48,7 @@
           </q-input>
           <q-input class="q-mb-lg" standout v-model="userParams.captchaVal" placeholder="Code">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/code.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/code.png" />
             </template>
             <template v-slot:append>
               <q-img no-spinner v-if="userParams.captchaId !== ''" :src="imageSrc(
@@ -59,25 +59,25 @@
           </q-input>
           <q-input class="q-mb-md" standout v-model="userParams.securityKey" placeholder="Secret Key">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/key.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/key.png" />
             </template>
           </q-input>
           <q-input class="q-mb-md" standout v-model="userParams.code" placeholder="Invite Code">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/default/user.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/login/user.png" />
             </template>
           </q-input>
           <div class="row no-wrap">
             <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
               class="q-mb-md q-mr-sm select" standout>
               <template v-slot:prepend>
-                <q-img width="24px" height="16px" src="/images/default/china.png" @click.stop.prevent />
+                <q-img width="24px" height="16px" src="/images/mobile/login/china.png" @click.stop.prevent />
                 <q-icon name="keyboard_arrow_down" />
               </template>
               <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps">
                   <q-item-section avatar>
-                    <q-img width="24px" height="16px" src="/images/default/china.png" @click.stop.prevent />
+                    <q-img width="24px" height="16px" src="/images/mobile/login/china.png" @click.stop.prevent />
                   </q-item-section>
                   <q-item-section>
                     <q-item-label>{{ scope.opt.label }}</q-item-label>
@@ -180,6 +180,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 :deep .q-select .q-field__control:hover:before {
   opacity: 0;
 }

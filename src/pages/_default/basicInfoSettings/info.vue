@@ -5,7 +5,7 @@
       <div class="row">
         <div class="q-mr-md avatar">
           <q-avatar class="q-mr-md avatar">
-            <img src="/images/default/head.png">
+            <img src="/images/mobile/info/head.png">
           </q-avatar>
         </div>
         <div class="col-8">
@@ -17,34 +17,34 @@
           </div>
           <div class="row no-wrap">
             <q-chip class="q-chip">
-              <q-img class="vip" src="/images/default/Vip_icon.png" />
+              <q-img class="vip" src="/images/mobile/info/Vip_icon.png" />
               Lv.3
             </q-chip>
             <q-chip style="background: #fff !important;color: #333333 !important;border: 1px solid #F1F1F1;">
-              <q-img class="vip" src="/images/default/credit.png" />
+              <q-img class="vip" src="/images/mobile/info/credit.png" />
               信用分100
             </q-chip>
             <q-chip style="background: #fff !important;color: #01AC66 !important;border: 1px solid #01AC66;">
               已实名
               <span style="font-size: 11px;">＞</span>
-              <!-- <q-img class="q-ml-xs vip" src="/images/default/right_arrow.png.png" /> -->
+              <!-- <q-img class="q-ml-xs vip" src="page_bg/right_arrow.png.png" /> -->
             </q-chip>
           </div>
         </div>
       </div>
       <div>
-        <q-img width="24px" height="24px" src="/images/default/right_arrow.png" />
+        <q-img width="24px" height="24px" src="/images/mobile/info/right_arrow.png" />
       </div>
     </div>
     <div class="bg-grey-1 q-px-md q-py-md full-width">
       <!-- 店铺、交易管理 -->
       <div class="row q-mb-md btn">
         <q-btn @click="to('recharge')" no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col q-mr-md justify-start">
-          <q-img class="manage" src="/images/default/shop.png" />
+          <q-img class="manage" src="/images/mobile/info/recharge.png" />
           <div>Recharge</div>
         </q-btn>
         <q-btn @click="to('withdrawal')" no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col">
-          <q-img class="manage" src="/images/default/transaction.png" />
+          <q-img class="manage" src="/images/mobile/info/transaction.png" />
           <div>Cash Out</div>
         </q-btn>
       </div>
@@ -54,7 +54,7 @@
         <div v-for="(str, s) in item.element" :key="s" class="bg-white">
           <q-item @click="to(str.url)" v-ripple class="q-pa-md" clickable>
             <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-              <q-img :src="`/images/default/${str.avatar}`" width="24px" height="24px" />
+              <q-img :src="`/images/mobile/info/${str.avatar}`" width="24px" height="24px" />
             </q-item-section>
 
             <q-item-section>
@@ -62,7 +62,7 @@
             </q-item-section>
 
             <q-item-section side>
-              <q-img width="24px" height="24px" src="/images/default/right_arrow.png" />
+              <q-img width="24px" height="24px" src="/images/mobile/info/right_arrow.png" />
             </q-item-section>
           </q-item>
           <q-separator style="background: #F4F5FD;" inset />
@@ -130,6 +130,7 @@
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
   /* 退出dialog */
   .q-dialog__inner>div {
     border-radius: 20px 20px 0 0;

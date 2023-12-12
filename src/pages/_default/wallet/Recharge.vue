@@ -9,7 +9,7 @@
         <q-scroll-area style="height: 60px; width: 100%;" :visible="false">
           <div class="row no-wrap">
             <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex" style="width: 185px;height: 50px;"
-              :class="`q-pa-sm row bg-grey-11 radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
+              :class="`q-pa-sm row page_bg radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
               @click="typeDataIndex = typeIndex">
               <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
               <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -20,7 +20,7 @@
         <div class="q-mb-lg" v-if="typeArr[typeDataIndex].type == 1">
           <div class="text-center text-color-6 text-weight-medium" style="margin: 20px 0 10px 0;">充币地址二维码</div>
           <div class="row justify-center">
-            <q-img src="/images/delete/M.png" width="170px" height="170px" />
+            <q-img src="/images/mobile/share/M.png" width="170px" height="170px" />
           </div>
 
           <div class="row justify-center q-mt-sm">
@@ -36,7 +36,7 @@
           </div>
         </div>
         <!-- 数字货币类型 -->
-        <div v-else class="bg-grey-11 q-pa-md q-mb-md radius-8">
+        <div v-else class="page_bg q-pa-md q-mb-md radius-8">
           <div style="border-bottom: 1px dashed #DDDDDD" class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">Recharge Information</div>
           <div class="q-mt-md row justify-between no-wrap"
             style="width: 315px;border-radius: 10px;">
@@ -76,7 +76,7 @@
             <template v-slot:noneAdd>
               <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
                 class="radius-8 column justify-center">
-                <q-img src="/images/default/add.png" width="24px" height="24px" class="self-center" />
+                <q-img src="/images/mobile/wallet/add.png" width="24px" height="24px" class="self-center" />
               </div>
             </template>
           </uploader>
@@ -114,7 +114,7 @@ import { reactive, toRefs } from 'vue';
 import navBar from 'src/layouts/mobile/header.vue';
 import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 import { copyToClipboard } from 'quasar';
-import { NotifyNegative, NotifyPositive } from 'src/utils';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import uploader from 'src/components/mobile/uploader.vue';
 export default {
   name: 'rechargeIndex',
@@ -129,19 +129,19 @@ export default {
       imgUrl: '',
       inviteUrl: '09z8we73847zusyd873ezs88d009z8we73847zusyd873ezs88d0',
       typeArr: [{
-        image: '/images/delete/USDT.png',
+        image: '/images/mobile/card/USDT.png',
         value: '农业银行(9632)',
         type: 2
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: '建设银行(9232)',
         type: 1
       }, {
-        image: '/images/delete/USDT.png',
+        image: '/images/mobile/card/USDT.png',
         value: '农业银行(9631)',
         type: 2
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: '建设银行(7232)',
         type: 1
       }],
@@ -167,7 +167,7 @@ export default {
             title: 'Created Successfully',
             content: '',
             yesBtn: 'OK',
-            logo: '/images/default/success.png',
+            logo: 'page_bg/success.png',
             backUrl: ''
           })
         }
@@ -184,6 +184,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
   :deep .q-uploader__list {
     padding: 0;
   }

@@ -2,7 +2,7 @@
   <!-- <div class="Header"> -->
   <q-header reveal class="bg-white text-color-3 row justify-between q-py-md q-pl-xl q-pr-lg no-wrap">
     <div class="row items-center no-wrap">
-      <q-img @click="to('/')" class="q-mr-lg cursor-pointer" src="/images/default/pc/logo.png" width="172px" height="42px" />
+      <q-img @click="to('/')" class="q-mr-lg cursor-pointer" src="/images/pc/header/logo.png" width="172px" height="42px" />
       <span @click="to('/help/center')" class="text-color-3 q-ml-sm q-mr-xl cursor-pointer">Support Center</span>
       <div class="row no-wrap items-center cursor-pointer">
         <span>more</span>
@@ -10,7 +10,7 @@
         <q-menu :offset="[0, 27]" auto-close transition-show="jump-down" transition-hide="jump-up">
           <q-list style="min-width: 268px" class="q-py-sm">
             <q-item v-for="(item,i) in moreList" :key="i" clickable class="row no-wrap items-center">
-              <q-img class="q-mr-sm" :src="`/images/default/${item.url}.png`" width="38px" height="38px" />
+              <q-img class="q-mr-sm" :src="`/images/pc/header/${item.url}.png`" width="38px" height="38px" />
               <div>
                 <div style="font-size: 16px;">{{item.name}}</div>
                 <div style="font-size: 12px;">{{item.content}}</div>
@@ -24,7 +24,7 @@
       <!-- 搜索框 -->
       <q-input placeholder="searching..." rounded outlined v-model="search">
         <template v-slot:prepend>
-          <q-img class="q-mr-sm" src="/images/default/pc/search.png" width="20px" height="20px" />
+          <q-img class="q-mr-sm" src="/images/pc/header/search.png" width="20px" height="20px" />
         </template>
       </q-input>
       <!-- 登录状态下 -->
@@ -35,7 +35,7 @@
           <q-menu :offset="[140, 22]" auto-close transition-show="jump-down" transition-hide="jump-up">
             <q-list style="min-width: 214px" class="q-px-sm">
               <q-item @click="to(item.url)" v-for="(item,i) in depositList" :key="i" clickable class="row no-wrap items-center">
-                <q-img class="q-mr-sm" :src="`/images/default/pc/${item.url}.png`" width="20px" height="20px" />
+                <q-img class="q-mr-sm" :src="`/images/pc/header/${item.name}.png`" width="20px" height="20px" />
                 <div style="font-size: 16px;">{{item.name}}</div>
               </q-item>
             </q-list>
@@ -43,14 +43,14 @@
         </q-btn>
         <!-- 头像 -->
         <q-avatar class="q-ml-md cursor-pointer" style="width: 34px;height: 34px;">
-          <img src="/images/default/pc/avatar.png">
+          <img src="/images/pc/header/avatar.png">
           <q-menu :offset="[30, 22]" auto-close transition-show="jump-down" transition-hide="jump-up">
             <q-list style="min-width: 218px;padding: 20px 23px 0 23px">
               <q-item style="padding: 0;">
                 <div class="row">
                   <div>
                     <q-avatar class="q-mr-sm" style="width: 30px;height: 30px">
-                      <img src="/images/default/head.png">
+                      <img src="/images/pc/header/avatar.png">
                     </q-avatar>
                   </div>
                   <div class="col-8">
@@ -64,7 +64,7 @@
                     </div>
                     <div class="row no-wrap">
                       <q-chip class="q-chip" style="border: 1px solid #F7DEB6;">
-                        <q-img class="vip" src="/images/default/Vip_icon.png" />
+                        <q-img class="vip" src="images/pc/header/Vip_icon.png" />
                         Lv.3
                       </q-chip>
                       <q-chip class="q-chip bg-primary text-white" style="font-size: 12px;">
@@ -76,21 +76,21 @@
               </q-item>
               <q-separator class="q-mt-lg" style="background: #F1F1F1;" />
               <q-item @click="to(item.url)" v-for="(item,i) in infoList" :key="i" clickable class="row no-wrap items-center q-py-md q-px-xs">
-                <q-img class="q-mr-sm" :src="`/images/default/pc/${item.img}.png`" width="20px" height="20px" />
+                <q-img class="q-mr-sm" :src="`/images/pc/header/${item.img}.png`" width="20px" height="20px" />
                 <div>{{item.name}}</div>
               </q-item>
               <q-separator class="q-mt-md" style="background: #F1F1F1;" />
               <q-item @click="logOut()" clickable class="row no-wrap items-center q-py-xs q-px-xs">
-                <q-img class="q-mr-sm" src="/images/default/pc/LogOut.png" width="20px" height="20px" />
+                <q-img class="q-mr-sm" src="/images/pc/header/LogOut.png" width="20px" height="20px" />
                 <div>Log out</div>
               </q-item>
             </q-list>
           </q-menu>
         </q-avatar>
         <!--  -->
-        <q-img class="q-ml-md cursor-pointer" width="24px" height="24px" src="/images/default/darkness/email.png" />
+        <q-img class="q-ml-md cursor-pointer" width="24px" height="24px" src="/images/pc/header/prompt.png" />
         <q-img class="q-ml-md cursor-pointer" style="overflow: unset;" width="24px" height="24px"
-          src="/images/default/darkness/prompt.png">
+          src="/images/pc/header/prompt.png">
           <q-badge style="background: #F45E0C;" class="badge" floating rounded>20</q-badge>
         </q-img>
       </div>
@@ -118,12 +118,12 @@
             <q-form>
               <q-input class="q-mb-md" standout v-model="userParams.username" placeholder="Username">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/user.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/user.png" />
                 </template>
               </q-input>
               <q-input class="q-mb-md" v-model="userParams.password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/password.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/password.png" />
                 </template>
                 <template v-slot:append>
                   <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -132,7 +132,7 @@
               </q-input>
               <q-input class="q-mb-md" v-model="userParams.captchaVal" standout placeholder="Password">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/code.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/code.png" />
                 </template>
                 <template v-slot:append>
                   <q-img no-spinner v-if="userParams.captchaId !== ''" :src="imageSrc(
@@ -171,17 +171,17 @@
             <q-form>
               <q-input standout class="q-mb-md" v-model="registerParams.username" placeholder="Username">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/user.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/user.png" />
                 </template>
               </q-input>
               <q-input standout class="q-mb-md" v-model="registerParams.email" placeholder="Email">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/email.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/email.png" />
                 </template>
               </q-input>
               <q-input class="q-mb-md" v-model="registerParams.password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/password.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/password.png" />
                 </template>
                 <template v-slot:append>
                   <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -190,7 +190,7 @@
               </q-input>
               <q-input class="q-mb-md" standout v-model="password" :type="isPwd2 ? 'password' : 'text'" placeholder="Confirm Password">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/password.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/password.png" />
                 </template>
                 <template v-slot:append>
                   <q-icon style="color: #999999;" :name="isPwd2 ? 'visibility_off' : 'visibility'" class="cursor-pointer"
@@ -199,7 +199,7 @@
               </q-input>
               <q-input class="q-mb-md" standout v-model="registerParams.captchaVal" placeholder="Code">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/code.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/code.png" />
                 </template>
                 <template v-slot:append>
                   <q-img no-spinner v-if="userParams.captchaId !== ''" :src="imageSrc(
@@ -210,25 +210,25 @@
               </q-input>
               <q-input class="q-mb-md" standout v-model="registerParams.securityKey" placeholder="Secret Key">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/key.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/key.png" />
                 </template>
               </q-input>
               <q-input class="q-mb-md" standout v-model="registerParams.code" placeholder="Invite Code">
                 <template v-slot:prepend>
-                  <q-img width="24px" height="24px" src="/images/default/user.png" />
+                  <q-img width="24px" height="24px" src="/images/pc/header/user.png" />
                 </template>
               </q-input>
               <div class="row no-wrap">
                 <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
                   class="q-mb-md q-mr-sm select" standout>
                   <template v-slot:prepend>
-                    <q-img width="24px" height="16px" src="/images/default/china.png" @click.stop.prevent />
+                    <q-img width="24px" height="16px" src="/images/pc/header/china.png" @click.stop.prevent />
                     <q-icon name="keyboard_arrow_down" />
                   </template>
                   <template v-slot:option="scope">
                     <q-item v-bind="scope.itemProps">
                       <q-item-section avatar>
-                        <q-img width="24px" height="16px" src="/images/default/china.png" @click.stop.prevent />
+                        <q-img width="24px" height="16px" src="/images/pc/header/china.png" @click.stop.prevent />
                       </q-item-section>
                       <q-item-section>
                         <q-item-label>{{ scope.opt.label }}</q-item-label>
@@ -350,9 +350,9 @@
         // 头像下拉框数据
         infoList: [
           {
-            name: 'Profile',
-            img: 'Profile',
-            url: '/settings',
+            name: 'Dashboard',
+            img: 'Dashboard',
+            url: '/dashboard',
           },
           {
             name: 'Security',
@@ -365,7 +365,7 @@
             url: '/share',
           },
           {
-            name: 'Team Management',
+            name: 'My Team',
             img: 'TeamManagement',
             url: '/team',
           },
@@ -460,62 +460,13 @@
 </script>
 
 <style lang="scss" scoped>
-  // 下拉选框样式
-  :deep .q-select .q-field__control:hover:before {
-    opacity: 0;
-  }
-  :deep .q-select .q-field__prepend {
-    padding-right: 0;
-    color: #8F959E;
-  }
-  :deep .q-select  .q-field__append {
-    padding-left: 4px;
-    font-size: 15px;
-    color: #8F959E;
-  }
-  :deep .q-select .q-field__native {
-    display: none;
-  }
-  :deep .q-select  .q-field__append .q-icon {
-    display: none;
-  }
-  // pc版input样式
-  :deep .q-field--standout .q-field__native {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
-
-  :deep .q-field--standout .q-field__prefix {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
-
-  :deep .q-field--standout .q-field__append {
-    color: rgba(0, 0, 0, 0.54) !important;
-  }
-
-  :deep .q-field--standout:before {
-    background: #fff !important;
-  }
-  :deep .q-field--standout .q-field__control {
-    background: #fff !important;
-    height: 56px !important;
-    min-height: 56px !important;
-    outline: none !important;
-    border: 1px solid #DDDDDD;
-    box-shadow: none !important;
-    border-radius: 4px;
-  }
-  :deep .q-field--highlighted .q-field__control {
-    background: #fff !important;
-    box-shadow: none !important;
-  }
+  @import url("../../css/pcCss.css");
   .q-header {
     min-width: 1100px;
     position: absolute;
   }
 
-  /* 头像下按钮 */
   .q-chip {
-    /* width: 44px; */
     height: 18px;
     font-size: 10px;
     color: #F7DEB6;
@@ -540,17 +491,4 @@
     right: -35%;
   }
 
-  :deep .q-field--outlined .q-field__control {
-    background: #fff !important;
-    border: 1px solid #DDDDDD !important;
-    border-radius: 20px !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    outline: none !important;
-  }
-
-  :deep .q-field--outlined .q-field__marginal {
-    height: 40px;
-    padding-right: 0 !important;
-  }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="column bg-grey-11" style="padding: 48px 244px;">
+  <div class="column page_bg" style="padding: 48px 244px;">
     <div class="col column justify-between bg-white radius-8">
       <div class="q-py-md q-px-lg row items-center no-wrap text-h5 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
@@ -7,14 +7,14 @@
         <div class="q-ml-md">Recharge</div>
       </div>
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium bg-grey-11 q-py-sm q-px-md" style="border-radius: 2px;">
+        <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-sm q-px-md" style="border-radius: 2px;">
           Account Type
         </div>
         <!-- 卡类型选择 -->
         <div class="row q-mt-md">
           <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex"
             style="width: 214px;height: 50px;border-radius: 9px;"
-            :class="`q-pa-sm row bg-grey-11 q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
+            :class="`q-pa-sm row page_bg q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
             @click="typeDataIndex = typeIndex">
             <q-img class="self-center q-mr-sm" :src="typeI.image" width="32px" height="32px" />
             <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -105,7 +105,7 @@
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 120px;height: 120px;background-color: #F5F6FA;"
                   class="radius-8 column justify-center">
-                  <q-img src="/images/default/add.png" width="24px" height="24px" class="self-center" />
+                  <q-img src="page_bg/add.png" width="24px" height="24px" class="self-center" />
                 </div>
               </template>
             </uploader>
@@ -129,7 +129,7 @@
           <div class="bg-white q-pt-sm q-pa-xl  justify-between" style="width:475px">
             <div class="row justify-center">
               <q-img src="/images/pc/recharge/success.png" width="120px" height="120px" />
-      
+
             </div>
             <div class="row justify-center">
               <div class="text-color-3 text-h6 text-weight-medium q-mt-md">Submitted successfully</div>
@@ -151,7 +151,7 @@
 <script lang="ts">
   import { reactive, toRefs } from 'vue';
   import { copyToClipboard } from 'quasar';
-  import { NotifyNegative, NotifyPositive } from 'src/utils';
+  // import { NotifyNegative, NotifyPositive } from 'src/utils';
   import uploader from 'src/components/mobile/uploader.vue';
   export default {
     name: 'rechargeIndex',
@@ -187,10 +187,10 @@
       const copyToClipboardFunc = (str : string) => {
         copyToClipboard(str)
           .then(() => {
-            NotifyPositive('复制成功！');
+            // NotifyPositive('复制成功！');
           })
           .catch(() => {
-            NotifyNegative('复制失败！');
+            // NotifyNegative('复制失败！');
           });
       };
 
@@ -204,7 +204,7 @@
               title: 'Created Successfully',
               content: '',
               yesBtn: 'OK',
-              logo: '/images/default/success.png',
+              logo: 'page_bg/success.png',
               backUrl: ''
             })
           }
@@ -221,6 +221,7 @@
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   :deep .q-item {
     padding: 8px 0;
     font-size: 16px;
@@ -235,13 +236,6 @@
     display: none !important;
   }
   // pc版input样式
-  :deep .q-field--standout .q-field__native {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
-
-  :deep .q-field--standout .q-field__suffix {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
   :deep .q-field--standout .q-field__control {
     width: 230px;
     background: #fff !important;

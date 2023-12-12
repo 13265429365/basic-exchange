@@ -14,8 +14,8 @@
           </q-item-section>
 
           <q-item-section side>
-            <q-img v-if="shape == item.name" src="/images/default/radio_active.png" class="radioIcon" />
-            <q-img v-else src="/images/default/radio.png" class="radioIcon" />
+            <q-img v-if="shape == item.name" src="page_bg/radio_active.png" class="radioIcon" />
+            <q-img v-else src="page_bg/radio.png" class="radioIcon" />
             <!-- radio_active.png -->
             <!-- <q-radio v-model="shape" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="item.name" /> -->
           </q-item-section>
@@ -30,7 +30,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import navBar from 'src/layouts/mobile/header.vue';
-import { NotifyPositive } from 'src/utils/index';
+import { NotifyPositive } from 'src/utils/notify';
 import { useInitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils';
 
@@ -70,6 +70,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
 .radioIcon {
   width: 20px;
   height: 20px;

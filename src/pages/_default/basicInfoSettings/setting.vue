@@ -7,7 +7,7 @@
       <div v-for="(item, i) in list" :key="i" class="bg-white">
         <q-item @click="to(item.url, item.toggle)" v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-            <q-img :src="`/images/default/${item.avatar}`" width="24px" height="24px" />
+            <q-img :src="`/images/mobile/settings/${item.avatar}`" width="24px" height="24px" />
           </q-item-section>
 
           <q-item-section>
@@ -18,7 +18,7 @@
             <div class="row no-wrap items-center">
               <div v-if="item.version">{{item.version}}</div>
               <q-toggle v-if="item.toggle" size="sm" v-model="toggle" val="lg" />
-              <q-img v-else width="24px" height="24px" src="/images/default/right_arrow.png" />
+              <q-img v-else width="24px" height="24px" src="/images/mobile/settings/right_arrow.png" />
             </div>
           </q-item-section>
         </q-item>
@@ -60,4 +60,5 @@
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
 </style>

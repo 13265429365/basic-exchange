@@ -3,7 +3,7 @@
     <headerBar></headerBar>
     <q-page-container>
       <div class="row justify-center q-mb-lg" style="margin-top: 270px">
-        <q-img src="/images/default/pc/404.png" width="200px" height="200px" />
+        <q-img src="page_bg/pc/404.png" width="200px" height="200px" />
       </div>
       <div class="text-center text-weight-bold q-mb-md" style="font-size: 30px">
         Page Not Found!!

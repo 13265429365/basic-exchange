@@ -1,13 +1,13 @@
 <template>
   <div class="column full-height full-width">
-    <navBar title="edit card"></navBar>
+    <navBar title="Card"></navBar>
     <q-separator style="background: #F4F5FD;" />
     <div class="col   q-pa-md full-width column justify-between">
       <div>
         <div class="q-mb-md"
           :style="`height: 125px;background: linear-gradient(90deg, ${type == 1 ? '#1EC273' : '#7475BF'} 0%, ${type == 1 ? '#71D687' : '#3D8FC9'} 100%);border-radius: 14px;overflow: hidden;`">
           <div class="cardTransparent row " style="padding: 15px 20px;">
-            <q-img src="/images/delete/USDT.png" width="34px" height="34px" />
+            <q-img src="/images/mobile/card/USDT.png" width="34px" height="34px" />
             <div class="col column justify-between">
               <div class="row justify-between q-pl-sm">
                 <div>
@@ -25,13 +25,14 @@
         </div>
         <!-- 银行卡类型 -->
         <div class="col full-width" v-if="type == 1">
-          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Bank Name</div>
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Owner</div>
@@ -42,23 +43,23 @@
         <!-- 数字货币类型 -->
         <div v-else>
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Public Blockchain</div>
-          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Name</div>
-          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Address</div>
@@ -118,10 +119,10 @@ export default {
       type: 1, //钱包类型
       options: [
         {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: 'USDT'
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: 'BTC'
         },
       ]
@@ -152,8 +153,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .cardTransparent {
-  background: url('/images/default/cardTransparent.png') no-repeat;
+  background: url('page_bg/cardTransparent.png') no-repeat;
   background-size: 100% 100%;
   height: 125px;
   width: 100%;
@@ -171,43 +173,43 @@ export default {
   height: 50px;
 }
 
-:deep(.q-field--labeled .q-field__native) {
-  padding: 0;
-}
+// :deep(.q-field--labeled .q-field__native) {
+//   padding: 0;
+// }
 
-:deep(.userInfo-input .q-field__native) {
-  text-align: end;
-}
+// :deep(.userInfo-input .q-field__native) {
+//   text-align: end;
+// }
 
-:deep(.q-field__label) {
-  top: 20px;
-}
+// :deep(.q-field__label) {
+//   top: 20px;
+// }
 
-:deep(.q-btn) {
-  min-height: 44px;
-}
+// :deep(.q-btn) {
+//   min-height: 44px;
+// }
 
-:deep(.q-field--standout.q-field--rounded .q-field__control) {
-  border-radius: 25px;
-}
+// :deep(.q-field--standout.q-field--rounded .q-field__control) {
+//   border-radius: 25px;
+// }
 
-:deep(.q-field__control:before) {
-  color: #333333 !important;
-}
+// :deep(.q-field__control:before) {
+//   color: #333333 !important;
+// }
 
-:deep(.q-field__native) {
-  color: #333333 !important;
-  font-weight: 500 !important;
-  font-family: PingFangSC-Medium, sans-serif;
-  line-height: 20px;
-}
+// :deep(.q-field__native) {
+//   color: #333333 !important;
+//   font-weight: 500 !important;
+//   font-family: PingFangSC-Medium, sans-serif;
+//   line-height: 20px;
+// }
 
-:deep(.q-field__prepend .q-field--standout .q-field--highlighted) {
-  color: #333333 !important;
-}
+// :deep(.q-field__prepend .q-field--standout .q-field--highlighted) {
+//   color: #333333 !important;
+// }
 
-:deep(.q-field--focused .q-field--highlighted) {
-  color: #333333 !important;
-  background-color: #333333 !important;
-}
+// :deep(.q-field--focused .q-field--highlighted) {
+//   color: #333333 !important;
+//   background-color: #333333 !important;
+// }
 </style>

@@ -6,8 +6,8 @@
       <div class="pageHeader">
         My Team
       </div>
-      <div style="padding: 48px 100px;">
-        <div class="bg-grey-11 q-pa-md radius-8 row no-wrap items-center" style="width: 220px;">
+      <div style="padding: 48px 100px;min-width: 1160px;">
+        <div class="page_bg q-pa-md radius-8 row no-wrap items-center" style="width: 220px;">
           <div class="text-primary text-weight-bold" style="font-size: 16px;">
             Team Benefit：$2659
           </div>
@@ -18,7 +18,7 @@
             <template  v-slot:header>
               <q-item-section avatar>
                 <q-avatar style="width: 40;height: 40px;">
-                  <q-img :src="`/images/default/${item.img}.png`"></q-img>
+                  <q-img :src="`page_bg/${item.img}.png`"></q-img>
                 </q-avatar>
               </q-item-section>
               <q-item-section style="justify-content:start">
@@ -46,7 +46,7 @@
               <template  v-slot:header>
                 <q-item-section avatar>
                   <q-avatar style="width: 40;height: 40px;">
-                    <q-img :src="`/images/default/${str.img}.png`"></q-img>
+                    <q-img :src="`page_bg/${str.img}.png`"></q-img>
                   </q-avatar>
                 </q-item-section>
                 <q-item-section style="justify-content:start">
@@ -74,7 +74,7 @@
                 <template  v-slot:header>
                   <q-item-section avatar>
                     <q-avatar style="width: 40;height: 40px;">
-                      <q-img :src="`/images/default/${el.img}.png`"></q-img>
+                      <q-img :src="`page_bg/${el.img}.png`"></q-img>
                     </q-avatar>
                   </q-item-section>
                   <q-item-section style="justify-content:start">
@@ -181,6 +181,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   .btn {
     height: 24px;
     border-radius: 12px 12px 12px 12px;

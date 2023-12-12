@@ -12,7 +12,7 @@
               <div class="row no-wrap items-center">
                 <div class="row no-wrap items-center q-mr-xl">
                   <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
-                    <q-img src="/images/default/head.png"></q-img>
+                    <q-img src="page_bg/head.png"></q-img>
                   </q-avatar>
                   <div>
                     <div class="text-h6 text-weight-medium">Jessica</div>
@@ -157,6 +157,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   .separation {
     width: 1px;
     background: #DDDDDD;

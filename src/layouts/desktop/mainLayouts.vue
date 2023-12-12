@@ -41,27 +41,10 @@
     width: 100%;
   }
 
-  // 默认页面背景颜色
-  :deep .bg-grey-11 {
-    background-color: #f5f6fa;
-  }
-  
-  // 常用字体颜色
-  :deep .text-color-3 {
-    color: #333333 !important;
-  }
-
-  :deep .text-color-6 {
-    color: #666666;
-  }
-
-  :deep .text-color-9 {
-    color: #999999;
-  }
-
   :deep .calc {
     width: calc(100% - 268px);
     min-width: 1100px - 268px;
+    padding-left: 10px;
   }
   :deep .conent {
       max-width: 1100px;
@@ -75,5 +58,6 @@
     font-size: 28px;
     color: #333;
     font-weight: bold;
-}
+  }
+
 </style>

@@ -6,7 +6,7 @@
       <div class="row q-mb-xl">
         <div class="q-mr-md avatar">
           <q-avatar class="q-mr-md avatar" style="width: 64px;height: 64px;">
-            <q-img src="/images/default/head.png"></q-img>
+            <q-img src="page_bg/head.png"></q-img>
           </q-avatar>
         </div>
         <div>
@@ -14,7 +14,7 @@
             Paul K. Jensen
           </div>
           <q-chip class="q-chip row justify-center items-center">
-            <q-img style="width: 11px;height: 10px;" src="/images/default/Vip_icon.png" />
+            <q-img style="width: 11px;height: 10px;" src="page_bg/Vip_icon.png" />
             <span class="q-mx-xs">Lv.3</span>
             <q-icon name="arrow_forward_ios"></q-icon>
           </q-chip>
@@ -35,7 +35,7 @@
         <div>
           <div class="text-h5 text-weight-medium q-mb-xl">
             <span class="q-mr-sm">Estimated Balance</span>
-            <q-img @click="moneyShow=!moneyShow" src="/images/default/eye@2x.png" class="cursor-pointer" width="18px" height="18px"></q-img>
+            <q-img @click="moneyShow=!moneyShow" src="page_bg/eye@2x.png" class="cursor-pointer" width="18px" height="18px"></q-img>
           </div>
           <div v-if="moneyShow">
             <div class="text-h5">
@@ -82,6 +82,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   .line {
     width: 150px;
     height: 73px;

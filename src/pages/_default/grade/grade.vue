@@ -4,7 +4,7 @@
     <q-separator style="background: #F4F5FD;" />
     <div class="col bg-white  q-pa-md" style="width: 100%;">
       <div class="vipCard q-mt-md row  q-pa-md">
-        <q-img src="/images/default/VIP.png" width="93px" height="66px" style="position: absolute;top: -13px;right: 0;" />
+        <q-img src="/images/mobile/grade/VIP.png" width="93px" height="66px" style="position: absolute;top: -13px;right: 0;" />
         <div class="col-10 column">
           <div style="color: #FEC183;" class="text-h6">VIP Card</div>
           <div style="color: #FEC183;" class="text-caption full-width col">
@@ -68,8 +68,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .vipCard {
-  background-image: url('/images/default/vipCard.png');
+  background-image: url('/images/mobile/grade/vipCard.png');
   height: 80px;
   width: 100%;
   background-size: 100% 100%;

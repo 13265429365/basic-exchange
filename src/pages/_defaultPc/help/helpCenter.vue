@@ -76,6 +76,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
 ::v-deep(.q-expansion-item) {
   padding-left: 9px;
   border-bottom: 1px solid #F4F5FD;

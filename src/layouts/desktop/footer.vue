@@ -5,7 +5,7 @@
       <div v-for="(item,i) in list" :key="i" style="margin-right: 70px;">
         <div v-for="(str,s) in item.data" :key="s"
           :class="['q-mb-sm row items-center no-wrap cursor-pointer',{'white':!str.isTitle}]">
-          <q-img v-if="str.icon" class="q-mr-xs" :src="`/images/default/pc/${str.icon}.png`" width="20px"
+          <q-img v-if="str.icon" class="q-mr-xs" :src="`images/pc/footer/${str.icon}.png`" width="20px"
             height="20px"></q-img>
           <div style="white-space: nowrap;">{{str.name}}</div>
         </div>
@@ -14,10 +14,10 @@
       <div>
         <div class="white q-mb-sm cursor-pointer">Community</div>
         <div class="row no-wrap q-mb-md">
-          <q-img class="q-mr-md cursor-pointer" src="/images/default/pc/Facebook.png" width="32px" height="32px"></q-img>
-          <q-img class="q-mr-md cursor-pointer" src="/images/default/pc/twitter.png" width="32px" height="32px"></q-img>
-          <q-img class="q-mr-md cursor-pointer" src="/images/default/pc/Instagram.png" width="32px" height="32px"></q-img>
-          <q-img class="q-mr-md cursor-pointer" src="/images/default/pc/Youtube.png" width="32px" height="32px"></q-img>
+          <q-img class="q-mr-md cursor-pointer" src="images/pc/footer/Facebook.png" width="32px" height="32px"></q-img>
+          <q-img class="q-mr-md cursor-pointer" src="images/pc/footer/twitter.png" width="32px" height="32px"></q-img>
+          <q-img class="q-mr-md cursor-pointer" src="images/pc/footer/Instagram.png" width="32px" height="32px"></q-img>
+          <q-img class="q-mr-md cursor-pointer" src="images/pc/footer/Youtube.png" width="32px" height="32px"></q-img>
         </div>
         <!-- 下拉按钮 -->
         <q-btn-dropdown class="q-mb-md justify-between" style="border: 1px solid #fff;width: 176px;height: 40px;" icon="language" label="English" no-caps>
@@ -111,6 +111,7 @@
 </script>
 
 <style scoped>
+  @import url("../../css/pcCss.css");
   .q-footer {
     min-width: 1100px;
     background: #021736;

@@ -29,7 +29,7 @@ export default {
         title: 'success',
         content: '',
         yesBtn: 'OK',
-        logo: '/images/default/success.png',
+        logo: 'page_bg/success.png',
         backUrl: ''
       }
     });
@@ -45,3 +45,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+  @import url("../../../css/mobileCss.css");
+</style>

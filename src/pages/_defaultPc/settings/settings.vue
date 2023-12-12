@@ -27,7 +27,7 @@
               </q-avatar>
             </div>
             <div class="row items-end">
-              <q-btn @click="showEdit(item)" class="bg-grey-11" no-caps :label="item.btn"></q-btn>
+              <q-btn @click="showEdit(item)" class="page_bg" no-caps :label="item.btn"></q-btn>
             </div>
           </div>
           <q-separator class="q-mt-md" style="background: #F1F1F1;" />
@@ -97,6 +97,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   .q-btn {
     width: 80px;
     height: 32px;

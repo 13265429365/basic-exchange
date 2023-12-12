@@ -7,9 +7,9 @@
         <div class="text-h5 text-weight-bold">Complete Your Profile</div>
       </div>
       <div class="row justify-center">
-        <div class="relative logo">
-          <q-img src="/images/default/head.png" :ratio="1" />
-          <q-img class="head_edit" src="/images/default/head_edit.png" style="" />
+        <div class="relative q-mt-lg q-mb-sm" style="width: 80px;height: 80px;">
+          <q-img src="/images/mobile/infoEdit/head.png" :ratio="1" />
+          <q-img class="head_edit" src="/images/mobile/infoEdit/head_edit.png" style="" />
         </div>
       </div>
       <div class="q-mt-lg q-px-lg">
@@ -49,12 +49,12 @@
               <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
                 class="q-mb-md q-mr-md" filled>
                 <template v-slot:prepend>
-                  <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
+                  <q-img class="countryLogo" src="page_bg/china.png" @click.stop.prevent />
                 </template>
                 <template v-slot:option="scope">
                   <q-item v-bind="scope.itemProps">
                     <q-item-section avatar>
-                      <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
+                      <q-img class="countryLogo" src="page_bg/china.png" @click.stop.prevent />
                     </q-item-section>
                     <q-item-section>
                       <q-item-label>{{ scope.opt.label }}</q-item-label>
@@ -116,6 +116,7 @@
 </script>
 
 <style scoped>
+  @import url("../../../css/mobileCss.css");
   .relative {
     position: relative;
   }

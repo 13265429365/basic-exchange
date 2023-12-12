@@ -165,6 +165,7 @@
   });
 </script>
 <style lang="scss" scoped>
+  @import url("../../../css/pcCss.css");
   :deep .q-table {
     padding-left: 39px;
   }

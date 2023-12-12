@@ -132,6 +132,7 @@
 </script>
 
 <style scoped>
+  @import url("../../../css/pcCss.css");
   :deep(.q-expansion-item .q-item) {
     padding: 0;
     margin-bottom: 16px;

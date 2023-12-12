@@ -2,12 +2,12 @@
   <div class="column full-height full-width">
     <navBar title="Card"></navBar>
     <q-separator style="background: #F4F5FD;" />
-    <div class="col  bg-grey-11 q-pa-md full-width column justify-between">
+    <div class="col  page_bg q-pa-md full-width column justify-between">
       <div class="col full-width">
         <div class="q-mb-md"
           style="height: 125px;background: linear-gradient(90deg, #1EC273 0%, #71D687 100%);border-radius: 14px;overflow: hidden;">
           <div class="cardTransparent row " style="padding: 15px 20px;">
-            <q-img src="/images/delete/USDT.png" width="34px" height="34px" />
+            <q-img src="/images/mobile/card/USDT.png" width="34px" height="34px" />
             <div class="col column justify-between">
               <div class="row justify-between q-pl-sm">
                 <div>
@@ -33,7 +33,7 @@
         <div class="q-mb-md"
           style="height: 125px;background: linear-gradient(90deg, #7475BF 0%, #3D8FC9 100%);border-radius: 14px;overflow: hidden;">
           <div class="cardTransparent row" style="padding: 15px 20px;">
-            <q-img src="/images/delete/USDT.png" width="34px" height="34px" />
+            <q-img src="/images/mobile/card/USDT.png" width="34px" height="34px" />
             <div class="col column justify-between">
               <div class="row justify-between q-pl-sm">
                 <div>
@@ -104,8 +104,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .cardTransparent {
-  background: url('/images/default/cardTransparent.png') no-repeat;
+  background: url('page_bg/cardTransparent.png') no-repeat;
   background-size: 100% 100%;
   height: 125px;
   width: 100%;

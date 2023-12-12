@@ -1,6 +1,6 @@
 <template>
   <div class="column full-height full-width">
-    <navBar title="edit card"></navBar>
+    <navBar title="Add New Card"></navBar>
     <q-separator style="background: #F4F5FD;" />
     <div class="col   q-pa-md full-width column justify-between">
       <div class="col full-width">
@@ -8,7 +8,7 @@
         <q-scroll-area style="height: 60px; width: 100%;" :visible="false">
           <div class="row no-wrap">
             <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex" style="width: 120px;height: 50px;"
-              :class="`q-pa-sm row bg-grey-11 radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
+              :class="`q-pa-sm row page_bg radius-8 q-mr-sm justify-center ${typeIndex == typeDataIndex ? 'select' : ''}`"
               @click="typeDataIndex = typeIndex">
               <q-img class="self-center q-mr-sm" :src="typeI.image" width="26px" height="26px" />
               <div class="text-color-3 text-body1 text-weight-bold self-center">{{ typeI.value }}</div>
@@ -20,13 +20,13 @@
         <!-- 银行卡类型 -->
         <div v-if="typeArr[typeDataIndex].type == 1">
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Bank Name</div>
-          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Card Owner</div>
@@ -38,23 +38,23 @@
         <div v-else>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Public Blockchain</div>
-          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Name</div>
-          <div class="bg-grey-11 full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
+          <div class="page_bg full-width row justify-between q-px-md q-mb-md" style="border-radius: 10px;height: 55px;"
             @click="dialog = true">
             <div class="self-center row">
               <q-img :src="options[model].image" width="26px" height="26px" />
               <div class="self-center q-ml-sm">{{ options[model].value }}</div>
             </div>
-            <q-img class="self-center" src="/images/default/chevron.png" width="24px" height="24px" />
+            <q-img class="self-center" src="/images/mobile/card/chevron.png" width="24px" height="24px" />
           </div>
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Token Address</div>
@@ -110,28 +110,28 @@ export default {
       model: 0,
       typeDataIndex: 0,
       typeArr: [{
-        image: '/images/delete/USDT.png',
+        image: '/images/mobile/card/USDT.png',
         value: 'Card',
         type: 1
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: 'TRC20',
         type: 2
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: 'TRC20',
         type: 2
       }, {
-        image: '/images/delete/BTC.png',
+        image: '/images/mobile/card/BTC.png',
         value: 'TRC20',
         type: 2
       }],
       options: [
         {
-          image: '/images/delete/USDT.png',
+          image: '/images/mobile/card/USDT.png',
           value: '农业银行'
         }, {
-          image: '/images/delete/BTC.png',
+          image: '/images/mobile/card/BTC.png',
           value: '建设银行'
         },
       ]
@@ -147,7 +147,7 @@ export default {
             title: 'Created Successfully',
             content: '',
             yesBtn: 'OK',
-            logo: '/images/default/success.png',
+            logo: '/images/mobile/success.png',
             backUrl: ''
           })
         }
@@ -170,8 +170,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @import url("../../../css/mobileCss.css");
 .cardTransparent {
-  background: url('/images/default/cardTransparent.png') no-repeat;
+  background: url('page_bg/cardTransparent.png') no-repeat;
   background-size: 100% 100%;
   height: 125px;
   width: 100%;
@@ -187,53 +188,53 @@ export default {
   display: none !important;
 }
 
-:deep(.q-field__control) {
-  background-color: #F5F6FA !important;
-  height: 50px;
-  box-shadow: none !important;
-}
+// :deep(.q-field__control) {
+//   background-color: #F5F6FA !important;
+//   height: 50px;
+//   box-shadow: none !important;
+// }
 
-:deep(.q-field__marginal) {
-  height: 50px;
-}
+// :deep(.q-field__marginal) {
+//   height: 50px;
+// }
 
-:deep(.q-field--labeled .q-field__native) {
-  padding: 0;
-}
+// :deep(.q-field--labeled .q-field__native) {
+//   padding: 0;
+// }
 
-:deep(.userInfo-input .q-field__native) {
-  text-align: end;
-}
+// :deep(.userInfo-input .q-field__native) {
+//   text-align: end;
+// }
 
-:deep(.q-field__label) {
-  top: 20px;
-}
+// :deep(.q-field__label) {
+//   top: 20px;
+// }
 
-:deep(.q-btn) {
-  min-height: 44px;
-}
+// :deep(.q-btn) {
+//   min-height: 44px;
+// }
 
-:deep(.q-field--standout.q-field--rounded .q-field__control) {
-  border-radius: 25px;
-}
+// :deep(.q-field--standout.q-field--rounded .q-field__control) {
+//   border-radius: 25px;
+// }
 
-:deep(.q-field__control:before) {
-  color: #333333 !important;
-}
+// :deep(.q-field__control:before) {
+//   color: #333333 !important;
+// }
 
-:deep(.q-field__native) {
-  color: #333333 !important;
-  font-weight: 500 !important;
-  font-family: PingFangSC-Medium, sans-serif;
-  line-height: 20px;
-}
+// :deep(.q-field__native) {
+//   color: #333333 !important;
+//   font-weight: 500 !important;
+//   font-family: PingFangSC-Medium, sans-serif;
+//   line-height: 20px;
+// }
 
-:deep(.q-field__prepend .q-field--standout .q-field--highlighted) {
-  color: #333333 !important;
-}
+// :deep(.q-field__prepend .q-field--standout .q-field--highlighted) {
+//   color: #333333 !important;
+// }
 
-:deep(.q-field--focused .q-field--highlighted) {
-  color: #333333 !important;
-  background-color: #333333 !important;
-}
+// :deep(.q-field--focused .q-field--highlighted) {
+//   color: #333333 !important;
+//   background-color: #333333 !important;
+// }
 </style>

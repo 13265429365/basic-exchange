@@ -60,6 +60,7 @@
   };
 </script>
 <style scoped>
+  @import url("../../../css/pcCss.css");
   .border {
     border: 3px solid #01AC66;
   }
