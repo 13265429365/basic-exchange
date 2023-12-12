@@ -1,5 +1,5 @@
 import { route } from 'quasar/wrappers';
-// import { UserTokenKey } from 'src/stores/user';
+import { UserTokenKey, InitStoreState } from 'src/stores/init';
 import { Cookies } from 'quasar';
 import {
   createMemoryHistory,
@@ -9,14 +9,7 @@ import {
 } from 'vue-router';
 
 import routes from 'src/router/routes';
-import { defaultRouter } from 'src/router/defaultRouters';
-import { defaultPcRouters } from 'src/router/defaultPCRouters';
 
-// 所有模版路由信息
-export const templateRoutes: any = new Map([
-  ['default', defaultRouter],
-  ['defaultPc', defaultPcRouters],
-]);
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -26,7 +19,7 @@ export const templateRoutes: any = new Map([
  * with the Router instance.
  */
 
-export default route(function ({ /* store, */ ssrContext }) {
+export default route(async function ({ store, ssrContext }) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history'
@@ -43,29 +36,30 @@ export default route(function ({ /* store, */ ssrContext }) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
 
-  // 路由前置守卫
+  // 请求初始化数据
   const $cookies = ssrContext ? Cookies.parseSSR(ssrContext) : Cookies;
+  store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
+  store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
 
   Router.beforeEach((to, form, next) => {
-    next()
-    // const userToken = <string>$cookies.get(UserTokenKey);
-    // if (
-    //   (to.name === 'Login' || to.name === 'Register') &&
-    //   userToken != null &&
-    //   userToken.length > 0
-    // ) {
-    //   next({ name: 'home' });
-    // } else {
-    //   // 验证是否跳转到登录页面
-    //   if (
-    //     to.matched.some((record) => record.meta.requireAuth) &&
-    //     (userToken == null || userToken.length === 0)
-    //   ) {
-    //     next({ name: 'Login', query: { next: to.fullPath } });
-    //   } else {
-    //     next();
-    //   }
-    // }
+    if (
+      (to.name === 'Login' || to.name === 'Register') &&
+      store.state.value.init.userToken != null &&
+      store.state.value.init.userToken.length > 0
+    ) {
+      next({ name: 'Home' });
+    } else {
+      // 验证是否跳转到登录页面
+      if (
+        to.matched.some((record) => record.meta.requireAuth) &&
+        (store.state.value.init.userToken == null ||
+          store.state.value.init.userToken.length === 0)
+      ) {
+        next({ name: 'Login' });
+      } else {
+        next();
+      }
+    }
   });
 
   return Router;

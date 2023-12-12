@@ -1,6 +1,6 @@
 import { TemplateRouteInterface } from 'src/router/routes';
 
-export const defaultPcRouters: TemplateRouteInterface[] = [
+export const defaultDesktopRouter: TemplateRouteInterface[] = [
   {
     path: '/',
     name: 'defaultPc',

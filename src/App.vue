@@ -7,7 +7,7 @@ import { defineComponent } from 'vue';
 import { useMeta, useQuasar } from 'quasar';
 import { useInitStore } from 'src/stores/init';
 import { dynamicRouterFunc } from 'src/router/routes';
-import { templateRoutes } from 'src/router/index';
+import { templateRoutes } from 'src/router/routes';
 import { useRouter } from 'vue-router';
 
 export default defineComponent({

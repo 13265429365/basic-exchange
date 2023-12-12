@@ -1,4 +1,6 @@
 import { RouteRecordRaw, Router } from 'vue-router';
+import { defaultRouter } from 'src/router/default/mobile';
+import { defaultDesktopRouter } from 'src/router/default/desktop';
 
 export interface TemplateRouteInterface {
   path: string;
@@ -8,6 +10,12 @@ export interface TemplateRouteInterface {
   meta: any;
   children: TemplateRouteInterface[];
 }
+
+// 所有模版路由信息 桌面端必须带上 Desktop
+export const templateRoutes: any = new Map([
+  ['default', defaultRouter],
+  ['defaultDesktop', defaultDesktopRouter],
+]);
 
 // componentPathList 获取文件路径文件
 const componentPathList = {
@@ -24,14 +32,8 @@ export const dynamicRouterFunc = (
   parent = '' //  父级路由
 ) => {
   if (routerList && routerList.length > 0 && template !== '') {
-    // if (template=='pc') {
-    //   console.log(routerList, '路由列表');
-    //   console.log(template, '模板');
-    //   console.log(parent, '父级路由');
-    // }
     routerList.forEach((item) => {
-      // template = isMobile ? template : template + 'Pc';
-      template = isMobile ? template : 'defaultPc';
+      template = isMobile ? template : template + 'Desktop';
       //  获取路径
       let vuePath = '../' + item.componentPath + '/' + item.component;
       if (item.componentPath === 'pages') {
