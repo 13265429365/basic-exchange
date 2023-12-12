@@ -46,17 +46,6 @@ export default route(async function ({ store, ssrContext }) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
-<<<<<<< HEAD
-  dynamicRouterFunc(
-    Router,
-    templateRoutes.get('default'),
-    'default',
-    false,
-  )
-  console.log(routes);
-=======
-
->>>>>>> main
   // 请求初始化数据
   const $cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies;
   const $platform = process.env.SERVER
@@ -72,6 +61,7 @@ export default route(async function ({ store, ssrContext }) {
     <boolean>$platform.is.mobile
   );
 
+  //  路由守卫
   Router.beforeEach((to, form, next) => {
     if (
       (to.name === 'Login' || to.name === 'Register') &&

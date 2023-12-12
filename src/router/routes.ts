@@ -17,9 +17,7 @@ export const dynamicRouterFunc = (
   isMobile: boolean, //  是否手机端
   parent = '', //  父级路由
 ) => {
-  console.log(routerList);
-  console.log(parent);
-  if (routerList && routerList.length > 0 && template !== '') {
+  if (routerList && routerList.length > 0) {
     routerList.forEach((item) => {
     // console.log(isMobile ? item.componentMobile : item.componentDesktop);
       //  动态添加路由
@@ -27,7 +25,6 @@ export const dynamicRouterFunc = (
         path: item.route,
         name: item.name,
         component:
-        // componentPathList[item.componentPath][vuePath]
           componentPathList[
             isMobile ? item.componentMobile : item.componentDesktop
           ],
