@@ -4,10 +4,10 @@ import {
   LayoutsMobilePath,
   PagesTemplateDesktopPath,
   PagesTemplateMobilePath,
-} from 'src/router';
+} from 'src/router/index';
 
 export const TemplateName = 'default';
-
+console.log(PagesTemplateDesktopPath(TemplateName, 'index.vue'));
 export const defaultRouter: TemplateRouteInterface[] = [
   //  主体布局文件 Tabbar + 桌面端头部尾部
   {
@@ -17,6 +17,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
       {
+        name: 'Home',
         route: '/',
         componentMobile: PagesTemplateDesktopPath(TemplateName, 'index.vue'),
         componentDesktop: PagesTemplateMobilePath(TemplateName, 'index.vue'),
