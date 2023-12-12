@@ -37,8 +37,8 @@ export default defineComponent({
     //  动态载入路由
     dynamicRouterFunc(
       $router,
-      templateRoutes.get($q.platform.is.mobile ? 'default' : 'defaultPc'),
-      $q.platform.is.mobile ? 'default' : 'defaultPc',
+      templateRoutes.get($q.platform.is.mobile ? '_default' : '_defaultDesktop'),
+      $q.platform.is.mobile ? '_default' : '_defaultDesktop',
       <boolean>$q.platform.is.mobile
     );
     //  覆盖当前路由

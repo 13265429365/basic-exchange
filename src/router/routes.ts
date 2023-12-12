@@ -13,8 +13,8 @@ export interface TemplateRouteInterface {
 
 // 所有模版路由信息 桌面端必须带上 Desktop
 export const templateRoutes: any = new Map([
-  ['default', defaultRouter],
-  ['defaultDesktop', defaultDesktopRouter],
+  ['_default', defaultRouter],
+  ['_defaultDesktop', defaultDesktopRouter],
 ]);
 
 // componentPathList 获取文件路径文件
@@ -32,8 +32,10 @@ export const dynamicRouterFunc = (
   parent = '' //  父级路由
 ) => {
   if (routerList && routerList.length > 0 && template !== '') {
+
     routerList.forEach((item) => {
-      template = isMobile ? template : template + 'Desktop';
+      template = isMobile ? template : '_defaultDesktop';
+
       //  获取路径
       let vuePath = '../' + item.componentPath + '/' + item.component;
       if (item.componentPath === 'pages') {
@@ -43,6 +45,7 @@ export const dynamicRouterFunc = (
             ? item.component
             : '/' + template + '/' + item.component;
       }
+      console.log(vuePath)
       router.addRoute(parent, {
         path: item.path,
         name: item.name,

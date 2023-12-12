@@ -160,7 +160,7 @@
 </template>
 
 <script lang="ts">
-  import menuBar from 'src/layouts/pc/settingLayouts.vue';
+  import menuBar from 'src/layouts/desktop/settingLayouts.vue';
   import { defineComponent, reactive, toRefs, ref, onMounted, onUnmounted } from 'vue';
   import { useRouter } from 'vue-router';
   import * as echarts from 'echarts'

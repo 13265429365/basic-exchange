@@ -5,7 +5,7 @@ export const defaultDesktopRouter: TemplateRouteInterface[] = [
     path: '/',
     name: 'defaultPc',
     componentPath: 'layouts',
-    component: 'pc/mainLayouts.vue',
+    component: 'desktop/mainLayouts.vue',
     children: [
       {
         path: '/',
