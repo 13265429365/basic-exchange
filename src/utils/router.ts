@@ -21,5 +21,6 @@ export const PagesTemplateMobilePath = (
   templabe: string,
   name: string
 ): string => {
+  // console.log('../pages/' + templabe + '/mobile/' + name);
   return '../pages/' + templabe + '/mobile/' + name;
 };

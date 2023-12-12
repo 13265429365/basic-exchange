@@ -84,7 +84,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
 
   //  全屏的布局文件
   {
-    name: 'LayoutsFull',
+    name: 'Layouts',
     route: '/',
     componentMobile: LayoutsMobilePath('full.vue'),
     componentDesktop: LayoutsDesktopPath('main.vue'),
