@@ -3,6 +3,7 @@ import { TemplateRouteInterface } from 'src/router';
 import { defaultRouter, TemplateName } from 'src/router/defaultRouter';
 
 // 所有模版路由信息 桌面端必须带上 Desktop
+
 export const templateRoutes: any = new Map([[TemplateName, defaultRouter]]);
 
 // componentPathList 获取文件路径文件

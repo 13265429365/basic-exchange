@@ -23,8 +23,8 @@
 </template>
 
 <script lang="ts">
-import footerBar from 'src/layouts/pc/footer.vue';
-import headerBar from 'src/layouts/pc/header.vue';
+import footerBar from 'src/layouts/desktop/footer.vue';
+import headerBar from 'src/layouts/desktop/header.vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 
