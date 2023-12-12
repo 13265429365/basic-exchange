@@ -9,54 +9,50 @@
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs } from 'vue';
-  import headerBar from './header.vue';
-  import footerBar from './footer.vue';
-  // import { useRouter } from 'vue-router';
+import { reactive, toRefs } from 'vue';
+import headerBar from 'src/layouts/desktop/header.vue';
+import footerBar from './footer.vue';
 
-  export default {
-    components: { headerBar, footerBar },
-    name: 'defaultPc',
-    setup() {
-      // const router = useRouter();
-      const state = reactive({
-
-      });
-      return {
-        ...toRefs(state),
-      };
-    },
-  };
+export default {
+  components: { headerBar, footerBar },
+  name: 'defaultPc',
+  setup() {
+    // const router = useRouter();
+    const state = reactive({});
+    return {
+      ...toRefs(state),
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  html body {
-    min-width: 1100px !important;
-    overflow: scroll;
-  }
+// html body {
+//   min-width: 1100px !important;
+//   overflow: scroll;
+// }
 
-  .q-page-container {
-    min-width: 1100px !important;
-    width: 100%;
-  }
+// .q-page-container {
+//   min-width: 1100px !important;
+//   width: 100%;
+// }
 
-  :deep .calc {
-    width: calc(100% - 268px);
-    min-width: 1100px - 278px;
-    padding-left: 10px;
-  }
-  :deep .conent {
-      max-width: 1100px;
-      min-width: 1100px;
-      margin: 0 auto;
-  }
-  :deep .pageHeader {
-    width: 100%;
-    padding: 33px 100px;
-    background: #FAFAFA;
-    font-size: 28px;
-    color: #333;
-    font-weight: bold;
-  }
-
+// :deep .calc {
+//   width: calc(100% - 268px);
+//   min-width: 1100px - 278px;
+//   padding-left: 10px;
+// }
+// :deep .conent {
+//   max-width: 1100px;
+//   min-width: 1100px;
+//   margin: 0 auto;
+// }
+// :deep .pageHeader {
+//   width: 100%;
+//   padding: 33px 100px;
+//   background: #fafafa;
+//   font-size: 28px;
+//   color: #333;
+//   font-weight: bold;
+// }
 </style>
