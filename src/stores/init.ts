@@ -18,7 +18,7 @@ export const InitStoreState = {
   tabbars: [] as tabbarInterface[],
 
   // 用户菜单
-  userMenu: [] as menuInterface[][],
+  userMenu: [] as userMenuInterface[][],
 
   // 快捷菜单
   quickMenu: [] as menuInterface[][],
@@ -126,6 +126,17 @@ interface tabbarInterface {
 
   //  激活图标
   activeIcon: string;
+
+  //  路由
+  route: string;
+}
+
+interface userMenuInterface {
+  //  标题
+  name: string;
+
+  //  默认图标
+  icon: string;
 
   //  路由
   route: string;

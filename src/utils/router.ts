@@ -13,6 +13,7 @@ export const PagesTemplateDesktopPath = (
   templabe: string,
   name: string
 ): string => {
+  console.log('../pages/' + templabe + 'desktop/' + name);
   return '../pages/' + templabe + 'desktop/' + name;
 };
 
