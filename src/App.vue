@@ -6,7 +6,7 @@
 import { defineComponent } from 'vue';
 import { useMeta, useQuasar } from 'quasar';
 import { useInitStore } from 'src/stores/init';
-import { dynamicRouterFunc } from 'src/router/routes';
+// import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
 import { useRouter } from 'vue-router';
 
@@ -35,12 +35,12 @@ export default defineComponent({
     };
     useMeta(metaData);
     //  动态载入路由
-    dynamicRouterFunc(
-      $router,
-      templateRoutes.get($q.platform.is.mobile ? '_default' : '_defaultDesktop'),
-      $q.platform.is.mobile ? '_default' : '_defaultDesktop',
-      <boolean>$q.platform.is.mobile
-    );
+    // dynamicRouterFunc(
+    //   $router,
+    //   templateRoutes.get($q.platform.is.mobile ? '_default' : '_defaultDesktop'),
+    //   $q.platform.is.mobile ? '_default' : '_defaultDesktop',
+    //   <boolean>$q.platform.is.mobile
+    // );
     //  覆盖当前路由
     $router.replace($router.currentRoute.value.fullPath);
   },

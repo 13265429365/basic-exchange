@@ -8,6 +8,16 @@ import {
   createWebHistory,
 } from 'vue-router';
 
+// 路由接口
+export interface TemplateRouteInterface {
+  route: string; //  路由
+  name: string; //  名称
+  componentMobile: string; //  手机端文件
+  componentDesktop: string; //  桌面端文件
+  meta: any; //  meta数据
+  children: TemplateRouteInterface[]; //  子级
+}
+
 import routes from 'src/router/routes';
 
 /*
