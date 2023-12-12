@@ -1,84 +1,67 @@
 <template>
-  <div class="q-px-md q-py-md row navBar justify-between" :style="{
-    'background': bgColor,
-    height: height
-  }">
-    <q-icon class="self-center absolute" name="arrow_back" size="24px" @click="backFunc"></q-icon>
-    <p
-      :class="[color == 'black' ? 'text-color-3' : 'text-' + color, 'text-weight-bolder', 'q-ma-none', textCenter ? 'text-center' : 'q-pl-sm', 'ellipsis', 'col', 'text-subtitle1']">
-      {{ title }}
-    </p>
-    <slot name="right"></slot>
+  <div class="row justify-between items-center" :style="style">
+    <q-icon
+      :name="leftButton.name"
+      :size="leftButton.size"
+      @click="
+        leftButton.route == '' ? $router.back() : $router.push(leftButton.route)
+      "
+    ></q-icon>
   </div>
-  <!-- 占位 -->
-  <div :style="{ height }"></div>
+  <div :class="titleClass">{{ title }}</div>
+  <div>
+    <q-icon
+      v-if="rightButton.icon != ''"
+      :name="rightButton.name"
+      :size="rightButton.size"
+      @click="$router.push(rightButton.route)"
+    ></q-icon>
+  </div>
 </template>
 
 <script lang="ts">
-import { useRouter } from 'vue-router';
 import { reactive, toRefs } from 'vue';
 
 export default {
-  name: 'navBar',
+  name: 'LayoutsHeader',
   props: {
-    color: {
-      type: String,
-      default: () => {
-        return 'black';
-      },
+    //  主体 style
+    style: {
+      type: Object,
+      defualt: { height: '60px' },
     },
-    bgColor: {
-      type: String,
-      default: () => {
-        return 'white';
-      },
-    },
+    //  标题
     title: {
-      type: String,
-      default: () => {
-        return '';
-      },
-    },
-    backUrl: {
       type: String,
       default: '',
     },
-    height: {
+    titleClass: {
       type: String,
-      default: '60px',
+      default: 'text-body1 text-bold',
     },
-    textCenter: {
-      type: Boolean,
-      default: true
+    //  左侧按钮图标
+    leftButton: {
+      type: Object,
+      default: () => {
+        return { icon: 'arrow_back', size: '24px', route: '' };
+      },
+    },
+    //  右侧按钮图标
+    rightButton: {
+      type: Object,
+      default: () => {
+        return { icon: '', size: '24px', route: '' };
+      },
     },
   },
-  setup(props: any, { emit }) {
-    const router = useRouter();
-    // 返回按钮
-    const backFunc = () => {
-      props.backUrl === '' ? router.back() : router.push(props.backUrl);
-      // console.log(props.backUrl);
-    };
-    const state = reactive({
-    });
-    const handleClick = (tabIndex: any) => {
-      // 使用self访问组件实例
-      emit('custom_event', tabIndex);
-    }
+  setup() {
+    const state = reactive({});
+
     return {
       ...toRefs(state),
-      backFunc,
-      handleClick
     };
   },
 };
 </script>
 
-<style scoped>
-.navBar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 99;
-}
-</style>
+<style scoped></style>
