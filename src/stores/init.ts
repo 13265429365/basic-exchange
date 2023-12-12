@@ -170,6 +170,9 @@ interface LanguageInterface {
   //  语言名称
   name: string;
 
+  //  语言别名
+  alias: string;
+
   //  语言图标
   icon: string;
 }

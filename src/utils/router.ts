@@ -9,11 +9,17 @@ export const LayoutsMobilePath = (name: string): string => {
 };
 
 // PagesTemplateDesktopPath 桌面端页面文件
-export const PagesTemplateDesktopPath = (name: string): string => {
-  return '../pages/desktop/' + name;
+export const PagesTemplateDesktopPath = (
+  templabe: string,
+  name: string
+): string => {
+  return '../pages/' + templabe + 'desktop/' + name;
 };
 
 // PagesTemplateMobilePath 手机端页面文件
-export const PagesTemplateMobilePath = (name: string): string => {
-  return '../pages/mobile/' + name;
+export const PagesTemplateMobilePath = (
+  templabe: string,
+  name: string
+): string => {
+  return '../pages/' + templabe + 'mobile/' + name;
 };

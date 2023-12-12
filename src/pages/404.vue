@@ -47,31 +47,4 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-.sub {
-  width: 100%;
-  height: 44px;
-  background: $default;
-  border-radius: 29px;
-  cursor: pointer;
-  color: #fff;
-  font-size: 15px;
-}
-
-.login {
-  color: $default;
-  cursor: pointer;
-}
-
-.logo {
-  width: 70px;
-  height: 70px;
-  margin-top: 30px;
-  margin-bottom: 20px;
-}
-
-.countryLogo {
-  width: 24px;
-  height: 16px;
-}
-</style>
+<style lang="scss" scoped></style>
