@@ -47,23 +47,23 @@ export const InitStoreState = {
     settings: {
       //  注册配置
       register: {
-        //  是否显示确认密码
-        showCmfPass: false,
-        //  是否显示安全密钥
-        showSecurityPass: false,
-        //  是否显示验证码
-        showVerify: true,
-        //  是否显示手机号码
-        showTelephone: false,
         //  是否显示邮箱
         showEmail: false,
+        //  是否显示确认密码
+        showCmfPass: false,
+        //  是否显示验证码
+        showVerify: false,
+        //  是否显示安全密钥
+        showSecurityPass: false,
+        //  是否显示手机号码
+        showTelephone: false,
       },
       //  登录配置
       login: {
         //  是否显示验证码
-        showVerify: true,
+        showVerify: false,
         //  是否显示注册
-        showRegister: true,
+        showRegister: false,
       },
       //  切换语言配置
       lang: {

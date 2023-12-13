@@ -27,32 +27,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// html body {
-//   min-width: 1100px !important;
-//   overflow: scroll;
-// }
+:deep .calc {
+  width: calc(100% - 268px);
+  min-width: 1100px - 278px;
+  padding-left: 10px;
+}
 
-// .q-page-container {
-//   min-width: 1100px !important;
-//   width: 100%;
-// }
-
-// :deep .calc {
-//   width: calc(100% - 268px);
-//   min-width: 1100px - 278px;
-//   padding-left: 10px;
-// }
-// :deep .conent {
-//   max-width: 1100px;
-//   min-width: 1100px;
-//   margin: 0 auto;
-// }
-// :deep .pageHeader {
-//   width: 100%;
-//   padding: 33px 100px;
-//   background: #fafafa;
-//   font-size: 28px;
-//   color: #333;
-//   font-weight: bold;
-// }
+:deep .pageHeader {
+  width: 100%;
+  padding: 33px 100px;
+  background: #fafafa;
+  font-size: 28px;
+  color: #333;
+  font-weight: bold;
+}
 </style>

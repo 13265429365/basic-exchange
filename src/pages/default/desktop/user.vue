@@ -23,11 +23,11 @@
             <div class="row items-center">
               <div v-if="item.content" class="text-weight-medium">{{item.content}}</div>
               <q-avatar v-else style="width: 34px;height: 34px;">
-                <img :src="`/images/pc/settings/${item.avatar}.png`">
+                <img src="https://cdn.quasar.dev/img/avatar.png">
               </q-avatar>
             </div>
             <div class="row items-end">
-              <q-btn @click="showEdit(item)" class="page_bg" no-caps :label="item.btn"></q-btn>
+              <q-btn class="bg-grey-3" no-caps :label="item.btn"></q-btn>
             </div>
           </div>
           <q-separator class="q-mt-md" style="background: #F1F1F1;" />
@@ -35,18 +35,15 @@
         <!--  -->
       </div>
     </div>
-    <Edit ref="edit"></Edit>
   </div>
 </template>
 
 <script lang="ts">
 import menuBar from 'src/layouts/desktop/setting.vue';
-import Edit from './Edit/Edit.vue';
-import { defineComponent, reactive, toRefs, ref } from 'vue';
+import { defineComponent, reactive, toRefs } from 'vue';
 export default defineComponent({
   components: {
     menuBar,
-    Edit
   },
   name: 'userIndex',
   setup() {
@@ -83,20 +80,13 @@ export default defineComponent({
         },
       ],
     });
-    let edit = ref(null);
     return {
       ...toRefs(store),
-      edit,
-      // 打开edit对话框
-      showEdit(row: unknown) {
-        edit.value?.showEdit(row)
-      },
     }
   }
 });
 </script>
 <style lang="scss" scoped>
-  @import url("../../../css/pcCss.css");
   .q-btn {
     width: 80px;
     height: 32px;

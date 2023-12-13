@@ -1,145 +1,136 @@
 <template>
   <q-dialog v-model="LoginShow">
     <q-card style="width: 410px">
-      <q-card-section style="padding: 30px">
-        <div class="text-center text-weight-bold text-primary" style="font-size: 36px">
+      <q-card-section class="q-pa-lg">
+        <!--  -->
+        <div class="text-center text-weight-bold text-primary text-h4">
           Login
         </div>
-        <div class="text-center" style="font-size: 18px">
+        <div class="text-center text-h6 text-weight-regular">
           Login to your account
         </div>
-        <div class="q-mt-lg">
-          <q-form>
-            <q-input class="q-mb-md" standout v-model="userParams.username" placeholder="Username">
-              <template v-slot:prepend>
-                <q-img width="24px" height="24px" src="/images/pc/header/user.png" />
-              </template>
-            </q-input>
-            <q-input class="q-mb-md" v-model="userParams.password" standout :type="isPwd ? 'password' : 'text'"
-              placeholder="Password">
-              <template v-slot:prepend>
-                <q-img width="24px" height="24px" src="/images/pc/header/password.png" />
-              </template>
-              <template v-slot:append>
-                <q-icon style="color: #999999" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                  @click="isPwd = !isPwd" />
-              </template>
-            </q-input>
-            <q-input class="q-mb-md" v-model="userParams.captchaVal" standout placeholder="Password">
-              <template v-slot:prepend>
-                <q-img width="24px" height="24px" src="/images/pc/header/code.png" />
-              </template>
-              <template v-slot:append>
-                <q-img no-spinner v-if="userParams.captchaId !== ''"
-                  :src="imageSrc('/captcha/' + userParams.captchaId + '/200-50')" width="120px" height="32px"
-                  @click="refreshCaptchaFunc"></q-img>
-              </template>
-            </q-input>
-            <div @click="toForgot()" class="text-right q-mb-lg" style="font-size: 14px; color: #999999">
-              Forgot Password?
-            </div>
-            <!-- 登录按钮 -->
-            <q-btn @click="toMypage()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
-              color="primary" label="Login" />
-            <!-- 前往注册 -->
-            <div class="text-center" style="font-size: 14px">
-              First time here?
-              <span @click="toRegister()" class="text-primary cursor-pointer">Signup</span>
-            </div>
-          </q-form>
-        </div>
+
+        <q-form class="q-mt-lg">
+          <!-- 账号 -->
+          <q-input class="q-mb-md" standout v-model="params.username" placeholder="Name">
+            <template v-slot:prepend>
+              <q-img width="24px" height="24px" src="/icons/username.png" />
+            </template>
+          </q-input>
+
+          <!-- 密码 -->
+          <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
+            placeholder="Password">
+            <template v-slot:prepend>
+              <q-img width="24px" height="24px" src="/icons/password.png" />
+            </template>
+            <template v-slot:append>
+              <q-icon style="color: #999999" :name="isPwd ? 'visibility' : 'visibility_off'" class="cursor-pointer"
+                @click="isPwd = !isPwd" />
+            </template>
+          </q-input>
+
+          <!-- 验证码 -->
+          <q-input v-if="loginSetting.showVerify" class="q-mb-sm" standout v-model="params.captchaVal" placeholder="Code">
+            <template v-slot:prepend>
+              <q-img width="24px" height="24px" src="/icons/code.png" />
+            </template>
+            <template v-slot:append>
+              <q-img no-spinner v-if="params.captchaId !== ''" :src="imageSrc('/captcha/' + params.captchaId + '/200-50')"
+                width="120px" height="32px" @click="refreshCaptchaFunc"></q-img>
+            </template>
+          </q-input>
+
+          <!-- 忘记密码、登录、注册 -->
+          <div class="text-right q-mb-lg text-grey-7 cursor-pointer">Forgot Password?</div>
+          <q-btn @click="$router.push('/user')" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
+            color="primary" label="Login" />
+          <div v-if="loginSetting.showRegister" class="text-center q-mb-xl">
+            First time here?
+            <span @click="toRegister()" class="text-primary cursor-pointer">Signup</span>
+          </div>
+        </q-form>
       </q-card-section>
     </q-card>
   </q-dialog>
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs, onMounted } from 'vue';
-  import { useRouter } from 'vue-router';
-  // 登录相关
-  import { CaptchaAPI } from 'src/apis';
-  import { userLogin } from 'src/apis/user';
-  import { imageSrc } from 'src/utils';
-  // import { NotifyNegative, NotifyPositive } from 'src/utils/notify'
-  export default {
-    name: 'loginDialog',
-    setup() {
-      const router = useRouter();
-      let store = reactive({
-        // 是否显示密码
-        isPwd: true,
-        //登录input数据
-        userParams: {
-          username: '',
-          password: '',
-          captchaId: '', //验证id
-          captchaVal: '', // 验证码
-        },
-        // 登录弹窗
-        LoginShow: false,
-        // 确认密码
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+// 登录相关
+import { useRouter } from 'vue-router';
+import { CaptchaAPI } from 'src/apis';
+import { userLogin } from 'src/apis/user';
+import { imageSrc } from 'src/utils';
+import { useInitStore } from 'src/stores/init';
+import { InitStoreState } from 'src/stores/init';
+
+export default defineComponent({
+  name: 'userLogin',
+  setup(props: any, context: any) {
+    const $router = useRouter();
+    const $initStore = useInitStore();
+
+    const state = reactive({
+      // 登录配置
+      loginSetting: InitStoreState.config.settings.login,
+
+      // 登录弹窗
+      LoginShow: false,
+
+      // 是否显示密码
+      isPwd: false,
+
+      params: {
+        username: '',
         password: '',
+        captchaId: '', //验证Id
+        captchaVal: '', // 验证码
+      },
+    });
+    onMounted(() => {
+      refreshCaptchaFunc();
+    });
+
+    // 获取验证码
+    const refreshCaptchaFunc = () => {
+      CaptchaAPI().then((res: any) => {
+        state.params.captchaId = res;
       });
-      onMounted(() => {
-        refreshCaptchaFunc();
-      });
-      // 获取验证码
-      const refreshCaptchaFunc = () => {
-        CaptchaAPI().then((res : any) => {
-          store.userParams.captchaId = res;
-        });
-      };
-      const toLogin = () => {
-          store.LoginShow = true;
-      };
-      return {
-        ...toRefs(store),
-        // 点击登录
-        toMypage() {
+    };
+
+    // 提交登录
+    const submitFunc = () => {
+      userLogin(state.params)
+        .then((res: any) => {
+          $initStore.updateUserToken(res.token);
+          $router.push({ name: 'Home' });
+        })
+        .catch(() => {
           refreshCaptchaFunc();
-          userLogin(store.userParams).then((res : any) => {
-            store.LoginShow = false;
-            router.push('/dashboard');
-          });
-        },
-        // 登录弹窗
-        toLogin,
-        refreshCaptchaFunc,
-        imageSrc,
-      };
-    },
-  };
+        });
+    };
+
+    // 打开登录弹窗
+    const openLogin = (status: boolean) => {
+      state.LoginShow = status
+    };
+
+    // 点击注册
+    const toRegister = () => {
+      context.emit('switchDialog', false, true);
+    }
+
+    return {
+      imageSrc,
+      ...toRefs(state),
+      refreshCaptchaFunc,
+      submitFunc,
+      openLogin,
+      toRegister,
+    };
+  },
+});
 </script>
 
-<style lang="scss" scoped>
-  // @import url("../../css/pcCss.css");
-  // .q-header {
-  //   min-width: 1100px;
-  //   position: absolute;
-  // }
-
-  // .q-chip {
-  //   height: 18px;
-  //   font-size: 10px;
-  //   color: #F7DEB6;
-  //   background: #322B19;
-  //   margin: 0;
-  //   margin-right: 4px;
-  //   padding: 4px 5px;
-  // }
-
-  // .vip {
-  //   width: 11px;
-  //   height: 11px;
-  //   margin-right: 2px;
-  // }
-
-  // .badge {
-  //   width: 20px;
-  //   height: 20px;
-  //   border-radius: 50%;
-  //   padding: 2px;
-  //   top: -35%;
-  //   right: -35%;
-  // }
-</style>
+<style lang="scss" scoped></style>
