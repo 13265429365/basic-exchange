@@ -7,8 +7,7 @@
           class="q-mt-lg q-mb-md"
           width="70px"
           height="70px"
-          src="/images/logo.png"
-          :ratio="1"
+          :src="`${imageSrc('/images/logo.png')}`"
         />
       </div>
       <div class="row justify-center">
@@ -27,7 +26,7 @@
             <q-img
               width="24px"
               height="24px"
-              src="/images/mobile/login/user.png"
+              src="/icons/username.png"
             />
           </template>
         </q-input>
@@ -44,7 +43,7 @@
             <q-img
               width="24px"
               height="24px"
-              src="/images/mobile/login/password.png"
+              src="/icons/password.png"
             />
           </template>
           <template v-slot:append>
@@ -68,7 +67,7 @@
             <q-img
               width="24px"
               height="24px"
-              src="/images/mobile/login/code.png"
+              src="/icons/code.png"
             />
           </template>
           <template v-slot:append>
@@ -98,7 +97,7 @@
         <div class="text-center q-mb-xl" style="font-size: 14px">
           First time here?
           <span
-            @click="$router.push('/register')"
+            @click="$router.push({name: 'UserRegister'})"
             class="text-primary cursor-pointer"
             >Signup</span
           >

@@ -66,6 +66,8 @@ export default {
       { name: '我的', route: '/user', icon: '', activeIcon: '' },
     ];
 
+
+
     onMounted(() => {
       state.currentTab = $router.currentRoute.value.path;
     });

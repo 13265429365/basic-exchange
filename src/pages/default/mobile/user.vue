@@ -1,60 +1,65 @@
 <template>
   <div class="mypage">
-    <div class="row justify-between q-pt-xl q-mt-md q-px-md q-pb-lg">
+    <div class="row justify-between q-pt-xl q-px-md q-pb-lg bg-white">
       <!-- 头像 -->
       <div class="row">
-        <div class="q-mr-md avatar">
-          <q-avatar class="q-mr-md avatar">
-            <img src="https://cdn.quasar.dev/img/avatar.png">
-          </q-avatar>
-        </div>
+        <q-avatar class="q-mr-md avatar">
+          <q-img src="https://cdn.quasar.dev/img/avatar.png" width="50px" height="50px" />
+        </q-avatar>
         <div class="col-8">
-          <div class="text-weight-bold" style="font-size: 18px;line-height: 1;">
+          <div class="text-weight-bolder">
             Ahmed Raza
           </div>
-          <div class="q-mt-xs q-mb-sm">
+          <div>
             ahmedraza@gmail.com
           </div>
           <div class="row no-wrap">
             <q-chip class="q-chip">
-              <q-img class="vip" src="/images/mobile/info/Vip_icon.png" />
+              <q-img class="q-mr-xs" style="width: 11px;height: 11px;" />
               Lv.3
             </q-chip>
             <q-chip style="background: #fff !important;color: #333333 !important;border: 1px solid #F1F1F1;">
-              <q-img class="vip" src="/images/mobile/info/credit.png" />
+              <q-img class="q-mr-xs" style="width: 11px;height: 11px;" />
               信用分100
             </q-chip>
             <q-chip style="background: #fff !important;color: #01AC66 !important;border: 1px solid #01AC66;">
               已实名
-              <span style="font-size: 11px;">＞</span>
-              <!-- <q-img class="q-ml-xs vip" src="page_bg/right_arrow.png.png" /> -->
+              <q-icon class="text-primary" name="keyboard_arrow_right" size="11px"></q-icon>
             </q-chip>
           </div>
         </div>
       </div>
       <div>
-        <q-img width="24px" height="24px" src="/images/mobile/info/right_arrow.png" />
+        <q-icon name="keyboard_arrow_right" size="24px"></q-icon>
       </div>
     </div>
+
+    <!--  -->
     <div class="bg-grey-1 q-px-md q-py-md full-width">
       <!-- 店铺、交易管理 -->
       <div class="row q-mb-md btn">
-        <q-btn @click="to('recharge')" no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col q-mr-md justify-start">
-          <q-img class="manage" src="/images/mobile/info/recharge.png" />
-          <div>Recharge</div>
+        <q-btn class="bg-white q-py-sm q-px-md col q-mr-md radius-8" no-caps unelevated>
+          <div class="row justify-start items-center">
+            <q-img class="q-mr-sm" :src="`${imageSrc('/images/logo.png')}`" width="42px" height="42px" />
+            <div>Recharge</div>
+          </div>
         </q-btn>
-        <q-btn @click="to('withdrawal')" no-caps style="padding: 9px 15px;border-radius: 8px" class="bg-white col">
-          <q-img class="manage" src="/images/mobile/info/transaction.png" />
-          <div>Cash Out</div>
+        <q-btn class="bg-white col q-py-sm q-px-md radius-8" no-caps unelevated>
+          <div class="row justify-start items-center">
+            <q-img class="q-mr-sm" :src="`${imageSrc('/images/logo.png')}`" width="42px" height="42px" />
+            <div>Cash Out</div>
+          </div>
         </q-btn>
       </div>
+
+
       <!-- 列表 -->
-      <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md border-a-8"
-        style="border:0 !important;overflow: hidden;border-radius: 8px;">
+      <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md radius-8 no-border">
         <div v-for="(child, childKey) in item.child" :key="childKey" class="bg-white">
           <q-item @click="$router.push(child.url)" class="q-pa-md" clickable>
-            <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-              <q-img :src="`/images/mobile/info/${child.avatar}`" width="24px" height="24px" />
+            <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
+              <!-- <q-img :src="`/images/mobile/info/${child.avatar}`" width="24px" height="24px" /> -->
+              <q-img :src="`${imageSrc('/images/logo.png')}`" width="24px" height="24px" />
             </q-item-section>
 
             <q-item-section>
@@ -62,35 +67,35 @@
             </q-item-section>
 
             <q-item-section side>
-              <q-icon name="expand_more" size="24px"></q-icon>
+              <q-icon name="keyboard_arrow_right" size="24px"></q-icon>
             </q-item-section>
           </q-item>
           <q-separator style="background: #F4F5FD;" inset />
         </div>
       </q-list>
-      <q-btn @click="dialog = true" class="full-width q-mb-lg q-mt-md" unelevated rounded no-caps
-        style="height: 44px;justify-content: center !important;" color="primary" label="Logout" />
+      <q-btn @click="dialog = true" class="full-width q-mb-lg q-mt-md" unelevated rounded no-caps color="primary"
+        label="Logout" />
     </div>
 
     <!-- 退出登录 -->
     <q-dialog full-width v-model="dialog" position="bottom">
-      <q-card style="border-radius: 20px 20ox 0 0;">
+      <q-card>
         <q-card-section>
           <div class="row justify-center q-mb-lg">
-            <q-separator style="height: 4px;width: 80px;border-radius: 24px;" color="grey-4" />
+            <q-separator class="rounded-borders col-3" style="height: 4px" color="grey-4" />
           </div>
           <div class="row justify-center">
-            <div class="text-weight-bold" style="font-size: 18px;">Logout</div>
+            <div class="text-weight-bold text-h6">Logout</div>
           </div>
           <q-separator class="q-mt-md  q-mb-lg" color="grey-4" />
           <div class="row justify-center q-mb-xl">
             <div class="text-grey-10">Are you sure you want to log out?</div>
           </div>
           <div class="row justify-between no-wrap">
-            <q-btn @click="dialog = false" class="q-mr-md" unelevated rounded no-caps
-              style="height: 44px;border:1px solid #01AC66;width: 157px;" color="bg-white text-green" label="Cancel" />
-            <q-btn @click="store.dialog = false" unelevated rounded no-caps
-              style="height: 44px;width: 157px;" color="primary" label="Yes,Logout" />
+            <q-btn @click="dialog = false" class="q-mr-md text-primary bg-white col-5" unelevated rounded no-caps
+              style="border:1px solid #01AC66" label="Cancel" />
+            <q-btn @click="$router.push({name:'UserLogin'})" class="col-5" unelevated rounded no-caps color="primary"
+              label="Yes,Logout" />
           </div>
         </q-card-section>
       </q-card>
@@ -100,71 +105,72 @@
 
 <script lang="ts">
   import { defineComponent, reactive, toRefs } from 'vue';
+  import { imageSrc } from 'src/utils';
   export default defineComponent({
     name: 'userIndex',
     setup() {
       let store = reactive({
+        // 用户菜单
         userList: [
-            {
-              child: [
-                {
-                  name: 'Card Management',
-                  avatar: 'card.png',
-                  url: 'card'
-                }, {
-                  name: 'My Wallet',
-                  avatar: 'wallet.png',
-                  url: 'wallet/index'
-                }, {
-                  name: 'My property',
-                  avatar: 'property.png',
-                  url: 'property',
-                }
-              ],
-            },
-            {
-              child: [
-                {
-                  name: 'Share',
-                  avatar: 'share.png',
-                  url: 'share'
-                }, {
-                  name: 'Team Management',
-                  avatar: 'Management.png',
-                  url: 'team/management'
-                }, {
-                  name: 'Team Benefits',
-                  avatar: 'Benefits.png',
-                  url: '/team/benefits'
-                }
-              ],
-            },
-            {
-              child: [
-                {
-                  name: 'VIP',
-                  avatar: 'vip.png',
-                  url: '/grade',
-                }, {
-                  name: 'Identification',
-                  avatar: 'Identification.png',
-                  url: 'identification'
-                }, {
-                  name: 'Help Center',
-                  avatar: 'help.png',
-                  url: 'help/center'
-                }, {
-                  name: 'Settings',
-                  avatar: 'settings.png',
-                  url: 'setting'
-                }, {
-                  name: 'Download',
-                  avatar: 'download.png',
-                  url: 'download'
-                }
-              ],
-            },
-
+          {
+            child: [
+              {
+                name: 'Card Management',
+                avatar: 'card.png',
+                url: 'card'
+              }, {
+                name: 'My Wallet',
+                avatar: 'wallet.png',
+                url: 'wallet/index'
+              }, {
+                name: 'My property',
+                avatar: 'property.png',
+                url: 'property',
+              }
+            ],
+          },
+          {
+            child: [
+              {
+                name: 'Share',
+                avatar: 'share.png',
+                url: 'share'
+              }, {
+                name: 'Team Management',
+                avatar: 'Management.png',
+                url: 'team/management'
+              }, {
+                name: 'Team Benefits',
+                avatar: 'Benefits.png',
+                url: '/team/benefits'
+              }
+            ],
+          },
+          {
+            child: [
+              {
+                name: 'VIP',
+                avatar: 'vip.png',
+                url: '/grade',
+              }, {
+                name: 'Identification',
+                avatar: 'Identification.png',
+                url: 'identification'
+              }, {
+                name: 'Help Center',
+                avatar: 'help.png',
+                url: 'help/center'
+              }, {
+                name: 'Settings',
+                avatar: 'settings.png',
+                url: 'setting'
+              }, {
+                name: 'Download',
+                avatar: 'download.png',
+                url: 'download'
+              }
+            ],
+          },
         ],
 
         // 退出彈窗
@@ -172,6 +178,7 @@
       })
       return {
         ...toRefs(store),
+        imageSrc,
       }
     }
   })
@@ -182,28 +189,17 @@
   .q-dialog__inner>div {
     border-radius: 20px 20px 0 0;
   }
+
   .q-dialog__inner>div>div {
     padding: 10px 20px 50px 20px;
   }
-
-  /* 店铺、交易管理按钮 */
-  :deep .q-btn:before {
-    box-shadow: 0 0 0 !important;
-  }
-
-  :deep .btn>.q-btn .q-btn__content {
-    justify-content: start !important;
-  }
-
-  .manage {
-    width: 42px;
-    height: 42px;
-    margin-right: 10px;
+  .radius-8 {
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   /* 头像下按钮 */
   .q-chip {
-    /* width: 44px; */
     height: 19px;
     font-size: 10px;
     color: #F7DEB6 !important;
@@ -212,17 +208,5 @@
     margin: 0;
     margin-right: 4px;
     padding: 4px 5px;
-  }
-
-  .vip {
-    width: 11px;
-    height: 11px;
-    margin-right: 2px;
-  }
-
-  /* 头像 */
-  .avatar {
-    width: 50px;
-    height: 50px;
   }
 </style>

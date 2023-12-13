@@ -43,12 +43,13 @@
 import menuBar from 'src/layouts/desktop/setting.vue';
 import Edit from './Edit/Edit.vue';
 import { defineComponent, reactive, toRefs, ref } from 'vue';
+// 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
 export default defineComponent({
   components: {
     menuBar,
     Edit
   },
-  name: 'userIndex',
+  name: 'settingsView',
   setup() {
     let store = reactive({
       //
