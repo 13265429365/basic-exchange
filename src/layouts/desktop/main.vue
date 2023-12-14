@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header bordered>
+    <q-header bordered class="bg-white">
       <HeaderLayouts></HeaderLayouts>
     </q-header>
 
