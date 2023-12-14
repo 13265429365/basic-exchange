@@ -1,122 +1,64 @@
 <template>
   <q-header reveal class="bg-white text-grey-10 row justify-between q-py-md q-pl-xl q-pr-lg no-wrap">
-    <!-- left -->
-    <div class="row items-center no-wrap">
-      <!-- logo -->
-      <q-img @click="$router.push('/')" class="q-mr-lg cursor-pointer" :src="`${imageSrc('/images/Logo.png')}`"
-        width="172px" height="42px" />
+    <q-toolbar class="GPL__toolbar" style="height: 64px">
+      <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap">
+        <q-img width="42px" height="42px" :src="`${imageSrc('/images/Logo.png')}`"></q-img>
+        <span class="q-ml-sm">shopmark</span>
+      </q-toolbar-title>
 
-      <!-- 独立菜单 -->
-      <span @click="$router.push('/help/center')" class="text-grey-10 q-ml-sm q-mr-xl cursor-pointer">Support
-        Center</span>
-      <div class="row no-wrap items-center cursor-pointer">
-        <span>more</span>
-        <q-icon name="keyboard_arrow_down" />
-        <q-menu :offset="[0, 27]" auto-close transition-show="jump-down" transition-hide="jump-up">
-          <q-list class="q-py-sm">
-            <q-item v-for="(item, i) in moreList" :key="i" clickable class="row no-wrap items-center">
-              <q-img class="q-mr-sm" :src="`/images/pc/header/${item.url}.png`" width="38px" height="38px" />
-              <div>
-                <div style="font-size: 16px">{{ item.name }}</div>
-                <div style="font-size: 12px">{{ item.content }}</div>
-              </div>
+      <q-space />
+
+      <q-input class="items-center" dense standout="bg-primary" v-model="search" placeholder="Search" />
+
+      <q-btn unelevated rounded dense no-wrap color="primary" no-caps label="Deposit" class="q-mx-md q-px-md">
+        <q-menu>
+          <q-list class="text-grey-8" style="min-width: 100px">
+            <q-item aria-hidden="true">
+              <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Create New</q-item-section>
+            </q-item>
+            <q-item v-for="menu in createMenu" :key="menu.text" clickable v-close-popup aria-hidden="true">
+              <q-item-section avatar>
+                <q-icon :name="menu.icon" />
+              </q-item-section>
+              <q-item-section>{{ menu.text }}</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
-      </div>
-    </div>
+      </q-btn>
 
 
-    <!-- right -->
-    <div class="row items-center no-wrap">
-      <!-- 搜索框 -->
-      <q-input placeholder="searching..." rounded outlined v-model="search">
-        <template v-slot:prepend>
-          <q-icon name="search"></q-icon>
-        </template>
-      </q-input>
 
-      <!-- 登录状态下 -->
-      <div v-if="isLogin" class="row items-center">
-        <!-- Deposit按钮 -->
-        <q-btn class="q-ml-md text-weight-regular cursor-pointer" style="padding: 0 10px; min-height: 30px" unelevated
-          rounded no-caps color="primary" label="Deposit">
+      <div class="q-gutter-sm row items-center no-wrap">
+        <!-- 头像 -->
+        <q-btn round flat>
+          <q-avatar size="34px">
+            <img src="https://cdn.quasar.dev/img/boy-avatar.png">
+          </q-avatar>
+          <q-menu anchor="top end" self="top end">
+            <q-list class="text-grey-8" style="min-width: 100px">
+              <q-item aria-hidden="true">
+                <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Create New</q-item-section>
+              </q-item>
+              <q-item v-for="menu in createMenu" :key="menu.text" clickable v-close-popup aria-hidden="true">
+                <q-item-section avatar>
+                  <q-icon :name="menu.icon" />
+                </q-item-section>
+                <q-item-section>{{ menu.text }}</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
         </q-btn>
 
-        <!-- 头像 -->
-        <q-avatar class="q-ml-md cursor-pointer" style="width: 34px; height: 34px">
-          <q-img src="https://cdn.quasar.dev/img/avatar.png" />
-
-          <!-- 头像下拉框 -->
-          <q-menu :offset="[30, 22]" auto-close transition-show="jump-down" transition-hide="jump-up">
-            <q-list class="q-px-lg q-pt-lg">
-              <!-- 用户资料 -->
-              <q-item class="q-pa-none">
-                <div class="row">
-                  <div>
-                    <q-avatar class="q-mr-sm" style="width: 30px; height: 30px">
-                      <img src="https://cdn.quasar.dev/img/avatar.png" />
-                    </q-avatar>
-                  </div>
-                  <div class="col-8">
-                    <div class="row no-wrap items-center q-mb-xs">
-                      <div class="text-weight-bold q-mr-sm">Jack</div>
-                      <div style="font-size: 12px">569***@qq.com</div>
-                    </div>
-                    <div class="row no-wrap">
-                      <q-chip class="q-chip q-pa-none q-px-md text-caption" style="border: 1px solid #f7deb6">
-                        <q-img class="vip" src="images/pc/header/Vip_icon.png" />
-                        Lv.3
-                      </q-chip>
-                      <q-chip class="q-chip bg-primary text-white text-caption">
-                        unverified
-                      </q-chip>
-                    </div>
-                  </div>
-                </div>
-              </q-item>
-              <q-separator class="q-mt-lg" style="background: #f1f1f1" />
-
-              <!-- 用户列表 -->
-              <q-item @click="$router.push(item.url)" v-for="(item, i) in infoList" :key="i" clickable
-                class="row no-wrap items-center q-py-md q-px-xs">
-                <q-img class="q-mr-sm" :src="`${imageSrc('/images/Logo.png')}`" width="20px" height="20px" />
-                <div>{{ item.name }}</div>
-              </q-item>
-              <q-separator class="q-mt-md" style="background: #f1f1f1" />
-              <q-item clickable class="row no-wrap items-center q-py-xs q-px-xs">
-                <q-img class="q-mr-sm" :src="`${imageSrc('/images/Logo.png')}`" width="20px" height="20px" />
-                <div>Log out</div>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-avatar>
-
-        <!-- 钱包、钱包下拉框 -->
-        <q-icon class="q-ml-md cursor-pointer" name="wallet" size="24px">
-          <q-menu :offset="[140, 22]" auto-close transition-show="jump-down" transition-hide="jump-up">
-            <q-list style="min-width: 214px" class="q-px-sm">
-              <q-item @click="$router.push(item.url)" v-for="(item, i) in depositList" :key="i" clickable
-                class="row no-wrap items-center">
-                <q-img class="q-mr-sm" :src="`/images/pc/header/${item.name}.png`" width="20px" height="20px" />
-                <div style="font-size: 16px">{{ item.name }}</div>
-              </q-item>
-            </q-list>
-          </q-menu>
-        </q-icon>
-        <q-icon class="q-ml-md cursor-pointer" name="notifications" size="24px"></q-icon>
+        <!--  -->
+        <q-btn round dense flat color="text-grey-7" icon="account_balance_wallet"></q-btn>
+        <q-btn round dense flat color="grey-8" icon="notifications">
+          <q-badge color="red" text-color="white" floating>
+            2
+          </q-badge>
+        </q-btn>
+        <q-btn round dense flat color="grey-8" icon="language"></q-btn>
       </div>
-
-
-      <!-- 未登录状态下 -->
-      <div v-else class="row items-center no-wrap">
-        <q-btn @click="login()" class="q-ml-md text-grey-10 text-weight-regular" style="padding: 0 10px; min-height: 30px"
-          unelevated rounded no-caps color="white" label="Login" />
-        <q-btn @click="register()" class="q-ml-md text-weight-regular" style="padding: 0 10px; min-height: 30px"
-          unelevated rounded no-caps color="primary" label="Register" />
-      </div>
-      <q-icon class="q-ml-md cursor-pointer" name="language" size="24px"></q-icon>
-    </div>
+    </q-toolbar>
 
 
     <!-- 登录、注册 -->
@@ -138,75 +80,20 @@ export default {
     Register,
   },
   setup() {
-    let store = reactive({
+    let state = reactive({
       // 判断是否登录
       isLogin: false,
 
       // 搜索框
       search: '',
 
-      // more下拉框数据
-      moreList: [
-        {
-          name: 'Title',
-          content: 'describedescribedescribe',
-          url: 'cashOut',
-        },
-        {
-          name: 'Title',
-          content: 'describedescribedescribe',
-          url: 'cashOut',
-        },
-        {
-          name: 'Title',
-          content: 'describedescribedescribe',
-          url: 'cashOut',
-        },
-      ],
-
-      // deposit下拉框数据
-      depositList: [
-        {
-          name: 'Card Management',
-          url: '/card',
-        },
-        {
-          name: 'My Wallet',
-          url: '/wallet',
-        },
-        {
-          name: 'My Property',
-          url: '/assets',
-        },
-      ],
-
-      // 头像下拉框数据
-      infoList: [
-        {
-          name: 'Dashboard',
-          img: 'Dashboard',
-          url: '/dashboard',
-        },
-        {
-          name: 'Security',
-          img: 'Security',
-          url: '/security',
-        },
-        {
-          name: 'Share',
-          img: 'Share',
-          url: '/share',
-        },
-        {
-          name: 'My Team',
-          img: 'TeamManagement',
-          url: '/team',
-        },
-        {
-          name: 'Vip',
-          img: 'vip',
-          url: '/vip',
-        },
+      createMenu: [
+        { icon: 'photo_album', text: 'Album' },
+        { icon: 'people', text: 'Shared Album' },
+        { icon: 'movie', text: 'Movie' },
+        { icon: 'library_books', text: 'Animation' },
+        { icon: 'dashboard', text: 'Collage' },
+        { icon: 'book', text: 'Photo book' }
       ],
     });
 
@@ -229,13 +116,13 @@ export default {
     }
 
     return {
-      ...toRefs(store),
+      imageSrc,
+      ...toRefs(state),
       LoginRef,
       RegisterRef,
       switchDialog,
       login,
       register,
-      imageSrc,
     };
   },
 };
