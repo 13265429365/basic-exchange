@@ -9,31 +9,30 @@
             <q-img :src="imageSrc(config.logo)" width="24px" height="24px"></q-img>
           </q-item-section>
           <q-item-section avatar class="q-mr-xl">
-            {{ menu.name }}
+            <div style="user-select: none">{{ menu.name }}</div>
           </q-item-section>
         </template>
 
         <!-- 子级 -->
         <q-item @click="routerTo(children.route)" v-for="(children, childrenIndex) in menu.children" :key="childrenIndex"
-          :header-inset-level="1" :active="activeRouter == children.route" active-class="active" clickable v-ripple>
+          :header-inset-level="1" :active="activeRouter == children.route" active-class="active" clickable>
           <q-item-section avatar style="opacity: 0">
             <q-icon name="inbox" />
           </q-item-section>
           <q-item-section>
-            {{ children.name }}
+            <div style="user-select: none">{{ children.name }}</div>
           </q-item-section>
         </q-item>
       </q-expansion-item>
 
 
       <!-- 不含子级的列表 -->
-      <q-item v-else :active="activeRouter == menu.route" active-class="active" :clickable="activeRouter != menu.route"
-        v-ripple>
+      <q-item v-else :active="activeRouter == menu.route" active-class="active" :clickable="activeRouter != menu.route">
         <q-item-section avatar>
           <q-img :src="imageSrc(config.logo)" width="24px" height="24px"></q-img>
         </q-item-section>
         <q-item-section>
-          {{ menu.name }}
+          <div style="user-select: none">{{ menu.name }}</div>
         </q-item-section>
       </q-item>
     </div>

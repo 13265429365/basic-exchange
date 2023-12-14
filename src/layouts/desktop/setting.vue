@@ -39,4 +39,13 @@ export default {
 .calc {
   width: 100%;
 }
+
+:deep(.maxWidth1200) {
+  width: 100%;
+
+  &>div {
+    min-width: 1000px;
+    max-width: 1200px;
+  }
+}
 </style>

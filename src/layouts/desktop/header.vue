@@ -10,12 +10,27 @@
       </q-toolbar-title>
 
       <!-- 左侧tabBar菜单 -->
-      <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
+      <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">、
+        <q-btn-dropdown :menu-offset="[80, 18]" v-if="tabBar.data.isDesktop" class="text-black" :label="tabBar.name" flat
+          dense no-wrap dropdown-icon="expand_more">
+          <q-list>
+            <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
+              aria-hidden="true">
+              <q-item-section avatar>
+                <q-icon :name="children.icon" />
+              </q-item-section>
+              <q-item-section>{{ children.name }}</q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+      </div>
+
+      <!-- <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
         <q-btn v-if="tabBar.data.isDesktop" :label="tabBar.name" rounded flat dense no-wrap
           :icon-right="tabBar.children.length > 0 ? 'expand_more' : ''" class="text-black q-mx-md q-px-md" no-caps>
-          <!-- 父级菜单 -->
+          父级菜单
           <q-menu v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" :offset="[0, 20]"
-            style="box-shadow: 0px 4px 10px 0px rgba(153,153,153,0.25);">
+            >
             <q-list>
               <q-item clickable aria-hidden="true">
                 <q-item-section avatar>
@@ -26,23 +41,22 @@
             </q-list>
           </q-menu>
         </q-btn>
-      </div>
+      </div> -->
 
 
       <!-- 左侧快捷菜单 -->
-      <q-btn label="more" rounded flat dense no-wrap icon-right="expand_more" class="text-black q-mx-md q-px-md" no-caps>
-        <q-menu :offset="[-80, 20]" flat style="box-shadow: 0px 4px 10px 0px rgba(153,153,153,0.25);">
-          <q-list>
-            <q-item v-for="(quickMenu, quickMenuIndex) in quickMenuList" :key="quickMenuIndex" clickable v-close-popup
-              aria-hidden="true">
-              <q-item-section avatar>
-                <q-icon :name="quickMenu.icon" />
-              </q-item-section>
-              <q-item-section>{{ quickMenu.name }}</q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
+      <q-btn-dropdown :menu-offset="[50, 18]" class="text-black" label="more" flat dense no-caps
+        dropdown-icon="expand_more">
+        <q-list>
+          <q-item v-for="(quickMenu, quickMenuIndex) in quickMenuList" :key="quickMenuIndex" clickable v-close-popup
+            aria-hidden="true">
+            <q-item-section avatar>
+              <q-icon :name="quickMenu.icon" />
+            </q-item-section>
+            <q-item-section>{{ quickMenu.name }}</q-item-section>
+          </q-item>
+        </q-list>
+      </q-btn-dropdown>
 
       <q-space />
 
@@ -63,10 +77,10 @@
           <q-avatar size="34px">
             <img :src="imageSrc(config.logo)">
           </q-avatar>
-          <q-menu :offset="[160, 18]" class="q-pa-md" style="box-shadow: 0px 4px 10px 0px rgba(153,153,153,0.25);">
+          <q-menu :offset="[160, 18]" class="q-pa-md">
             <q-list style="min-width: 218px;">
               <!-- 固定头部 -->
-              <q-item clickable v-close-popup aria-hidden="true">
+              <q-item aria-hidden="true">
                 <div class="row no-wrap">
                   <q-avatar size="30px">
                     <img :src="imageSrc(config.logo)">
@@ -218,5 +232,14 @@ export default {
   .q-field__marginal {
     height: 40px !important;
   }
+}
+
+:deep(.q-item) {
+  border-radius: 8px;
+}
+
+:deep(.q-item .q-item__section) {
+  min-width: auto;
+  padding-right: 10px;
 }
 </style>
