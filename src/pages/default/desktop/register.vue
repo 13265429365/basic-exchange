@@ -123,7 +123,7 @@ import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
-import { InitStoreState } from 'src/stores/init'
+import { InitStoreState } from 'src/stores/init';
 export default defineComponent({
   name: 'registerDialog',
   setup(props: any, context: any) {
