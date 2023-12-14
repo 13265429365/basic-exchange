@@ -15,13 +15,16 @@ export const InitStoreState = {
   userInfo: {} as any,
 
   //  tabbars 菜单
-  tabbars: [] as tabbarInterface[],
+  tabBars: [] as menuInterface[],
 
   // 用户菜单
-  userMenu: [] as userMenuInterface[][],
+  userMenu: [] as menuInterface[][],
 
   // 快捷菜单
   quickMenu: [] as menuInterface[][],
+
+  // 桌面设置菜单
+  settingMenu: [] as menuInterface[][],
 
   //  翻译数据
   translate: [] as translateInterface[],
@@ -116,6 +119,32 @@ export const useInitStore = defineStore('init', {
     },
   },
 });
+
+interface menuInterface {
+  // 列表名称
+  name: string,
+
+  // 列表路由
+  routes: string,
+  
+  // 列表图标
+  icon: string,
+  
+  // 列表高亮图标
+  activeIcon: string,
+
+  // 子级列表
+  children: [],
+
+  // 是否显示
+  data: {
+    // 手机是否显示
+    isMobile: boolean,
+
+    // 桌面是否显示
+    isDesktop: boolean,
+  }
+}
 
 interface countryInterface {
   //  国家ID
