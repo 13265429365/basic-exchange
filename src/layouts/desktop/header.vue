@@ -1,7 +1,7 @@
 <template>
   <q-header reveal class="bg-white text-grey-10 row justify-between q-py-md q-pl-xl q-pr-lg no-wrap">
     <q-toolbar class="GPL__toolbar" style="height: 64px">
-      <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap">
+      <q-toolbar-title v-if="$q.screen.gt.sm" shrink class="row items-center no-wrap cursor-pointer">
         <q-img width="42px" height="42px" :src="`${imageSrc('/images/Logo.png')}`"></q-img>
         <span class="q-ml-sm">shopmark</span>
       </q-toolbar-title>
