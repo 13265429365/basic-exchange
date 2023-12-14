@@ -5,13 +5,9 @@
     </q-header>
 
     <q-page-container>
-      <div>
-        <div>
-
-        </div>
-        <div>
-          <router-view />
-        </div>
+      <div class="row no-wrap">
+        <MenuLayouts></MenuLayouts>
+        <router-view />
       </div>
     </q-page-container>
 
@@ -25,9 +21,10 @@
 import { reactive, toRefs } from 'vue';
 import HeaderLayouts from 'src/layouts/desktop/header.vue';
 import FooterLayouts from 'src/layouts/desktop/footer.vue';
+import MenuLayouts from 'src/layouts/desktop/menu.vue';
 
 export default {
-  components: { HeaderLayouts, FooterLayouts },
+  components: { HeaderLayouts, FooterLayouts, MenuLayouts },
   name: 'LayoutsSetting',
   setup() {
     const state = reactive({});
@@ -38,4 +35,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.calc {
+  width: 100%;
+}
+</style>

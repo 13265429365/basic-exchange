@@ -14,7 +14,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     name: 'Layouts',
     route: '/',
     componentMobile: LayoutsMobilePath('tabbar.vue'),
-    componentDesktop: LayoutsDesktopPath('main.vue'),
+    componentDesktop: LayoutsDesktopPath('setting.vue'),
     children: [
       {
         name: 'HomeIndex',

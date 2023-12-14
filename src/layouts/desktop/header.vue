@@ -10,38 +10,23 @@
       </q-toolbar-title>
 
       <!-- 左侧tabBar菜单 -->
-      <q-btn label="Support Center" rounded flat dense no-wrap icon-right="expand_more" class="text-black q-mx-md q-px-md"
-        no-caps>
-        <!-- 父级菜单 -->
-        <q-menu :offset="[0, 20]" style="box-shadow: 0px 4px 10px 0px rgba(153,153,153,0.25);">
-          <q-list>
-            <q-item v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex" clickable aria-hidden="true">
-              <q-item-section avatar>
-                <q-icon :name="tabBar.icon" />
-              </q-item-section>
-              <q-item-section>{{ tabBar.name }}</q-item-section>
-              <q-item-section side v-if="tabBar.children.length > 0">
-                <q-icon name="keyboard_arrow_right" />
-              </q-item-section>
-
-              <!-- 子级菜单 -->
-              <q-menu v-if="tabBar.children.length > 0" :offset="[-158, -50]" flat
-                style="box-shadow: 0px 4px 10px 0px rgba(153,153,153,0.25);">
-                <q-list>
-                  <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
-                    v-close-popup aria-hidden="true">
-                    <q-item-section avatar>
-                      <q-icon :name="children.icon" />
-                    </q-item-section>
-                    <q-item-section>{{ children.name }}</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-item>
-          </q-list>
-        </q-menu>
-      </q-btn>
-
+      <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
+        <q-btn v-if="tabBar.data.isDesktop" :label="tabBar.name" rounded flat dense no-wrap
+          :icon-right="tabBar.children.length > 0 ? 'expand_more' : ''" class="text-black q-mx-md q-px-md" no-caps>
+          <!-- 父级菜单 -->
+          <q-menu v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" :offset="[0, 20]"
+            style="box-shadow: 0px 4px 10px 0px rgba(153,153,153,0.25);">
+            <q-list>
+              <q-item clickable aria-hidden="true">
+                <q-item-section avatar>
+                  <q-icon :name="children.icon" />
+                </q-item-section>
+                <q-item-section>{{ children.name }}</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+      </div>
 
 
       <!-- 左侧快捷菜单 -->
