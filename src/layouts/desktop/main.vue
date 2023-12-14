@@ -1,23 +1,28 @@
 <template>
-  <q-layout>
-    <headerBar></headerBar>
+  <q-layout view="hHh LpR fFf">
+    <q-header bordered>
+      <HeaderLayouts></HeaderLayouts>
+    </q-header>
+
     <q-page-container>
       <router-view />
     </q-page-container>
-    <footerBar></footerBar>
+
+    <q-footer bordered>
+      <FooterLayouts></FooterLayouts>
+    </q-footer>
   </q-layout>
 </template>
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-import headerBar from 'src/layouts/desktop/header.vue';
-import footerBar from './footer.vue';
+import HeaderLayouts from 'src/layouts/desktop/header.vue';
+import FooterLayouts from 'src/layouts/desktop/footer.vue';
 
 export default {
-  components: { headerBar, footerBar },
+  components: { HeaderLayouts, FooterLayouts },
   name: 'defaultPc',
   setup() {
-    // const router = useRouter();
     const state = reactive({});
     return {
       ...toRefs(state),
@@ -26,19 +31,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-:deep .calc {
-  width: calc(100% - 268px);
-  min-width: 1100px - 278px;
-  padding-left: 10px;
-}
-
-:deep .pageHeader {
-  width: 100%;
-  padding: 33px 100px;
-  background: #fafafa;
-  font-size: 28px;
-  color: #333;
-  font-weight: bold;
-}
-</style>
+<style lang="scss" scoped></style>

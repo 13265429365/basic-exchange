@@ -9,10 +9,10 @@
   color: rgba(0, 0, 0, 0.54);
 }
 .q-field__control:before {
-  background: #F5F6FA !important;
+  background: #f5f6fa !important;
 }
 .q-field .q-field__control {
-  background: #F5F6FA !important;
+  background: #f5f6fa !important;
   border-radius: 10px !important;
   height: 50px !important;
   min-height: 50px !important;
@@ -21,20 +21,20 @@
 }
 // 下拉框去除默认样式FF
 .q-select .q-field__control:hover:before {
-    opacity: 0;
-  }
+  opacity: 0;
+}
 .q-select .q-field__prepend {
-    padding-right: 0;
-    color: #8F959E;
-  }
+  padding-right: 0;
+  color: #8f959e;
+}
 .q-select .q-field__append {
-    padding-left: 4px;
-    font-size: 15px;
-    color: #8F959E;
-  }
+  padding-left: 4px;
+  font-size: 15px;
+  color: #8f959e;
+}
 .q-select .q-field__native {
-    display: none;
-  }
+  display: none;
+}
 .q-select .q-field__append .q-icon {
-    display: none;
-  }
+  display: none;
+}
