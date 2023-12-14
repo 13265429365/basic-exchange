@@ -21,7 +21,7 @@ import FooterLayouts from 'src/layouts/desktop/footer.vue';
 
 export default {
   components: { HeaderLayouts, FooterLayouts },
-  name: 'defaultPc',
+  name: 'LayoutsMain',
   setup() {
     const state = reactive({});
     return {

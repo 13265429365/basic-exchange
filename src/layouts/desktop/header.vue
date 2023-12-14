@@ -1,15 +1,18 @@
 <template>
   <div>
-    <q-toolbar style="height: 64px">
+    <q-toolbar style="height: 60px">
       <!-- left logo -->
-      <q-toolbar-title shrink class="row items-center no-wrap cursor-pointer">
-        <q-img width="42px" height="42px" :src="imageSrc('/images/logo.png')"></q-img>
+      <q-toolbar-title shrink class="cursor-pointer text-black">
+        <q-avatar>
+          <img width="42px" height="42px" :src="imageSrc(config.logo)">
+        </q-avatar>
+        <span class="q-ml-sm">{{ config.name }}</span>
       </q-toolbar-title>
 
       <!-- more -->
       <q-btn rounded flat dense no-wrap class="text-black q-mx-md q-px-md" no-caps label="Support Center"></q-btn>
       <q-btn rounded flat dense no-wrap class="text-black q-mx-md q-px-md" no-caps label="more" icon-right="expand_more">
-        <q-menu>
+        <q-menu flat>
           <q-list>
             <q-item aria-hidden="true">
               <q-item-section class="text-uppercase text-grey-7" style="font-size: 0.7rem">Create New</q-item-section>
@@ -108,7 +111,7 @@ import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 
 export default {
-  name: 'headerBar',
+  name: 'LayoutsHeader',
   components: { LoginPages, Registerpages },
   setup() {
     const $initStore = useInitStore()
@@ -125,8 +128,23 @@ export default {
       // 搜索框
       search: '',
 
-      createMenu: [] as any,
+      //  左侧菜单
+      tabbarList: [] as any,
     });
+
+
+    state.tabbarList = [
+      { name: '首页', route: '/', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
+      { name: '行情', route: '/market', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '合约', route: '/contact', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      {
+        name: '期货', route: '/futures', icon: '', activeIcon: '', children: [
+          { name: '黄金期货', route: '/contact', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+        ], data: { isMobile: true, isDesktop: true }
+      },
+      { name: '我的', route: '/user', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
+    ];
+
 
     // dialogOpenFunc 打开登录注册
     const dialogOpenFunc = (dialogRef: any) => {
