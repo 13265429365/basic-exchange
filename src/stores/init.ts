@@ -117,42 +117,6 @@ export const useInitStore = defineStore('init', {
   },
 });
 
-interface tabbarInterface {
-  //  标题
-  name: string;
-
-  //  默认图标
-  icon: string;
-
-  //  激活图标
-  activeIcon: string;
-
-  //  路由
-  route: string;
-}
-
-interface userMenuInterface {
-  //  标题
-  name: string;
-
-  //  默认图标
-  icon: string;
-
-  //  路由
-  route: string;
-}
-
-interface menuInterface {
-  //  标题
-  name: string;
-
-  //  默认图标
-  icon: string;
-
-  //  路由
-  route: string;
-}
-
 interface countryInterface {
   //  国家ID
   id: number;

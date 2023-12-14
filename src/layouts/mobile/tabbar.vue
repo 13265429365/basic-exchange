@@ -13,23 +13,10 @@
     </q-page-container>
 
     <q-footer reveal bordered class="bg-white text-black text-caption">
-      <q-tabs
-        v-model="currentTab"
-        dense
-        indicator-color="transparent"
-        active-color="primary"
-      >
-        <q-route-tab
-          v-for="(tab, tabIndex) in tabbarList"
-          :key="tabIndex"
-          :name="tab.route"
-          :icon="
-            'img:' +
-            imageSrc(tab.route == currentTab ? tab.activeIcon : tab.icon)
-          "
-          :ripple="false"
-          :to="tab.route"
-        >
+      <q-tabs v-model="currentTab" dense indicator-color="transparent" active-color="primary">
+        <q-route-tab v-for="(tab, tabIndex) in tabbarList" :key="tabIndex" :name="tab.route" :icon="'img:' +
+          imageSrc(tab.route == currentTab ? tab.activeIcon : tab.icon)
+          " :ripple="false" :to="tab.route">
           <template v-slot:default>
             <div class="text-caption">{{ tab.name }}</div>
           </template>
@@ -59,11 +46,11 @@ export default {
 
     //  初始化数据
     state.tabbarList = [
-      { name: '首页', route: '/', icon: '', activeIcon: '' },
-      { name: '行情', route: '/market', icon: '', activeIcon: '' },
-      { name: '合约', route: '/contact', icon: '', activeIcon: '' },
-      { name: '期货', route: '/futures', icon: '', activeIcon: '' },
-      { name: '我的', route: '/user', icon: '', activeIcon: '' },
+      { name: '首页', route: '/', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
+      { name: '行情', route: '/market', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '合约', route: '/contact', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '期货', route: '/futures', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '我的', route: '/user', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
     ];
 
 
