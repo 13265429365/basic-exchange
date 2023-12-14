@@ -161,7 +161,6 @@ export default {
     const LoginRef = ref(null) as any;
     const RegisterRef = ref(null) as any;
 
-
     const state = reactive({
       config: $initStore.config,
 
