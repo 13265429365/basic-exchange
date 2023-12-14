@@ -118,7 +118,7 @@
 
         <!-- 消息 -->
         <q-btn round dense flat color="grey-8" icon="notifications">
-          <q-badge color="red" text-color="white" floating>
+          <q-badge color="red" text-color="white" rounded floating>
             2
           </q-badge>
         </q-btn>

@@ -1,4 +1,4 @@
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 768px) {
     // 设置手机版input背景、圆角、高度
     .q-field .q-field__control {
         background: #f5f6fa !important;
@@ -15,7 +15,7 @@
     }
 }
 
-@media screen and (min-width: 501px) {
+@media screen and (min-width: 769px) {
     // 设置桌面版input背景、圆角、高度
     .q-field .q-field__control {
         background: #fff !important;
@@ -41,28 +41,4 @@
 
 .q-field .q-field__native {
     color: rgba(0, 0, 0, 0.87) !important;
-}
-
-// 下拉框去除默认样式
-.q-select .q-field__control:hover:before {
-    opacity: 0;
-}
-
-.q-select .q-field__prepend {
-    padding-right: 0;
-    color: #8f959e;
-}
-
-.q-select .q-field__append {
-    padding-left: 4px;
-    font-size: 15px;
-    color: #8f959e;
-}
-
-.q-select .q-field__native {
-    display: none;
-}
-
-.q-select .q-field__append .q-icon {
-    display: none;
 }

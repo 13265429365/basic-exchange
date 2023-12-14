@@ -18,8 +18,6 @@ export const dynamicRouterFunc = (
 ) => {
   if (routerList && routerList.length > 0) {
     routerList.forEach((item) => {
-    console.log(item.componentMobile);
-    // console.log(isMobile ? item.componentMobile : item.componentDesktop);
       //  动态添加路由
       router.addRoute(parent, {
         path: item.route,
