@@ -7,7 +7,8 @@
             <div class="column">
               <div class="text-body1 text-bold">{{ article.name }}</div>
               <div v-for="(children, childrenIndex) in article.children" :key="childrenIndex" style="width: 100%;">
-                <div class="ellipsis text-grey-4 text-body2 q-mt-sm">{{ children.name }}</div>
+                <div class="ellipsis text-grey-4 text-body2 q-mt-sm cursor-pointer" @click="routerTo(children.route)">{{
+                  children.name }}</div>
               </div>
             </div>
           </div>
@@ -19,7 +20,7 @@
         <div class="text-body1 text-bold">社区</div>
         <div class="row items-center q-gutter-sm">
           <div v-for="(community, communityIndex) in communityList" :key="communityIndex">
-            <q-icon :name="community.icon" size="md"></q-icon>
+            <q-icon :name="community.icon" size="md" class="cursor-pointer" @click="routerTo(community.route)"></q-icon>
           </div>
         </div>
 
@@ -41,6 +42,7 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue'
 import { useInitStore } from 'src/stores/init';
+import { routerTo } from 'src/utils'
 
 export default {
   name: 'LayoutsFooter',
@@ -97,6 +99,7 @@ export default {
     ]
 
     return {
+      routerTo,
       ...toRefs(state)
     };
   },
