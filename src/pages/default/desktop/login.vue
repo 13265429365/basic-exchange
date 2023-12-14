@@ -112,7 +112,7 @@ export default defineComponent({
     };
 
     // 打开登录弹窗
-    const openLogin = (status: boolean) => {
+    const open = (status: boolean) => {
       state.LoginShow = status
     };
 
@@ -126,7 +126,7 @@ export default defineComponent({
       ...toRefs(state),
       refreshCaptchaFunc,
       submitFunc,
-      openLogin,
+      open,
       toRegister,
     };
   },

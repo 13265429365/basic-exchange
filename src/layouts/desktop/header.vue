@@ -96,20 +96,20 @@
     </q-toolbar>
 
     <LoginPages ref="LoginRef"></LoginPages>
-    <Registerpages ref="RegisterRef"></Registerpages>
+    <RegisterPages ref="RegisterRef"></RegisterPages>
   </div>
 </template>
 
 <script lang="ts">
 import LoginPages from 'src/pages/default/desktop/login.vue';
-import Registerpages from 'src/pages/default/desktop/register.vue';
+import RegisterPages from 'src/pages/default/desktop/register.vue';
 import { reactive, toRefs, ref } from 'vue';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 
 export default {
   name: 'headerBar',
-  components: { LoginPages, Registerpages },
+  components: { LoginPages, RegisterPages },
   setup() {
     const $initStore = useInitStore()
     const LoginRef = ref(null) as any;

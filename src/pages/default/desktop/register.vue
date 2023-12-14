@@ -176,7 +176,7 @@ export default defineComponent({
     };
 
     // 注册弹窗
-    const openRegister = (status: boolean) => {
+    const open = (status: boolean) => {
       state.registerShow = status;
     };
 
@@ -209,7 +209,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       toLogin,
-      openRegister,
+      open,
       newValue,
       refreshCaptchaFunc,
       submitFunc,
