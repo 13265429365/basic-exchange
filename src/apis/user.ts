@@ -9,3 +9,5 @@ export const userLogin = (params: any) => {
 export const userRegister = (params: any) => {
   return api.post('/register', params);
 };
+
+

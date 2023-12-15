@@ -22,7 +22,7 @@ export const setLanguageFunc = (i18n: any, locales: any, lang: string) => {
 
 export default boot(({ app }) => {
   const i18n = createI18n({
-    locale: 'en-US',
+    locale: 'zh-CN',
     globalInjection: true,
     messages,
     legacy: false,

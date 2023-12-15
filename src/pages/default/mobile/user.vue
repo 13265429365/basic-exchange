@@ -38,16 +38,11 @@
     <div class="bg-grey-1 q-px-md q-py-md full-width">
       <!-- 店铺、交易管理 -->
       <div class="row q-mb-md btn">
-        <q-btn class="bg-white q-py-sm q-px-md col q-mr-md radius-8" no-caps unelevated>
+        <q-btn v-for="(quickMenu, quickMenuIndex) in quickMenuList" :key="quickMenuIndex"
+          class="bg-white q-py-sm q-px-md col q-mr-md radius-8" no-caps unelevated>
           <div class="row justify-start items-center">
-            <q-img class="q-mr-sm" :src="`${imageSrc('/images/logo.png')}`" width="42px" height="42px" />
-            <div>Recharge</div>
-          </div>
-        </q-btn>
-        <q-btn class="bg-white col q-py-sm q-px-md radius-8" no-caps unelevated>
-          <div class="row justify-start items-center">
-            <q-img class="q-mr-sm" :src="`${imageSrc('/images/logo.png')}`" width="42px" height="42px" />
-            <div>Cash Out</div>
+            <q-img class="q-mr-sm" :src="`${imageSrc(quickMenu.icon)}`" width="42px" height="42px" />
+            <div>{{ quickMenu.name }}</div>
           </div>
         </q-btn>
       </div>
@@ -55,11 +50,11 @@
 
       <!-- 列表 -->
       <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md radius-8 no-border">
-        <div v-for="(child, childKey) in item.child" :key="childKey" class="bg-white">
+        <div v-for="(child, childKey) in item.children" :key="childKey" class="bg-white">
           <q-item @click="$router.push(child.url)" class="q-pa-md" clickable>
             <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
               <!-- <q-img :src="`/images/mobile/info/${child.avatar}`" width="24px" height="24px" /> -->
-              <q-img :src="`${imageSrc('/images/logo.png')}`" width="24px" height="24px" />
+              <q-img :src="`${imageSrc(child.icon)}`" width="24px" height="24px" />
             </q-item-section>
 
             <q-item-section>
@@ -94,7 +89,7 @@
           <div class="row justify-between no-wrap">
             <q-btn @click="dialog = false" class="q-mr-md text-primary bg-white col-5" unelevated rounded no-caps
               style="border:1px solid #01AC66" label="Cancel" />
-            <q-btn @click="$router.push({name:'UserLogin'})" class="col-5" unelevated rounded no-caps color="primary"
+            <q-btn @click="$router.push({ name: 'UserLogin' })" class="col-5" unelevated rounded no-caps color="primary"
               label="Yes,Logout" />
           </div>
         </q-card-section>
@@ -104,109 +99,60 @@
 </template>
 
 <script lang="ts">
-  import { defineComponent, reactive, toRefs } from 'vue';
-  import { imageSrc } from 'src/utils';
-  export default defineComponent({
-    name: 'userIndex',
-    setup() {
-      let store = reactive({
-        // 用户菜单
-        userList: [
-          {
-            child: [
-              {
-                name: 'Card Management',
-                avatar: 'card.png',
-                url: 'card'
-              }, {
-                name: 'My Wallet',
-                avatar: 'wallet.png',
-                url: 'wallet/index'
-              }, {
-                name: 'My property',
-                avatar: 'property.png',
-                url: 'property',
-              }
-            ],
-          },
-          {
-            child: [
-              {
-                name: 'Share',
-                avatar: 'share.png',
-                url: 'share'
-              }, {
-                name: 'Team Management',
-                avatar: 'Management.png',
-                url: 'team/management'
-              }, {
-                name: 'Team Benefits',
-                avatar: 'Benefits.png',
-                url: '/team/benefits'
-              }
-            ],
-          },
-          {
-            child: [
-              {
-                name: 'VIP',
-                avatar: 'vip.png',
-                url: '/grade',
-              }, {
-                name: 'Identification',
-                avatar: 'Identification.png',
-                url: 'identification'
-              }, {
-                name: 'Help Center',
-                avatar: 'help.png',
-                url: 'help/center'
-              }, {
-                name: 'Settings',
-                avatar: 'settings.png',
-                url: 'setting'
-              }, {
-                name: 'Download',
-                avatar: 'download.png',
-                url: 'download'
-              }
-            ],
-          },
-        ],
+import { defineComponent, reactive, toRefs } from 'vue';
+import { imageSrc } from 'src/utils';
+import { useInitStore, InitStoreState } from 'src/stores/init';
+export default defineComponent({
+  name: 'userIndex',
+  setup() {
+    const $initStore = useInitStore()
 
-        // 退出彈窗
-        dialog: false,
-      })
-      return {
-        ...toRefs(store),
-        imageSrc,
-      }
+    let state = reactive({
+      // 用户菜单
+      userList: [] as any,
+
+      // 快捷菜单
+      quickMenuList: [] as any,
+
+      // 退出彈窗
+      dialog: false,
+    })
+
+    state.userList = $initStore.userMenu
+    state.quickMenuList = $initStore.quickMenu;
+
+    return {
+      ...toRefs(state),
+      imageSrc,
     }
-  })
+  }
+})
 </script>
 
 <style scoped>
-  /* 退出dialog */
-  .q-dialog__inner>div {
-    border-radius: 20px 20px 0 0;
-  }
+/* 退出dialog */
+.q-dialog__inner>div {
+  border-radius: 20px 20px 0 0;
+}
 
-  .q-dialog__inner>div>div {
-    padding: 10px 20px 50px 20px;
-  }
-  .radius-8 {
-    border-radius: 8px;
-    overflow: hidden;
-  }
+.q-dialog__inner>div>div {
+  padding: 10px 20px 50px 20px;
+}
 
-  /* 头像下按钮 */
-  .q-chip {
-    height: 19px;
-    font-size: 10px;
-    color: #F7DEB6 !important;
-    background: #322B19 !important;
-    border: 1px solid #F7DEB6;
-    margin: 0;
-    margin-right: 4px;
-    padding: 4px 5px;
-  }
+.radius-8 {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 头像下按钮 */
+.q-chip {
+  height: 19px;
+  font-size: 10px;
+  color: #F7DEB6 !important;
+  background: #322B19 !important;
+  border: 1px solid #F7DEB6;
+  margin: 0;
+  margin-right: 4px;
+  padding: 4px 5px;
+}
 </style>

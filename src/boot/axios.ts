@@ -26,7 +26,7 @@ api.interceptors.request.use((config: any) => {
       spinner: QSpinnerBars,
       spinnerColor: 'secondary',
       spinnerSize: 50,
-      message: 'Some important process is in progress. Hang on...',
+      message: '加载中...',
     });
   }
 

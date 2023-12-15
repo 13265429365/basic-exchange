@@ -14,17 +14,17 @@ export const InitStoreState = {
   //  用户信息
   userInfo: {} as any,
 
-  //  tabbars 菜单
+  //  tabbars 菜单（桌面header左侧）
   tabBars: [] as menuInterface[],
 
-  // 用户菜单
-  userMenu: [] as menuInterface[][],
+  // 用户菜单(桌面左侧menu)
+  userMenu: [] as menuInterface[],
 
-  // 快捷菜单
-  quickMenu: [] as menuInterface[][],
+  // home菜单（桌面header右侧头像）
+  homeMenu: [] as menuInterface[],
 
-  // 桌面设置菜单
-  settingMenu: [] as menuInterface[][],
+  // 快捷菜单（桌面header左侧）
+  quickMenu: [] as menuInterface[],
 
   //  翻译数据
   translate: [] as translateInterface[],
@@ -53,20 +53,20 @@ export const InitStoreState = {
         //  是否显示邮箱
         showEmail: false,
         //  是否显示确认密码
-        showCmfPass: false,
+        showCmfPass: true,
         //  是否显示验证码
-        showVerify: false,
+        showVerify: true,
         //  是否显示安全密钥
         showSecurityPass: false,
         //  是否显示手机号码
-        showTelephone: false,
+        showTelephone: true,
       },
       //  登录配置
       login: {
         //  是否显示验证码
-        showVerify: false,
+        showVerify: true,
         //  是否显示注册
-        showRegister: false,
+        showRegister: true,
       },
       //  切换语言配置
       lang: {
@@ -111,11 +111,22 @@ export const useInitStore = defineStore('init', {
   },
   getters: {},
   actions: {
+    // 更新tabbars 菜单
+    updateMenuList(list: any) {
+      Object.assign(this, list)
+    },
+
     //  更新用户Token
     updateUserToken(token: string) {
       this.userToken = token;
       console.log('更新了token');
       Cookies.set(UserTokenKey, token, { expires: '30d 3h 5m' });
+    },
+
+    //  删除用户Token
+    removeUserToken() {
+      console.log('删除了token');
+      Cookies.remove(UserTokenKey);
     },
   },
 });
@@ -126,10 +137,10 @@ interface menuInterface {
 
   // 列表路由
   routes: string,
-  
+
   // 列表图标
   icon: string,
-  
+
   // 列表高亮图标
   activeIcon: string,
 

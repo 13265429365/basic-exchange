@@ -10,6 +10,7 @@ export default defineComponent({
   name: 'App',
   created: () => {
     const $initStore = useInitStore();
+
     //  设置客户端Meta信息
     const metaData = {
       title: $initStore.config.name,

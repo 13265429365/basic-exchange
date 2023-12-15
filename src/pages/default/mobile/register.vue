@@ -55,8 +55,9 @@
             <q-img src="/icons/code.png" />
           </template>
           <template v-slot:append>
-            <q-img no-spinner v-if="params.captchaId !== ''" :src="imageSrc('/captcha/' + params.captchaId + '/200-50')
-              " width="120px" height="32px" @click="refreshCaptchaFunc"></q-img>
+            <q-img no-spinner v-if="params.captchaId !== ''"
+              :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/200-50')" width="120px" height="32px"
+              @click="refreshCaptchaFunc"></q-img>
           </template>
         </q-input>
 
@@ -119,8 +120,9 @@ import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
-import { NotifyNegative } from 'src/utils/notify';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { InitStoreState } from 'src/stores/init';
+
 export default defineComponent({
   name: 'userRegister',
   setup() {
@@ -178,8 +180,11 @@ export default defineComponent({
         return false
       };
       userRegister(state.params).then((res: any) => {
+        NotifyPositive('注册成功')
+
+        // 更改配置文件userToken
         $initStore.updateUserToken(res.token);
-        $router.push({ name: 'Home' })
+        $router.push({ name: 'HomeIndex' });
       }).catch(() => {
         refreshCaptchaFunc();
       });

@@ -57,8 +57,9 @@
               <q-img src="/icons/code.png" />
             </template>
             <template v-slot:append>
-              <q-img no-spinner v-if="params.captchaId !== ''" :src="imageSrc('/captcha/' + params.captchaId + '/200-50')
-                " width="120px" height="32px" @click="refreshCaptchaFunc"></q-img>
+              <q-img no-spinner v-if="params.captchaId !== ''"
+                :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/200-50')" width="120px" height="32px"
+                @click="refreshCaptchaFunc"></q-img>
             </template>
           </q-input>
 
@@ -79,7 +80,7 @@
 
           <!-- 手机号码 -->
           <div v-if="registerSetting.showTelephone" class="row no-wrap">
-            <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
+            <q-select @update:modelValue="newValue($event)" v-model="areaCode" option-value="code" :options="options"
               class="q-mb-md q-mr-sm select" standout>
               <template v-slot:prepend>
                 <q-img width="24px" height="16px" @click.stop.prevent />
@@ -88,10 +89,10 @@
               <template v-slot:option="scope">
                 <q-item v-bind="scope.itemProps">
                   <q-item-section avatar>
-                    <q-img width="24px" height="16px" @click.stop.prevent />
+                    <q-img :src="imageSrc(scope.opt.icon)" width="24px" height="16px" @click.stop.prevent />
                   </q-item-section>
                   <q-item-section>
-                    <q-item-label>{{ scope.opt.label }}</q-item-label>
+                    <q-item-label>{{ scope.opt.name }}</q-item-label>
                   </q-item-section>
                 </q-item>
               </template>
@@ -121,9 +122,8 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useInitStore } from 'src/stores/init';
-import { NotifyNegative } from 'src/utils/notify';
-import { InitStoreState } from 'src/stores/init';
+import { useInitStore, InitStoreState } from 'src/stores/init';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 export default defineComponent({
   name: 'registerDialog',
   setup(props: any, context: any) {
@@ -165,9 +165,14 @@ export default defineComponent({
       // 登录弹窗
       registerShow: false,
     });
+
+    // 获取国家列表
+    state.options = $initStore.countryList
+
     onMounted(() => {
       refreshCaptchaFunc();
     });
+
     // 获取验证码
     const refreshCaptchaFunc = () => {
       CaptchaAPI().then((res: any) => {
@@ -188,21 +193,29 @@ export default defineComponent({
         return false
       };
       userRegister(state.params).then((res: any) => {
+        NotifyPositive('注册成功')
+
+        // 更改配置文件userToken
         $initStore.updateUserToken(res.token);
-        $router.push({ name: 'Home' })
+        if ($router.currentRoute.value.path == '/') {
+          location.reload()
+        } else {
+          $router.push({ name: 'HomeIndex' });
+        }
       }).catch(() => {
         refreshCaptchaFunc();
       });
     }
 
     // 监听地区选择
-    const newValue = (newValue: void) => {
-      console.log(newValue)
+    const newValue = (newValue: any) => {
+      state.areaCode = newValue.code
+      console.log(state.areaCode)
     }
 
     // 点击注册
     const toLogin = () => {
-      context.emit('switchDialog', true, false);
+      context.emit('switchDialogFunc', true, false);
     }
 
 

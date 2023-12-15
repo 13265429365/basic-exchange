@@ -36,14 +36,15 @@
               <q-img width="24px" height="24px" src="/icons/code.png" />
             </template>
             <template v-slot:append>
-              <q-img no-spinner v-if="params.captchaId !== ''" :src="imageSrc('/captcha/' + params.captchaId + '/200-50')"
-                width="120px" height="32px" @click="refreshCaptchaFunc"></q-img>
+              <q-img class="cursor-pointer" no-spinner v-if="params.captchaId !== ''"
+                :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/200-50')" width="120px" height="32px"
+                @click="refreshCaptchaFunc"></q-img>
             </template>
           </q-input>
 
           <!-- 忘记密码、登录、注册 -->
           <div class="text-right q-mb-lg text-grey-7 cursor-pointer">Forgot Password?</div>
-          <q-btn @click="$router.push('/user')" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
+          <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
             color="primary" label="Login" />
           <div v-if="loginSetting.showRegister" class="text-center q-mb-xl">
             First time here?
@@ -64,6 +65,8 @@ import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 import { InitStoreState } from 'src/stores/init';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+
 
 export default defineComponent({
   name: 'userLogin',
@@ -72,6 +75,9 @@ export default defineComponent({
     const $initStore = useInitStore();
 
     const state = reactive({
+      // 悬浮按钮
+      fabShow: false,
+
       // 登录配置
       loginSetting: InitStoreState.config.settings.login,
 
@@ -103,8 +109,17 @@ export default defineComponent({
     const submitFunc = () => {
       userLogin(state.params)
         .then((res: any) => {
+          // 关闭弹窗
+          state.LoginShow = false
+          NotifyPositive('欢迎回来')
+
+          // 更改配置文件userToken
           $initStore.updateUserToken(res.token);
-          $router.push({ name: 'Home' });
+          if ($router.currentRoute.value.path == '/') {
+            location.reload()
+          } else {
+            $router.push({ name: 'HomeIndex' });
+          }
         })
         .catch(() => {
           refreshCaptchaFunc();
@@ -118,7 +133,7 @@ export default defineComponent({
 
     // 点击注册
     const toRegister = () => {
-      context.emit('switchDialog', false, true);
+      context.emit('switchDialogFunc', false, true);
     }
 
     return {

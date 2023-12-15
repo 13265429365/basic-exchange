@@ -1,8 +1,10 @@
 import { route } from 'quasar/wrappers';
-import { UserTokenKey, InitStoreState } from 'src/stores/init';
+import { UserTokenKey, InitStoreState, useInitStore } from 'src/stores/init';
 import { Cookies, Platform } from 'quasar';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
+import { CaptchaAPI, userInit, footerList } from 'src/apis/index';
+
 
 import {
   createMemoryHistory,
@@ -32,11 +34,15 @@ import routes from 'src/router/routes';
  */
 
 export default route(async function ({ store, ssrContext }) {
+  // 获取init方法
+  const $initStore = useInitStore();
+
+  // 
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history'
-    ? createWebHistory
-    : createWebHashHistory;
+      ? createWebHistory
+      : createWebHashHistory;
 
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
@@ -53,6 +59,19 @@ export default route(async function ({ store, ssrContext }) {
     : Platform;
   store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
   store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
+
+  // 请求接口获取菜单
+  const params = {
+    doadmin: '192.168.229.1',
+    lang: 'zh-CN',
+  }
+  // userInit   //获取初始化数据
+  // footerList //获取footer数据
+  userInit(params).then((res: any) => {
+    console.log('初始化数据', res)
+
+    $initStore.updateMenuList(res)
+  });
 
   //  动态加载路由
   dynamicRouterFunc(

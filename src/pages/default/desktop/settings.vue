@@ -15,13 +15,13 @@
               <div class="row" style="min-width: 260px;">
                 <q-img class="q-mr-sm" width="24px" height="24px" :src="`/images/pc/settings/${item.title}.png`"></q-img>
                 <div>
-                  <div class="text-h6 text-color-3 text-weight-bold">{{item.title}}</div>
-                  <div style="font-size: 12px;">{{item.decs}}</div>
+                  <div class="text-h6 text-color-3 text-weight-bold">{{ item.title }}</div>
+                  <div style="font-size: 12px;">{{ item.decs }}</div>
                 </div>
               </div>
             </div>
             <div class="row items-center">
-              <div v-if="item.content" class="text-weight-medium">{{item.content}}</div>
+              <div v-if="item.content" class="text-weight-medium">{{ item.content }}</div>
               <q-avatar v-else style="width: 34px;height: 34px;">
                 <img :src="`/images/pc/settings/${item.avatar}.png`">
               </q-avatar>
@@ -43,7 +43,7 @@
 import menuBar from 'src/layouts/desktop/setting.vue';
 import Edit from './Edit/Edit.vue';
 import { defineComponent, reactive, toRefs, ref } from 'vue';
-// 因为自动加载路由问题。 第一次会获取不到页面跳转到404页面，未修复
+
 export default defineComponent({
   components: {
     menuBar,
@@ -97,12 +97,14 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-  @import url("../../../css/pcCss.css");
-  .q-btn {
-    width: 80px;
-    height: 32px;
-  }
-  .q-btn:before {
-    box-shadow: none;
-  }
+@import url("../../../css/pcCss.css");
+
+.q-btn {
+  width: 80px;
+  height: 32px;
+}
+
+.q-btn:before {
+  box-shadow: none;
+}
 </style>
