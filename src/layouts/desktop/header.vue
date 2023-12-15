@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-toolbar style="height: 60px">
+    <q-toolbar class="q-pr-xl" style="height: 60px;padding-left: 64px">
       <!-- 左侧 logo -->
       <q-toolbar-title shrink class="cursor-pointer text-black">
         <q-avatar>
@@ -10,10 +10,10 @@
       </q-toolbar-title>
 
       <!-- 左侧tabBar菜单 -->
-      <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">、
+      <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
         <q-btn-dropdown :menu-offset="[80, 18]" v-if="tabBar.data.isDesktop" class="text-black" :label="tabBar.name" flat
-          dense no-wrap dropdown-icon="expand_more">
-          <q-list>
+          no-wrap :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
+          <q-list v-if="tabBar.children.length > 0">
             <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
               aria-hidden="true">
               <q-item-section avatar>
@@ -45,8 +45,7 @@
 
 
       <!-- 左侧快捷菜单 -->
-      <q-btn-dropdown :menu-offset="[50, 18]" class="text-black" label="more" flat dense no-caps
-        dropdown-icon="expand_more">
+      <q-btn-dropdown :menu-offset="[50, 18]" class="text-black" label="more" flat no-caps dropdown-icon="expand_more">
         <q-list>
           <q-item v-for="(quickMenu, quickMenuIndex) in quickMenuList" :key="quickMenuIndex" clickable v-close-popup
             aria-hidden="true">
@@ -77,7 +76,7 @@
           <q-avatar size="34px">
             <img :src="imageSrc(config.logo)">
           </q-avatar>
-          <q-menu :offset="[160, 18]" class="q-pa-md">
+          <q-menu :offset="[160, 12]" class="q-pa-md">
             <q-list style="min-width: 218px;">
               <!-- 固定头部 -->
               <q-item aria-hidden="true">
@@ -90,31 +89,33 @@
                       <span class="q-mr-sm">Jack</span>
                       <span class="text-grey-7">569***@qq.com</span>
                     </div>
-                    <div class="row no-wrap q-mt-xs">
+                    <div class="row no-wrap q-mt-sm">
                       <q-btn size="xs" icon="verified" rounded flat dense no-wrap class="q-px-sm q-mr-sm" no-caps
                         style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
-                        <span class="text-caption">Lv.3</span>
+                        <div style="font-size: 11px;">Lv.3</div>
                       </q-btn>
                       <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps>
-                        <span class="text-caption">unverified</span>
+                        <div style="font-size: 11px;">unverified</div>
                       </q-btn>
                     </div>
                   </div>
                 </div>
               </q-item>
 
-              <q-separator />
+              <q-separator inset class="q-mt-md q-mb-sm" />
 
               <!-- 用户列表 -->
-              <q-item v-for="(userMenu, userMenuIndex) in userMenuList" :key="userMenuIndex" clickable v-close-popup
-                aria-hidden="true">
+              <q-item dense v-for="(userMenu, userMenuIndex) in userMenuList" :key="userMenuIndex" clickable v-close-popup
+                aria-hidden="true" class="q-py-md">
                 <q-item-section avatar>
                   <q-icon :name="userMenu.icon" />
                 </q-item-section>
-                <q-item-section>{{ userMenu.name }}</q-item-section>
+                <q-item-section>
+                  <div>{{ userMenu.name }}</div>
+                </q-item-section>
               </q-item>
 
-              <q-separator />
+              <q-separator inset />
 
               <!-- 退出 -->
               <q-item clickable v-close-popup aria-hidden="true">
@@ -181,15 +182,15 @@ export default {
 
     // 左侧tabBar菜单
     state.tabBarList = [
-      { name: '首页', route: '/', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
-      { name: '行情', route: '/market', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-      { name: '合约', route: '/contact', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '首页', route: '/', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
+      { name: '行情', route: '/market', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '合约', route: '/contact', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
       {
-        name: '期货', route: '/futures', icon: 'dashboard', activeIcon: '', children: [
-          { name: '黄金期货', route: '/contact', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+        name: '期货', route: '/futures', icon: 'thumb_up', activeIcon: '', children: [
+          { name: '黄金期货', route: '/contact', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
         ], data: { isMobile: true, isDesktop: true }
       },
-      { name: '我的', route: '/user', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
+      { name: '我的', route: '/user', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
     ];
 
     // 左侧快捷菜单
@@ -236,10 +237,19 @@ export default {
 
 :deep(.q-item) {
   border-radius: 8px;
+
+  .q-item__section {
+    color: #333;
+  }
 }
 
 :deep(.q-item .q-item__section) {
   min-width: auto;
   padding-right: 10px;
+}
+
+:deep(.q-btn .q-btn-dropdown__arrow) {
+  font-size: 12px;
+  color: #666;
 }
 </style>

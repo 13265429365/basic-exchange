@@ -11,7 +11,7 @@
       </div>
     </q-page-container>
 
-    <q-footer bordered>
+    <q-footer style="background: #021736;" bordered>
       <FooterLayouts></FooterLayouts>
     </q-footer>
   </q-layout>

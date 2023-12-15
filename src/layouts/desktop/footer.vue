@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #021736;padding: 36px" class="text-white column items-center">
+  <div style="padding: 36px" class="text-white column items-center">
     <div style="width: 1200px;">
       <div class="row">
         <div class="col-9">
