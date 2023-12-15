@@ -1,6 +1,8 @@
 import { boot } from 'quasar/wrappers';
 import { createI18n } from 'vue-i18n';
 
+import messages from 'src/i18n';
+
 // 解析配置语言
 const parsePrefetchLocales = (locales: any, lang: string): any => {
   const messages = {} as any;
@@ -20,6 +22,9 @@ export const setLanguageFunc = (i18n: any, locales: any, lang: string) => {
 
 export default boot(({ app }) => {
   const i18n = createI18n({
+    locale: 'en-US',
+    globalInjection: true,
+    messages,
     legacy: false,
   });
 

@@ -42,7 +42,7 @@ import { defineComponent, reactive, toRefs } from 'vue';
 export default defineComponent({
   name: 'userIndex',
   setup() {
-    let store = reactive({
+    let state = reactive({
       //
       list: [
         {
@@ -76,7 +76,7 @@ export default defineComponent({
       ],
     });
     return {
-      ...toRefs(store),
+      ...toRefs(state),
     }
   }
 });

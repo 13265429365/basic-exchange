@@ -68,6 +68,7 @@
 
       <!-- 右侧Deposit -->
       <q-btn rounded flat dense no-wrap class="bg-primary text-white q-mx-md q-px-md" no-caps label="Deposit"></q-btn>
+      <div class="text-black">{{ $t('success') }}</div>
 
       <!-- 右侧固定按钮 -->
       <div class="q-gutter-sm row items-center no-wrap">
@@ -76,7 +77,7 @@
           <q-avatar size="34px">
             <img :src="imageSrc(config.logo)">
           </q-avatar>
-          <q-menu :offset="[160, 12]" class="q-pa-md">
+          <q-menu :offset="[160, 15]" class="q-pa-md">
             <q-list style="min-width: 218px;">
               <!-- 固定头部 -->
               <q-item aria-hidden="true">
@@ -120,7 +121,7 @@
               <!-- 退出 -->
               <q-item clickable v-close-popup aria-hidden="true">
                 <q-item-section avatar>
-                  <q-icon name="logout" />
+                  <q-icon name="o_logout" />
                 </q-item-section>
                 <q-item-section>退出</q-item-section>
               </q-item>
@@ -129,15 +130,17 @@
         </q-btn>
 
         <!-- 钱包 -->
-        <q-btn round dense flat color="grey-8" icon="account_balance_wallet"></q-btn>
+        <q-btn round dense flat color="grey-8" icon="o_account_balance_wallet"></q-btn>
 
         <!-- 消息 -->
-        <q-btn round dense flat color="grey-8" icon="notifications">
+        <q-btn round dense flat color="grey-8" icon="o_notifications">
           <q-badge color="red" text-color="white" rounded floating>
             2
           </q-badge>
         </q-btn>
-        <q-btn round dense flat color="grey-8" icon="language"></q-btn>
+        <q-btn round dense flat color="grey-8" icon="o_language">
+          <switchLanguage :offset="[0, 20]"></switchLanguage>
+        </q-btn>
       </div>
     </q-toolbar>
 
@@ -149,13 +152,14 @@
 <script lang="ts">
 import LoginPages from 'src/pages/default/desktop/login.vue';
 import RegisterPages from 'src/pages/default/desktop/register.vue';
+import switchLanguage from 'src/components/switchLanguage.vue';
 import { reactive, toRefs, ref } from 'vue';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 
 export default {
   name: 'LayoutsHeader',
-  components: { LoginPages, RegisterPages },
+  components: { LoginPages, RegisterPages, switchLanguage },
   setup() {
     const $initStore = useInitStore()
     const LoginRef = ref(null) as any;
@@ -182,15 +186,15 @@ export default {
 
     // 左侧tabBar菜单
     state.tabBarList = [
-      { name: '首页', route: '/', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
-      { name: '行情', route: '/market', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-      { name: '合约', route: '/contact', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '首页', route: '/', icon: 'o_dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
+      { name: '行情', route: '/market', icon: 'o_dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '合约', route: '/contact', icon: 'o_dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
       {
-        name: '期货', route: '/futures', icon: 'thumb_up', activeIcon: '', children: [
-          { name: '黄金期货', route: '/contact', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+        name: '期货', route: '/futures', icon: 'o_dashboard', activeIcon: '', children: [
+          { name: '黄金期货', route: '/contact', icon: 'o_dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
         ], data: { isMobile: true, isDesktop: true }
       },
-      { name: '我的', route: '/user', icon: 'thumb_up', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
+      { name: '我的', route: '/user', icon: 'o_dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
     ];
 
     // 左侧快捷菜单
