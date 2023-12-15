@@ -27,7 +27,7 @@
             <div class="q-py-xs q-px-md row justify-between no-wrap"
               style="background-color: #F9F9F9;width: 315px;border-radius: 10px;">
               <div class="ellipsis">
-                {{inviteUrl}}
+                {{ inviteUrl }}
               </div>
               <div class="text-primary q-ml-md text-weight-bold" @click="copyToClipboardFunc(inviteUrl)">
                 copy
@@ -37,9 +37,9 @@
         </div>
         <!-- 数字货币类型 -->
         <div v-else class="page_bg q-pa-md q-mb-md radius-8">
-          <div style="border-bottom: 1px dashed #DDDDDD" class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">Recharge Information</div>
-          <div class="q-mt-md row justify-between no-wrap"
-            style="width: 315px;border-radius: 10px;">
+          <div style="border-bottom: 1px dashed #DDDDDD" class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">
+            Recharge Information</div>
+          <div class="q-mt-md row justify-between no-wrap" style="width: 315px;border-radius: 10px;">
             <div class="ellipsis text-weight-medium">
               Mrh Raju
             </div>
@@ -47,8 +47,7 @@
               copy
             </div>
           </div>
-          <div class="q-mt-md row justify-between no-wrap"
-            style="width: 315px;border-radius: 10px;">
+          <div class="q-mt-md row justify-between no-wrap" style="width: 315px;border-radius: 10px;">
             <div class="ellipsis text-weight-medium">
               5254 7634 8734 7690
             </div>
@@ -56,8 +55,7 @@
               copy
             </div>
           </div>
-          <div class="q-mt-md row justify-between no-wrap"
-            style="width: 315px;border-radius: 10px;">
+          <div class="q-mt-md row justify-between no-wrap" style="width: 315px;border-radius: 10px;">
             <div class="ellipsis text-weight-medium">
               BBC BANK
             </div>
@@ -86,8 +84,8 @@
           <div>1.确认地址, 并且等待主网同步 </div>
           <div>2.谨防假冒在线客服充值</div>
         </div>
-        <q-btn unelevated rounded color="primary" label="Add Money" class="full-width q-my-md" no-caps style="height: 44px;"
-          @click="alertPass = true" />
+        <q-btn unelevated rounded color="primary" label="Add Money" class="full-width q-my-md" no-caps
+          style="height: 44px;" @click="alertPass = true" />
       </div>
 
       <!-- 添加按钮 -->
@@ -96,15 +94,6 @@
 
     <!-- 安全密码 -->
     <q-dialog v-model="alertPass">
-      <dialogAlert :isShowCloseBtn="false" title="Security Key" @eventDialogAlert="alertPass = false"
-        @eventDialogAlertYesBtn="yesFun($router)">
-        <template v-slot:body>
-          <div class="q-py-md">
-            <q-input type="password" standout placeholder="请输入" v-model="password" :dense="true" class="alertInput"
-              style="height: 48px;" />
-          </div>
-        </template>
-      </dialogAlert>
     </q-dialog>
   </div>
 </template>
@@ -112,13 +101,12 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import navBar from 'src/layouts/mobile/header.vue';
-import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import uploader from 'src/components/mobile/uploader.vue';
 export default {
   name: 'rechargeIndex',
-  components: { navBar, dialogAlert, uploader },
+  components: { navBar, uploader },
   setup() {
     const state = reactive({
       alertPass: false,
@@ -184,15 +172,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import url("../../../css/mobileCss.css");
-  :deep .q-uploader__list {
-    padding: 0;
-  }
+@import url("../../../css/mobileCss.css");
+
+:deep .q-uploader__list {
+  padding: 0;
+}
 
 .select {
   background-color: rgba(241, 250, 246, 1) !important;
   border: 1px solid $primary;
 }
+
 :deep(.q-scrollarea__thumb) {
   display: none !important;
 }

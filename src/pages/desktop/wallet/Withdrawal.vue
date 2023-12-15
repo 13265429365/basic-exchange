@@ -28,12 +28,12 @@
             <div class="text-weight-medium q-mr-xs">
               可用余额：
             </div>
-            <div class="text-weight-medium text-h6" style="color: #F45E0C;">￥{{Total}}</div>
+            <div class="text-weight-medium text-h6" style="color: #F45E0C;">￥{{ Total }}</div>
           </div>
           <div class="row no-wrap items-center q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mr-xs">充值金额：</div>
             <q-input suffix="元" type="number" standout v-model="text" />
-            <div @click="text=Total" class="text-primary q-ml-sm cursor-pointer">全部提现</div>
+            <div @click="text = Total" class="text-primary q-ml-sm cursor-pointer">全部提现</div>
           </div>
 
         </div>
@@ -65,104 +65,92 @@
           </div>
           <div class="row justify-center">
             <q-btn unelevated rounded color="primary" label="OK" style="width: 260px;" class="q-mt-xl" no-caps
-              @click="alertPass=!alertPass" />
+              @click="alertPass = !alertPass" />
           </div>
         </div>
       </q-card>
     </q-dialog>
-    <!-- <q-dialog v-model="alertPass">
-      <dialogAlert style="width: 380px;" :isShowCloseBtn="false" title="Security Key" @eventDialogAlert="alertPass = false"
-        @eventDialogAlertYesBtn="yesFun($router)">
-        <template v-slot:body>
-          <div class="q-py-md row justify-center">
-            <q-input type="password" standout placeholder="请输入" v-model="password" :dense="true" class=""
-              style="height: 48px;" />
-          </div>
-        </template>
-      </dialogAlert>
-    </q-dialog> -->
   </div>
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs } from 'vue';
-  // import dialogAlert from 'src/components/mobile/dialogAlert.vue';
-  export default {
-    name: 'withdrawalIndex',
-    // components: { dialogAlert },
-    setup() {
-      const state = reactive({
-        alertPass: false,
-        text: '',
-        password: '',
-        money: '',
-        Total: 2693.23,
-        typeDataIndex: 0,
-        typeArr: [{
-          image: '/images/mobile/card/USDT.png',
-          value: '农业银行(9632)',
-          type: 2
-        }, {
-          image: '/images/mobile/card/BTC.png',
-          value: '建设银行(9232)',
-          type: 1
-        }, {
-          image: '/images/mobile/card/USDT.png',
-          value: '农业银行(9631)',
-          type: 2
-        }, {
-          image: '/images/mobile/card/BTC.png',
-          value: '建设银行(7232)',
-          type: 1
-        }],
-      });
-      // 全部提现
-      // const allWithdrawals= () => {
-      //   state.
-      // }
-      const yesFun = (router : any) => {
-        state.alertPass = false;
-        // 密码正确
-        router.push({
-          name: 'showMessage',
-          state: {
-            params: JSON.stringify({
-              navTitle: 'withdrawal',
-              title: 'Submitted successfully',
-              content: 'Please be patient and keep an eye on the progress at any time',
-              yesBtn: 'OK',
-              logo: 'page_bg/wait.png',
-              backUrl: '/info'
-            })
-          }
-        })
-      };
+import { reactive, toRefs } from 'vue';
+export default {
+  name: 'withdrawalIndex',
+  setup() {
+    const state = reactive({
+      alertPass: false,
+      text: '',
+      password: '',
+      money: '',
+      Total: 2693.23,
+      typeDataIndex: 0,
+      typeArr: [{
+        image: '/images/mobile/card/USDT.png',
+        value: '农业银行(9632)',
+        type: 2
+      }, {
+        image: '/images/mobile/card/BTC.png',
+        value: '建设银行(9232)',
+        type: 1
+      }, {
+        image: '/images/mobile/card/USDT.png',
+        value: '农业银行(9631)',
+        type: 2
+      }, {
+        image: '/images/mobile/card/BTC.png',
+        value: '建设银行(7232)',
+        type: 1
+      }],
+    });
+    // 全部提现
+    // const allWithdrawals= () => {
+    //   state.
+    // }
+    const yesFun = (router: any) => {
+      state.alertPass = false;
+      // 密码正确
+      router.push({
+        name: 'showMessage',
+        state: {
+          params: JSON.stringify({
+            navTitle: 'withdrawal',
+            title: 'Submitted successfully',
+            content: 'Please be patient and keep an eye on the progress at any time',
+            yesBtn: 'OK',
+            logo: 'page_bg/wait.png',
+            backUrl: '/info'
+          })
+        }
+      })
+    };
 
-      return {
-        ...toRefs(state),
-        yesFun,
-      }
+    return {
+      ...toRefs(state),
+      yesFun,
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  @import url("../../../css/pcCss.css");
-  .select {
-    background-color: rgba(241, 250, 246, 1) !important;
-    border: 1px solid $primary;
-  }
+@import url("../../../css/pcCss.css");
 
-  // pc版input样式
+.select {
+  background-color: rgba(241, 250, 246, 1) !important;
+  border: 1px solid $primary;
+}
 
-  :deep .q-field--standout .q-field__control {
-    width: 230px;
-    background: #fff !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    outline: none !important;
-    border: 1px solid #DDDDDD;
-    box-shadow: none !important;
-    border-radius: 4px;
-  }
+// pc版input样式
+
+:deep .q-field--standout .q-field__control {
+  width: 230px;
+  background: #fff !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  outline: none !important;
+  border: 1px solid #DDDDDD;
+  box-shadow: none !important;
+  border-radius: 4px;
+}
 </style>

@@ -14,7 +14,7 @@ import { defineComponent, toRefs, reactive } from 'vue';
 import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
-  name: 'switchLanguage',
+  name: 'SwitchLanguage',
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
 

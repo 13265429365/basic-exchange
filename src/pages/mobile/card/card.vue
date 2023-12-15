@@ -63,19 +63,12 @@
       <div style="border: 1px dashed #01AC66;height: 54px;background-color: rgba(1, 172, 102, 0.05);"
         class="radius-8  column justify-center row" @click="$router.push({ name: 'addCard' })">
         <div class="text-center text-primary text-weight-bold self-center row">
-          <q-icon size="20px" name="add"
-            class="self-center" />Add Card
+          <q-icon size="20px" name="add" class="self-center" />Add Card
         </div>
       </div>
     </div>
     <!-- 删除弹窗 -->
     <q-dialog v-model="alertDelete">
-      <dialogAlert :isShowCloseBtn="false" title="Delete Confirmation" @eventDialogAlert="alertDelete = false"
-        @eventDialogAlertYesBtn="deleteFun">
-        <template v-slot:body>
-          <div class="text-center q-py-md text-color-3">Are you sure to delete the card？</div>
-        </template>
-      </dialogAlert>
     </q-dialog>
   </div>
 </template>
@@ -83,11 +76,10 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import navBar from 'src/layouts/mobile/header.vue';
-import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 
 export default {
   name: 'defaultCard',
-  components: { navBar, dialogAlert },
+  components: { navBar },
   setup() {
     const state = reactive({
       alertDelete: false,
@@ -104,7 +96,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import url("../../../css/mobileCss.css");
+@import url("../../../css/mobileCss.css");
+
 .cardTransparent {
   background: url('page_bg/cardTransparent.png') no-repeat;
   background-size: 100% 100%;

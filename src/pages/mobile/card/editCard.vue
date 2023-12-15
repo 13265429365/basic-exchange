@@ -86,15 +86,6 @@
 
     <!-- 安全密码 -->
     <q-dialog v-model="alertPass">
-      <dialogAlert :isShowCloseBtn="false" title="Security Key" @eventDialogAlert="passwordFun"
-        @eventDialogAlertYesBtn="yesFun">
-        <template v-slot:body>
-          <div class="q-py-md">
-            <q-input type="password" standout placeholder="请输入" v-model="password" :dense="true" class="alertInput"
-              style="height: 48px;" />
-          </div>
-        </template>
-      </dialogAlert>
     </q-dialog>
   </div>
 </template>
@@ -102,12 +93,11 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import navBar from 'src/layouts/mobile/header.vue';
-import dialogAlert from 'src/components/mobile/dialogAlert.vue';
 import { useRoute } from 'vue-router';
 
 export default {
   name: 'cardEdit',
-  components: { navBar, dialogAlert },
+  components: { navBar },
   setup() {
     const route = useRoute();
     const state = reactive({
@@ -153,7 +143,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import url("../../../css/mobileCss.css");
+@import url("../../../css/mobileCss.css");
+
 .cardTransparent {
   background: url('page_bg/cardTransparent.png') no-repeat;
   background-size: 100% 100%;

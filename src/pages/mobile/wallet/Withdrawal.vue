@@ -23,7 +23,7 @@
               <div @click="money = Total" style="font-size: 14px" class="text-primary">全部提现</div>
             </template>
           </q-input>
-          <div class="text-color-6">available balance：￥{{Total}}</div>
+          <div class="text-color-6">available balance：￥{{ Total }}</div>
         </div>
       </div>
 
@@ -34,94 +34,87 @@
 
     <!-- 安全密码 -->
     <q-dialog v-model="alertPass">
-      <dialogAlert :isShowCloseBtn="false" title="Security Key" @eventDialogAlert="alertPass = false"
-        @eventDialogAlertYesBtn="yesFun($router)">
-        <template v-slot:body>
-          <div class="q-py-md">
-            <q-input type="password" standout placeholder="请输入" v-model="password" :dense="true" class="alertInput"
-              style="height: 48px;" />
-          </div>
-        </template>
-      </dialogAlert>
     </q-dialog>
   </div>
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs } from 'vue';
-  import navBar from 'src/layouts/mobile/header.vue';
-  import dialogAlert from 'src/components/mobile/dialogAlert.vue';
-  export default {
-    name: 'withdrawalIndex',
-    components: { navBar, dialogAlert },
-    setup() {
-      const state = reactive({
-        alertPass: false,
-        password: '',
-        money: '',
-        Total: 157,
-        typeDataIndex: 0,
-        typeArr: [{
-          image: '/images/mobile/card/USDT.png',
-          value: '农业银行(9632)',
-          type: 2
-        }, {
-          image: '/images/mobile/card/BTC.png',
-          value: '建设银行(9232)',
-          type: 1
-        }, {
-          image: '/images/mobile/card/USDT.png',
-          value: '农业银行(9631)',
-          type: 2
-        }, {
-          image: '/images/mobile/card/BTC.png',
-          value: '建设银行(7232)',
-          type: 1
-        }],
-      });
-      // 全部提现
-      // const allWithdrawals= () => {
-      //   state.
-      // }
-      const yesFun = (router : any) => {
-        state.alertPass = false;
-        // 密码正确
-        router.push({
-          name: 'showMessage',
-          state: {
-            params: JSON.stringify({
-              navTitle: 'withdrawal',
-              title: 'Submitted successfully',
-              content: 'Please be patient and keep an eye on the progress at any time',
-              yesBtn: 'OK',
-              logo: '/images/mobile/wait.png',
-              backUrl: '/info'
-            })
-          }
-        })
-      };
+import { reactive, toRefs } from 'vue';
+import navBar from 'src/layouts/mobile/header.vue';
+export default {
+  name: 'withdrawalIndex',
+  components: { navBar },
+  setup() {
+    const state = reactive({
+      alertPass: false,
+      password: '',
+      money: '',
+      Total: 157,
+      typeDataIndex: 0,
+      typeArr: [{
+        image: '/images/mobile/card/USDT.png',
+        value: '农业银行(9632)',
+        type: 2
+      }, {
+        image: '/images/mobile/card/BTC.png',
+        value: '建设银行(9232)',
+        type: 1
+      }, {
+        image: '/images/mobile/card/USDT.png',
+        value: '农业银行(9631)',
+        type: 2
+      }, {
+        image: '/images/mobile/card/BTC.png',
+        value: '建设银行(7232)',
+        type: 1
+      }],
+    });
+    // 全部提现
+    // const allWithdrawals= () => {
+    //   state.
+    // }
+    const yesFun = (router: any) => {
+      state.alertPass = false;
+      // 密码正确
+      router.push({
+        name: 'showMessage',
+        state: {
+          params: JSON.stringify({
+            navTitle: 'withdrawal',
+            title: 'Submitted successfully',
+            content: 'Please be patient and keep an eye on the progress at any time',
+            yesBtn: 'OK',
+            logo: '/images/mobile/wait.png',
+            backUrl: '/info'
+          })
+        }
+      })
+    };
 
-      return {
-        ...toRefs(state),
-        yesFun,
-      }
+    return {
+      ...toRefs(state),
+      yesFun,
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  @import url("../../../css/mobileCss.css");
-  .select {
-    background-color: rgba(241, 250, 246, 1) !important;
-    border: 1px solid $primary;
-  }
-  :deep .q-field  .q-field__append {
-    color: #01AC66 !important;
-  }
-  :deep .q-field .q-field__control:hover:before {
-    opacity: 0;
-  }
-  :deep(.q-scrollarea__thumb) {
-    display: none !important;
-  }
-</style>
+@import url("../../../css/mobileCss.css");
+
+.select {
+  background-color: rgba(241, 250, 246, 1) !important;
+  border: 1px solid $primary;
+}
+
+:deep .q-field .q-field__append {
+  color: #01AC66 !important;
+}
+
+:deep .q-field .q-field__control:hover:before {
+  opacity: 0;
+}
+
+:deep(.q-scrollarea__thumb) {
+  display: none !important;
+}</style>
