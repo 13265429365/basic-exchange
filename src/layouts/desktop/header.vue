@@ -68,7 +68,6 @@
 
       <!-- 右侧Deposit -->
       <q-btn rounded flat dense no-wrap class="bg-primary text-white q-mx-md q-px-md" no-caps label="Deposit"></q-btn>
-      <div class="text-black">{{ $t('success') }}</div>
 
       <!-- 右侧固定按钮 -->
       <div class="q-gutter-sm row items-center no-wrap">

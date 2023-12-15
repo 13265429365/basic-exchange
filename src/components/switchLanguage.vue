@@ -25,7 +25,7 @@ export default defineComponent({
       // 切换语言
       locale,
     })
-    // console.log(state.locale)
+
     state.languageList = [
       { id: 1, name: 'English', alias: 'en-US', icon: '' },
       { id: 2, name: 'Chinese', alias: 'ch', icon: '' },
