@@ -60,6 +60,7 @@ export default route(async function ({ store, ssrContext }) {
   store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
   store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
 
+
   // 请求接口获取菜单
   const params = {
     doadmin: '192.168.229.1',
@@ -70,8 +71,10 @@ export default route(async function ({ store, ssrContext }) {
   userInit(params).then((res: any) => {
     console.log('初始化数据', res)
 
-    $initStore.updateMenuList(res)
+    $initStore.updateInit(res)
   });
+
+
 
   //  动态加载路由
   dynamicRouterFunc(

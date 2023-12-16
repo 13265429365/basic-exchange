@@ -12,12 +12,12 @@
       <!-- 左侧tabBar菜单 -->
       <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
         <q-btn-dropdown :menu-offset="[80, 18]" v-if="tabBar.data.isDesktop" class="text-black" :label="tabBar.name" flat
-          no-wrap :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
+          no-wrap no-caps :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
           <q-list v-if="tabBar.children.length > 0">
             <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
               aria-hidden="true">
               <q-item-section avatar>
-                <q-icon :name="children.icon" />
+                <q-img width="34px" height="34px" :src="imageSrc(children.icon)"></q-img>
               </q-item-section>
               <q-item-section>{{ children.name }}</q-item-section>
             </q-item>
@@ -131,7 +131,7 @@
           <q-btn @click="dialogOpenRegister(true)" rounded flat dense no-wrap
             class="bg-primary text-white q-mx-md q-px-md" no-caps label="Register"></q-btn>
         </div>
-        <q-btn round dense flat color="grey-8" icon="o_language">
+        <q-btn v-if="config.settings.lang.showHome" round dense flat color="grey-8" icon="o_language">
           <switchLanguage :offset="[0, 20]"></switchLanguage>
         </q-btn>
       </div>
@@ -180,6 +180,7 @@ export default {
       // 右侧头像菜单
       homeMenuList: [] as any,
     });
+
 
 
     // 左侧tabBar菜单

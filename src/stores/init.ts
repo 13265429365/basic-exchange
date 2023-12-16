@@ -111,8 +111,8 @@ export const useInitStore = defineStore('init', {
   },
   getters: {},
   actions: {
-    // 更新tabbars 菜单
-    updateMenuList(list: any) {
+    // 更新初始化数据
+    updateInit(list: any) {
       Object.assign(this, list)
     },
 

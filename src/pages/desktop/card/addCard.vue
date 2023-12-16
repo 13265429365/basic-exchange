@@ -28,11 +28,11 @@
         </div>
         <!-- 创建信息输入 -->
         <!-- 卡片类型1 -->
-        <div class="q-mt-lg q-pa-md" v-if="typeDataIndex==0">
+        <div class="q-mt-lg q-pa-md" v-if="typeDataIndex == 0">
           <div class="q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mb-xs">银行名称：</div>
             <div class="row justify-between q-px-md q-mb-md q-py-sm"
-              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;" @click="dialog = true">
+              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
               <div class="self-center row">
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
@@ -42,11 +42,11 @@
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
-                  <q-item @click="model=i" v-for="(item,i) in options" :key="i" clickable
+                  <q-item @click="model = i" v-for="(item, i) in options" :key="i" clickable
                     class="row no-wrap items-center">
                     <q-img class="q-mr-sm" :src="item.image" width="38px" height="38px" />
                     <div>
-                      <div style="font-size: 16px;">{{item.value}}</div>
+                      <div style="font-size: 16px;">{{ item.value }}</div>
                     </div>
                   </q-item>
                 </q-list>
@@ -69,7 +69,7 @@
           <div class="q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mb-xs">Public Blockchain</div>
             <div class="row justify-between q-px-md q-mb-md q-py-sm"
-              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;" @click="dialog = true">
+              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
               <div class="self-center row">
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
@@ -79,11 +79,11 @@
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
-                  <q-item @click="model=i" v-for="(item,i) in options" :key="i" clickable
+                  <q-item @click="model = i" v-for="(item, i) in options" :key="i" clickable
                     class="row no-wrap items-center">
                     <q-img class="q-mr-sm" :src="item.image" width="38px" height="38px" />
                     <div>
-                      <div style="font-size: 16px;">{{item.value}}</div>
+                      <div style="font-size: 16px;">{{ item.value }}</div>
                     </div>
                   </q-item>
                 </q-list>
@@ -93,7 +93,7 @@
           <div class="q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mb-xs">Token Name</div>
             <div class="row justify-between q-px-md q-mb-md q-py-sm"
-              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;" @click="dialog = true">
+              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
               <div class="self-center row">
                 <q-img :src="options[model].image" width="26px" height="26px" />
                 <div class="self-center q-ml-sm">{{ options[model].value }}</div>
@@ -103,11 +103,11 @@
               <!-- 下拉 -->
               <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
                 <q-list style="min-width: 268px" class="q-py-sm">
-                  <q-item @click="model=i" v-for="(item,i) in options" :key="i" clickable
+                  <q-item @click="model = i" v-for="(item, i) in options" :key="i" clickable
                     class="row no-wrap items-center">
                     <q-img class="q-mr-sm" :src="item.image" width="38px" height="38px" />
                     <div>
-                      <div style="font-size: 16px;">{{item.value}}</div>
+                      <div style="font-size: 16px;">{{ item.value }}</div>
                     </div>
                   </q-item>
                 </q-list>
@@ -139,8 +139,9 @@
                 <q-input standout class="q-mb-md" type="password" v-model="text" placeholder="Enter Security Key">
                 </q-input>
                 <div class="row justify-center q-mt-lg">
-                  <q-btn class="q-mr-md text-color-3" unelevated rounded no-caps @click="alertPass=false" style="background: #F3F5F5;height: 40px;width: 160px;" label="Cancel"></q-btn>
-                  <q-btn @click="alertPass=false" class="" unelevated rounded no-caps style="height: 40px;width: 160px;"
+                  <q-btn class="q-mr-md text-color-3" unelevated rounded no-caps @click="alertPass = false"
+                    style="background: #F3F5F5;height: 40px;width: 160px;" label="Cancel"></q-btn>
+                  <q-btn @click="alertPass = false" class="" unelevated rounded no-caps style="height: 40px;width: 160px;"
                     color="primary" label="Save" />
                 </div>
               </q-form>
@@ -153,91 +154,92 @@
 </template>
 
 <script lang="ts">
-  import { reactive, toRefs } from 'vue';
-  export default {
-    name: 'addCard',
-    setup() {
-      const state = reactive({
-        // 密码对话框
-        alertPass: false,
-        text: '',
-        model: 0,
-        typeDataIndex: 0,
-        imgUrl: '',
-        inviteUrl: '09z8we73847zusyd873ezs88d009z8we73847zusyd873ezs88d0',
-        typeArr: [{
+import { reactive, toRefs } from 'vue';
+export default {
+  name: 'addCard',
+  setup() {
+    const state = reactive({
+      // 密码对话框
+      alertPass: false,
+      text: '',
+      model: 0,
+      typeDataIndex: 0,
+      imgUrl: '',
+      inviteUrl: '09z8we73847zusyd873ezs88d009z8we73847zusyd873ezs88d0',
+      typeArr: [{
+        image: '/images/mobile/card/USDT.png',
+        value: 'Card',
+        type: 2
+      }, {
+        image: '/images/mobile/card/BTC.png',
+        value: 'TRC20',
+        type: 1
+      }, {
+        image: '/images/mobile/card/BTC.png',
+        value: 'TRC20',
+        type: 1
+      }, {
+        image: '/images/mobile/card/BTC.png',
+        value: 'TRC20',
+        type: 1
+      }],
+      options: [
+        {
           image: '/images/mobile/card/USDT.png',
-          value: 'Card',
-          type: 2
+          value: '农业银行'
         }, {
           image: '/images/mobile/card/BTC.png',
-          value: 'TRC20',
-          type: 1
-        }, {
-          image: '/images/mobile/card/BTC.png',
-          value: 'TRC20',
-          type: 1
-        }, {
-          image: '/images/mobile/card/BTC.png',
-          value: 'TRC20',
-          type: 1
-        }],
-        options: [
-          {
-            image: '/images/mobile/card/USDT.png',
-            value: '农业银行'
-          }, {
-            image: '/images/mobile/card/BTC.png',
-            value: '建设银行'
-          },
-        ],
-      });
+          value: '建设银行'
+        },
+      ],
+    });
 
-      const yesFun = (router : any) => {
-        state.alertPass = false;
-        // 密码正确
-        router.push({
-          name: 'showMessage',
-          state: {
-            params: JSON.stringify({
-              title: 'Created Successfully',
-              content: '',
-              yesBtn: 'OK',
-              logo: 'page_bg/success.png',
-              backUrl: ''
-            })
-          }
-        })
-      };
+    const yesFun = (router: any) => {
+      state.alertPass = false;
+      // 密码正确
+      router.push({
+        name: 'showMessage',
+        state: {
+          params: JSON.stringify({
+            title: 'Created Successfully',
+            content: '',
+            yesBtn: 'OK',
+            logo: 'page_bg/success.png',
+            backUrl: ''
+          })
+        }
+      })
+    };
 
-      return {
-        ...toRefs(state),
-        yesFun,
-      }
+    return {
+      ...toRefs(state),
+      yesFun,
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  @import url("../../../css/pcCss.css");
-  .select {
-    background-color: rgba(241, 250, 246, 1) !important;
-    border: 1px solid $primary;
-  }
+@import url("../../../css/pcCss.css");
 
-  // pc版input样式
-  :deep .q-field--standout .q-field__native {
-    color: rgba(0, 0, 0, 0.87) !important;
-  }
+.select {
+  background-color: rgba(241, 250, 246, 1) !important;
+  border: 1px solid $primary;
+}
 
-  :deep .q-field--standout .q-field__control {
-    width: 420px;
-    background: #fff !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    outline: none !important;
-    border: 1px solid #DDDDDD;
-    box-shadow: none !important;
-    border-radius: 4px;
-  }
+// pc版input样式
+:deep .q-field--standout .q-field__native {
+  color: rgba(0, 0, 0, 0.87) !important;
+}
+
+:deep .q-field--standout .q-field__control {
+  width: 420px;
+  background: #fff !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  outline: none !important;
+  border: 1px solid #DDDDDD;
+  box-shadow: none !important;
+  border-radius: 4px;
+}
 </style>

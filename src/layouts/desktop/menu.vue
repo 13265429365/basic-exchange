@@ -62,19 +62,6 @@ export default defineComponent({
       menuList: [] as any,
     });
 
-    // state.menuList = [
-    //   { name: 'Dashboard', route: '/user', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
-    //   { name: 'My Wallet', route: '', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-    //   { name: 'Assets', route: '', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-    //   {
-    //     name: 'Card', route: '', icon: 'dashboard', activeIcon: '', children: [
-    //       { name: 'Identification', route: '', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-    //       { name: 'Security', route: '', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-    //     ], data: { isMobile: true, isDesktop: true }
-    //   },
-    //   { name: 'My Team', route: '', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
-    //   { name: 'Settings', route: '', icon: 'dashboard', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
-    // ]
     state.menuList = $initStore.userMenu;
 
     // 加载页面获取当前所在页面

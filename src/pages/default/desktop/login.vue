@@ -64,8 +64,7 @@ import { CaptchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
-import { InitStoreState } from 'src/stores/init';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 
 
 export default defineComponent({
@@ -79,7 +78,7 @@ export default defineComponent({
       fabShow: false,
 
       // 登录配置
-      loginSetting: InitStoreState.config.settings.login,
+      loginSetting: $initStore.config.settings.login,
 
       // 登录弹窗
       LoginShow: false,
@@ -94,6 +93,7 @@ export default defineComponent({
         captchaVal: '', // 验证码
       },
     });
+
     onMounted(() => {
       refreshCaptchaFunc();
     });

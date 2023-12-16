@@ -79,32 +79,33 @@
           </q-input>
 
           <!-- 手机号码 -->
-          <div v-if="registerSetting.showTelephone" class="row no-wrap">
-            <q-select @update:modelValue="newValue($event)" v-model="areaCode" option-value="code" :options="options"
-              class="q-mb-md q-mr-sm select" standout>
-              <template v-slot:prepend>
-                <q-img width="24px" height="16px" @click.stop.prevent />
-                <q-icon name="keyboard_arrow_down" />
+          <div v-if="registerSetting.showTelephone" class="row no-wrap justify-between">
+            <q-btn-dropdown class="col-4 text-weight-regular" unelevated flat no-caps dropdown-icon="expand_more"
+              style="height: 56px;border: 1px solid #DDDDDD;color: #8F959E;">
+              <template v-slot:label>
+                <div class="row no-wrap items-center">
+                  <q-img :src="imageSrc(options[areaCodeIndex].icon ? options[areaCodeIndex].icon : '')" width="24px"
+                    height="16px" />
+                  <div class="q-ml-sm">+{{ options[areaCodeIndex].code }}</div>
+                </div>
               </template>
-              <template v-slot:option="scope">
-                <q-item v-bind="scope.itemProps">
-                  <q-item-section avatar>
-                    <q-img :src="imageSrc(scope.opt.icon)" width="24px" height="16px" @click.stop.prevent />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>{{ scope.opt.name }}</q-item-label>
-                  </q-item-section>
+              <!-- 下拉 -->
+              <q-list style="min-width: 268px" class="q-py-sm">
+                <q-item @click="areaCodeIndex = i" v-for="(item, i) in options" :key="i" clickable v-close-popup
+                  class="row no-wrap items-center">
+                  <q-img class="q-mr-sm" :src="imageSrc(item.icon ? item.icon : '')" width="38px" height="38px" />
+                  <div>
+                    <div style="font-size: 16px;">{{ item.name }}</div>
+                  </div>
                 </q-item>
-              </template>
-              <template v-slot:append>
-                <div>+86</div>
-              </template>
-            </q-select>
-            <q-input class="q-mb-lg full-width" standout v-model="params.telephone" placeholder="Telphone" />
+              </q-list>
+            </q-btn-dropdown>
+
+            <q-input style="width: 64%;" standout v-model="params.telephone" placeholder="Telphone" />
           </div>
 
           <!-- 前往登录、点击注册 -->
-          <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px;"
+          <q-btn @click="submitFunc()" class="full-width q-my-lg" unelevated rounded no-caps style="height: 44px;"
             color="primary" label="Signup" />
           <div class="size14 text-center q-pb-xl">
             Already have an account?
@@ -122,7 +123,7 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useInitStore, InitStoreState } from 'src/stores/init';
+import { useInitStore } from 'src/stores/init';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 export default defineComponent({
   name: 'registerDialog',
@@ -132,23 +133,20 @@ export default defineComponent({
 
     let state = reactive({
       // 注册配置
-      registerSetting: InitStoreState.config.settings.register,
+      registerSetting: $initStore.config.settings.register,
 
       // 是否显示密码
       isPwd: false,
       isPwd2: false,
 
       // 地区选择
-      options: [
-        { label: '+86', value: '中国' },
-        { label: '+866', value: '香港' },
-      ],
+      options: [] as any,
 
       // 确认密码
       password: '',
 
       // 手机区号
-      areaCode: '+86',
+      areaCodeIndex: 0,
 
       //
       params: {
@@ -207,11 +205,6 @@ export default defineComponent({
       });
     }
 
-    // 监听地区选择
-    const newValue = (newValue: any) => {
-      state.areaCode = newValue.code
-      console.log(state.areaCode)
-    }
 
     // 点击注册
     const toLogin = () => {
@@ -223,7 +216,6 @@ export default defineComponent({
       ...toRefs(state),
       toLogin,
       open,
-      newValue,
       refreshCaptchaFunc,
       submitFunc,
       imageSrc,
