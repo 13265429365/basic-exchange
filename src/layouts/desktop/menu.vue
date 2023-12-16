@@ -1,5 +1,5 @@
 <template>
-  <q-list padding class="q-ml-xl q-mt-xl q-mr-md" style="width: 220px">
+  <q-list padding>
     <div @click="routerTo(menu.route)" v-for="(menu, menuIndex) in menuList" :key="menuIndex">
       <!-- 含有子级的列表 -->
       <q-expansion-item accordion v-if="menu.children.length > 0" :default-opened="menuIndex == 0">

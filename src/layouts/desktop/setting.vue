@@ -6,7 +6,9 @@
 
     <q-page-container>
       <div class="row no-wrap">
-        <MenuLayouts></MenuLayouts>
+        <q-scroll-area class="q-ml-xl q-mt-xl q-mr-md" style="height: 500px;width: 260px">
+          <MenuLayouts></MenuLayouts>
+        </q-scroll-area>
         <router-view />
       </div>
     </q-page-container>
