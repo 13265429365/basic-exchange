@@ -8,9 +8,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer style="background: #021736;" bordered>
-      <FooterLayouts></FooterLayouts>
-    </q-footer>
+    <FooterLayouts style="background: #021736;"></FooterLayouts>
   </q-layout>
 </template>
 

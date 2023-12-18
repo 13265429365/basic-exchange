@@ -5,6 +5,7 @@
         v-for="(language, languageIndex) in languageList" :key="languageIndex" clickable v-close-popup aria-hidden="true">
         <q-item-section avatar>
           <q-img width="24px" height="24px" :src="imageSrc(language.icon)" />
+
         </q-item-section>
         <q-item-section>{{ language.name }}</q-item-section>
       </q-item>

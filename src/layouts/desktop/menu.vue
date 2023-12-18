@@ -1,23 +1,24 @@
 <template>
-  <q-list padding>
-    <div @click="routerTo(menu.route)" v-for="(menu, menuIndex) in menuList" :key="menuIndex">
+  <q-list class="q-ml-xl q-mt-xl q-mr-md" style="width: 220px" padding>
+    <div v-for="(menu, menuIndex) in menuList" :key="menuIndex">
       <!-- 含有子级的列表 -->
-      <q-expansion-item accordion v-if="menu.children.length > 0" :default-opened="menuIndex == 0">
+      <q-expansion-item accordion v-if="menu.children.length > 0" default-opened>
         <!-- 父级 -->
         <template v-slot:header>
           <q-item-section avatar>
             <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
           </q-item-section>
-          <q-item-section avatar class="q-mr-xl">
-            <div style="user-select: none;min-width: 80px;">{{ menu.name }}</div>
+          <q-item-section avatar>
+            <div style="user-select: none;min-width: 120px;">{{ menu.name }}</div>
           </q-item-section>
         </template>
 
         <!-- 子级 -->
-        <q-item @click="routerTo(children.route)" v-for="(children, childrenIndex) in menu.children" :key="childrenIndex"
-          :header-inset-level="1" :active="activeRouter == children.route" active-class="active" clickable>
+        <q-item :to="children.route" @click="activeRouter = children.route"
+          v-for="(children, childrenIndex) in menu.children" :key="childrenIndex" :header-inset-level="1"
+          :active="activeRouter == children.route" active-class="active" clickable>
           <q-item-section avatar>
-            <q-img width="24px" height="24px" :src="imageSrc(children.icon)"></q-img>
+            <q-img width="24px" height="24px" src=""></q-img>
           </q-item-section>
           <q-item-section>
             <div style="user-select: none">{{ children.name }}</div>
@@ -27,7 +28,8 @@
 
 
       <!-- 不含子级的列表 -->
-      <q-item v-else :active="activeRouter == menu.route" active-class="active" :clickable="activeRouter != menu.route">
+      <q-item v-else @click="activeRouter = menu.route" :active="activeRouter == menu.route" active-class="active"
+        :clickable="activeRouter != menu.route" :to="menu.route">
         <q-item-section avatar>
           <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
         </q-item-section>
@@ -42,8 +44,8 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { routerTo, imageSrc } from 'src/utils/index'
-import { InitStoreState, useInitStore } from 'src/stores/init'
+import { imageSrc } from 'src/utils/index';
+import { InitStoreState, useInitStore } from 'src/stores/init';
 
 export default defineComponent({
   name: 'LayoutsMenu',
@@ -56,7 +58,7 @@ export default defineComponent({
       config: InitStoreState.config,
 
       // 选中菜单
-      activeRouter: '/',
+      activeRouter: '/wallet/account/index',
 
       // 菜单列表
       menuList: [] as any,
@@ -71,7 +73,6 @@ export default defineComponent({
 
     return {
       imageSrc,
-      routerTo,
       ...toRefs(state),
     };
   },
@@ -90,12 +91,6 @@ export default defineComponent({
 
   .q-item__section--avatar {
     min-width: auto;
-  }
-}
-
-:deep(.q-expansion-item) {
-  .q-expansion-item__content {
-    padding-left: 40px;
   }
 }
 </style>

@@ -20,6 +20,7 @@ export const iconSrc = (icon: string) => {
 
 // 跳转路由
 export const routerTo = (route: string) => {
+  const $router = useRouter();
   if (route == '') {
     return;
   }
@@ -28,6 +29,6 @@ export const routerTo = (route: string) => {
     window.location.href = route;
     return;
   }
-  const $router = useRouter();
+
   $router.push(route);
 };
