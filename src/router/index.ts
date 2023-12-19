@@ -6,8 +6,6 @@ import { templateRoutes } from 'src/router/routes';
 
 import { userInit, footerList } from 'src/apis/index';
 
-
-
 import {
   createMemoryHistory,
   createRouter,
@@ -38,7 +36,6 @@ import routes from 'src/router/routes';
 export default route(async function ({ store, ssrContext }) {
   // 获取init方法
   const $initStore = useInitStore();
-
   // 
   const createHistory = process.env.SERVER
     ? createMemoryHistory
@@ -63,6 +60,7 @@ export default route(async function ({ store, ssrContext }) {
   store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
 
 
+
   // 请求接口获取菜单
   const params = {
     doadmin: '192.168.229.1',
@@ -71,10 +69,11 @@ export default route(async function ({ store, ssrContext }) {
   // userInit   //获取初始化数据
   // footerList //获取footer数据
   userInit(params).then((res: any) => {
-    console.log('初始化数据', res)
+    // console.log('初始化数据', res)
 
     $initStore.updateInit(res)
   });
+
 
 
   //  动态加载路由

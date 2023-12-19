@@ -61,20 +61,16 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 // 登录相关
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
-import { userLogin } from 'src/apis/user';
+import { userLogin, getUserInfo } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { NotifyPositive } from 'src/utils/notify';
 import { useInitStore } from 'src/stores/init';
-import { userInfoStore } from 'src/stores/userInfo';
 
 export default defineComponent({
   name: 'userLogin',
   setup(props: any, context: any) {
     const $router = useRouter();
     const $initStore = useInitStore();
-
-    // 获取用户信息
-    const $InfoStore = userInfoStore()
 
     const state = reactive({
       // 悬浮按钮
@@ -111,29 +107,34 @@ export default defineComponent({
     // 提交登录
     const submitFunc = () => {
       userLogin(state.params)
-        .then((res: any) => {
+        .then(async (res: any) => {
           // 关闭弹窗
           state.LoginShow = false
           NotifyPositive('欢迎回来')
 
           // 更改配置文件userToken
           $initStore.updateUserToken(res.token);
-
-          // 获取用户信息
-          setTimeout(() => {
-            $InfoStore.updateInfo();
-            console.log($InfoStore.info);
-          }, 2000);
-
-          // if ($router.currentRoute.value.path == '/') {
-          //   location.reload()
-          // } else {
-          //   $router.push({ name: 'HomeIndex' });
-          // }
+          await userInfo()
         })
         .catch(() => {
           refreshCaptchaFunc();
         });
+    };
+
+    // 获取用户信息
+    const userInfo = () => {
+      getUserInfo()
+        .then((res: any) => {
+          // 将用户资料存到浏览器缓存
+          localStorage.setItem('userInfo', JSON.stringify(res))
+
+          if ($router.currentRoute.value.path == '/') {
+            context.emit('updateLoginStatus')
+          } else {
+            context.emit('updateLoginStatus')
+            $router.push({ name: 'HomeIndex' });
+          }
+        })
     };
 
     // 打开登录弹窗
@@ -153,7 +154,6 @@ export default defineComponent({
       submitFunc,
       open,
       toRegister,
-      $InfoStore,
     };
   },
 });

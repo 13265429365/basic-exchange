@@ -121,7 +121,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
-import { userRegister } from 'src/apis/user';
+import { userRegister, getUserInfo } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
@@ -195,15 +195,27 @@ export default defineComponent({
 
         // 更改配置文件userToken
         $initStore.updateUserToken(res.token);
-        if ($router.currentRoute.value.path == '/') {
-          location.reload()
-        } else {
-          $router.push({ name: 'HomeIndex' });
-        }
+        userInfo()
       }).catch(() => {
         refreshCaptchaFunc();
       });
     }
+
+    // 获取用户信息
+    const userInfo = () => {
+      getUserInfo()
+        .then((res: any) => {
+          // 将用户资料存到浏览器缓存
+          localStorage.setItem('userInfo', JSON.stringify(res))
+
+          if ($router.currentRoute.value.path == '/') {
+            context.emit('updateLoginStatus')
+          } else {
+            context.emit('updateLoginStatus')
+            $router.push({ name: 'HomeIndex' });
+          }
+        })
+    };
 
 
     // 点击注册

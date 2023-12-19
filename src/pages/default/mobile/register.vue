@@ -141,7 +141,7 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
-import { userRegister } from 'src/apis/user';
+import { userRegister, getUserInfo } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
@@ -205,7 +205,7 @@ export default defineComponent({
     // 提交注册
     const submitFunc = () => {
       // 判断两次密码是否一致
-      if (state.params.password !== state.password) {
+      if (state.params.password !== state.password && state.registerSetting.showCmfPass) {
         NotifyNegative('判断两次密码不一致');
         return false
       };
@@ -214,11 +214,22 @@ export default defineComponent({
 
         // 更改配置文件userToken
         $initStore.updateUserToken(res.token);
-        $router.push({ name: 'HomeIndex' });
+        userInfo()
       }).catch(() => {
         refreshCaptchaFunc();
       });
     }
+
+    // 获取用户信息
+    const userInfo = () => {
+      getUserInfo()
+        .then((res: any) => {
+          // 将用户资料存到浏览器缓存
+          localStorage.setItem('userInfo', JSON.stringify(res))
+
+          $router.push({ name: 'HomeIndex' });
+        })
+    };
 
 
     return {

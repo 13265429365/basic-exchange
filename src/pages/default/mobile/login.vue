@@ -15,7 +15,7 @@
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('/images/logo.png')}`" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('')}`" />
     </div>
     <div class="row justify-center">
       <div class="text-weight-bold" style="font-size: 24px">Welcome Back</div>
@@ -82,7 +82,7 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
-import { userLogin } from 'src/apis/user';
+import { userLogin, getUserInfo } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore, InitStoreState } from 'src/stores/init';
 import { NotifyPositive } from 'src/utils/notify';
@@ -128,16 +128,27 @@ export default defineComponent({
     // 提交登录
     const submitFunc = () => {
       userLogin(state.params)
-        .then((res: any) => {
+        .then(async (res: any) => {
           NotifyPositive('欢迎回来')
 
           // 更改配置文件userToken
           $initStore.updateUserToken(res.token);
-          $router.push({ name: 'HomeIndex' });
+          await userInfo()
         })
         .catch(() => {
           refreshCaptchaFunc();
         });
+    };
+
+    // 获取用户信息
+    const userInfo = () => {
+      getUserInfo()
+        .then((res: any) => {
+          // 将用户资料存到浏览器缓存
+          localStorage.setItem('userInfo', JSON.stringify(res))
+
+          $router.push({ name: 'HomeIndex' });
+        })
     };
 
     return {

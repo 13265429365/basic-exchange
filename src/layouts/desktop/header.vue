@@ -72,16 +72,16 @@
                     </q-avatar>
                     <div class="q-ml-sm">
                       <div class="row no-wrap">
-                        <span class="q-mr-sm">Jack</span>
-                        <span class="text-grey-7">569***@qq.com</span>
+                        <span class="q-mr-sm">{{ userInfo.userName }}</span>
+                        <span class="text-grey-7">{{ userInfo.email }}</span>
                       </div>
                       <div class="row no-wrap q-mt-sm">
                         <q-btn size="xs" icon="verified" rounded flat dense no-wrap class="q-px-sm q-mr-sm" no-caps
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
-                          <div style="font-size: 11px;">Lv.3</div>
+                          <div style="font-size: 11px;">Lv.{{ userInfo.Level }}</div>
                         </q-btn>
                         <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps>
-                          <div style="font-size: 11px;">unverified</div>
+                          <div style="font-size: 11px;">{{ userInfo.authStatus ? 'verified' : 'unverified' }}</div>
                         </q-btn>
                       </div>
                     </div>
@@ -140,8 +140,9 @@
 
     </q-toolbar>
 
-    <LoginPages ref="LoginRef" @switchDialogFunc="switchDialogFunc"></LoginPages>
-    <RegisterPages ref="RegisterRef" @switchDialogFunc="switchDialogFunc"></RegisterPages>
+    <LoginPages ref="LoginRef" @updateLoginStatus="updateLoginStatus" @switchDialogFunc="switchDialogFunc"></LoginPages>
+    <RegisterPages ref="RegisterRef" @updateLoginStatus="updateLoginStatus" @switchDialogFunc="switchDialogFunc">
+    </RegisterPages>
   </div>
 </template>
 
@@ -149,17 +150,19 @@
 import LoginPages from 'src/pages/default/desktop/login.vue';
 import RegisterPages from 'src/pages/default/desktop/register.vue';
 import switchLanguage from 'src/components/switchLanguage.vue';
-import { reactive, toRefs, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { reactive, toRefs, ref, onMounted } from 'vue';
 import { imageSrc } from 'src/utils';
+import { NotifyPositive } from 'src/utils/notify';
 import { useInitStore, InitStoreState } from 'src/stores/init';
-import { useQuasar } from 'quasar';
 
 export default {
   name: 'LayoutsHeader',
   components: { LoginPages, RegisterPages, switchLanguage },
   setup() {
-    const $q = useQuasar()
+    const $router = useRouter();
     const $initStore = useInitStore()
+
     const LoginRef = ref(null) as any;
     const RegisterRef = ref(null) as any;
 
@@ -169,6 +172,9 @@ export default {
 
       //  是否登录
       isLogin: $initStore.userToken != '' && $initStore.userToken,
+
+      // 用户信息
+      userInfo: {} as any,
 
       // 搜索框
       search: '',
@@ -183,7 +189,12 @@ export default {
       homeMenuList: [] as any,
     });
 
-
+    onMounted(() => {
+      let userInfo = localStorage.getItem('userInfo')
+      if (userInfo != null) {
+        state.userInfo = JSON.parse(userInfo)
+      }
+    })
 
     // 左侧tabBar菜单
     state.tabBarList = $initStore.tabbars;
@@ -212,8 +223,15 @@ export default {
 
     // 退出登录
     const Logout = () => {
+      NotifyPositive('退出成功')
       $initStore.updateUserToken('')
-      location.reload()
+      $router.push({ name: 'HomeIndex' });
+      updateLoginStatus()
+    }
+
+    // 更新登录状态
+    const updateLoginStatus = () => {
+      state.isLogin = $initStore.userToken != '' && $initStore.userToken
     }
 
 
@@ -226,6 +244,7 @@ export default {
       dialogOpenRegister,
       switchDialogFunc,
       Logout,
+      updateLoginStatus,
     };
   },
 };

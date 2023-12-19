@@ -30,13 +30,13 @@ api.interceptors.request.use((config: any) => {
     });
   }
 
-  const userStore = useInitStore();
+  const $userStore = useInitStore();
   // 如果存在Token，那么请求带上Token
   if (
-    userStore.userToken !== '' &&
+    $userStore.userToken !== '' &&
     !config.headers.hasOwnProperty('Authorization')
   ) {
-    config.headers['Authorization'] = 'Bearer ' + userStore.userToken;
+    config.headers['Authorization'] = 'Bearer ' + $userStore.userToken;
   }
 
   // // 如果设置了语言，那么请求带上语言
