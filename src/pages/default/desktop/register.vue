@@ -186,7 +186,7 @@ export default defineComponent({
     // 提交注册
     const submitFunc = () => {
       // 判断两次密码是否一致
-      if (state.params.password !== state.password) {
+      if (state.params.password !== state.password && state.registerSetting.showCmfPass) {
         NotifyNegative('判断两次密码不一致');
         return false
       };

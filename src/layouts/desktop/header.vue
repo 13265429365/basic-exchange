@@ -10,9 +10,10 @@
       </q-toolbar-title>
 
       <!-- 左侧tabBar菜单 -->
-      <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
-        <q-btn-dropdown :menu-offset="[80, 18]" v-if="tabBar.data.isDesktop" class="text-black" :label="tabBar.name" flat
-          no-wrap no-caps :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
+      <div class="row no-wrap items-center">
+        <q-btn-dropdown v-show="tabBar.data.isDesktop" v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex"
+          :menu-offset="[80, 18]" class="text-black q-mr-sm" :label="tabBar.name" flat no-wrap no-caps
+          :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
           <q-list v-if="tabBar.children.length > 0">
             <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
               aria-hidden="true">
@@ -25,12 +26,11 @@
         </q-btn-dropdown>
       </div>
 
-
       <!-- 左侧快捷菜单 -->
       <q-btn-dropdown :menu-offset="[50, 18]" class="text-black" label="more" flat no-caps dropdown-icon="expand_more">
         <q-list>
-          <q-item v-for="(quickMenu, quickMenuIndex) in quickMenuList" :key="quickMenuIndex" clickable v-close-popup
-            aria-hidden="true">
+          <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
+            :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
             <q-item-section avatar>
               <q-img width="34px" height="34px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
@@ -54,7 +54,8 @@
         <!-- 登录状态 -->
         <div v-if="isLogin" class="row items-center no-wrap">
           <!-- 右侧Deposit -->
-          <q-btn rounded flat dense no-wrap class="bg-primary text-white q-mx-md q-px-md" no-caps label="Deposit"></q-btn>
+          <q-btn @click="$router.push('/wallet/deposit')" rounded flat dense no-wrap
+            class="bg-primary text-white q-mx-md q-px-md" no-caps label="Deposit"></q-btn>
 
           <!-- 头像 -->
           <q-btn class="q-mr-sm" round flat>
@@ -90,8 +91,8 @@
                 <q-separator inset class="q-mt-md q-mb-sm" />
 
                 <!-- 用户列表 -->
-                <q-item dense v-for="(userMenu, userMenuIndex) in homeMenuList" :key="userMenuIndex" clickable
-                  v-close-popup aria-hidden="true" class="q-py-md">
+                <q-item @click="$router.push(userMenu.route)" dense v-for="(userMenu, userMenuIndex) in homeMenuList"
+                  :key="userMenuIndex" clickable v-close-popup aria-hidden="true" class="q-py-md">
                   <q-item-section avatar>
                     <q-img width="20px" height="20px" :src="imageSrc(userMenu.icon)"></q-img>
                   </q-item-section>
@@ -114,7 +115,8 @@
           </q-btn>
 
           <!-- 钱包 -->
-          <q-btn round dense flat color="grey-8" icon="o_account_balance_wallet"></q-btn>
+          <q-btn @click="$router.push('/wallet/index')" round dense flat color="grey-8"
+            icon="o_account_balance_wallet"></q-btn>
 
           <!-- 消息 -->
           <q-btn round dense flat color="grey-8" icon="o_notifications">
@@ -255,6 +257,7 @@ export default {
 }
 
 :deep(.q-btn .q-btn-dropdown__arrow) {
+  margin-left: 0;
   font-size: 12px;
   color: #666;
 }

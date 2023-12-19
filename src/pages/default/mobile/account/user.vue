@@ -15,11 +15,11 @@
           </div>
           <div class="row no-wrap">
             <q-chip class="q-chip">
-              <q-img class="q-mr-xs" style="width: 11px;height: 11px;" />
+              <q-img src="/icons/Vip.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
               Lv.3
             </q-chip>
             <q-chip style="background: #fff !important;color: #333333 !important;border: 1px solid #F1F1F1;">
-              <q-img class="q-mr-xs" style="width: 11px;height: 11px;" />
+              <q-img src="/icons/credit.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
               信用分100
             </q-chip>
             <q-chip style="background: #fff !important;color: #01AC66 !important;border: 1px solid #01AC66;">
@@ -37,11 +37,11 @@
     <!--  -->
     <div class="bg-grey-1 q-px-md q-py-md full-width">
       <!-- 店铺、交易管理 -->
-      <div class="row q-mb-md btn">
-        <q-btn v-for="(quickMenu, quickMenuIndex) in quickMenuList" :key="quickMenuIndex"
-          class="bg-white q-py-sm q-px-md col q-mr-md radius-8" no-caps unelevated>
+      <div class="row justify-between q-mb-md btn">
+        <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
+          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm radius-8" no-caps unelevated>
           <div class="row justify-start items-center">
-            <q-img class="q-mr-sm" :src="`${imageSrc(quickMenu.icon)}`" width="42px" height="42px" />
+            <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ quickMenu.name }}</div>
           </div>
         </q-btn>
@@ -51,7 +51,7 @@
       <!-- 列表 -->
       <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md radius-8 no-border">
         <div v-for="(child, childKey) in item.children" :key="childKey" class="bg-white">
-          <q-item @click="$router.push(child.url)" class="q-pa-md" clickable>
+          <q-item @click="$router.push(child.route)" class="q-pa-md" clickable>
             <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
               <!-- <q-img :src="`/images/mobile/info/${child.avatar}`" width="24px" height="24px" /> -->
               <q-img :src="`${imageSrc(child.icon)}`" width="24px" height="24px" />
@@ -139,10 +139,6 @@ export default defineComponent({
   padding: 10px 20px 50px 20px;
 }
 
-.radius-8 {
-  border-radius: 8px;
-  overflow: hidden;
-}
 
 /* 头像下按钮 */
 .q-chip {

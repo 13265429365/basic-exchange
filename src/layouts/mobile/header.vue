@@ -2,26 +2,13 @@
   <q-layout view="hhh LpR fFf" class="bg-grey-1">
     <q-header bordered class="bg-white text-black">
       <q-toolbar>
-        <q-btn
-          dense
-          flat
-          round
-          :icon="data.leftBtn.icon"
-          color="grey-8"
-          @click="data.leftBtn.callback"
-        />
+        <q-btn dense flat round :icon="data.leftBtn.icon" color="grey-8" @click="data.leftBtn.callback" />
 
-        <q-toolbar-title class="text-center">
+        <q-toolbar-title class="text-center text-subtitle2">
           {{ data.title }}
         </q-toolbar-title>
 
-        <q-btn
-          dense
-          flat
-          round
-          :icon="data.rightBtn.icon"
-          @click="data.rightBtn.callback"
-        />
+        <q-icon dense flat round :name="data.rightBtn.icon" @click="data.rightBtn.callback" />
       </q-toolbar>
     </q-header>
     <q-page-container>

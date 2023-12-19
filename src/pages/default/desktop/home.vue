@@ -96,7 +96,7 @@
     <q-fab style="width: 56px;height: 56px;" hide-icon>
       <template v-slot:label>
         <q-avatar class="full-width full-height">
-          <img :src="imageSrc(onlineIcon)">
+          <!-- <q-img :src="imageSrc(onlineIcon)"></q-img> -->
         </q-avatar>
       </template>
     </q-fab>
