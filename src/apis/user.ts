@@ -10,4 +10,9 @@ export const userRegister = (params: any) => {
   return api.post('api/v1/register', params);
 };
 
+// 用户注册
+export const getUserInfo = () => {
+  return api.post('api/v1/user/info');
+};
+
 

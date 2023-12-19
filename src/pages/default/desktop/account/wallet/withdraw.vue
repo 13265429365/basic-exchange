@@ -1,15 +1,20 @@
 <template>
   <div class="column page_bg" style="padding: 48px 244px;">
     <div class="col column justify-between bg-white radius-8">
+
+      <!-- 大标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img :src="imageSrc('')" width="40PX" height="40px"></q-img>
         <div class="q-ml-md">Withdrawal</div>
       </div>
+
+      <!--  -->
       <div class="col full-width q-pa-lg">
         <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-sm q-px-md" style="border-radius: 2px;">
           Withdrawal account
         </div>
+
         <!-- 卡类型选择 -->
         <div class="row q-mt-md">
           <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex"
@@ -22,6 +27,7 @@
               style="bottom: 0;right: 0;"></q-img>
           </div>
         </div>
+
         <!-- 提现 -->
         <div class="q-mt-lg">
           <div class="row no-wrap items-center q-mb-md">

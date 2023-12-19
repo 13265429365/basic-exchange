@@ -3,7 +3,9 @@ import { UserTokenKey, InitStoreState, useInitStore } from 'src/stores/init';
 import { Cookies, Platform } from 'quasar';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
-import { CaptchaAPI, userInit, footerList } from 'src/apis/index';
+
+import { userInit, footerList } from 'src/apis/index';
+
 
 
 import {
@@ -73,7 +75,6 @@ export default route(async function ({ store, ssrContext }) {
 
     $initStore.updateInit(res)
   });
-
 
 
   //  动态加载路由

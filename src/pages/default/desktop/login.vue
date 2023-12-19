@@ -63,15 +63,18 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useInitStore } from 'src/stores/init';
 import { NotifyPositive } from 'src/utils/notify';
-
+import { useInitStore } from 'src/stores/init';
+import { userInfoStore } from 'src/stores/userInfo';
 
 export default defineComponent({
   name: 'userLogin',
   setup(props: any, context: any) {
     const $router = useRouter();
     const $initStore = useInitStore();
+
+    // 获取用户信息
+    const $InfoStore = userInfoStore()
 
     const state = reactive({
       // 悬浮按钮
@@ -115,11 +118,18 @@ export default defineComponent({
 
           // 更改配置文件userToken
           $initStore.updateUserToken(res.token);
-          if ($router.currentRoute.value.path == '/') {
-            location.reload()
-          } else {
-            $router.push({ name: 'HomeIndex' });
-          }
+
+          // 获取用户信息
+          setTimeout(() => {
+            $InfoStore.updateInfo();
+            console.log($InfoStore.info);
+          }, 2000);
+
+          // if ($router.currentRoute.value.path == '/') {
+          //   location.reload()
+          // } else {
+          //   $router.push({ name: 'HomeIndex' });
+          // }
         })
         .catch(() => {
           refreshCaptchaFunc();
@@ -143,6 +153,7 @@ export default defineComponent({
       submitFunc,
       open,
       toRegister,
+      $InfoStore,
     };
   },
 });

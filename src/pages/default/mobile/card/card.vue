@@ -14,7 +14,7 @@
                 </div>
                 <div class="row">
                   <q-btn outline rounded color="white" class="q-pa-xs" size="13px" style="width: 58px;height: 15px;"
-                    label="Edit" no-caps @click="$router.push({ name: 'MobileEditCard', query: { type: 1 } })" />
+                    label="Edit" no-caps @click="$router.push({ name: 'EditCard', query: { type: 1 } })" />
                   <q-btn outline rounded color="white" class="q-pa-xs q-ml-sm" size="13px"
                     style="width: 58px;height: 15px;" label="Delete" no-caps @click="alertDelete = true" />
                 </div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="row">
                   <q-btn outline rounded color="white" class="q-pa-xs" size="13px" style="width: 58px;height: 15px;"
-                    label="Edit" no-caps @click="$router.push({ name: 'MobileEditCard', query: { type: 2 } })" />
+                    label="Edit" no-caps @click="$router.push({ name: 'EditCard', query: { type: 2 } })" />
                   <q-btn outline rounded color="white" class="q-pa-xs q-ml-sm" size="13px"
                     style="width: 58px;height: 15px;" label="Delete" no-caps @click="alertDelete = true" />
                 </div>
@@ -59,7 +59,7 @@
 
       <!-- 添加按钮 -->
       <div style="border: 1px dashed #01AC66;height: 54px;background-color: rgba(1, 172, 102, 0.05);"
-        class="radius-8  column justify-center row" @click="$router.push({ name: 'MobileAddCard' })">
+        class="radius-8  column justify-center row" @click="$router.push({ name: 'AddCard' })">
         <div class="text-center text-primary text-weight-bold self-center row"> <q-icon size="20px" name="add"
             class="self-center" />Add Card
         </div>

@@ -51,7 +51,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       {
         name: 'UserIndex',
         route: '/user',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'account/user.vue'),
+        componentMobile: PagesTemplateMobilePath(TemplateName, 'user/user.vue'),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
@@ -73,7 +73,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/wallet/deposit',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          ''
+          'wallet/deposit.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/wallet/deposit.vue'),
         children: [],
@@ -85,7 +85,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/wallet/withddraw',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          ''
+          'wallet/withdraw.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/wallet/withdraw.vue'),
         children: [],
@@ -93,11 +93,11 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       // 桌面版添加卡片
       {
-        name: 'DesktopAddCard',
+        name: 'AddCard',
         route: '/add/card',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          ''
+          'card/addCard.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'card/addCard.vue'),
         children: [],
@@ -105,11 +105,11 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       // 桌面版编辑卡片
       {
-        name: 'DesktopEditCard',
+        name: 'EditCard',
         route: '/edit/card',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          ''
+          'card/editCard.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'card/editCard.vue'),
         children: [],
@@ -140,30 +140,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-      // 手机版添加卡片
-      {
-        name: 'MobileAddCard',
-        route: '/add/card',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'card/addCard.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-        children: [],
-        meta: { requireAuth: false, keepAlive: false },
-      },
-      // 手机版编辑卡片
-      {
-        name: 'MobileEditCard',
-        route: '/edit/card',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'card/editCard.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-        children: [],
-        meta: { requireAuth: false, keepAlive: false },
-      },
       // 我的钱包
       {
         name: 'Wallet',
@@ -176,37 +152,13 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-      // 钱包明细
+      // 钱包明细(手机)
       {
         name: 'WalletDetail',
         route: '/wallet/detail',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'wallet/billDetail.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-        children: [],
-        meta: { requireAuth: false, keepAlive: false },
-      },
-      // 手机充值
-      {
-        name: 'Deposit',
-        route: '/wallet/deposit',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'wallet/deposit.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-        children: [],
-        meta: { requireAuth: false, keepAlive: false },
-      },
-      // 手机提现
-      {
-        name: 'Withdraw',
-        route: '/wallet/withddraw',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'wallet/withdraw.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
         children: [],
@@ -290,7 +242,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/user/settings',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'account/setting.vue'
+          'user/setting.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/setting.vue'),
         children: [],
@@ -303,7 +255,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/settings/password',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'account/settings/updatePassword.vue'
+          'user/settings/updatePassword.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/setting.vue'),
         children: [],
@@ -315,7 +267,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/settings/code',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'account/settings/updateCode.vue'
+          'user/settings/updateCode.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/setting.vue'),
         children: [],
@@ -327,7 +279,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/settings/bind/phone',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'account/settings/bindPhone.vue'
+          'user/settings/bindPhone.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/setting.vue'),
         children: [],
@@ -339,7 +291,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/settings/enter/email',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'account/settings/enterEmail.vue'
+          'user/settings/enterEmail.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/setting.vue'),
         children: [],
@@ -351,7 +303,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/settings/language',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'account/settings/language.vue'
+          'user/settings/language.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/setting.vue'),
         children: [],
@@ -375,7 +327,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/user/realauth',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'account/realAuth.vue'
+          'user/realAuth.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/realAuth.vue'),
         children: [],

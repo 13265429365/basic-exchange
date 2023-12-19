@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
 import { Loading, QSpinnerBars } from 'quasar';
-// import { useUserStore } from 'src/stores/user';
+import { useInitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
 
 declare module '@vue/runtime-core' {
@@ -30,14 +30,14 @@ api.interceptors.request.use((config: any) => {
     });
   }
 
-  // const userStore = useUserStore();
+  const userStore = useInitStore();
   // 如果存在Token，那么请求带上Token
-  // if (
-  //   userStore.userToken !== '' &&
-  //   !config.headers.hasOwnProperty('Authorization')
-  // ) {
-  //   config.headers['Authorization'] = 'Bearer ' + userStore.userToken;
-  // }
+  if (
+    userStore.userToken !== '' &&
+    !config.headers.hasOwnProperty('Authorization')
+  ) {
+    config.headers['Authorization'] = 'Bearer ' + userStore.userToken;
+  }
 
   // // 如果设置了语言，那么请求带上语言
   // if (userStore.userLang !== '') {
