@@ -33,6 +33,9 @@ import routes from 'src/router/routes';
  * with the Router instance.
  */
 
+export const enUS = {} as any
+export const ch = {} as any
+
 export default route(async function ({ store, ssrContext }) {
   // 获取init方法
   const $initStore = useInitStore();
@@ -66,15 +69,24 @@ export default route(async function ({ store, ssrContext }) {
     doadmin: '192.168.229.1',
     lang: 'zh-CN',
   }
+
+
   // userInit   //获取初始化数据
   // footerList //获取footer数据
   userInit(params).then((res: any) => {
     // console.log('初始化数据', res)
 
     $initStore.updateInit(res)
+
+    res.translate.forEach((element: any) => {
+      if (element.label != '') {
+        enUS[element.label] = element.label
+        ch[element.label] = element.value
+      }
+    });
+
+
   });
-
-
 
   //  动态加载路由
   dynamicRouterFunc(

@@ -4,15 +4,15 @@
       <q-card-section class="q-pa-lg">
         <!--  -->
         <div class="text-center text-weight-bold text-primary text-h4">
-          Login
+          {{ $t('login') }}
         </div>
         <div class="text-center text-h6 text-weight-regular">
-          Login to your account
+          {{ $t('loginSmall') }}
         </div>
 
         <q-form class="q-mt-lg">
           <!-- 账号 -->
-          <q-input class="q-mb-md" standout v-model="params.username" placeholder="Name">
+          <q-input class="q-mb-md" standout v-model="params.username" :placeholder="$t('username')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/icons/username.png" />
             </template>
@@ -20,7 +20,7 @@
 
           <!-- 密码 -->
           <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
-            placeholder="Password">
+            :placeholder="$t('password')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/icons/password.png" />
             </template>
@@ -31,7 +31,8 @@
           </q-input>
 
           <!-- 验证码 -->
-          <q-input v-if="loginSetting.showVerify" class="q-mb-sm" standout v-model="params.captchaVal" placeholder="Code">
+          <q-input v-if="loginSetting.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
+            :placeholder="$t('code')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/icons/code.png" />
             </template>
@@ -43,12 +44,12 @@
           </q-input>
 
           <!-- 忘记密码、登录、注册 -->
-          <div class="text-right q-mb-lg text-grey-7 cursor-pointer">Forgot Password?</div>
+          <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
           <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
-            color="primary" label="Login" />
-          <div v-if="loginSetting.showRegister" class="text-center q-mb-xl">
-            First time here?
-            <span @click="toRegister()" class="text-primary cursor-pointer">Signup</span>
+            color="primary" :label="$t('login')" />
+          <div @click="toRegister()" v-if="loginSetting.showRegister"
+            class="text-center text-primary q-mb-xl cursor-pointer">
+            {{ $t('toRegister') }}
           </div>
         </q-form>
       </q-card-section>
@@ -61,7 +62,7 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 // 登录相关
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
-import { userLogin, getUserInfo } from 'src/apis/user';
+import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { NotifyPositive } from 'src/utils/notify';
 import { useInitStore } from 'src/stores/init';
@@ -114,19 +115,7 @@ export default defineComponent({
 
           // 更改配置文件userToken
           $initStore.updateUserToken(res.token);
-          await userInfo()
-        })
-        .catch(() => {
-          refreshCaptchaFunc();
-        });
-    };
-
-    // 获取用户信息
-    const userInfo = () => {
-      getUserInfo()
-        .then((res: any) => {
-          // 将用户资料存到浏览器缓存
-          localStorage.setItem('userInfo', JSON.stringify(res))
+          await localStorage.setItem('userInfo', JSON.stringify(res.userInfo))
 
           if ($router.currentRoute.value.path == '/') {
             context.emit('updateLoginStatus')
@@ -135,6 +124,9 @@ export default defineComponent({
             $router.push({ name: 'HomeIndex' });
           }
         })
+        .catch(() => {
+          refreshCaptchaFunc();
+        });
     };
 
     // 打开登录弹窗

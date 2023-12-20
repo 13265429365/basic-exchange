@@ -5,7 +5,7 @@
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
         <q-icon name="o_swap_horiz" />
-        <div>language</div>
+        <div>{{ $t('language') }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
     </q-toolbar>
@@ -23,7 +23,7 @@
 
     <q-form class="q-mt-lg q-px-lg">
       <!-- 账号 -->
-      <q-input class="q-mb-md" standout v-model="params.username" placeholder="Name">
+      <q-input class="q-mb-md" standout v-model="params.username" :placeholder="$t('username')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/icons/username.png" />
         </template>
@@ -31,7 +31,7 @@
 
       <!-- 密码 -->
       <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
-        placeholder="Password">
+        :placeholder="$t('password')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/icons/password.png" />
         </template>
@@ -43,7 +43,7 @@
 
       <!-- 验证码 -->
       <q-input v-if="loginSetting.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
-        placeholder="Code">
+        :placeholder="$t('code')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/icons/code.png" />
         </template>
@@ -55,12 +55,12 @@
       </q-input>
 
       <!-- 忘记密码、登录、注册 -->
-      <div class="text-right q-mb-lg text-grey-7 cursor-pointer">Forgot Password?</div>
+      <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
       <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
-        color="primary" label="Login" />
-      <div class="text-center q-mb-xl">
-        First time here?
-        <span @click="$router.push({ name: 'UserRegister' })" class="text-primary cursor-pointer">Signup</span>
+        color="primary" :label="$t('login')" />
+      <div @click="$router.push({ name: 'UserRegister' })" v-if="loginSetting.showRegister"
+        class="text-center text-primary q-mb-xl cursor-pointer">
+        {{ $t('toRegister') }}
       </div>
     </q-form>
   </div>
@@ -133,22 +133,12 @@ export default defineComponent({
 
           // 更改配置文件userToken
           $initStore.updateUserToken(res.token);
-          await userInfo()
+          await localStorage.setItem('userInfo', JSON.stringify(res.userInfo))
+          $router.push({ name: 'HomeIndex' });
         })
         .catch(() => {
           refreshCaptchaFunc();
         });
-    };
-
-    // 获取用户信息
-    const userInfo = () => {
-      getUserInfo()
-        .then((res: any) => {
-          // 将用户资料存到浏览器缓存
-          localStorage.setItem('userInfo', JSON.stringify(res))
-
-          $router.push({ name: 'HomeIndex' });
-        })
     };
 
     return {

@@ -12,7 +12,7 @@
       <!-- 左侧tabBar菜单 -->
       <div class="row no-wrap items-center">
         <q-btn-dropdown v-show="tabBar.data.isDesktop" v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex"
-          :menu-offset="[80, 18]" class="text-black q-mr-sm" :label="tabBar.name" flat no-wrap no-caps
+          :menu-offset="[80, 18]" class="text-black q-mr-sm" :label="$t(tabBar.name)" flat no-wrap no-caps
           :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
           <q-list v-if="tabBar.children.length > 0">
             <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
@@ -20,21 +20,22 @@
               <q-item-section avatar>
                 <q-img width="34px" height="34px" :src="imageSrc(children.icon)"></q-img>
               </q-item-section>
-              <q-item-section>{{ children.name }}</q-item-section>
+              <q-item-section>{{ $t(children.name) }}</q-item-section>
             </q-item>
           </q-list>
         </q-btn-dropdown>
       </div>
 
       <!-- 左侧快捷菜单 -->
-      <q-btn-dropdown :menu-offset="[50, 18]" class="text-black" label="more" flat no-caps dropdown-icon="expand_more">
+      <q-btn-dropdown :menu-offset="[50, 18]" class="text-black" :label="$t('more')" flat no-caps
+        dropdown-icon="expand_more">
         <q-list>
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
             :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
             <q-item-section avatar>
               <q-img width="34px" height="34px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
-            <q-item-section>{{ quickMenu.name }}</q-item-section>
+            <q-item-section>{{ $t(quickMenu.name) }}</q-item-section>
           </q-item>
         </q-list>
       </q-btn-dropdown>
@@ -42,9 +43,9 @@
       <q-space />
 
       <!-- 右侧搜索 -->
-      <q-input dense standout="bg-primary" v-model="search" placeholder="Search">
+      <q-input dense standout="bg-primary" v-model="search" :placeholder="$t('search')">
         <template v-slot:prepend>
-          <q-icon style="color: #999999 !important;" name="search" />
+          <q-icon style="color: #999999 !important;" name="o_search" />
         </template>
       </q-input>
 
@@ -55,7 +56,7 @@
         <div v-if="isLogin" class="row items-center no-wrap">
           <!-- 右侧Deposit -->
           <q-btn @click="$router.push('/wallet/deposit')" rounded flat dense no-wrap
-            class="bg-primary text-white q-mx-md q-px-md" no-caps label="Deposit"></q-btn>
+            class="bg-primary text-white q-mx-md q-px-md" no-caps :label="$t('deposit')"></q-btn>
 
           <!-- 头像 -->
           <q-btn class="q-mr-sm" round flat>
@@ -97,7 +98,7 @@
                     <q-img width="20px" height="20px" :src="imageSrc(userMenu.icon)"></q-img>
                   </q-item-section>
                   <q-item-section>
-                    <div>{{ userMenu.name }}</div>
+                    <div>{{ $t(userMenu.name) }}</div>
                   </q-item-section>
                 </q-item>
 
@@ -108,7 +109,7 @@
                   <q-item-section avatar>
                     <q-icon name="o_logout" />
                   </q-item-section>
-                  <q-item-section>退出</q-item-section>
+                  <q-item-section>{{ $t('logout') }}</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -129,9 +130,9 @@
         <!-- 未登录状态 -->
         <div v-else class="row no-wrap items-center">
           <q-btn @click="dialogOpenLogin(true)" rounded flat dense no-wrap class="bg-white text-grey-7 q-mx-md q-px-md"
-            no-caps label="Login"></q-btn>
+            no-caps :label="$t('login')"></q-btn>
           <q-btn @click="dialogOpenRegister(true)" rounded flat dense no-wrap
-            class="bg-primary text-white q-mx-md q-px-md" no-caps label="Register"></q-btn>
+            class="bg-primary text-white q-mx-md q-px-md" no-caps :label="$t('register')"></q-btn>
         </div>
         <q-btn v-if="config.settings.lang.showHome" round dense flat color="grey-8" icon="o_language">
           <switchLanguage :offset="[0, 20]"></switchLanguage>
@@ -191,6 +192,7 @@ export default {
 
     onMounted(() => {
       let userInfo = localStorage.getItem('userInfo')
+
       if (userInfo != null) {
         state.userInfo = JSON.parse(userInfo)
       }
@@ -224,13 +226,16 @@ export default {
     // 退出登录
     const Logout = () => {
       NotifyPositive('退出成功')
-      $initStore.updateUserToken('')
-      $router.push({ name: 'HomeIndex' });
+      $initStore.removeUserToken()
+      localStorage.removeItem('userInfo')
+      $router.push({ name: 'HomeIndex' })
       updateLoginStatus()
     }
 
     // 更新登录状态
     const updateLoginStatus = () => {
+      console.log($initStore.userToken);
+
       state.isLogin = $initStore.userToken != '' && $initStore.userToken
     }
 

@@ -1,4 +1,5 @@
 import { useRouter } from 'vue-router';
+import { date } from 'quasar'
 
 // 图片处理方法
 export const imageSrc = (url: string) => {
@@ -31,4 +32,9 @@ export const routerTo = (route: string) => {
   }
 
   $router.push(route);
+};
+
+// 日期格式化
+export const formatDate = (time: string) => {
+  return date.formatDate(time, 'YYYY-MM-DD HH:mm:ss')
 };

@@ -5,7 +5,7 @@
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
         <q-icon name="o_swap_horiz" />
-        <div>language</div>
+        <div>{{ $t('language') }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
     </q-toolbar>
@@ -18,20 +18,20 @@
       <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('/images/logo.png')}`" />
     </div>
     <div class="row justify-center">
-      <div class="text-h5 text-weight-bold">Create New Account</div>
+      <div class="text-h5 text-weight-bold">{{ $t('registerSmall') }}</div>
     </div>
 
     <q-form class="q-mt-lg q-px-lg">
       <!-- 邮箱 -->
       <q-input v-if="registerSetting.register.showEmail" standout class="q-mb-md" v-model="params.email"
-        placeholder="email">
+        :placeholder="$t('email')">
         <template v-slot:prepend>
           <q-img src="/icons/email.png" />
         </template>
       </q-input>
 
       <!-- 账号 -->
-      <q-input standout class="q-mb-md" v-model="params.username" placeholder="Username">
+      <q-input standout class="q-mb-md" v-model="params.username" :placeholder="$t('username')">
         <template v-slot:prepend>
           <q-img src="/icons/username.png" />
         </template>
@@ -39,7 +39,7 @@
 
       <!-- 密码 -->
       <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
-        placeholder="Password">
+        :placeholder="$t('password')">
         <template v-slot:prepend>
           <q-img src="/icons/password.png" />
         </template>
@@ -51,7 +51,7 @@
 
       <!-- 确认密码 -->
       <q-input v-if="registerSetting.register.showCmfPass" class="q-mb-md" v-model="password" standout
-        :type="isPwd2 ? 'text' : 'password'" placeholder="Password">
+        :type="isPwd2 ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
         <template v-slot:prepend>
           <q-img src="/icons/password.png" />
         </template>
@@ -63,7 +63,7 @@
 
       <!-- 验证码 -->
       <q-input v-if="registerSetting.register.showVerify" class="q-mb-md" standout v-model="params.captchaVal"
-        placeholder="Code">
+        :placeholder="$t('code')">
         <template v-slot:prepend>
           <q-img src="/icons/code.png" />
         </template>
@@ -76,14 +76,14 @@
 
       <!-- 秘钥 -->
       <q-input v-if="registerSetting.register.showSecurityPass" class="q-mb-md" standout v-model="params.securityKey"
-        placeholder="Secret Key">
+        :placeholder="$t('enterSecretKey')">
         <template v-slot:prepend>
           <q-img src="/icons/key.png" />
         </template>
       </q-input>
 
       <!-- 邀请码 -->
-      <q-input class="q-mb-md" standout v-model="params.code" placeholder="Invite Code">
+      <q-input class="q-mb-md" standout v-model="params.code" :placeholder="$t('inviteCode')">
         <template v-slot:prepend>
           <q-img src="/icons/profile.png" />
         </template>
@@ -111,15 +111,14 @@
           </q-list>
         </q-btn-dropdown>
 
-        <q-input style="width: 64%;" standout v-model="params.telephone" placeholder="Telphone" />
+        <q-input style="width: 64%;" standout v-model="params.telephone" :placeholder="$t('telephone')" />
       </div>
 
       <!-- 前往登录、点击注册 -->
       <q-btn @click="submitFunc()" class="full-width q-my-lg" unelevated rounded no-caps style="height: 44px;"
-        color="primary" label="Signup" />
-      <div class="size14 text-center q-pb-xl">
-        Already have an account?
-        <span @click="$router.push('/login')" class="text-primary cursor-pointer">Login</span>
+        color="primary" :label="$t('register')" />
+      <div @click="$router.push('/login')" class="text-center q-pb-xl text-primary cursor-pointer">
+        {{ $t('toLogin') }}
       </div>
     </q-form>
   </div>

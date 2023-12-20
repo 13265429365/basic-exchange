@@ -2,53 +2,30 @@
   <div class="calc">
     <div style="padding: 48px 100px;">
       <div class="text-weight-medium q-mb-lg" style="font-size: 28px;">
-        Team Benefit
+        {{ $t('teamBenefits') }}
       </div>
       <!-- 头像 -->
       <div class="radius-8 q-pa-lg" style="border: 1px solid #DDDDDD;">
-        <q-scroll-area style="max-width: 942px;height: 60px;">
-          <div class="row no-wrap items-center">
-            <div class="row no-wrap items-center q-mr-xl">
-              <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
-                <q-img :src="imageSrc('')"></q-img>
-              </q-avatar>
-              <div>
-                <div class="text-h6 text-weight-medium">Jessica</div>
-                <div class="text-weight-medium text-primary" style="font-size: 17px;">+$2659</div>
-              </div>
-            </div>
-            <div class="separation"></div>
+        <!-- <q-scroll-area style="max-width: 942px;height: 60px;"> -->
+        <div class="row no-wrap items-center">
+          <div class="row no-wrap items-center q-mr-xl">
+            <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
+              <q-img :src="imageSrc('')"></q-img>
+            </q-avatar>
             <div>
-              <div class="text-h5 text-center text-weight-medium noWrap">26</div>
-              <div class="text-color-6 text-center noWrap">邀请人数</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="text-h5 text-center text-weight-medium noWrap">26</div>
-              <div class="text-color-6 text-center noWrap">邀请收益</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="text-h5 text-center text-weight-medium noWrap">696.23</div>
-              <div class="text-color-6 text-center noWrap">购买总金额</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="text-h5 text-center text-weight-medium noWrap">9623.2</div>
-              <div class="text-color-6 text-center noWrap">购买收益</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="text-h5 text-center text-weight-medium noWrap">26</div>
-              <div class="text-color-6 text-center noWrap">利润总金额</div>
-            </div>
-            <div class="separation"></div>
-            <div>
-              <div class="text-h5 text-center text-weight-medium noWrap">26</div>
-              <div class="text-color-6 text-center noWrap">利润收益</div>
+              <div class="text-h6 text-weight-medium">{{ userInfo.userName }}</div>
+              <div class="text-weight-medium text-primary" style="font-size: 17px;">+{{ teamEarnings }}</div>
             </div>
           </div>
-        </q-scroll-area>
+          <div v-for="(item, i) in TeamBenefit" :key="i" class="row no-wrap">
+            <div class="separation"></div>
+            <div>
+              <div class="text-h5 text-center text-weight-medium noWrap">{{ item.number }}</div>
+              <div class="text-color-6 text-center noWrap">{{ $t(item.name) }}</div>
+            </div>
+          </div>
+        </div>
+        <!-- </q-scroll-area> -->
       </div>
 
 
@@ -56,28 +33,33 @@
       <q-table class="q-mt-lg q-pa-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="i" hide-bottom
         hide-header>
         <template v-slot:top>
-          <div class="text-h5 text-weight-medium">Transactions</div>
+          <div class="text-h5 text-weight-medium">{{ $t('transactions') }}</div>
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td>
               <div class="text-body1">
-                {{ props.row.name }}
+                {{ props.row.id }}
               </div>
             </q-td>
             <q-td>
               <div class="text-body1">
-                {{ props.row.calories }}
+                {{ props.row.userName }}
               </div>
             </q-td>
             <q-td>
               <div class="text-body1">
-                {{ props.row.fat }}
+                {{ formatDate(props.row.createdAt) }}
               </div>
             </q-td>
-            <q-td class="row justify-between items-center">
-              <div :class="['text-body1', { 'text-primary': props.row.fat == 'Recharge' }]">
-                {{ props.row.carbs }}
+            <q-td>
+              <div class="text-body1">
+                {{ $t(props.row.name) }}
+              </div>
+            </q-td>
+            <q-td>
+              <div :class="['text-body1', { 'text-primary': props.row.name == 'Recharge' }]">
+                {{ props.row.money }}
               </div>
             </q-td>
           </q-tr>
@@ -89,65 +71,75 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc, formatDate } from 'src/utils/index';
+import { getTeamDetails } from 'src/apis/user';
 
 export default defineComponent({
   name: 'benefitIndex',
   setup() {
     const $router = useRouter();
     let state = reactive({
+      // 用户资料
+      userInfo: {} as any,
+
+      // 总收益
+      teamEarnings: '' as any,
+
+      // 团队收益详情
+      TeamBenefit: [] as any,
+
       // table数据
       columns: [] as any,
       rows: [] as any,
     });
-    state.columns = [
-      {
-        name: 'name',
-        required: true,
-        align: 'left',
-        sortable: true
-      },
-      { name: 'calories', align: 'center', field: 'calories', sortable: true },
-      { name: 'fat', field: 'fat', sortable: true },
-      { name: 'carbs', field: 'carbs' },
-    ]
 
-    state.rows = [
-      {
-        name: '1',
-        calories: '2023-11-08',
-        fat: 'Withdrawal',
-        carbs: '+236',
-        i: 0,
-      },
-      {
-        name: '2',
-        calories: '2023-11-08',
-        fat: 'Recharge',
-        carbs: '+190',
-        i: 1,
-      },
-      {
-        name: '3',
-        calories: '2023-11-08',
-        fat: 'Withdrawal',
-        carbs: '+236',
-        i: 0,
-      },
-      {
-        name: '4',
-        calories: '2023-11-08',
-        fat: 'Recharge',
-        carbs: '+190',
-        i: 1,
-      },
-    ]
+    onMounted(() => {
+      const info = localStorage.getItem('userInfo')
+      if (info != null) {
+        state.userInfo = JSON.parse(info)
+        TeamDetails({ id: state.userInfo.id })
+      }
+    })
+
+    // 获取用户团队详情
+    const TeamDetails = (params: any) => {
+      getTeamDetails(params).then((res: any) => {
+        console.log(res);
+        state.teamEarnings = res.teamEarnings
+        // 团队数据
+        for (const TeamBenefit in res) {
+          if (TeamBenefit != 'teamEarningsIndex') {
+            state.TeamBenefit.push({
+              name: TeamBenefit,
+              number: res[TeamBenefit],
+            })
+          }
+        }
+
+
+        // 收益详情
+        if (res.teamEarningsIndex.length <= 0) {
+          return false
+        }
+
+        for (const BenefitDetails in res.teamEarningsIndex[0]) {
+          state.columns.push({
+            name: BenefitDetails,
+          })
+        }
+
+        res.teamEarningsIndex.forEach((element: any) => {
+          state.rows.push(element)
+        });
+      })
+    }
 
 
     return {
       imageSrc,
+      formatDate,
       ...toRefs(state),
     }
   }
@@ -163,5 +155,13 @@ export default defineComponent({
 
 .noWrap {
   white-space: nowrap;
+}
+
+td {
+  width: 20%;
+
+  div {
+    width: 100%;
+  }
 }
 </style>

@@ -51,13 +51,13 @@ export const InitStoreState = {
       //  注册配置
       register: {
         //  是否显示邮箱
-        showEmail: false,
+        showEmail: true,
         //  是否显示确认密码
         showCmfPass: true,
         //  是否显示验证码
         showVerify: true,
         //  是否显示安全密钥
-        showSecurityPass: false,
+        showSecurityPass: true,
         //  是否显示手机号码
         showTelephone: true,
       },
@@ -125,6 +125,7 @@ export const useInitStore = defineStore('init', {
 
     //  删除用户Token
     removeUserToken() {
+      this.userToken = ''
       console.log('删除了token');
       Cookies.remove(UserTokenKey);
     },

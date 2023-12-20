@@ -70,10 +70,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 桌面版充值
       {
         name: 'Deposit',
-        route: '/wallet/deposit',
+        route: '/wallets/deposit',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'wallet/deposit.vue'
+          'wallets/deposit.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/wallet/deposit.vue'),
         children: [],
@@ -82,16 +82,16 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 桌面版提现
       {
         name: 'Withdraw',
-        route: '/wallet/withddraw',
+        route: '/wallets/withddraw',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'wallet/withdraw.vue'
+          'wallets/withdraw.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/wallet/withdraw.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-      // 桌面版添加卡片
+      // 添加卡片
       {
         name: 'AddCard',
         route: '/add/card',
@@ -103,7 +103,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-      // 桌面版编辑卡片
+      // 编辑卡片
       {
         name: 'EditCard',
         route: '/edit/card',
@@ -131,7 +131,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 卡片管理
       {
         name: 'Account',
-        route: '/wallet/account/index',
+        route: '/wallets/account/index',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'card/card.vue'
@@ -143,7 +143,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 我的钱包
       {
         name: 'Wallet',
-        route: '/wallet/index',
+        route: '/wallets/index',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'wallet/wallet.vue'
@@ -155,7 +155,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 钱包明细(手机)
       {
         name: 'WalletDetail',
-        route: '/wallet/detail',
+        route: '/wallets/detail',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'wallet/billDetail.vue'
@@ -167,7 +167,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 我的资产
       {
         name: 'Assets',
-        route: '/wallet/assets/index',
+        route: '/wallets/assets/index',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'wallet/assets/assets.vue'

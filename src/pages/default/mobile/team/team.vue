@@ -7,7 +7,7 @@
         </q-avatar>
         <div class="q-ml-md text-subtitle1">
           <div class="text-white text-weight-medium">Carla Schoen</div>
-          <div class="text-white text-weight-medium">Team Benefits: +8626</div>
+          <div class="text-white text-weight-medium">{{ $t('teamBenefits') }} : +8971</div>
         </div>
       </div>
 

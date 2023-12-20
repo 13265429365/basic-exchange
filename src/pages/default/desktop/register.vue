@@ -4,23 +4,24 @@
       <q-card-section class="q-pa-lg">
 
         <div class="text-center text-weight-bold text-primary text-h4">
-          Sign Up
+          {{ $t('register') }}
         </div>
         <div class="text-center text-h6 text-weight-regular">
-          Create an account
+          {{ $t('registerSmall') }}
         </div>
 
 
         <q-form class="q-mt-lg">
           <!-- 邮箱 -->
-          <q-input v-if="registerSetting.showEmail" standout class="q-mb-md" v-model="params.email" placeholder="email">
+          <q-input v-if="registerSetting.showEmail" standout class="q-mb-md" v-model="params.email"
+            :placeholder="$t('email')">
             <template v-slot:prepend>
               <q-img src="/icons/email.png" />
             </template>
           </q-input>
 
           <!-- 账号 -->
-          <q-input standout class="q-mb-md" v-model="params.username" placeholder="Username">
+          <q-input standout class="q-mb-md" v-model="params.username" :placeholder="$t('username')">
             <template v-slot:prepend>
               <q-img src="/icons/username.png" />
             </template>
@@ -28,7 +29,7 @@
 
           <!-- 密码 -->
           <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
-            placeholder="Password">
+            :placeholder="$t('password')">
             <template v-slot:prepend>
               <q-img src="/icons/password.png" />
             </template>
@@ -40,7 +41,7 @@
 
           <!-- 确认密码 -->
           <q-input v-if="registerSetting.showCmfPass" class="q-mb-md" v-model="password" standout
-            :type="isPwd2 ? 'text' : 'password'" placeholder="Password">
+            :type="isPwd2 ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
             <template v-slot:prepend>
               <q-img src="/icons/password.png" />
             </template>
@@ -52,7 +53,7 @@
 
           <!-- 验证码 -->
           <q-input v-if="registerSetting.showVerify" class="q-mb-md" standout v-model="params.captchaVal"
-            placeholder="Code">
+            :placeholder="$t('code')">
             <template v-slot:prepend>
               <q-img src="/icons/code.png" />
             </template>
@@ -65,14 +66,14 @@
 
           <!-- 秘钥 -->
           <q-input v-if="registerSetting.showSecurityPass" class="q-mb-md" standout v-model="params.securityKey"
-            placeholder="Secret Key">
+            :placeholder="$t('enterSecretKey')">
             <template v-slot:prepend>
               <q-img src="/icons/key.png" />
             </template>
           </q-input>
 
           <!-- 邀请码 -->
-          <q-input class="q-mb-md" standout v-model="params.code" placeholder="Invite Code">
+          <q-input class="q-mb-md" standout v-model="params.code" :placeholder="$t('inviteCode')">
             <template v-slot:prepend>
               <q-img src="/icons/profile.png" />
             </template>
@@ -101,15 +102,14 @@
               </q-list>
             </q-btn-dropdown>
 
-            <q-input style="width: 64%;" standout v-model="params.telephone" placeholder="Telphone" />
+            <q-input style="width: 64%;" standout v-model="params.telephone" :placeholder="$t('telephone')" />
           </div>
 
           <!-- 前往登录、点击注册 -->
           <q-btn @click="submitFunc()" class="full-width q-my-lg" unelevated rounded no-caps style="height: 44px;"
-            color="primary" label="Signup" />
-          <div class="size14 text-center q-pb-xl">
-            Already have an account?
-            <span @click="toLogin()" class="text-primary cursor-pointer">Login</span>
+            color="primary" :label="$t('register')" />
+          <div @click="toLogin()" class="text-center q-pb-xl text-primary cursor-pointer">
+            {{ $t('toLogin') }}
           </div>
         </q-form>
       </q-card-section>
@@ -121,7 +121,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
-import { userRegister, getUserInfo } from 'src/apis/user';
+import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { useInitStore } from 'src/stores/init';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
@@ -190,33 +190,23 @@ export default defineComponent({
         NotifyNegative('判断两次密码不一致');
         return false
       };
-      userRegister(state.params).then((res: any) => {
+      userRegister(state.params).then(async (res: any) => {
         NotifyPositive('注册成功')
 
         // 更改配置文件userToken
         $initStore.updateUserToken(res.token);
-        userInfo()
+        state.registerShow = false;
+        await localStorage.setItem('userInfo', JSON.stringify(res.userInfo))
+        if ($router.currentRoute.value.path == '/') {
+          context.emit('updateLoginStatus')
+        } else {
+          context.emit('updateLoginStatus')
+          $router.push({ name: 'HomeIndex' });
+        }
       }).catch(() => {
         refreshCaptchaFunc();
       });
     }
-
-    // 获取用户信息
-    const userInfo = () => {
-      getUserInfo()
-        .then((res: any) => {
-          // 将用户资料存到浏览器缓存
-          localStorage.setItem('userInfo', JSON.stringify(res))
-
-          if ($router.currentRoute.value.path == '/') {
-            context.emit('updateLoginStatus')
-          } else {
-            context.emit('updateLoginStatus')
-            $router.push({ name: 'HomeIndex' });
-          }
-        })
-    };
-
 
     // 点击注册
     const toLogin = () => {

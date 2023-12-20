@@ -2,7 +2,7 @@
   <div class="calc">
     <!-- 通用header(app.scss) -->
     <div class="pageHeader">
-      accountManage
+      {{ $t('accountManage') }}
     </div>
 
     <div class="maxWidth1200">
@@ -20,9 +20,9 @@
                     <div class="text-white size16">
                       兴业银行·厦门支行
                     </div>
-                    <div @click="$router.push({ name: 'DesktopEditCard', query: { type: 1 } })"
+                    <div @click="$router.push({ name: 'EditCard', query: { type: 1 } })"
                       class="row btn justify-center items-center q-ml-md">
-                      Edit</div>
+                      {{ $t('edit') }}</div>
                   </div>
                   <div class="text-white" style="font-size: 12px;">Josh Daniel</div>
                 </div>
@@ -52,9 +52,9 @@
                     <div class="text-white size16">
                       USDT-ERC20
                     </div>
-                    <div @click="$router.push({ name: 'DesktopEditCard', query: { type: 2 } })"
+                    <div @click="$router.push({ name: 'EditCard', query: { type: 2 } })"
                       class="row btn justify-center items-center q-ml-md">
-                      Edit</div>
+                      {{ $t('edit') }}</div>
                   </div>
                   <div class="text-white" style="font-size: 12px;">Digital Currency</div>
                 </div>
@@ -74,7 +74,7 @@
 
 
         <!-- 添加按钮 (本页定义css) -->
-        <div @click="$router.push({ name: 'DesktopAddCard' })" class="column justify-center row add-btn cursor-pointer">
+        <div @click="$router.push({ name: 'AddCard' })" class="column justify-center row add-btn cursor-pointer">
           <div class="text-center text-color-9">
             <q-icon size="28px" name="add" class="self-center" />
             <div>Add Card</div>
@@ -87,13 +87,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils/index';
+import { userGetCard, userDelCard } from 'src/apis/wallets';
 
 export default defineComponent({
   name: 'cardIndex',
   setup() {
-    let state = reactive({});
+    let state = reactive({
+      // 用户卡片列表
+      cardList: [],
+    });
+
+    onMounted(() => {
+      getCard()
+    })
+
+    const getCard = () => {
+      userGetCard().then((res: any) => {
+        console.log(res);
+
+      })
+    }
+
     return {
       imageSrc,
       ...toRefs(state),

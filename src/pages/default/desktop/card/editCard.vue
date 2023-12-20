@@ -40,7 +40,7 @@
 
           <!-- 银行名称 -->
           <div class="q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mb-xs">银行名称：</div>
+            <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankName') }}：</div>
             <div class="row justify-between q-px-md q-mb-md q-py-sm"
               style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
               <div class="self-center row">
@@ -65,13 +65,13 @@
 
           <!-- 银行卡号 -->
           <div class="q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mb-xs">银行卡号：</div>
+            <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankNumber') }}：</div>
             <q-input type="number" standout v-model="text" />
           </div>
 
           <!-- 本人姓名 -->
           <div class="q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mb-xs">本人姓名：</div>
+            <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('idName') }}：</div>
             <q-input standout v-model="text" />
           </div>
           <q-btn unelevated rounded color="primary" label="Submit" class="q-my-md" no-caps

@@ -1,5 +1,5 @@
 <template>
-  <q-list class="q-ml-xl q-mt-xl q-mr-md" style="width: 220px" padding>
+  <q-list class="q-ml-xl q-mt-xl q-mr-md" style="min-width: 220px;width: 220px" padding>
     <div v-for="(menu, menuIndex) in menuList" :key="menuIndex">
       <!-- 含有子级的列表 -->
       <q-expansion-item accordion v-if="menu.children.length > 0" default-opened>
@@ -9,7 +9,7 @@
             <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
           </q-item-section>
           <q-item-section avatar>
-            <div style="user-select: none;min-width: 120px;">{{ menu.name }}</div>
+            <div style="user-select: none;min-width: 120px;">{{ $t(menu.name) }}</div>
           </q-item-section>
         </template>
 
@@ -21,7 +21,7 @@
             <q-img width="24px" height="24px" src=""></q-img>
           </q-item-section>
           <q-item-section>
-            <div style="user-select: none">{{ children.name }}</div>
+            <div style="user-select: none">{{ $t(children.name) }}</div>
           </q-item-section>
         </q-item>
       </q-expansion-item>
@@ -34,7 +34,7 @@
           <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
         </q-item-section>
         <q-item-section>
-          <div style="user-select: none">{{ menu.name }}</div>
+          <div style="user-select: none">{{ $t(menu.name) }}</div>
         </q-item-section>
       </q-item>
     </div>
