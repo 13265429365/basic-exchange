@@ -1,17 +1,19 @@
 <template>
   <div>
-    <q-uploader flat auto-upload :url="baseURL + '/upload'" :field-name="name" :style="uploaderStyle" :accept="accept"
-      :class="uploaderClass" :multiple="multiple" max-files="9" @uploaded="uploadedFunc" @start="uploaderStartFunc"
-      @finish="uploaderFinishFunc" @rejected="uploaderRejectedFunc" :headers="[{ name: 'Token', value: userToken }]">
+    <q-uploader flat auto-upload :url="baseURL + 'api/v1/upload'" :field-name="name" :style="uploaderStyle"
+      :accept="accept" :class="uploaderClass" :multiple="multiple" max-files="9" @uploaded="uploadedFunc"
+      @start="uploaderStartFunc" @finish="uploaderFinishFunc" @rejected="uploaderRejectedFunc"
+      :headers="[{ name: 'Authorization', value: 'Bearer ' + userToken }]">
       <template v-slot:header></template>
       <template v-slot:list="scope">
         <div @click="scope.pickFiles">
           <!-- 单图 -->
           <q-card flat bordered :style="listStyle" class="cursor-pointer" v-if="type === 'avatar'">
-            <div class="column justify-center items-center">
+            <div class="row justify-center items-center" style="border: 1px dashed #D7D7D7;">
               <q-uploader-add-trigger />
-              <div v-if="respValue !== ''">
-                <img :src="imageSrc(respValue)" alt="" style="width: 100%" />
+              <div v-if="respValue !== ''" class="row justify-center items-center"
+                :style="{ width: '100%', height: listStyle.height }">
+                <img :src="imageSrc(respValue)" alt="" style="height: 145px;" />
               </div>
               <div v-else :style="{ width: '100%', height: listStyle.height }">
                 <slot name="noneAdd"></slot>
@@ -53,7 +55,7 @@
 import { reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { Loading, QSpinnerBars } from 'quasar';
-import { InitStoreState } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
 
 
@@ -99,16 +101,18 @@ export default {
     type: { type: String, default: 'avatar' },
   },
   setup(props: any, context: any) {
+    let $initStore = InitStore()
+
     // const userStore = useUserStore();
     const state = reactive({
       // 用户token
-      userToken: InitStoreState.userToken,
+      userToken: $initStore.userToken,
 
       // api路径
       baseURL: process.env.baseURL,
 
       // 
-      respValue: props.value,
+      respValue: '' as any,
 
       // upload样式
       barStyle: {
@@ -130,13 +134,14 @@ export default {
     // 上传完成回调方法
     const uploadedFunc = (info: any) => {
       const imagePath = JSON.parse(info.xhr.response).data;
-      if (props.multiple) {
-        state.respValue.push(imagePath);
-      } else {
-        state.respValue[0] = imagePath;
-      }
 
-      context.emit('uploaded', imagePath);
+
+      if (props.multiple) {
+        state.respValue.push(...imagePath);
+      } else {
+        state.respValue = imagePath[0];
+      }
+      context.emit('uploaded', state.respValue);
     };
 
     // 删除图片列表
@@ -179,12 +184,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .q-card--bordered {
   border: 0px !important;
 }
 
-.q-uploader__list {
-  padding: 0 !important;
+:deep(.q-uploader .q-uploader__list) {
+  padding: 8px !important;
+  // overflow: hidden;
 }
 </style>

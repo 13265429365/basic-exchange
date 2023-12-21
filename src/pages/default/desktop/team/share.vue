@@ -7,7 +7,7 @@
         <div class="row justify-center">
           <div class="relative-position">
             <div class="qrcode bg-white" style="z-index: 999;">
-              <q-img src="/images/pc/share/M.png" style="z-index: 999;border-radius: 10px;"></q-img>
+              <div id="qrCode" style="z-index: 999;border-radius: 10px;width: 100px;height: 100px;"></div>
             </div>
             <q-img class="absolute" width="133px" height="225px" style="left: -103px;top:0"
               src="/images/pc/share/qrcode-left.png"></q-img>
@@ -30,10 +30,10 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { onMounted, onUnmounted, reactive, toRefs } from 'vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
-
+import { getInvite } from 'src/apis/user';
 
 export default {
   name: 'defaultShare',
@@ -41,6 +41,12 @@ export default {
     const state = reactive({
       inviteUrl: 'http://192.168.3.126:9100/login'
     });
+
+    onMounted(() => {
+      getInvite().then((res: any) => {
+        console.log(res);
+      })
+    })
 
     // 复制方法
     const copyToClipboardFunc = (str: string) => {

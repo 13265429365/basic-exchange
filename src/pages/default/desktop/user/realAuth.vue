@@ -2,86 +2,78 @@
   <div class="calc">
     <!-- 通用header(app.scss) -->
     <div class="pageHeader">
-      realAuth
+      {{ $t('realAuth') }}
     </div>
 
     <div class="maxWidth1200">
       <!-- input -->
-      <div>
+      <q-form @submit="submit" class="full-width">
         <div class="row no-wrap justify-between">
           <div class="q-mr-md" style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">your name</div>
-            <q-input standout class="q-mb-lg" v-model="content" placeholder="Email" />
+            <div class="q-mb-xs text-color-6">{{ $t('email') }}</div>
+            <q-input :rules="[
+              val => val !== null && val !== ''
+            ]" standout class="q-mb-lg" v-model="form.realName" :placeholder="$t('email')" />
           </div>
           <div style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">Phone number</div>
-            <q-input standout class="q-mb-lg" v-model="content" placeholder="Email" />
+            <div class="q-mb-xs text-color-6">{{ $t('telephone') }}</div>
+            <q-input :rules="[
+              val => val !== null && val !== ''
+            ]" standout class="q-mb-lg" v-model="form.telephone" :placeholder="$t('telephone')" />
           </div>
         </div>
         <div class="row no-wrap justify-between">
           <div class="q-mr-md" style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">ID number</div>
-            <q-input standout class="q-mb-lg" v-model="content" placeholder="Email" />
+            <div class="q-mb-xs text-color-6">{{ $t('bankNumber') }}</div>
+            <q-input :rules="[
+              val => val !== null && val !== ''
+            ]" standout class="q-mb-lg" v-model="form.number" :placeholder="$t('bankNumber')" />
           </div>
           <div style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">ID Address</div>
-            <q-input standout class="q-mb-lg" v-model="content" placeholder="Email" />
+            <div class="q-mb-xs text-color-6">{{ $t('digitalAddress') }}</div>
+            <q-input :rules="[
+              val => val !== null && val !== ''
+            ]" standout class="q-mb-lg" v-model="form.address" :placeholder="$t('digitalAddress')" />
           </div>
         </div>
 
         <!-- 上传身份证 -->
-        <div class="q-mb-xs text-color-6">Document</div>
+        <div class="q-mb-xs text-color-6">{{ $t('idPhoto1').replace('正面', '').replace('1', '') }}</div>
         <div class="row justify-between">
-          <div style="width: 31%;">
-            <uploader :value="imgUrl" :listStyle="{
+          <div class="q-mb-xl" style="width: 48.5%;">
+            <uploader @uploaded="uploaded" :value="imgUrl" :listStyle="{
               height: '155px',
             }">
               <template v-slot:noneAdd>
-                <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
-                  class="column justify-center items-center fit">
+                <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
                   <q-icon name="add" size="29px" />
                 </div>
               </template>
             </uploader>
-            <div class="text-body2 text-weight-medium text-center q-mt-lg">证件正面照</div>
+            <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto1') }}</div>
           </div>
 
           <!--  -->
-          <div style="width: 31%;">
-            <uploader :value="imgUrl" :listStyle="{
+          <div class="q-mb-xl" style="width: 48.5%;">
+            <uploader @uploaded="uploaded2" :value="imgUrl" :listStyle="{
               height: '155px',
             }">
               <template v-slot:noneAdd>
-                <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
-                  class="column justify-center items-center fit">
+                <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
                   <q-icon name="add" size="29px" />
                 </div>
               </template>
             </uploader>
-            <div class="text-body2 text-weight-medium text-center q-mt-lg">证件反面照</div>
-          </div>
-
-          <!--  -->
-          <div style="width: 31%;">
-            <uploader :value="imgUrl" :listStyle="{
-              height: '155px',
-            }">
-              <template v-slot:noneAdd>
-                <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;"
-                  class="column justify-center items-center fit">
-                  <q-icon name="add" size="29px" />
-                </div>
-              </template>
-            </uploader>
-            <div class="text-body2 text-weight-medium text-center q-mt-lg">手持证件照</div>
+            <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto2') }}</div>
           </div>
         </div>
 
         <!-- sub按钮 -->
-        <div class="q-mt-xl row justify-end">
-          <q-btn rounded color="primary" no-caps label="Submit" style="width: 170px;height: 48px;"></q-btn>
+        <div class="q-mt-xl row justify-center">
+          <q-btn rounded color="primary" type="submit" no-caps :label="$t('submit')"
+            style="width: 170px;height: 48px;"></q-btn>
         </div>
-      </div>
+      </q-form>
 
     </div>
   </div>
@@ -89,7 +81,10 @@
 
 <script lang="ts">
 import uploader from 'src/components/uploader.vue';
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
+import { NotifyNegative } from 'src/utils/notify';
+import { userAuth, getUserAuth } from 'src/apis/user';
+import { UserStore } from 'src/stores/user';
 
 export default defineComponent({
   components: {
@@ -97,13 +92,65 @@ export default defineComponent({
   },
   name: 'realAuthIndex',
   setup() {
-    let state = reactive({
+    const $userStore = UserStore()
+    const state = reactive({
       //
       content: '',
       imgUrl: '',
+      form: {
+        realName: '',
+        telephone: '',
+        number: '',
+        address: '',
+        photo1: '',
+        photo2: '',
+      } as any,
     });
+    console.log($userStore.userInfo.id);
+
+    onMounted(() => {
+      getAuth()
+    })
+
+    const getAuth = () => {
+      getUserAuth().then((res: any) => {
+        console.log(res);
+        state.form = res.data
+      })
+    }
+
+    const submit = () => {
+      if (state.form.photo1 == '' || state.form.photo2 == '') {
+        NotifyNegative('请上传证件照')
+        return false
+      }
+      let params = {
+        realName: state.form.realName,
+        telephone: state.form.telephone,
+        number: state.form.number,
+        address: state.form.address,
+        photo1: state.form.photo1,
+        photo2: state.form.photo2,
+      }
+      userAuth(params).then((res: any) => {
+        getAuth()
+        console.log(res);
+      })
+    }
+
+    const uploaded = (url: any) => {
+      state.form.photo1 = url
+    }
+
+    const uploaded2 = (url: any) => {
+      state.form.photo2 = url
+    }
+
     return {
       ...toRefs(state),
+      uploaded,
+      uploaded2,
+      submit,
     }
   }
 });

@@ -51,7 +51,8 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, onMounted } from 'vue'
+import { getHelpers } from 'src/apis/index'
 
 export default {
   name: 'helpCenter',
@@ -67,7 +68,15 @@ export default {
       }, {
         title: 'Does Tech Heim offer a warranty on its products?',
         content: 'Yes, Tech Heim provides a warranty on all eligible products. The specific warranty details may vary depending on the manufacturer and product category. Please refer to the product description or contact our customer support for more information.'
-      }]
+      }] as any,
+      articleList: [] as any,
+    })
+
+    onMounted(() => {
+      getHelpers().then((res: any) => {
+        state.articleList = res.data.articleList
+        console.log(res);
+      })
     })
 
     return {

@@ -1,6 +1,6 @@
 import { route } from 'quasar/wrappers';
 import { UserTokenKey, InitStoreState, InitStore, UserLangKey } from 'src/stores/init';
-import { Cookies, Platform, Quasar } from 'quasar';
+import { Cookies, Platform } from 'quasar';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
 import { userInit } from 'src/apis/index';

@@ -46,4 +46,20 @@ export const orderLevel = (params: any) => {
   return api.post('api/v1/user/level/order', params);
 };
 
+// 用户实名认证
+export const userAuth = (params: any) => {
+  return api.post('api/v1/user/auth/create', params);
+};
+
+// 用户获取实名
+export const getUserAuth = () => {
+  return api.post('api/v1/user/auth/info');
+};
+
+// 获取用户邀请码
+export const getInvite = () => {
+  return api.post('api/v1/user/invite/info');
+};
+
+
 

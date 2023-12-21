@@ -20,15 +20,25 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { onMounted, reactive, toRefs } from 'vue';
 import { date } from 'quasar';
 import { imageSrc } from 'src/utils/index';
+import { getDownload } from 'src/apis';
 
 export default {
   name: 'defaultDownload',
   setup() {
     const state = reactive({
+      url: '' as any,
     });
+
+    onMounted(() => {
+      getDownload().then((res: any) => {
+        state.url = res.data.android
+        console.log(res);
+      })
+    })
+
     return {
       imageSrc,
       date,
