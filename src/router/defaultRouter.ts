@@ -115,6 +115,30 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
+      // 文章
+      {
+        name: 'Article',
+        route: '/article',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          ''
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/article.vue'),
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
+      // 文章
+      {
+        name: 'ArticleDetails',
+        route: '/article/details',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          ''
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/details.vue'),
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
     ],
     meta: {},
   },

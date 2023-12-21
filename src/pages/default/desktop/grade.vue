@@ -49,11 +49,13 @@ import { onMounted, reactive, toRefs } from 'vue';
 import { getLevel, orderLevel } from 'src/apis/user';
 import { imageSrc } from 'src/utils/index';
 import { NotifyPositive } from 'src/utils/notify';
-
+import { UserStore } from 'src/stores/user';
 
 export default {
   name: 'defaultShare',
   setup() {
+    const $userStore = UserStore()
+
     const state = reactive({
       actName: 'Level1',
       levelList: [] as any,
@@ -66,25 +68,21 @@ export default {
     // 获取会员等级列表
     const getLevelList = () => {
       getLevel().then((res: any) => {
-        state.levelList = res
+        state.levelList = res.data
         if (state.levelList.length > 0) {
           state.actName = state.levelList[0].name
         }
-        console.log('会员等级列表', res);
+        console.log('会员等级列表', res.data);
       })
     }
 
     // 用户购买会员
     const OrderLevel = (name: string) => {
       state.actName = name
-      let id = localStorage.getItem('userInfo');
-      if (id != null) {
-        orderLevel({ id: JSON.parse(id).id }).then((res: any) => {
-          NotifyPositive('购买成功')
-          console.log(res);
-        })
-      }
-
+      orderLevel({ id: $userStore.userInfo.id }).then((res: any) => {
+        NotifyPositive('购买成功')
+        console.log(res);
+      })
     }
 
 

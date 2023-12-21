@@ -72,11 +72,13 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { formatDate, imageSrc } from 'src/utils/index'
 import { getTeam } from 'src/apis/user';
+import { UserStore } from 'src/stores/user';
 
 export default defineComponent({
   name: 'teamIndex',
   setup() {
     const $router = useRouter();
+    const $userStore = UserStore();
 
     let state = reactive({
       // 团队成员
@@ -86,17 +88,14 @@ export default defineComponent({
 
 
     onMounted(() => {
-      const id = localStorage.getItem('userInfo')
-      if (id != null) {
-        Team({ id: JSON.parse(id).id })
-      }
+      Team({ id: $userStore.userInfo.id })
     })
 
     // 获取用户团队详情
     const Team = (params: any) => {
       getTeam(params).then((res: any) => {
         console.log(res);
-        state.TeamMembers = res
+        state.TeamMembers = res.data
       })
     }
 

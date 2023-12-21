@@ -1,18 +1,15 @@
 import { defineStore } from 'pinia';
-import { Cookies } from 'quasar';
+import { Cookies, Quasar } from 'quasar';
 
 export const UserTokenKey = '_UserToken';
 export const UserLangKey = '_UserLang';
 
 export const InitStoreState = {
   //  用户Token
-  userToken: '',
+  userToken: '' as any,
 
   //  用户语言
-  userLang: '',
-
-  //  用户信息
-  userInfo: {} as any,
+  userLang: '' as any,
 
   //  tabbars 菜单（桌面header左侧）
   tabBars: [] as menuInterface[],
@@ -105,7 +102,7 @@ export const InitStoreState = {
 };
 
 // 初始化数据
-export const useInitStore = defineStore('init', {
+export const InitStore = defineStore('init', {
   state: () => {
     return JSON.parse(JSON.stringify(InitStoreState));
   },
@@ -116,18 +113,26 @@ export const useInitStore = defineStore('init', {
       Object.assign(this, list)
     },
 
-    //  更新用户Token
+    //  更新用户Token和语言
     updateUserToken(token: string) {
       this.userToken = token;
       console.log('更新了token');
       Cookies.set(UserTokenKey, token, { expires: '30d 3h 5m' });
     },
 
+    //  更新用户语言
+    updateUserLang(lang: string) {
+      this.userLang = lang
+      Cookies.set(UserLangKey, lang, { expires: '30d 3h 5m' });
+    },
+
     //  删除用户Token
     removeUserToken() {
       this.userToken = ''
+      this.userLang = ''
       console.log('删除了token');
       Cookies.remove(UserTokenKey);
+      Cookies.remove(UserLangKey);
     },
   },
 });

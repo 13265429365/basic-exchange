@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import { Loading, QSpinnerBars } from 'quasar';
-import { useInitStore } from 'src/stores/init';
+import { Loading, QSpinnerBars, Quasar } from 'quasar';
+import { InitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
 
 declare module '@vue/runtime-core' {
@@ -26,11 +26,11 @@ api.interceptors.request.use((config: any) => {
       spinner: QSpinnerBars,
       spinnerColor: 'secondary',
       spinnerSize: 50,
-      message: '加载中...',
+      message: 'loading...',
     });
   }
 
-  const $userStore = useInitStore();
+  const $userStore = InitStore();
   // 如果存在Token，那么请求带上Token
   if (
     $userStore.userToken !== '' &&
@@ -39,10 +39,10 @@ api.interceptors.request.use((config: any) => {
     config.headers['Authorization'] = 'Bearer ' + $userStore.userToken;
   }
 
-  // // 如果设置了语言，那么请求带上语言
-  // if (userStore.userLang !== '') {
-  //   config.headers['Accept-Language'] = userStore.userLang;
-  // }
+  // 如果设置了语言，那么请求带上语言
+  if ($userStore.userLang !== '') {
+    config.headers['Accept-Language'] = $userStore.userLang;
+  }
   return config;
 });
 
@@ -54,7 +54,7 @@ api.interceptors.response.use(
 
     if (res.hasOwnProperty('code')) {
       if (res.code === 0) {
-        return res.data;
+        return res;
       }
       NotifyNegative(res.msg);
       return Promise.reject(res.msg);

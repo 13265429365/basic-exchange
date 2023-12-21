@@ -42,9 +42,11 @@
 <script lang="ts">
 import Edit from './Edit/Edit.vue';
 
-import { defineComponent, reactive, toRefs, ref, onMounted } from 'vue';
+import { defineComponent, reactive, toRefs, ref, onMounted, nextTick } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { getUserInfo } from 'src/apis/user';
+import { UserStore } from 'src/stores/user';
+
 
 export default defineComponent({
   name: 'userIndex',
@@ -53,9 +55,11 @@ export default defineComponent({
   },
 
   setup() {
-    let edit = ref(null);
+    const $userStore = UserStore()
 
-    let state = reactive({
+    const edit = ref(null);
+
+    const state = reactive({
       //
       SettingList: [
         // arguments是请求的参数
@@ -139,19 +143,19 @@ export default defineComponent({
     })
 
     const UserInfo = () => {
-      getUserInfo().then((res: any) => {
+      getUserInfo().then(async (res: any) => {
         console.log('用户信息', res);
         state.SettingList.forEach((Setting: any) => {
-          for (const resItem in res) {
+          for (const resItem in res.data) {
             if (Setting.arguments == resItem) {
-              Setting.content = res[resItem]
+              Setting.content = res.data[resItem]
             }
           }
         });
-
-        localStorage.setItem('userInfo', JSON.stringify(res))
+        await $userStore.updateUserInfo(res.data)
       })
     }
+
 
     const show = (row: any) => {
       edit.value?.showEdit(row)

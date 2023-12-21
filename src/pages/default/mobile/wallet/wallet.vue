@@ -63,12 +63,12 @@
 import { reactive, toRefs, onMounted } from 'vue';
 import { walletList } from './ts/data';
 import { imageSrc } from 'src/utils/index';
-import { useInitStore } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 
 export default {
   name: 'walletIndex',
   setup(props: any, context: any) {
-    const $initStore = useInitStore()
+    const $initStore = InitStore()
 
     const state = reactive({
       list: walletList,

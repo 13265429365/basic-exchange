@@ -106,11 +106,11 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
-import { useInitStore, InitStoreState } from 'src/stores/init';
+import { InitStore, InitStoreState } from 'src/stores/init';
 export default {
   name: 'homeIndex',
   setup() {
-    const $initStore = useInitStore();
+    const $initStore = InitStore();
 
     const state = reactive({
 

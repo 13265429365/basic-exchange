@@ -142,7 +142,7 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userRegister, getUserInfo } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useInitStore } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 
 export default defineComponent({
@@ -152,7 +152,7 @@ export default defineComponent({
   },
   setup() {
     const $router = useRouter();
-    const $initStore = useInitStore();
+    const $initStore = InitStore();
 
     let state = reactive({
       // 注册配置
@@ -208,27 +208,16 @@ export default defineComponent({
         NotifyNegative('判断两次密码不一致');
         return false
       };
-      userRegister(state.params).then((res: any) => {
+      userRegister(state.params).then(async (res: any) => {
         NotifyPositive('注册成功')
 
         // 更改配置文件userToken
-        $initStore.updateUserToken(res.token);
-        userInfo()
+        await $initStore.updateUserToken(res.data.token);
+        $router.push({ name: 'HomeIndex' });
       }).catch(() => {
         refreshCaptchaFunc();
       });
     }
-
-    // 获取用户信息
-    const userInfo = () => {
-      getUserInfo()
-        .then((res: any) => {
-          // 将用户资料存到浏览器缓存
-          localStorage.setItem('userInfo', JSON.stringify(res))
-
-          $router.push({ name: 'HomeIndex' });
-        })
-    };
 
 
     return {

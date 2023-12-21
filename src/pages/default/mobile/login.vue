@@ -84,7 +84,7 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userLogin, getUserInfo } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useInitStore, InitStoreState } from 'src/stores/init';
+import { InitStore, InitStoreState } from 'src/stores/init';
 import { NotifyPositive } from 'src/utils/notify';
 
 export default defineComponent({
@@ -94,7 +94,7 @@ export default defineComponent({
   },
   setup() {
     const $router = useRouter();
-    const $initStore = useInitStore();
+    const $initStore = InitStore();
 
     const state = reactive({
       // 登录配置
@@ -132,8 +132,7 @@ export default defineComponent({
           NotifyPositive('欢迎回来')
 
           // 更改配置文件userToken
-          $initStore.updateUserToken(res.token);
-          await localStorage.setItem('userInfo', JSON.stringify(res.userInfo))
+          await $initStore.updateUserToken(res.token);
           $router.push({ name: 'HomeIndex' });
         })
         .catch(() => {

@@ -13,7 +13,7 @@
           <!-- 修改基础资料 -->
           <q-form v-if="form.type == 'info'">
             <div class="q-mb-xs">{{ form.title }}</div>
-            <q-input standout class="q-mb-md" v-model="form['arguments']" placeholder="Email">
+            <q-input standout class="q-mb-md" v-model="form['arguments']" :placeholder="arguments">
             </q-input>
             <div class="row justify-center q-mt-lg">
               <q-btn class="q-mr-md text-color-3" unelevated rounded no-caps @click="show = false"
@@ -34,7 +34,7 @@
             </q-input>
             <div class="q-mb-xs">Confirm {{ form.title }}</div>
             <q-input standout class="q-mb-md" :type="isPwd2 ? 'password' : 'text'" v-model="form.newPassword"
-              placeholder="oldPassword">
+              placeholder="newPassword">
               <template v-slot:append>
                 <q-icon @click="isPwd2 = !isPwd2" :name="isPwd2 ? 'o_visibility' : 'o_visibility_off'"></q-icon>
               </template>
@@ -80,7 +80,6 @@ export default defineComponent({
 
     // 打开弹窗
     const showEdit = (row: any) => {
-      console.log(row);
       state.form = { ...row }
 
       // 

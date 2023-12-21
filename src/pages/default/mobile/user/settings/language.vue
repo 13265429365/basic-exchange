@@ -28,14 +28,14 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { NotifyPositive } from 'src/utils/notify';
-import { useInitStore } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils/index';
 
 // 列表
 export default defineComponent({
   name: 'languageView',
   setup() {
-    const initStore = useInitStore();
+    const initStore = InitStore();
     const router = useRouter();
     let store = reactive({
       list: [] as any,

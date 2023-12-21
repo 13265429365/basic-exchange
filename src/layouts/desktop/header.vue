@@ -2,7 +2,8 @@
   <div>
     <q-toolbar class="q-pr-xl" style="height: 60px;padding-left: 64px">
       <!-- 左侧 logo -->
-      <q-toolbar-title shrink class="cursor-pointer text-black" style="margin-right: 88px;">
+      <q-toolbar-title @click="$router.push({ name: 'HomeIndex' })" shrink class="cursor-pointer text-black"
+        style="margin-right: 88px;">
         <q-avatar>
           <img width="42px" height="42px" :src="imageSrc(config.logo)">
         </q-avatar>
@@ -55,7 +56,7 @@
         <!-- 登录状态 -->
         <div v-if="isLogin" class="row items-center no-wrap">
           <!-- 右侧Deposit -->
-          <q-btn @click="$router.push('/wallet/deposit')" rounded flat dense no-wrap
+          <q-btn @click="$router.push({ name: 'Deposit' })" rounded flat dense no-wrap
             class="bg-primary text-white q-mx-md q-px-md" no-caps :label="$t('deposit')"></q-btn>
 
           <!-- 头像 -->
@@ -73,16 +74,17 @@
                     </q-avatar>
                     <div class="q-ml-sm">
                       <div class="row no-wrap">
-                        <span class="q-mr-sm">{{ userInfo.userName }}</span>
-                        <span class="text-grey-7">{{ userInfo.email }}</span>
+                        <span class="q-mr-sm">{{ $userStore.userInfo.userName }}</span>
+                        <span class="text-grey-7">{{ $userStore.userInfo.email }}</span>
                       </div>
                       <div class="row no-wrap q-mt-sm">
                         <q-btn size="xs" icon="verified" rounded flat dense no-wrap class="q-px-sm q-mr-sm" no-caps
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
-                          <div style="font-size: 11px;">Lv.{{ userInfo.Level }}</div>
+                          <div style="font-size: 11px;">Lv.{{ $userStore.userInfo.Level }}</div>
                         </q-btn>
                         <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps>
-                          <div style="font-size: 11px;">{{ userInfo.authStatus ? 'verified' : 'unverified' }}</div>
+                          <div style="font-size: 11px;">{{ $userStore.userInfo.authStatus ? 'verified' : 'unverified' }}
+                          </div>
                         </q-btn>
                       </div>
                     </div>
@@ -116,7 +118,7 @@
           </q-btn>
 
           <!-- 钱包 -->
-          <q-btn @click="$router.push('/wallet/index')" round dense flat color="grey-8"
+          <q-btn @click="$router.push({ name: 'Wallet' })" round dense flat color="grey-8"
             icon="o_account_balance_wallet"></q-btn>
 
           <!-- 消息 -->
@@ -152,17 +154,20 @@ import LoginPages from 'src/pages/default/desktop/login.vue';
 import RegisterPages from 'src/pages/default/desktop/register.vue';
 import switchLanguage from 'src/components/switchLanguage.vue';
 import { useRouter } from 'vue-router';
-import { reactive, toRefs, ref, onMounted } from 'vue';
+import { reactive, toRefs, ref, onMounted, watch } from 'vue';
 import { imageSrc } from 'src/utils';
 import { NotifyPositive } from 'src/utils/notify';
-import { useInitStore, InitStoreState } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
+import { UserStore } from 'src/stores/user';
+import { getUserInfo } from 'src/apis/user';
 
 export default {
   name: 'LayoutsHeader',
   components: { LoginPages, RegisterPages, switchLanguage },
   setup() {
     const $router = useRouter();
-    const $initStore = useInitStore()
+    const $initStore = InitStore()
+    const $userStore = UserStore()
 
     const LoginRef = ref(null) as any;
     const RegisterRef = ref(null) as any;
@@ -172,10 +177,9 @@ export default {
       config: $initStore.config,
 
       //  是否登录
-      isLogin: $initStore.userToken != '' && $initStore.userToken,
+      isLogin: $initStore.userToken,
 
-      // 用户信息
-      userInfo: {} as any,
+      userInfo: $initStore.userInfo,
 
       // 搜索框
       search: '',
@@ -190,12 +194,8 @@ export default {
       homeMenuList: [] as any,
     });
 
-    onMounted(() => {
-      let userInfo = localStorage.getItem('userInfo')
-
-      if (userInfo != null) {
-        state.userInfo = JSON.parse(userInfo)
-      }
+    watch(state, () => {
+      UserInfo()
     })
 
     // 左侧tabBar菜单
@@ -206,6 +206,17 @@ export default {
 
     // 右侧头像菜单
     state.homeMenuList = $initStore.homeMenu;
+
+
+    // 获取用户信息
+    const UserInfo = () => {
+      if (state.isLogin) {
+        getUserInfo().then(async (res: any) => {
+          console.log('用户信息', res);
+          await $userStore.updateUserInfo(res.data)
+        })
+      }
+    }
 
 
     // dialogOpenFunc 打开登录注册
@@ -224,10 +235,9 @@ export default {
     }
 
     // 退出登录
-    const Logout = () => {
+    const Logout = async () => {
       NotifyPositive('退出成功')
-      $initStore.removeUserToken()
-      localStorage.removeItem('userInfo')
+      await $initStore.removeUserToken()
       $router.push({ name: 'HomeIndex' })
       updateLoginStatus()
     }
@@ -235,7 +245,6 @@ export default {
     // 更新登录状态
     const updateLoginStatus = () => {
       console.log($initStore.userToken);
-
       state.isLogin = $initStore.userToken != '' && $initStore.userToken
     }
 
@@ -250,6 +259,7 @@ export default {
       switchDialogFunc,
       Logout,
       updateLoginStatus,
+      $userStore
     };
   },
 };

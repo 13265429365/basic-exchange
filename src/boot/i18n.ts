@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers';
 import { createI18n } from 'vue-i18n';
+import { InitStore } from 'src/stores/init';
 
 import messages from 'src/i18n';
 
@@ -22,7 +23,7 @@ export const setLanguageFunc = (i18n: any, locales: any, lang: string) => {
 
 export default boot(({ app }) => {
   const i18n = createI18n({
-    locale: 'zh-CN',
+    locale: InitStore().userLang ? InitStore().userLang : 'ch-CN',
     globalInjection: true,
     messages,
     legacy: false,

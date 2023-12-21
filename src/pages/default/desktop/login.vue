@@ -65,13 +65,13 @@ import { CaptchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { NotifyPositive } from 'src/utils/notify';
-import { useInitStore } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 
 export default defineComponent({
   name: 'userLogin',
   setup(props: any, context: any) {
     const $router = useRouter();
-    const $initStore = useInitStore();
+    const $initStore = InitStore();
 
     const state = reactive({
       // 悬浮按钮
@@ -94,10 +94,6 @@ export default defineComponent({
       },
     });
 
-    onMounted(() => {
-      refreshCaptchaFunc();
-    });
-
     // 获取验证码
     const refreshCaptchaFunc = () => {
       CaptchaAPI().then((res: any) => {
@@ -114,8 +110,7 @@ export default defineComponent({
           NotifyPositive('欢迎回来')
 
           // 更改配置文件userToken
-          $initStore.updateUserToken(res.token);
-          await localStorage.setItem('userInfo', JSON.stringify(res.userInfo))
+          $initStore.updateUserToken(res.data.token);
 
           if ($router.currentRoute.value.path == '/') {
             context.emit('updateLoginStatus')
@@ -131,6 +126,7 @@ export default defineComponent({
 
     // 打开登录弹窗
     const open = (status: boolean) => {
+      refreshCaptchaFunc();
       state.LoginShow = status
     };
 

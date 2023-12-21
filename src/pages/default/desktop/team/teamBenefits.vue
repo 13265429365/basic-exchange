@@ -75,11 +75,15 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { imageSrc, formatDate } from 'src/utils/index';
 import { getTeamDetails } from 'src/apis/user';
+import { UserStore } from 'src/stores/user';
+
 
 export default defineComponent({
   name: 'benefitIndex',
   setup() {
     const $router = useRouter();
+    const $userStore = UserStore();
+
     let state = reactive({
       // 用户资料
       userInfo: {} as any,
@@ -96,41 +100,37 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      const info = localStorage.getItem('userInfo')
-      if (info != null) {
-        state.userInfo = JSON.parse(info)
-        TeamDetails({ id: state.userInfo.id })
-      }
+      TeamDetails({ id: $userStore.userInfo.id })
     })
 
     // 获取用户团队详情
     const TeamDetails = (params: any) => {
       getTeamDetails(params).then((res: any) => {
         console.log(res);
-        state.teamEarnings = res.teamEarnings
+        state.teamEarnings = res.data.teamEarnings
         // 团队数据
-        for (const TeamBenefit in res) {
+        for (const TeamBenefit in res.data) {
           if (TeamBenefit != 'teamEarningsIndex') {
             state.TeamBenefit.push({
               name: TeamBenefit,
-              number: res[TeamBenefit],
+              number: res.data[TeamBenefit],
             })
           }
         }
 
 
         // 收益详情
-        if (res.teamEarningsIndex.length <= 0) {
+        if (res.data.teamEarningsIndex.length <= 0) {
           return false
         }
 
-        for (const BenefitDetails in res.teamEarningsIndex[0]) {
+        for (const BenefitDetails in res.data.teamEarningsIndex[0]) {
           state.columns.push({
             name: BenefitDetails,
           })
         }
 
-        res.teamEarningsIndex.forEach((element: any) => {
+        res.data.teamEarningsIndex.forEach((element: any) => {
           state.rows.push(element)
         });
       })

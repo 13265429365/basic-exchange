@@ -123,13 +123,13 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { useInitStore } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 export default defineComponent({
   name: 'registerDialog',
   setup(props: any, context: any) {
     const $router = useRouter();
-    const $initStore = useInitStore();
+    const $initStore = InitStore();
 
     let state = reactive({
       // 注册配置
@@ -167,10 +167,6 @@ export default defineComponent({
     // 获取国家列表
     state.options = $initStore.countryList
 
-    onMounted(() => {
-      refreshCaptchaFunc();
-    });
-
     // 获取验证码
     const refreshCaptchaFunc = () => {
       CaptchaAPI().then((res: any) => {
@@ -180,6 +176,7 @@ export default defineComponent({
 
     // 注册弹窗
     const open = (status: boolean) => {
+      refreshCaptchaFunc();
       state.registerShow = status;
     };
 
@@ -194,9 +191,8 @@ export default defineComponent({
         NotifyPositive('注册成功')
 
         // 更改配置文件userToken
-        $initStore.updateUserToken(res.token);
+        await $initStore.updateUserToken(res.data.token);
         state.registerShow = false;
-        await localStorage.setItem('userInfo', JSON.stringify(res.userInfo))
         if ($router.currentRoute.value.path == '/') {
           context.emit('updateLoginStatus')
         } else {

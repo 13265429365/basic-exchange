@@ -9,8 +9,8 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 // 本地API接口
-const devBaseURL = 'http://192.168.5.8:3010/';
-// const devBaseURL = 'http://192.168.5.25:3010/';
+// const devBaseURL = 'http://192.168.5.8:3010/';
+const devBaseURL = 'http://192.168.5.25:3010/';
 // const devBaseURL = 'http://127.0.0.1:3010/api/v1';
 
 

@@ -5,11 +5,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useMeta } from 'quasar';
-import { useInitStore } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 export default defineComponent({
   name: 'App',
   created: () => {
-    const $initStore = useInitStore();
+    const $initStore = InitStore();
 
     //  设置客户端Meta信息
     const metaData = {

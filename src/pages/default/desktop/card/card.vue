@@ -105,7 +105,7 @@ export default defineComponent({
 
     const getCard = () => {
       userGetCard().then((res: any) => {
-        console.log(res);
+        console.log(res.data);
 
       })
     }

@@ -1,10 +1,9 @@
 import { route } from 'quasar/wrappers';
-import { UserTokenKey, InitStoreState, useInitStore } from 'src/stores/init';
-import { Cookies, Platform } from 'quasar';
+import { UserTokenKey, InitStoreState, InitStore, UserLangKey } from 'src/stores/init';
+import { Cookies, Platform, Quasar } from 'quasar';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
-
-import { userInit, footerList } from 'src/apis/index';
+import { userInit } from 'src/apis/index';
 
 import {
   createMemoryHistory,
@@ -12,6 +11,7 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router';
+
 
 // 路由接口
 export interface TemplateRouteInterface {
@@ -38,7 +38,7 @@ export const ch = {} as any
 
 export default route(async function ({ store, ssrContext }) {
   // 获取init方法
-  const $initStore = useInitStore();
+  const $initStore = InitStore();
   // 
   const createHistory = process.env.SERVER
     ? createMemoryHistory
@@ -61,24 +61,21 @@ export default route(async function ({ store, ssrContext }) {
     : Platform;
   store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
   store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
-
-
+  store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : 'zh-CN';
 
   // 请求接口获取菜单
   const params = {
-    doadmin: '192.168.229.1',
-    lang: 'zh-CN',
+    domain: '192.168.229.1',
+    lang: store.state.value.init.userLang,
   }
 
-
   // userInit   //获取初始化数据
-  // footerList //获取footer数据
   userInit(params).then((res: any) => {
     // console.log('初始化数据', res)
 
-    $initStore.updateInit(res)
+    $initStore.updateInit(res.data)
 
-    res.translate.forEach((element: any) => {
+    res.data.translate.forEach((element: any) => {
       if (element.label != '') {
         enUS[element.label] = element.label
         ch[element.label] = element.value
@@ -91,7 +88,8 @@ export default route(async function ({ store, ssrContext }) {
   //  动态加载路由
   dynamicRouterFunc(
     Router,
-    templateRoutes.get('default'),
+    templateRoutes.get(store.state.value.init.config.template),
+    // templateRoutes.get('default'),
     <boolean>$platform.is.mobile
   );
 

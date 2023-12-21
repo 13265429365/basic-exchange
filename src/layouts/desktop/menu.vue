@@ -45,13 +45,13 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
-import { InitStoreState, useInitStore } from 'src/stores/init';
+import { InitStoreState, InitStore } from 'src/stores/init';
 
 export default defineComponent({
   name: 'LayoutsMenu',
   setup() {
     const $router = useRouter();
-    const $initStore = useInitStore()
+    const $initStore = InitStore()
 
     let state = reactive({
       // 项目logo

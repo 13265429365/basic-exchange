@@ -101,11 +101,11 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
-import { useInitStore, InitStoreState } from 'src/stores/init';
+import { InitStore, InitStoreState } from 'src/stores/init';
 export default defineComponent({
   name: 'userIndex',
   setup() {
-    const $initStore = useInitStore()
+    const $initStore = InitStore()
 
     let state = reactive({
       // 用户菜单
