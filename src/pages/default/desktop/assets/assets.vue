@@ -2,7 +2,7 @@
   <div class="calc">
     <!-- 通用header(app.scss) -->
     <div class="pageHeader">
-      Assets
+      {{ $t('myAssets') }}
     </div>
     <div style="padding: 48px 100px;">
       <!-- 钱包余额 -->
@@ -12,38 +12,50 @@
             style="height: 208px;width: 287px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
             <div>
               <div class="row items-center" style="height: 49px;">
-                <div class="text-white text-h5">Total Assets</div>
-                <q-img @click="moneyShow = !moneyShow" src="page_bg/eyes.png" class="q-ml-xs cursor-pointer" width="16px"
-                  height="16px" />
+                <div class="text-white text-h5">{{ $t('totalAssets') }}</div>
+                <q-icon color="white" @click="moneyShow = !moneyShow"
+                  :name="moneyShow ? 'o_visibility' : 'o_visibility_off'" class="q-ml-xs cursor-pointer"
+                  size="18px"></q-icon>
               </div>
+
               <!-- 点击显示、隐藏金额 -->
-              <div v-if="moneyShow" class="text-white">
-                <div class="text-h5">$1200.00</div>
-                <div class="text-h6">≈￥69865,21 </div>
+              <div style="height: 64px;">
+                <div v-if="moneyShow" class="text-white">
+                  <div class="text-h5">${{ form.moneySum }}</div>
+                  <div class="text-h6">≈￥{{ form.moneyRateSum }} </div>
+                </div>
+                <div v-else class="text-white text-weight-bold " style="font-size: 22px;height: 54px;">**** </div>
               </div>
-              <div v-else class="text-white text-weight-bold " style="font-size: 22px;height: 54px;">**** </div>
+
               <div class="row justify-between q-mt-md">
-                <q-btn class="bg-white text-primary" rounded style="width: 110px;height: 34px;" label="Deposit"></q-btn>
-                <q-btn class="bg-white text-primary" rounded style="width: 110px;height: 34px;" label="Widrow"></q-btn>
+                <q-btn class="bg-white text-primary" rounded style="width: 110px;height: 34px;"
+                  :label="$t('deposit')"></q-btn>
+                <q-btn class="bg-white text-primary" rounded style="width: 110px;height: 34px;"
+                  :label="$t('withdraw')"></q-btn>
               </div>
             </div>
           </div>
-          <div v-for="(item, i) in assetList" :key="i" class="q-pa-lg radius-8 q-mr-lg border"
+          <div v-for="(Assets, AssetsIndex) in form.userAssetsList" :key="AssetsIndex"
+            class="q-pa-lg radius-8 q-mr-lg border"
             style="height: 208px;width: 287px;background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%);">
             <div>
               <div class="row justify-between" style="height: 49px;">
-                <div class=" text-h5">{{ item.name }}</div>
-                <q-img :src="`/images/pc/assets/${item.icon}.png`" class="q-ml-xs" width="50px" height="50px" />
+                <div class=" text-h5">{{ Assets.name }}</div>
+                <q-img :src="imageSrc(Assets.icon)" class="q-ml-xs" width="50px" height="50px" />
               </div>
+
               <!-- 点击显示、隐藏金额 -->
-              <div v-if="moneyShow">
-                <div class="text-h5">{{ item.money }}</div>
-                <div class="text-h6 text-color-9">{{ item.approx }}</div>
+              <div style="height: 64px;">
+                <div v-if="moneyShow">
+                  <div class="text-h5">${{ Assets.money }}</div>
+                  <div class="text-grey-6">≈￥{{ Assets.moneyRate }}</div>
+                </div>
+                <div v-else class="text-weight-bold text-color-9" style="font-size: 22px;height: 54px;">**** </div>
               </div>
-              <div v-else class="text-weight-bold text-color-9" style="font-size: 22px;height: 54px;">**** </div>
+
               <div class="row justify-between q-mt-md">
-                <q-btn :to="item.route" class="text-primary" rounded no-caps
-                  style="width: 110px;height: 34px;background: rgba(1,172,102,0.1);" label="More"></q-btn>
+                <q-btn :to="Assets.route" class="text-primary" rounded no-caps
+                  style="width: 110px;height: 34px;background: rgba(1,172,102,0.1);" :label="$t('more')"></q-btn>
               </div>
             </div>
           </div>
@@ -54,7 +66,7 @@
       <div class="radius-8 q-mt-lg q-pt-lg q-px-md border">
         <div class="row no-wrap justify-between">
           <div class="text-h5 text-weight-bold q-px-xl">
-            Asset Allocation
+            {{ $t('assetsBlock') }}
           </div>
           <div class="row justify-end q-mb-md">
             <div class="bg-grey-1 q-pa-xs row" style="border-radius: 4px;">
@@ -73,20 +85,26 @@
       </div>
 
       <!-- 表格 horizontal -->
-      <q-table class="q-mt-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="i" hide-header>
+      <q-table class="q-mt-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
         <template v-slot:top>
           <div class="row justify-between full-width">
+            <!-- 左侧tabs -->
             <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
               <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Transactions"
                 label="Transactions" />
               <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Bill Detail"
                 label="Bill Detail" />
             </q-tabs>
+
+            <!-- 右侧 -->
             <div class="q-pr-md">
+              <!-- 选择 -->
               <q-btn class="bg-grey-1 text-color-6" no-caps rounded style="border: 1px solid #DDDDDD">
                 <div class="q-mr-xs">全部</div>
                 <q-icon name="expand_more"></q-icon>
               </q-btn>
+
+              <!-- 日期选择 -->
               <q-btn class="bg-grey-1 text-color-6 q-ml-md" no-caps rounded
                 style="border: 1px solid #DDDDDD;width: auto;">
                 <div class="row items-center">
@@ -98,31 +116,36 @@
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                   <q-date v-model="date" range>
                     <div class="row items-center justify-end q-gutter-sm">
-                      <q-btn label="Cancel" color="primary" flat v-close-popup />
-                      <q-btn label="OK" color="primary" flat v-close-popup />
+                      <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
+                      <q-btn @click="getBill" :label="$t('confirm')" color="primary" flat v-close-popup />
                     </div>
                   </q-date>
                 </q-popup-proxy>
               </q-btn>
             </div>
+
           </div>
         </template>
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td>
-              {{ props.row.name }}
+              {{ props.row.createdAt }}
             </q-td>
             <q-td>
-              {{ props.row.calories }}
+              <div
+                :class="[{ 'text-primary': props.row.name.indexOf('充值') > -1 }, { 'text-red': props.row.name.indexOf('提现') > -1 }]">
+                {{ props.row.name }}
+              </div>
             </q-td>
-            <q-td>
-              {{ props.row.fat }}
+            <q-td
+              :class="[{ 'text-primary': props.row.name.indexOf('充值') > -1 }, { 'text-red': props.row.name.indexOf('提现') > -1 }]">
+              {{ props.row.name.indexOf('充值') > -1 ? '+$' + props.row.money : '-$' + props.row.money }}
             </q-td>
             <q-td class="row justify-between items-center">
-              <div :class="[{ 'text-primary': props.row.carbs == 'examine' }, { 'text-red': props.row.carbs == 'fail' }]">
-                {{ props.row.carbs }}
+              <div>
+                {{ '$' + props.row.balance }}
               </div>
-              <div v-if="props.row.carbs == 'fail'">
+              <div>
                 <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
                   :name="props.expand ? 'expand_less' : 'expand_more'" />
               </div>
@@ -138,11 +161,11 @@
         <template v-slot:bottom>
           <div class="q-pa-md row items-center no-wrap">
             <div class="text-color-9 q-mr-md">
-              共{{ pagination.total }}条,
-              {{ pagination.paging }}条/页
+              共{{ total }}条,
+              {{ pagination.rowsPerPage }}条/页
             </div>
-            <q-pagination v-model="pagination.page" :max="pageTotal" :max-pageTotal="5" ellipsess :direction-links="true"
-              @input="changePagination($event)" active-color="#fff" class="pagination">
+            <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
+              @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
             </q-pagination>
             <div class="row nowrap">
               <div class="to">跳至</div>
@@ -159,14 +182,25 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { UserStore } from 'src/stores/user';
 import * as echarts from 'echarts'
 import { lineOption, lineThirty } from './ts/data';
+import { userGetAssets, userGetBill } from 'src/apis/wallets';
+import { imageSrc } from 'src/utils/index';
+import { date } from 'quasar'
 
 export default defineComponent({
-  name: 'assetsView',
+  name: 'assetsIndex',
   setup() {
     const router = useRouter();
+    const $userStore = UserStore()
     let state = reactive({
+      // 资产数据
+      form: {
+        moneySum: '',
+        moneyRateSum: '',
+      } as any,
+
       //选择开始结束日期
       date: {
         from: '2023-10-11',
@@ -180,16 +214,15 @@ export default defineComponent({
       moneyShow: true,
 
       // 分页
-      pageTotal: 1 as any, // 数据总页数
-      toPage: 1 as any, // 跳转至n页
+      pageTotal: 1, // 数据总页数
+      toPage: 1, // 跳转至n页
+      total: 1,//  共n条数据
       pagination: {
-        paging: 10 as any, //  n条/一页
-        total: 1 as any,//  共n条数据
-        page: 1 as any, //  v-model
+        rowsPerPage: 5, //  n条/一页
+        page: 1, //  当前页数
+        descending: true,
+        sortBy: 'created_at',
       },
-
-      // asset资产列表
-      assetList: [] as any,
 
       // 折线图
       lineDate: [
@@ -201,83 +234,88 @@ export default defineComponent({
       lineOption,
 
       // table数据
-      columns: [] as any,
+      columns: [
+        {
+          name: 'createdAt',
+        },
+        { name: 'name' },
+        { name: 'money' },
+        { name: 'balance' },
+      ] as any,
       rows: [] as any,
     });
 
-    state.assetList = [
-      {
-        name: 'VTH',
-        icon: 'btc',
-        money: '$8,692.000',
-        approx: '≈￥20,21',
-        route: '/vth',
-      },
-      {
-        name: 'My Wallet',
-        icon: 'wallet',
-        money: '$8,692.000',
-        approx: '≈￥20,21',
-        route: '/wallet',
-      },
-      {
-        name: 'My Wallet',
-        icon: 'wallet',
-        money: '$8,692.000',
-        approx: '≈￥20,21',
-        route: '',
-      },
-    ]
 
-    // 
-    state.columns = [
-      {
-        name: 'name',
-        required: true,
-        align: 'left',
-        sortable: true
-      },
-      { name: 'calories', align: 'center', field: 'calories', sortable: true },
-      { name: 'fat', field: 'fat', sortable: true },
-      { name: 'carbs', field: 'carbs' },
-    ]
+    onMounted(async () => {
+      // 预设查询时间
+      state.date.from = date.formatDate(Date.now(), 'YYYY-MM-DD')
+      state.date.to = date.formatDate(Date.now(), 'YYYY-MM-DD')
 
-    state.rows = [
-      {
-        name: '2023-11-08',
-        calories: 'Recharge-VTH',
-        fat: '+$26.623',
-        carbs: 'fail',
-        i: 0,
-      },
-      {
-        name: '2023-11-08',
-        calories: 'Recharge-VTH',
-        fat: '+$26.623',
-        carbs: 'fail',
-        i: 1,
-      },
-    ]
-
-    onMounted(() => {
       // 生成7日折线图
       const lineChart = echarts.init(document.getElementById('lineChart'))
       lineChart.setOption(state.lineOption)
+
+      // 执行api
+      await getAssets()
+      getBill()
     })
+
+
+    // 获取用户资产列表
+    const getAssets = () => {
+      userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
+        console.log('资产列表', res)
+        state.form = res.data
+      })
+    }
+
+
+    // 获取用户账单列表
+    const getBill = () => {
+      const params = {
+        createdAt: {
+          from: date.formatDate(state.date.from, 'x'),
+          to: date.formatDate(state.date.to, 'x'),
+        },
+        types: [],
+        pagination: {
+          rowsPerPage: Number(state.pagination.rowsPerPage), //  n条/一页
+          page: Number(state.pagination.page), //  当前页数
+          descending: state.pagination.descending,
+          sortBy: state.pagination.sortBy,
+        },
+      }
+      userGetBill(params).then((res: any) => {
+        state.rows = []
+        console.log('账单列表', res)
+        state.total = res.data.count
+        state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
+        res.data.items.forEach((element: any) => {
+          element.createdAt = date.formatDate(element.createdAt, 'YYYY-MM-DD')
+          state.rows.push(element)
+        });
+      })
+    }
+
 
     // 监听加减页
     const changePagination = (val: number) => {
       console.log(`changePagination: ${val}`)
       state.pagination.page = val
+      getBill()
     }
 
+
     // input输入页数回车
-    const refreshTableData = (val: number) => {
-      console.log(`changePagination: ${val}`)
-      if (state.toPage <= state.pagination.page) {
-        state.pagination.page = state.toPage
+    const refreshTableData = () => {
+      console.log(state.pagination.page);
+
+      if (state.toPage <= (state.total / state.rows.length)) {
+        state.pagination.page = Number(state.toPage)
+        getBill()
       }
     }
+
 
     // 切换折线图
     const switchDate = (val: string) => {
@@ -294,15 +332,12 @@ export default defineComponent({
     }
 
     return {
+      imageSrc,
       ...toRefs(state),
       changePagination,
       refreshTableData,
       switchDate,
-      to(url: string) {
-        if (url) {
-          router.push(url)
-        }
-      }
+      getBill,
     }
   }
 });

@@ -41,7 +41,7 @@
         <div class="q-mb-xs text-color-6">{{ $t('idPhoto1').replace('正面', '').replace('1', '') }}</div>
         <div class="row justify-between">
           <div class="q-mb-xl" style="width: 48.5%;">
-            <uploader @uploaded="uploaded" :value="imgUrl" :listStyle="{
+            <uploader :respValue="form.photo1" @uploaded="uploaded" :value="imgUrl" :listStyle="{
               height: '155px',
             }">
               <template v-slot:noneAdd>
@@ -55,7 +55,7 @@
 
           <!--  -->
           <div class="q-mb-xl" style="width: 48.5%;">
-            <uploader @uploaded="uploaded2" :value="imgUrl" :listStyle="{
+            <uploader :respValue="form.photo2" @uploaded="uploaded2" :value="imgUrl" :listStyle="{
               height: '155px',
             }">
               <template v-slot:noneAdd>
@@ -82,9 +82,10 @@
 <script lang="ts">
 import uploader from 'src/components/uploader.vue';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { NotifyNegative } from 'src/utils/notify';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { userAuth, getUserAuth } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   components: {
@@ -92,6 +93,7 @@ export default defineComponent({
   },
   name: 'realAuthIndex',
   setup() {
+    const { t } = useI18n()
     const $userStore = UserStore()
     const state = reactive({
       //
@@ -106,7 +108,6 @@ export default defineComponent({
         photo2: '',
       } as any,
     });
-    console.log($userStore.userInfo.id);
 
     onMounted(() => {
       getAuth()
@@ -133,6 +134,7 @@ export default defineComponent({
         photo2: state.form.photo2,
       }
       userAuth(params).then((res: any) => {
+        NotifyPositive(t('submittedSuccess'))
         getAuth()
         console.log(res);
       })

@@ -1,29 +1,30 @@
 <template>
-  <div class="column page_bg" style="padding: 48px 244px;">
+  <div class="column" style="padding: 48px 244px;background: #F8F9FC;">
     <div class="col column justify-between bg-white radius-8">
 
       <!-- 大标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img :src="imageSrc('')" width="40PX" height="40px"></q-img>
-        <div class="q-ml-md">Withdrawal</div>
+        <div class="q-ml-md">{{ $t('withdraw') }}</div>
       </div>
 
       <!--  -->
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-sm q-px-md" style="border-radius: 2px;">
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-sm q-px-md"
+          style="border-radius: 2px;background: #F8F9FC;">
           Withdrawal account
         </div>
 
         <!-- 卡类型选择 -->
         <div class="row q-mt-md">
-          <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex"
-            style="width: 214px;height: 50px;border-radius: 9px;"
-            :class="`q-pa-sm row page_bg q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
-            @click="typeDataIndex = typeIndex">
-            <q-img class="self-center q-mr-sm" :src="imageSrc('')" width="32px" height="32px" />
-            <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
-            <q-img v-if="typeIndex == typeDataIndex" class="absolute" :src="imageSrc('')" width="30PX" height="30px"
+          <div v-for="(typeI, typeIndex) in cardList" :key="typeIndex"
+            style="width: 214px;height: 50px;border-radius: 9px;background: #F8F9FC;"
+            :class="`q-pa-sm row q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == ActiveCardIndex ? 'select' : ''}`"
+            @click="selectType(typeIndex)">
+            <q-img class="self-center q-mr-sm" :src="imageSrc(typeI.icon)" width="32px" height="32px" />
+            <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.name }}</div>
+            <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/icons/select.png" width="30PX" height="30px"
               style="bottom: 0;right: 0;"></q-img>
           </div>
         </div>
@@ -36,16 +37,17 @@
             </div>
             <div class="text-weight-medium size16" style="color: #F45E0C;">￥{{ Total }}</div>
           </div>
+
           <div class="row no-wrap items-center q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mr-xs">充值金额：</div>
-            <q-input suffix="元" type="number" standout v-model="text" />
-            <div @click="text = Total" class="text-primary q-ml-sm cursor-pointer">全部提现</div>
+            <div class="text-color-3 text-weight-medium q-mr-xs">提现金额：</div>
+            <q-input suffix="元" type="number" standout v-model="form.money" />
+            <div @click="form.money = Total" class="text-primary q-ml-sm cursor-pointer">全部提现</div>
           </div>
 
         </div>
         <!-- 添加按钮 -->
-        <q-btn unelevated rounded color="primary" label="Submit" class="q-my-md" no-caps
-          style="height: 40px;width: 207px;" @click="alertPass = true" />
+        <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps
+          style="height: 40px;width: 207px;" @click="Withdraw" />
       </div>
 
 
@@ -80,42 +82,69 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, onMounted } from 'vue';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
+import { userGetCard, userWithdraw } from 'src/apis/wallets';
+import { UserStore } from 'src/stores/user';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { number } from 'echarts';
 
 export default {
   name: 'withdrawalIndex',
   setup() {
+    const { t } = useI18n()
+    const $router = useRouter()
+    const $userStore = UserStore()
+
     const state = reactive({
       alertPass: false,
       text: '' as any,
       password: '',
       money: '',
-      Total: 2693.23,
-      typeDataIndex: 0,
-      typeArr: [{
-        image: '/images/delete/USDT.png',
-        value: '农业银行(9632)',
-        type: 2
-      }, {
-        image: '/images/delete/BTC.png',
-        value: '建设银行(9232)',
-        type: 1
-      }, {
-        image: '/images/delete/USDT.png',
-        value: '农业银行(9631)',
-        type: 2
-      }, {
-        image: '/images/delete/BTC.png',
-        value: '建设银行(7232)',
-        type: 1
-      }],
+      Total: $userStore.userInfo.money,
+
+      form: {} as any,
+
+      // 选中卡片类型
+      ActiveCardIndex: 0,
+
+      // 卡片类型
+      cardList: [] as any,
     });
-    // 全部提现
-    // const allWithdrawals= () => {
-    //   state.
-    // }
+
+    onMounted(async () => {
+      getCard()
+    })
+
+    // 获取卡片列表
+    const getCard = () => {
+      userGetCard().then((res: any) => {
+        console.log(res.data);
+        state.cardList = res.data
+      })
+    }
+
+    // 提现
+    const Withdraw = () => {
+      const params = {
+        accountId: state.cardList[state.ActiveCardIndex].id,
+        money: Number(state.form.money),
+        securityKey: '',
+      }
+      userWithdraw(params).then((res: any) => {
+        NotifyPositive(t('submittedSuccess'))
+        console.log('提现成功', res.data);
+        $router.push({ name: 'AccountCard' })
+      })
+    }
+
+    // 切换卡片类型
+    const selectType = (typeIndex: any) => {
+      state.ActiveCardIndex = typeIndex
+    }
+
     const yesFun = (router: any) => {
       state.alertPass = false;
       // 密码正确
@@ -138,6 +167,8 @@ export default {
       imageSrc,
       ...toRefs(state),
       yesFun,
+      selectType,
+      Withdraw,
     }
   }
 };

@@ -34,8 +34,3 @@ export const getDownload = () => {
 export const getHelpers = () => {
   return api.post('api/v1/helpers');
 };
-
-// 获取前台翻译
-export const getTranslate = () => {
-  return api.post('api/v1/translate');
-};

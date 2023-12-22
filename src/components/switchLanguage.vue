@@ -38,10 +38,10 @@ export default defineComponent({
     })
 
     const switchLang = async (language: any) => {
-      state.locale = language.Alias
+      // state.locale = language.Alias
       await $initStore.updateUserLang(language.Alias)
 
-      // location.reload()
+      location.reload()
     }
 
     state.languageList = $initStore.languageList

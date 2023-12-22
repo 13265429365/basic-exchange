@@ -23,7 +23,15 @@
               <q-avatar v-if="item.avatar" style="width: 34px;height: 34px;">
                 <img src="https://cdn.quasar.dev/img/avatar.png">
               </q-avatar>
-              <div v-else class="text-weight-medium">{{ item.content }}</div>
+              <div v-if="item.title == 'Gender'" class="text-weight-medium">
+                {{ item.text }}
+              </div>
+              <div v-if="item.title == 'Birthday'" class="text-weight-medium">
+                {{ date.formatDate(item.content, 'YYYY-MM-DD') }}
+              </div>
+              <div v-if="item.title != 'Gender' && item.title != 'Birthday'" class="text-weight-medium">{{
+                item.content }}
+              </div>
 
             </div>
             <div class="row items-end">
@@ -46,6 +54,7 @@ import { defineComponent, reactive, toRefs, ref, onMounted, nextTick } from 'vue
 import { imageSrc } from 'src/utils/index';
 import { getUserInfo } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
+import { date } from 'quasar';
 
 
 export default defineComponent({
@@ -68,25 +77,25 @@ export default defineComponent({
         {
           title: 'Nickname',
           decs: 'Set a customized nickname for your profile.',
-          content: 'Paul K. Jensen',
+          content: '',
           btn: 'Edit',
           arguments: 'nickname',
           type: 'info',
           headTitle: 'Edit Nickname',
         },
-        {
-          title: 'Avatar',
-          decs: 'Select an avatar to personalize your account.',
-          avatar: 'avatar(2)',
-          btn: 'Change',
-          arguments: 'avatar',
-          type: 'info',
-          headTitle: 'Edit Avatar',
-        },
+        // {
+        //   title: 'Avatar',
+        //   decs: 'Select an avatar to personalize your account.',
+        //   avatar: '1',
+        //   btn: 'Change',
+        //   arguments: 'avatar',
+        //   type: 'info',
+        //   headTitle: 'Edit Avatar',
+        // },
         {
           title: 'Gender',
           decs: 'Select your gender.',
-          content: 'Male',
+          content: '',
           btn: 'Edit',
           arguments: 'sex',
           type: 'info',
@@ -95,7 +104,7 @@ export default defineComponent({
         {
           title: 'Birthday',
           decs: 'Select your birthday.',
-          content: '2023-10-12',
+          content: '',
           btn: 'Edit',
           arguments: 'birthday',
           type: 'info',
@@ -104,7 +113,7 @@ export default defineComponent({
         {
           title: 'Phone Number',
           decs: 'Set a phonenumber for your profile.',
-          content: '+18652368542',
+          content: '',
           btn: 'Edit',
           arguments: 'telephone',
           type: 'info',
@@ -113,7 +122,7 @@ export default defineComponent({
         {
           title: 'E-mail',
           decs: 'Set a E-mail for your profile.',
-          content: 'Jimmy.smith1996@gmail.com',
+          content: '',
           btn: 'Edit',
           arguments: 'email',
           type: 'info',
@@ -135,7 +144,7 @@ export default defineComponent({
           type: 'secure',
           headTitle: 'Edit Secret Key',
         },
-      ],
+      ] as any,
     });
 
     onMounted(() => {
@@ -143,7 +152,7 @@ export default defineComponent({
     })
 
     const UserInfo = () => {
-      getUserInfo().then(async (res: any) => {
+      getUserInfo().then((res: any) => {
         console.log('用户信息', res);
         state.SettingList.forEach((Setting: any) => {
           for (const resItem in res.data) {
@@ -152,7 +161,21 @@ export default defineComponent({
             }
           }
         });
-        await $userStore.updateUserInfo(res.data)
+        state.SettingList.forEach((Setting: any) => {
+          if (Setting.title == 'Gender') {
+            if (Setting.content == 0) {
+              Setting.text = '未填写'
+            }
+            if (Setting.content == 1) {
+              Setting.text = 'male'
+            }
+            if (Setting.content == 2) {
+              Setting.text = 'female'
+            }
+          }
+        })
+        $userStore.updateUserInfo(res.data)
+        localStorage.setItem('userInfo', JSON.stringify(res.data))
       })
     }
 
@@ -163,6 +186,7 @@ export default defineComponent({
 
     return {
       imageSrc,
+      date,
       ...toRefs(state),
       edit,
       // 打开edit对话框

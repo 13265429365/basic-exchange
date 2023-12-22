@@ -154,7 +154,7 @@ import LoginPages from 'src/pages/default/desktop/login.vue';
 import RegisterPages from 'src/pages/default/desktop/register.vue';
 import switchLanguage from 'src/components/switchLanguage.vue';
 import { useRouter } from 'vue-router';
-import { reactive, toRefs, ref, onMounted, watch } from 'vue';
+import { reactive, toRefs, ref, watch } from 'vue';
 import { imageSrc } from 'src/utils';
 import { NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
@@ -211,9 +211,10 @@ export default {
     // 获取用户信息
     const UserInfo = () => {
       if (state.isLogin) {
-        getUserInfo().then(async (res: any) => {
+        getUserInfo().then((res: any) => {
           console.log('用户信息', res);
-          await $userStore.updateUserInfo(res.data)
+          $userStore.updateUserInfo(res.data)
+          localStorage.setItem('userInfo', JSON.stringify(res.data))
         })
       }
     }
@@ -238,6 +239,7 @@ export default {
     const Logout = async () => {
       NotifyPositive('退出成功')
       await $initStore.removeUserToken()
+      await localStorage.removeItem('userInfo')
       $router.push({ name: 'HomeIndex' })
       updateLoginStatus()
     }

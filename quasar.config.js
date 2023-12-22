@@ -72,7 +72,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ['Meta', 'Loading', 'Notify'],
+      plugins: ['Meta', 'Loading', 'Notify', 'Dialog', 'LocalStorage'],
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build

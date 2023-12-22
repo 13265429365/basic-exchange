@@ -2,7 +2,7 @@
   <div class="calc">
     <!-- 通用header(app.scss) -->
     <div class="pageHeader">
-      My Wallet
+      {{ $t('myWallet') }}
     </div>
 
     <div class="maxWidth1200">
@@ -13,23 +13,24 @@
             <q-img class="q-mr-lg" :src="imageSrc('/assets/icon/menu/deposit.png')" width="66px" height="66px"></q-img>
             <div class="q-pt-sm">
               <div class="row items-center">
-                <div class="text-white text-h6 q-mr-xs">Wallet Balance</div>
+                <div class="text-white text-h6 q-mr-xs">{{ $t('balance') }}</div>
                 <q-img @click="moneyShow = !moneyShow" class="cursor-pointer"
                   :src="`/images/pc/wallet/${moneyShow ? 'show' : 'noShow'}.png`" width="14px" height="14px"></q-img>
               </div>
-              <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$8,692.000' : '****' }}</div>
+              <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
+              </div>
             </div>
           </div>
 
           <!-- btn -->
           <div class="row">
-            <q-btn class="text-primary bg-white no-shadow" rounded no-caps label="Recharge"></q-btn>
-            <q-btn class="text-primary bg-white no-shadow q-ml-md" rounded no-caps label="Withdrawal"></q-btn>
+            <q-btn class="text-primary bg-white no-shadow" rounded no-caps :label="$t('deposit')"></q-btn>
+            <q-btn class="text-primary bg-white no-shadow q-ml-md" rounded no-caps :label="$t('withdraw')"></q-btn>
           </div>
         </div>
 
         <!-- 表格 horizontal -->
-        <q-table class="q-mt-lg no-shadow" bordered :rows="rows" :columns="columns" row-key="i" hide-header>
+        <q-table class="q-mt-lg no-shadow" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
           <template v-slot:top>
             <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
               <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Transactions"
@@ -41,18 +42,19 @@
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td>
+                {{ props.row.updatedAt }}
+              </q-td>
+              <q-td
+                :class="[{ 'text-primary': props.row.name.indexOf('充值') > -1 }, { 'text-red': props.row.name.indexOf('提现') > -1 }]">
                 {{ props.row.name }}
               </q-td>
-              <q-td>
-                {{ props.row.calories }}
-              </q-td>
-              <q-td>
-                {{ props.row.fat }}
+              <q-td
+                :class="[{ 'text-primary': props.row.name.indexOf('充值') > -1 }, { 'text-red': props.row.name.indexOf('提现') > -1 }]">
+                {{ props.row.name.indexOf('充值') > -1 ? '+$' + props.row.money : '-$' + props.row.money }}
               </q-td>
               <q-td class="row justify-between items-center">
-                <div
-                  :class="[{ 'text-primary': props.row.carbs == 'examine' }, { 'text-red': props.row.carbs == 'fail' }]">
-                  {{ props.row.carbs }}
+                <div>
+                  {{ '$' + props.row.fee }}
                 </div>
                 <div v-if="props.row.carbs == 'fail'">
                   <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
@@ -66,14 +68,15 @@
               </q-td>
             </q-tr>
           </template>
+
           <template v-slot:bottom>
             <div class="q-pa-md row items-center no-wrap">
               <div class="text-color-9 q-mr-md">
-                共{{ pagination.total }}条,
-                {{ pagination.paging }}条/页
+                共{{ total }}条,
+                {{ pagination.rowsPerPage }}条/页
               </div>
-              <q-pagination v-model="pagination.page" :max="pageTotal" :max-pageTotal="5" ellipsess
-                :direction-links="true" @input="changePagination($event)" active-color="#fff" class="pagination">
+              <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
+                @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
               </q-pagination>
               <div class="row nowrap">
                 <div class="to">跳至</div>
@@ -89,79 +92,96 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
+import { UserStore } from 'src/stores/user';
+import { userGetOrder } from 'src/apis/wallets';
+import { date } from 'quasar'
 
 export default defineComponent({
   name: 'walletView',
   setup() {
+    const $userStore = UserStore()
     const $router = useRouter();
 
     let state = reactive({
+      money: 0,
+
+      // 钱包订单数据
+      form: {} as any,
+
       // 表格切换
       tab: 'Transactions',
 
       // 是否显示余额
       moneyShow: true,
 
-      //分页
-      pageTotal: 1 as any, // 数据总页数
-      toPage: 1 as any, // 跳转至n页
+      // 分页
+      pageTotal: 1, // 数据总页数
+      toPage: 1, // 跳转至n页
+      total: 1,//  共n条数据
       pagination: {
-        paging: 10 as any, //  n条/一页
-        total: 1 as any,//  共n条数据
-        page: 1 as any, //  v-model
+        rowsPerPage: 5, //  n条/一页
+        page: 1, //  当前页数
+        descending: true,
+        sortBy: 'created_at',
       },
 
       // table数据
-      columns: [] as any,
+      columns: [
+        { name: 'updatedAt' },
+        { name: 'name' },
+        { name: 'money' },
+        { name: 'fee' },
+      ] as any,
       rows: [] as any,
     });
 
-    // 
-    state.columns = [
-      {
-        name: 'name',
-        required: true,
-        align: 'left',
-        sortable: true
-      },
-      { name: 'calories', align: 'center', field: 'calories', sortable: true },
-      { name: 'fat', field: 'fat', sortable: true },
-      { name: 'carbs', field: 'carbs' },
-    ]
+    onMounted(() => {
+      state.money = $userStore.userInfo.money;
+      getOrder()
+    })
 
-    state.rows = [
-      {
-        name: '2023-11-08',
-        calories: 'Recharge-VTH',
-        fat: '+$26.623',
-        carbs: 'fail',
-        i: 0,
-      },
-      {
-        name: '2023-11-08',
-        calories: 'Recharge-VTH',
-        fat: '+$26.623',
-        carbs: 'fail',
-        i: 1,
-      },
-    ]
-
-    state.pagination.total = state.rows.length
+    // 获取钱包订单
+    const getOrder = () => {
+      state.rows = []
+      const params = {
+        // assetsId: {},
+        types: [],
+        pagination: {
+          rowsPerPage: Number(state.pagination.rowsPerPage), //  n条/一页
+          page: Number(state.pagination.page), //  当前页数
+          descending: state.pagination.descending,
+          sortBy: state.pagination.sortBy,
+        },
+      }
+      userGetOrder(params).then((res: any) => {
+        console.log('钱包订单', res)
+        state.form = res.data
+        state.total = res.data.count
+        state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
+        res.data.items.forEach((element: any) => {
+          element.updatedAt = date.formatDate(Number(element.updatedAt), 'YYYY-MM-DD')
+          state.rows.push(element)
+        })
+      })
+    }
 
     // 监听加减页
     const changePagination = (val: number) => {
       console.log(`changePagination: ${val}`)
       state.pagination.page = val
+      getOrder()
     }
 
     // input输入页数回车
-    const refreshTableData = (val: number) => {
-      console.log(`changePagination: ${val}`)
-      if (state.toPage <= state.pagination.page) {
-        state.pagination.page = state.toPage
+    const refreshTableData = () => {
+      console.log(state.pagination.page);
+
+      if (state.toPage <= (state.total / state.rows.length)) {
+        state.pagination.page = Number(state.toPage)
+        getOrder()
       }
     }
 

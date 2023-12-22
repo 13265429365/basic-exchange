@@ -9,13 +9,13 @@
         <div @click="scope.pickFiles">
           <!-- 单图 -->
           <q-card flat bordered :style="listStyle" class="cursor-pointer" v-if="type === 'avatar'">
-            <div class="row justify-center items-center" style="border: 1px dashed #D7D7D7;">
+            <div class="row justify-center items-center" style="border-radius: 8px;overflow: hidden;">
               <q-uploader-add-trigger />
-              <div v-if="respValue !== ''" class="row justify-center items-center"
+              <div v-if="respValue" class="row justify-center items-center"
                 :style="{ width: '100%', height: listStyle.height }">
-                <img :src="imageSrc(respValue)" alt="" style="height: 145px;" />
+                <q-img :src="imageSrc(respValue)" alt="" style="width: 100%;" height="160px"></q-img>
               </div>
-              <div v-else :style="{ width: '100%', height: listStyle.height }">
+              <div v-else :style="{ width: '100%', height: listStyle.height, border: '1px dashed #D7D7D7', }">
                 <slot name="noneAdd"></slot>
               </div>
             </div>
@@ -72,7 +72,7 @@ export default {
     multiple: { type: Boolean, default: false },
 
     // 图片路径
-    value: {
+    respValue: {
       type: String,
       default: '',
     },
@@ -141,6 +141,8 @@ export default {
       } else {
         state.respValue = imagePath[0];
       }
+      console.log(state.respValue);
+
       context.emit('uploaded', state.respValue);
     };
 
@@ -191,6 +193,6 @@ export default {
 
 :deep(.q-uploader .q-uploader__list) {
   padding: 8px !important;
-  // overflow: hidden;
+  overflow: hidden;
 }
 </style>

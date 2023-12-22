@@ -1,29 +1,32 @@
 <template>
-  <div class="column page_bg" style="padding: 48px 244px;">
+  <div class="column" style="padding: 48px 244px;background: #F8F9FC;">
     <div class="col column justify-between bg-white radius-8">
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img :src="imageSrc('')" width="40PX" height="40px"></q-img>
-        <div class="q-ml-md">Recharge</div>
+        <div class="q-ml-md">{{ $t('deposit') }}</div>
       </div>
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium page_bg q-py-sm q-px-md" style="border-radius: 2px;">
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-sm q-px-md"
+          style="border-radius: 2px;background: #F8F9FC;">
           Account Type
         </div>
+
         <!-- 卡类型选择 -->
         <div class="row q-mt-md">
-          <div v-for="(typeI, typeIndex) in typeArr" :key="typeIndex"
-            style="width: 214px;height: 50px;border-radius: 9px;"
-            :class="`q-pa-sm row page_bg q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == typeDataIndex ? 'select' : ''}`"
-            @click="typeDataIndex = typeIndex">
-            <q-img class="self-center q-mr-sm" :src="imageSrc('')" width="32px" height="32px" />
-            <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.value }}</div>
-            <q-img v-if="typeIndex == typeDataIndex" class="absolute" src="/images/pc/recharge/select.png" width="30PX"
-              height="30px" style="bottom: 0;right: 0;"></q-img>
+          <div v-for="(typeI, typeIndex) in cardType" :key="typeIndex"
+            style="width: 214px;height: 50px;border-radius: 9px;background: #F8F9FC;"
+            :class="`q-pa-sm row q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == ActiveCardIndex ? 'select' : ''}`"
+            @click="selectType(typeIndex)">
+            <q-img class="self-center q-mr-sm" :src="imageSrc(typeI.icon)" width="32px" height="32px" />
+            <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.name }}</div>
+            <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/icons/select.png" width="30PX" height="30px"
+              style="bottom: 0;right: 0;"></q-img>
           </div>
         </div>
+
         <!-- 银行卡类型 -->
-        <div class="q-mb-xl" v-if="typeArr[typeDataIndex].type == 1">
+        <!-- <div class="q-mb-xl">
           <div class="text-center text-color-6 text-weight-medium" style="margin: 60px 0 16px 0;">充币地址二维码</div>
           <div class="row justify-center">
             <q-img src="/images/delete/M.png" width="170px" height="170px" />
@@ -40,12 +43,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- 数字货币类型 -->
-        <div v-else class="q-pa-md">
+        <div class="q-pa-md">
           <div style="border-bottom: 1px dashed #DDDDDD">
-            <!-- 扩展项 Recharge Information -->
             <q-list>
               <q-expansion-item expand-separator label="Recharge Information">
                 <q-card>
@@ -95,13 +97,56 @@
         <div class="q-mt-lg">
           <div class="row no-wrap items-center q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mr-xs">充值金额：</div>
-            <q-input suffix="元" type="number" standout v-model="text" />
+            <q-input suffix="元" type="number" standout v-model="form.money" />
           </div>
+
+          <!-- 银行名称 -->
+          <div class="q-mb-md row no-wrap items-center"
+            v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
+            <div class="text-color-3 text-weight-medium q-mr-xs">银行名称：</div>
+            <div class="row justify-between q-px-md q-py-sm"
+              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
+              <div class="self-center row">
+                <q-img :src="imageSrc(cardType[ActiveCardIndex].items[ActiveBankIndex].icon)" width="26px"
+                  height="26px" />
+                <div class="self-center q-ml-sm">{{ cardType[ActiveCardIndex].items[ActiveBankIndex].name }}</div>
+              </div>
+              <q-icon class="self-center" name="expand_more" size="24px"></q-icon>
+              <!-- 下拉 -->
+              <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
+                <q-list style="min-width: 268px" class="q-py-sm">
+                  <q-item style="padding: 8px 16px;" @click="ActiveBankIndex = bankTypeIndex"
+                    v-for="(bankType, bankTypeIndex) in cardType[ActiveCardIndex].items" :key="bankTypeIndex" clickable
+                    class="row no-wrap items-center">
+                    <q-img class="q-mr-sm" :src="imageSrc(bankType.icon)" width="38px" height="38px" />
+                    <div>
+                      <div style="font-size: 16px;">{{ bankType.name }}</div>
+                    </div>
+                    <q-space />
+                    <q-icon v-if="ActiveBankIndex == bankTypeIndex" name="o_check_circle" color="primary"
+                      size="20px"></q-icon>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </div>
+          </div>
+
           <div class="row no-wrap">
             <div class="text-color-3 text-weight-medium q-mr-xs">
               充值凭证：
             </div>
-            <uploader :value="imgUrl" :listStyle="{
+            <div class="q-mb-xl" style="width: 180px;">
+              <uploader :respValue="form.voucher" @uploaded="uploaded" :listStyle="{
+                height: '160px',
+              }">
+                <template v-slot:noneAdd>
+                  <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
+                    <q-icon name="add" size="29px" />
+                  </div>
+                </template>
+              </uploader>
+            </div>
+            <!-- <uploader @uploaded="uploaded" :listStyle="{
               height: '120px',
             }">
               <template v-slot:noneAdd>
@@ -110,14 +155,14 @@
                   <q-icon name="add" size="24px" class="self-center"></q-icon>
                 </div>
               </template>
-            </uploader>
+            </uploader> -->
           </div>
         </div>
         <div class="q-mt-lg q-mb-md text-color-6">
           <div>充值提示：1、确认地址, 并且等待主网同步 2、谨防假冒在线客服充值</div>
         </div>
-        <q-btn unelevated rounded color="primary" label="Submit" class="q-my-md" no-caps
-          style="height: 40px;width: 207px;" @click="alertPass = true" />
+        <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps
+          style="height: 40px;width: 207px;" @click="Deposit" />
       </div>
 
       <!-- 添加按钮 -->
@@ -151,41 +196,82 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, onMounted } from 'vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
 import uploader from 'src/components/uploader.vue';
+import { userPayment, userDeposit } from 'src/apis/wallets';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+
 export default {
   name: 'rechargeIndex',
   components: { uploader },
   setup() {
+    const { t } = useI18n()
+    const $router = useRouter()
+
     const state = reactive({
       alertPass: false,
       password: '',
-      text: '',
-      model: 0,
-      typeDataIndex: 0,
-      imgUrl: '',
       inviteUrl: '09z8we73847zusyd873ezs88d009z8we73847zusyd873ezs88d0',
-      typeArr: [{
-        image: '/images/delete/USDT.png',
-        value: '农业银行(9632)',
-        type: 2
-      }, {
-        image: '/images/delete/BTC.png',
-        value: '建设银行(9232)',
-        type: 1
-      }, {
-        image: '/images/delete/USDT.png',
-        value: '农业银行(9631)',
-        type: 2
-      }, {
-        image: '/images/delete/BTC.png',
-        value: '建设银行(7232)',
-        type: 1
-      }],
+
+      form: {} as any,
+
+      // 当前选中的银行key
+      ActiveBankIndex: 0,
+
+      // 选中卡片类型
+      ActiveCardIndex: 0,
+
+      // 卡片类型
+      cardType: [] as any,
     });
+
+    onMounted(async () => {
+      getPayment()
+    })
+
+    // 获取支付列表
+    const getPayment = () => {
+      userPayment({ modes: [] }).then((res: any) => {
+        console.log('支付列表', res.data);
+        state.cardType = res.data
+        // 预设
+        state.cardType.forEach((cardType: any, cardTypeIndex: any) => {
+          if (cardType.name == state.form.name) {
+            state.ActiveCardIndex = cardTypeIndex
+            cardType.items.forEach((items: any, itemsIndex: any) => {
+              if (items.id == state.form.paymentId) {
+                state.ActiveBankIndex = itemsIndex
+              }
+            })
+          }
+        });
+      })
+    }
+
+    // 充值
+    const Deposit = () => {
+      const params = {
+        paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
+        money: Number(state.form.money),
+        voucher: state.form.voucher,
+      }
+      userDeposit(params).then((res: any) => {
+        NotifyPositive(t('submittedSuccess'))
+        console.log('充值成功', res.data);
+        $router.push({ name: 'AccountCard' })
+      })
+    }
+
+    // 切换卡片类型
+    const selectType = (typeIndex: any) => {
+      state.ActiveCardIndex = typeIndex
+      state.ActiveBankIndex = 0
+    }
+
     // 复制
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
@@ -196,6 +282,12 @@ export default {
           NotifyNegative('复制失败！');
         });
     };
+
+    const uploaded = (url: any) => {
+      state.form.voucher = url
+      console.log(url);
+
+    }
 
     const yesFun = (router: any) => {
       state.alertPass = false;
@@ -219,6 +311,9 @@ export default {
       copyToClipboardFunc,
       ...toRefs(state),
       yesFun,
+      selectType,
+      Deposit,
+      uploaded,
     }
   }
 };

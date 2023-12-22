@@ -1,9 +1,11 @@
 import { route } from 'quasar/wrappers';
 import { UserTokenKey, InitStoreState, InitStore, UserLangKey } from 'src/stores/init';
+import { UserStore } from 'src/stores/user';
 import { Cookies, Platform } from 'quasar';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
 import { userInit } from 'src/apis/index';
+import { LocalStorage } from 'quasar'
 
 import {
   createMemoryHistory,
@@ -39,6 +41,8 @@ export const ch = {} as any
 export default route(async function ({ store, ssrContext }) {
   // 获取init方法
   const $initStore = InitStore();
+  // 获取user方法
+  const $userStore = UserStore();
   // 
   const createHistory = process.env.SERVER
     ? createMemoryHistory
@@ -63,6 +67,12 @@ export default route(async function ({ store, ssrContext }) {
   store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
   store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : 'zh-CN';
 
+  // 每次刷新初始化userinfo
+  const local: string | null = LocalStorage.getItem('userInfo');
+  if (local != null) {
+    $userStore.updateUserInfo(JSON.parse(local))
+  }
+
   // 请求接口获取菜单
   const params = {
     domain: '192.168.229.1',
@@ -72,9 +82,10 @@ export default route(async function ({ store, ssrContext }) {
   // userInit   //获取初始化数据
   userInit(params).then((res: any) => {
     // console.log('初始化数据', res)
-
+    // 初始化init
     $initStore.updateInit(res.data)
 
+    // 初始化语言
     res.data.translate.forEach((element: any) => {
       if (element.label != '') {
         enUS[element.label] = element.label

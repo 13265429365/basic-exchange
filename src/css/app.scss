@@ -9,6 +9,9 @@
     .q-field .q-field__marginal {
         height: 50px !important;
     }
+    .q-field .q-field__append {
+        height: 50px !important;
+    }
     // 取消手机版input高亮
     .q-field__control:before {
         background: #f5f6fa !important;
@@ -25,6 +28,9 @@
         border: 1px solid #DDDDDD;
     }
     .q-field .q-field__marginal {
+        height: 56px !important;
+    }
+    .q-field .q-field__append {
         height: 56px !important;
     }
     // 取消桌面版input高亮

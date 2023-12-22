@@ -75,7 +75,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
           TemplateName,
           'wallets/deposit.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/wallet/deposit.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallet/deposit.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -87,7 +87,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
           TemplateName,
           'wallets/withdraw.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/wallet/withdraw.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallet/withdraw.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -154,7 +154,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     children: [
       // 卡片管理
       {
-        name: 'Account',
+        name: 'AccountCard',
         route: '/wallets/account/index',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
@@ -172,7 +172,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
           TemplateName,
           'wallet/wallet.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/wallet/wallet.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallet/wallet.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -196,7 +196,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
           TemplateName,
           'wallet/assets/assets.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'account/assets/assets.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'assets/assets.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },

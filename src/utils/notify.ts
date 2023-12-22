@@ -1,4 +1,20 @@
 import { Notify } from 'quasar';
+import { Dialog } from 'quasar'
+export const ConfirmPrompt = (title: any, message: any, actions: any) => {
+  Dialog.create({
+    title: title,
+    message: message,
+    ok: {
+      push: true
+    },
+    cancel: {
+      push: true,
+      color: 'negative'
+    },
+  }).onOk(() => {
+    actions()
+  })
+}
 
 // 错误提示
 export const NotifyNegative = (msg: string) => {
@@ -19,3 +35,4 @@ export const NotifyPositive = (msg: string) => {
     message: msg,
   });
 };
+
