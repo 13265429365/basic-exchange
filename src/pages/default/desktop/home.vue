@@ -93,10 +93,10 @@
 
   <!-- 客服图标 -->
   <q-page-sticky v-if="loginSetting.online.showLogin" position="bottom-right" :offset="[18, 18]">
-    <q-fab style="width: 56px;height: 56px;" hide-icon>
+    <q-fab class="bg-white" style="width: 56px;height: 56px;" hide-icon>
       <template v-slot:label>
         <q-avatar class="full-width full-height">
-          <!-- <q-img :src="imageSrc(onlineIcon)"></q-img> -->
+          <q-img width="56px" height="56px" :src="imageSrc(onlineIcon ? onlineIcon : '')"></q-img>
         </q-avatar>
       </template>
     </q-fab>
@@ -121,7 +121,7 @@ export default {
       onlineIcon: $initStore.config.onlineIcon,
 
       // 是否登录状态
-      isLogin: InitStoreState.userToken != '',
+      isLogin: $initStore.userToken != '',
       // cardList
       cardList: [
         { title: 'Membership <br> Organisations', url: 'team' },
@@ -145,7 +145,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+:deep(.q-fab > a) {
+  padding: 0;
+
+  .q-fab__label {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    max-height: 100%;
+  }
+}
+
 :deep(.q-expansion-item .q-item) {
   padding: 0;
   margin-bottom: 16px;

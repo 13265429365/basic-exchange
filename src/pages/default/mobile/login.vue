@@ -70,7 +70,7 @@
     <q-fab style="width: 56px;height: 56px;" hide-icon>
       <template v-slot:label>
         <q-avatar class="full-width full-height">
-          <img :src="imageSrc(onlineIcon)">
+          <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
         </q-avatar>
       </template>
     </q-fab>
@@ -98,10 +98,20 @@ export default defineComponent({
 
     const state = reactive({
       // 登录配置
-      loginSetting: $initStore.config.settings,
+      loginSetting: {
+        lang: {
+          showLogin: true
+        },
+        online: {
+          showLogin: true
+        },
+        login: {
+          showVerify: false,
+        }
+      } as any,
 
       // 客服图标
-      onlineIcon: $initStore.config.onlineIcon,
+      onlineIcon: '',
 
       // 是否显示密码
       isPwd: false,
@@ -116,6 +126,8 @@ export default defineComponent({
 
     onMounted(() => {
       refreshCaptchaFunc();
+      state.loginSetting = $initStore.config.settings
+      state.onlineIcon = $initStore.config.onlineIcon
     });
 
     // 获取验证码
@@ -132,7 +144,7 @@ export default defineComponent({
           NotifyPositive('欢迎回来')
 
           // 更改配置文件userToken
-          await $initStore.updateUserToken(res.token);
+          await $initStore.updateUserToken(res.data.token);
           $router.push({ name: 'HomeIndex' });
         })
         .catch(() => {

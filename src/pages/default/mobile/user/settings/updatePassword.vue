@@ -1,13 +1,10 @@
 <template>
   <div>
     <div>
-      <div class="row justify-center">
-        <div class="size24 text-weight-bold">Change Password</div>
-      </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
           <q-input class="q-mb-md" v-model="oldPassword" standout :type="isPwd ? 'password' : 'text'"
-            placeholder="Old Password">
+            :placeholder="$t('oldPassword')">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/password.png" />
             </template>
@@ -16,27 +13,18 @@
                 @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="password" standout :type="isPwd ? 'password' : 'text'" placeholder="Password">
+          <q-input class="q-mb-md" v-model="newPassword" standout :type="isPwd2 ? 'password' : 'text'"
+            :placeholder="$t('newPassword')">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/password.png" />
             </template>
             <template v-slot:append>
-              <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                @click="isPwd = !isPwd" />
+              <q-icon style="color: #999999;" :name="isPwd2 ? 'visibility_off' : 'visibility'" class="cursor-pointer"
+                @click="isPwd2 = !isPwd2" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="ConfirmPassword" standout :type="isPwd ? 'password' : 'text'"
-            placeholder="Confirm Password">
-            <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/password.png" />
-            </template>
-            <template v-slot:append>
-              <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                @click="isPwd = !isPwd" />
-            </template>
-          </q-input>
-          <q-btn @click="toMypage()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
-            color="primary" label="Confirm" />
+          <q-btn @click="submit()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
+            color="primary" :label="$t('confirm')" />
         </q-form>
       </div>
     </div>
@@ -45,20 +33,48 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { updatePassword } from 'src/apis/user';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+
 // import { useRouter } from 'vue-router';
 // 列表
 export default defineComponent({
   name: 'updatePassword',
-  setup() {
-    // const router = useRouter();
-    let store = reactive({
+  setup(props: any, context: any) {
+    const $router = useRouter();
+    const { t } = useI18n();
+
+    let state = reactive({
       isPwd: false,
+      isPwd2: false,
+
       oldPassword: '',
-      password: '',
-      ConfirmPassword: '',
+      newPassword: '',
     })
+
+    context.emit('update', {
+      title: t('password'),
+    })
+
+    // 执行接口
+    const submit = () => {
+      let params = {
+        type: 1,
+        oldPassword: state.oldPassword,
+        newPassword: state.newPassword,
+      }
+      updatePassword(params).then((res: any) => {
+        console.log(res);
+        NotifyPositive('修改成功')
+        $router.push({ name: 'UserIndex' })
+      })
+    }
+
     return {
-      ...toRefs(store),
+      ...toRefs(state),
+      submit,
     }
   }
 })

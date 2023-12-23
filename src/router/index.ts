@@ -71,6 +71,13 @@ export default route(async function ({ store, ssrContext }) {
   const local: string | null = LocalStorage.getItem('userInfo');
   if (local != null) {
     $userStore.updateUserInfo(JSON.parse(local))
+
+  }
+
+  // 每次刷新初始化init
+  const init: string | null = LocalStorage.getItem('init');
+  if (init != null) {
+    $initStore.updateInit(JSON.parse(init))
   }
 
   // 请求接口获取菜单
@@ -82,8 +89,6 @@ export default route(async function ({ store, ssrContext }) {
   // userInit   //获取初始化数据
   userInit(params).then((res: any) => {
     // console.log('初始化数据', res)
-    // 初始化init
-    $initStore.updateInit(res.data)
 
     // 初始化语言
     res.data.translate.forEach((element: any) => {
@@ -92,6 +97,10 @@ export default route(async function ({ store, ssrContext }) {
         ch[element.label] = element.value
       }
     });
+
+    // 初始化init
+    $initStore.updateInit(res.data)
+    LocalStorage.set('init', JSON.stringify(res.data))
 
 
   });

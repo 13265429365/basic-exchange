@@ -80,10 +80,11 @@
                       <div class="row no-wrap q-mt-sm">
                         <q-btn size="xs" icon="verified" rounded flat dense no-wrap class="q-px-sm q-mr-sm" no-caps
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
-                          <div style="font-size: 11px;">Lv.{{ $userStore.userInfo.Level }}</div>
+                          <div style="font-size: 11px;">Lv{{ $userStore.userInfo.Level }}</div>
                         </q-btn>
                         <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps>
-                          <div style="font-size: 11px;">{{ $userStore.userInfo.authStatus ? 'verified' : 'unverified' }}
+                          <div style="font-size: 11px;">{{ $userStore.userInfo.authStatus ? $t('realNameFailed') :
+                            $t('alreadyRealName') }}
                           </div>
                         </q-btn>
                       </div>

@@ -36,5 +36,5 @@ export const routerTo = (route: string) => {
 
 // 日期格式化
 export const formatDate = (time: string) => {
-  return date.formatDate(time, 'YYYY-MM-DD HH:mm:ss')
+  return date.formatDate(Number(time) * 1000, 'YYYY-MM-DD HH:mm:ss')
 };

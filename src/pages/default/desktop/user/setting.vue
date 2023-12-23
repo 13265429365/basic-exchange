@@ -14,7 +14,7 @@
               <div class="row" style="min-width: 260px;">
                 <q-img class="q-mr-sm" width="24px" height="24px" :src="imageSrc('')"></q-img>
                 <div>
-                  <div class="text-h6 text-color-3 text-weight-bold">{{ item.title }}</div>
+                  <div class="text-h6 text-color-3 text-weight-bold">{{ $t(item.arguments) }}</div>
                   <div style="font-size: 12px;">{{ item.decs }}</div>
                 </div>
               </div>
@@ -27,7 +27,7 @@
                 {{ item.text }}
               </div>
               <div v-if="item.title == 'Birthday'" class="text-weight-medium">
-                {{ date.formatDate(item.content, 'YYYY-MM-DD') }}
+                {{ date.formatDate(item.content * 1000, 'YYYY-MM-DD') }}
               </div>
               <div v-if="item.title != 'Gender' && item.title != 'Birthday'" class="text-weight-medium">{{
                 item.content }}

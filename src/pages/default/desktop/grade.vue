@@ -6,9 +6,8 @@
     </div>
     <div class="row justify-center q-pt-lg">
       <q-card v-for="(item, i) in levelList" :key="i" style="width: 288px;"
-        :class="['border-a-20 q-mr-lg q-mb-xl', { 'border': item.name == actName }]">
-        <div
-          :class="['text-weight-medium', { 'gradeBackground': item.name != actName, 'text-white': item.name != actName }]"
+        :class="['border-a-20 q-mr-lg q-mb-xl', { 'border': i == select }]">
+        <div :class="['text-weight-medium', { 'gradeBackground': i != select, 'text-white': i != select }]"
           style="height: 152px;">
           <q-img class="absolute" :src="imageSrc(item.icon)" width="66px" height="64px"
             style="top: 0; left: 50%; transform: translate(-50%, -36%);z-index: 999;"></q-img>
@@ -22,7 +21,7 @@
         </div>
         <q-card-section>
           <div class="row justify-center q-mt-sm">
-            <q-btn @click="OrderLevel(item.name)" class="text-weight-regular"
+            <q-btn @click="OrderLevel(item.name, i)" class="text-weight-regular"
               :class="[item.name == actName ? 'text-white bg-primary' : 'text-primary bg-white border']"
               style="width: 248px;min-height: 38px" unelevated rounded no-caps :label="$t('buy')" />
           </div>
@@ -48,16 +47,20 @@
 import { onMounted, reactive, toRefs } from 'vue';
 import { getLevel, orderLevel } from 'src/apis/user';
 import { imageSrc } from 'src/utils/index';
-import { NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive, NotifyNegative } from 'src/utils/notify';
 import { UserStore } from 'src/stores/user';
+import { getUserInfo } from 'src/apis/user';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'defaultShare',
   setup() {
     const $userStore = UserStore()
+    const $router = useRouter()
 
     const state = reactive({
-      actName: 'Level1',
+      actName: '',
+      select: 0,
       levelList: [] as any,
     });
 
@@ -67,6 +70,7 @@ export default {
 
     // 获取会员等级列表
     const getLevelList = () => {
+      state.select = $userStore.userInfo.Level
       getLevel().then((res: any) => {
         state.levelList = res.data
         if (state.levelList.length > 0) {
@@ -77,11 +81,26 @@ export default {
     }
 
     // 用户购买会员
-    const OrderLevel = (name: string) => {
+    const OrderLevel = (name: string, i: any) => {
       state.actName = name
-      orderLevel({ id: $userStore.userInfo.id }).then((res: any) => {
+      state.select = i
+      if (state.select < $userStore.userInfo.Level) {
+        NotifyNegative('不能购买比自己等级低的会员')
+        return false
+      }
+
+      orderLevel({ id: state.levelList[state.select].id }).then((res: any) => {
         NotifyPositive('购买成功')
+        UserInfo()
         console.log(res);
+      })
+    }
+
+    const UserInfo = () => {
+      getUserInfo().then((res: any) => {
+        console.log('用户信息', res);
+        $userStore.updateUserInfo(res.data)
+        localStorage.setItem('userInfo', JSON.stringify(res.data))
       })
     }
 

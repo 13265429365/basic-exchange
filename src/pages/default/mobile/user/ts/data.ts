@@ -4,7 +4,7 @@ export const settingList = [
   {
     name: 'Notification Settings',
     icon: 'settings/user.png',
-    route: ''
+    route: '/settings/info'
   }, {
     name: 'Login Password',
     icon: 'settings/pwd.png',

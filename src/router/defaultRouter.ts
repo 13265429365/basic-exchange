@@ -67,7 +67,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
     componentMobile: LayoutsMobilePath('header.vue'),
     componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
-      // 桌面版充值
+      // 充值
       {
         name: 'Deposit',
         route: '/wallets/deposit',
@@ -79,7 +79,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-      // 桌面版提现
+      // 提现
       {
         name: 'Withdraw',
         route: '/wallets/withddraw',
@@ -170,7 +170,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/wallets/index',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'wallet/wallet.vue'
+          'wallets/wallet.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallet/wallet.vue'),
         children: [],
@@ -179,10 +179,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 钱包明细(手机)
       {
         name: 'WalletDetail',
-        route: '/wallets/detail',
+        route: 'wallets/detail',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'wallet/billDetail.vue'
+          'assets/billDetail.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
         children: [],
@@ -194,7 +194,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/wallets/assets/index',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'wallet/assets/assets.vue'
+          'assets/assets.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'assets/assets.vue'),
         children: [],
@@ -272,7 +272,18 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-
+      // 手机用户设置基本信息
+      {
+        name: 'infoEdit',
+        route: '/settings/info',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'user/settings/infoEdit.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'user/setting.vue'),
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
       // 用户设置新密码
       {
         name: 'UpdatePassword',

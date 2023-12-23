@@ -113,7 +113,6 @@ export default defineComponent({
     onMounted(() => {
       getCard()
     })
-    console.log($initStore.config.settings.register.showSecurityPass);
 
     // 获取卡片列表
     const getCard = () => {

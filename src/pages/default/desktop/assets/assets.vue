@@ -108,13 +108,13 @@
               <q-btn class="bg-grey-1 text-color-6 q-ml-md" no-caps rounded
                 style="border: 1px solid #DDDDDD;width: auto;">
                 <div class="row items-center">
-                  <div class="q-mr-xs">{{ date.from }}</div>
+                  <div class="q-mr-xs">{{ dates.from }}</div>
                   <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
-                  <div class="q-mr-xs">{{ date.to }}</div>
+                  <div class="q-mr-xs">{{ dates.to }}</div>
                   <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
                 </div>
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="date" range>
+                  <q-date v-model="dates" range>
                     <div class="row items-center justify-end q-gutter-sm">
                       <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
                       <q-btn @click="getBill" :label="$t('confirm')" color="primary" flat v-close-popup />
@@ -129,7 +129,7 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td>
-              {{ props.row.createdAt }}
+              {{ date.formatDate(Number(props.row.createdAt * 1000), 'YYYY-MM-DD') }}
             </q-td>
             <q-td>
               <div
@@ -202,9 +202,9 @@ export default defineComponent({
       } as any,
 
       //选择开始结束日期
-      date: {
-        from: '2023-10-11',
-        to: '2023-10-16',
+      dates: {
+        from: '',
+        to: '',
       },
 
       // 表格切换
@@ -248,8 +248,9 @@ export default defineComponent({
 
     onMounted(async () => {
       // 预设查询时间
-      state.date.from = date.formatDate(Date.now(), 'YYYY-MM-DD')
-      state.date.to = date.formatDate(Date.now(), 'YYYY-MM-DD')
+      state.dates.from = date.formatDate(Date.now() - 86400000, 'YYYY-MM-DD')
+
+      state.dates.to = date.formatDate(Date.now(), 'YYYY-MM-DD')
 
       // 生成7日折线图
       const lineChart = echarts.init(document.getElementById('lineChart'))
@@ -274,8 +275,8 @@ export default defineComponent({
     const getBill = () => {
       const params = {
         createdAt: {
-          from: date.formatDate(state.date.from, 'x'),
-          to: date.formatDate(state.date.to, 'x'),
+          from: date.formatDate(Number(state.dates.from) - 86400 * 2, 'X'),
+          to: date.formatDate(Number(state.dates.to), 'X'),
         },
         types: [],
         pagination: {
@@ -291,7 +292,6 @@ export default defineComponent({
         state.total = res.data.count
         state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
         res.data.items.forEach((element: any) => {
-          element.createdAt = date.formatDate(element.createdAt, 'YYYY-MM-DD')
           state.rows.push(element)
         });
       })
@@ -333,6 +333,7 @@ export default defineComponent({
 
     return {
       imageSrc,
+      date,
       ...toRefs(state),
       changePagination,
       refreshTableData,

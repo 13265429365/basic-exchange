@@ -96,14 +96,14 @@
         <!-- 充值金额、充值凭证 -->
         <div class="q-mt-lg">
           <div class="row no-wrap items-center q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mr-xs">充值金额：</div>
+            <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('depositAmount') }}：</div>
             <q-input suffix="元" type="number" standout v-model="form.money" />
           </div>
 
           <!-- 银行名称 -->
           <div class="q-mb-md row no-wrap items-center"
             v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
-            <div class="text-color-3 text-weight-medium q-mr-xs">银行名称：</div>
+            <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('bankName') }}：</div>
             <div class="row justify-between q-px-md q-py-sm"
               style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
               <div class="self-center row">
@@ -133,7 +133,7 @@
 
           <div class="row no-wrap">
             <div class="text-color-3 text-weight-medium q-mr-xs">
-              充值凭证：
+              {{ $t('depositProof') }}：
             </div>
             <div class="q-mb-xl" style="width: 180px;">
               <uploader :respValue="form.voucher" @uploaded="uploaded" :listStyle="{
@@ -235,7 +235,7 @@ export default {
 
     // 获取支付列表
     const getPayment = () => {
-      userPayment({ modes: [] }).then((res: any) => {
+      userPayment({ modes: [1, 2] }).then((res: any) => {
         console.log('支付列表', res.data);
         state.cardType = res.data
         // 预设

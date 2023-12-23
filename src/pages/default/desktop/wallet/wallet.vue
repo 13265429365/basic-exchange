@@ -24,8 +24,10 @@
 
           <!-- btn -->
           <div class="row">
-            <q-btn class="text-primary bg-white no-shadow" rounded no-caps :label="$t('deposit')"></q-btn>
-            <q-btn class="text-primary bg-white no-shadow q-ml-md" rounded no-caps :label="$t('withdraw')"></q-btn>
+            <q-btn @click="$router.push({ name: 'Deposit' })" class="text-primary bg-white no-shadow" rounded no-caps
+              :label="$t('deposit')"></q-btn>
+            <q-btn @click="$router.push({ name: 'Withdraw' })" class="text-primary bg-white no-shadow q-ml-md" rounded
+              no-caps :label="$t('withdraw')"></q-btn>
           </div>
         </div>
 
@@ -42,7 +44,7 @@
           <template v-slot:body="props">
             <q-tr :props="props">
               <q-td>
-                {{ props.row.updatedAt }}
+                {{ date.formatDate(Number(props.row.updatedAt * 1000), 'YYYY-MM-DD') }}
               </q-td>
               <q-td
                 :class="[{ 'text-primary': props.row.name.indexOf('充值') > -1 }, { 'text-red': props.row.name.indexOf('提现') > -1 }]">
@@ -128,7 +130,7 @@ export default defineComponent({
         sortBy: 'created_at',
       },
 
-      // table数据
+      // 账单
       columns: [
         { name: 'updatedAt' },
         { name: 'name' },
@@ -162,7 +164,6 @@ export default defineComponent({
         state.total = res.data.count
         state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
         res.data.items.forEach((element: any) => {
-          element.updatedAt = date.formatDate(Number(element.updatedAt), 'YYYY-MM-DD')
           state.rows.push(element)
         })
       })
@@ -187,6 +188,7 @@ export default defineComponent({
 
     return {
       imageSrc,
+      date,
       ...toRefs(state),
       changePagination,
       refreshTableData,

@@ -128,7 +128,7 @@
     <q-fab style="width: 56px;height: 56px;" hide-icon>
       <template v-slot:label>
         <q-avatar class="full-width full-height">
-          <img :src="imageSrc(onlineIcon)">
+          <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
         </q-avatar>
       </template>
     </q-fab>
@@ -156,7 +156,21 @@ export default defineComponent({
 
     let state = reactive({
       // 注册配置
-      registerSetting: $initStore.config.settings,
+      registerSetting: {
+        lang: {
+          showLogin: true
+        },
+        register: {
+          showEmail: false,
+          showCmfPass: false,
+          showVerify: false,
+          showSecurityPass: false,
+          showTelephone: false,
+        },
+        online: {
+          showRegister: true
+        },
+      } as any,
 
       // 客服图标
       onlineIcon: $initStore.config.onlineIcon,
@@ -191,6 +205,7 @@ export default defineComponent({
     state.options = $initStore.countryList
 
     onMounted(() => {
+      state.registerSetting = $initStore.config.settings
       refreshCaptchaFunc();
     })
 

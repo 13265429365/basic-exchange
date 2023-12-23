@@ -4,26 +4,26 @@
       <!-- 头像 -->
       <div class="row">
         <q-avatar class="q-mr-md avatar">
-          <q-img src="https://cdn.quasar.dev/img/avatar.png" width="50px" height="50px" />
+          <q-img :src="imageSrc('')" width="50px" height="50px" />
         </q-avatar>
         <div class="col-8">
           <div class="text-weight-bolder">
-            Ahmed Raza
+            {{ userInfo.userName }}
           </div>
           <div>
-            ahmedraza@gmail.com
+            {{ userInfo.email }}
           </div>
           <div class="row no-wrap">
             <q-chip class="q-chip">
               <q-img src="/icons/Vip.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
-              Lv.3
+              Lv{{ userInfo.Level }}
             </q-chip>
             <q-chip style="background: #fff !important;color: #333333 !important;border: 1px solid #F1F1F1;">
               <q-img src="/icons/credit.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
-              信用分100
+              {{ $t('creditScore') + userInfo.score }}
             </q-chip>
             <q-chip style="background: #fff !important;color: #01AC66 !important;border: 1px solid #01AC66;">
-              已实名
+              {{ userInfo.authStatus ? $t('realNameFailed') : $t('alreadyRealName') }}
               <q-icon class="text-primary" name="keyboard_arrow_right" size="11px"></q-icon>
             </q-chip>
           </div>
@@ -42,7 +42,7 @@
           :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm radius-8" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
-            <div>{{ quickMenu.name }}</div>
+            <div>{{ $t(quickMenu.name) }}</div>
           </div>
         </q-btn>
       </div>
@@ -58,7 +58,7 @@
             </q-item-section>
 
             <q-item-section>
-              <q-item-label class="text-weight-bold">{{ child.name }}</q-item-label>
+              <q-item-label class="text-weight-bold">{{ $t(child.name) }}</q-item-label>
             </q-item-section>
 
             <q-item-section side>
@@ -69,7 +69,7 @@
         </div>
       </q-list>
       <q-btn @click="dialog = true" class="full-width q-mb-lg q-mt-md" unelevated rounded no-caps color="primary"
-        label="Logout" />
+        :label="$t('logout')" />
     </div>
 
     <!-- 退出登录 -->
@@ -80,17 +80,16 @@
             <q-separator class="rounded-borders col-3" style="height: 4px" color="grey-4" />
           </div>
           <div class="row justify-center">
-            <div class="text-weight-bold text-h6">Logout</div>
+            <div class="text-weight-bold text-h6">{{ $t('logout') }}</div>
           </div>
           <q-separator class="q-mt-md  q-mb-lg" color="grey-4" />
           <div class="row justify-center q-mb-xl">
-            <div class="text-grey-10">Are you sure you want to log out?</div>
+            <div class="text-grey-10">{{ $t('logoutSmall') }}</div>
           </div>
           <div class="row justify-between no-wrap">
             <q-btn @click="dialog = false" class="q-mr-md text-primary bg-white col-5" unelevated rounded no-caps
-              style="border:1px solid #01AC66" label="Cancel" />
-            <q-btn @click="$router.push({ name: 'UserLogin' })" class="col-5" unelevated rounded no-caps color="primary"
-              label="Yes,Logout" />
+              style="border:1px solid #01AC66" :label="$t('cancel')" />
+            <q-btn @click="Logout" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
           </div>
         </q-card-section>
       </q-card>
@@ -99,15 +98,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
-import { imageSrc } from 'src/utils';
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
+import { useRouter } from 'vue-router';
 import { InitStore, InitStoreState } from 'src/stores/init';
+import { UserStore } from 'src/stores/user';
+import { NotifyPositive } from 'src/utils/notify';
+import { imageSrc } from 'src/utils';
+import { getUserInfo } from 'src/apis/user';
+
 export default defineComponent({
   name: 'userIndex',
   setup() {
+    const $router = useRouter();
     const $initStore = InitStore()
+    const $userStore = UserStore()
 
     let state = reactive({
+      userInfo: {} as any,
+
       // 用户菜单
       userList: [] as any,
 
@@ -118,12 +126,50 @@ export default defineComponent({
       dialog: false,
     })
 
-    state.userList = $initStore.userMenu
-    state.quickMenuList = $initStore.quickMenu;
+
+
+
+    onMounted(async () => {
+      //  是否登录
+      if ($initStore.userToken == '' || $initStore.userToken == null) {
+        $router.push({ name: 'UserLogin' })
+      }
+
+      // 右侧头像菜单
+      state.userList = $initStore.userMenu
+
+      // 左侧快捷菜单
+      state.quickMenuList = $initStore.quickMenu;
+
+      UserInfo()
+    })
+
+    // 获取用户信息
+    const UserInfo = () => {
+      if ($initStore.userToken) {
+        getUserInfo().then((res: any) => {
+          console.log('用户信息', res);
+          state.userInfo = res.data
+          $userStore.updateUserInfo(res.data)
+          localStorage.setItem('userInfo', JSON.stringify(res.data))
+        })
+      }
+    }
+
+    // 退出登录
+    const Logout = async () => {
+      NotifyPositive('退出成功')
+      await $initStore.removeUserToken()
+      localStorage.removeItem('userInfo')
+      $router.push({ name: 'HomeIndex' })
+    }
+
+
 
     return {
-      ...toRefs(state),
       imageSrc,
+      ...toRefs(state),
+      Logout,
     }
   }
 })

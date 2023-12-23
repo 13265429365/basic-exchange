@@ -192,7 +192,7 @@ export default {
 }
 
 :deep(.q-uploader .q-uploader__list) {
-  padding: 8px !important;
+  // padding: 8px !important;
   overflow: hidden;
 }
 </style>

@@ -6,14 +6,14 @@
         class="row justify-between radius-8 q-mb-md">
         <div class="column justify-center">
           <div class="row items-center">
-            <div class="text-white">Total Assets</div>
+            <div class="text-white">{{ $t('totalAssets') }}</div>
             <q-icon @click="moneyShow = !moneyShow" :name="!moneyShow ? 'o_visibility' : 'o_visibility_off'"
               class="q-ml-sm cursor-pointer text-white" size="18px"></q-icon>
           </div>
           <!-- 点击显示、隐藏金额 -->
           <div v-if="moneyShow" class="text-white row items-center">
-            <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">$1200.00</span>
-            <span>≈￥69865,21 </span>
+            <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">${{ form.moneySum }}</span>
+            <span>≈￥{{ form.moneyRateSum }} </span>
           </div>
           <div v-else class="text-white text-weight-bold " style="font-size: 22px;">**** </div>
         </div>
@@ -25,14 +25,14 @@
           :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm radius-8" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
-            <div>{{ quickMenu.name }}</div>
+            <div>{{ $t(quickMenu.name) }}</div>
           </div>
         </q-btn>
       </div>
 
       <!-- echarts -->
       <div class="bg-white q-pa-md radius-8">
-        <div class="text-weight-bold q-mb-lg">资产分布</div>
+        <div class="text-weight-bold q-mb-lg">{{ $t('assetsBlock') }} </div>
         <div class="row justify-center q-mb-lg">
           <div @click="init(item.name)" v-for="(item, i) in typeList" :key="i"
             :class="['q-mx-xs q-px-md q-py-xs', { 'text-white': item.name == type, 'bg-primary': item.name == type, 'text-grey-8': item.name != type, 'page_bg': item.name != type, }]"
@@ -84,15 +84,15 @@
 
       <!--  -->
       <div class="q-mt-md q-mb-sm text-weight-bold">资产账户</div>
-      <div v-for="(item, i) in accountList" :key="i"
+      <div @click="$router.push('/wallets/detail')" v-for="(item, i) in form.userAssetsList" :key="i"
         class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm radius-8">
         <div class="row items-center">
-          <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc('')" />
+          <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(item.icon)" />
           <div class="text-weight-bold">{{ item.name }}</div>
         </div>
         <div>
-          <div class="text-weight-bold" style="font-size: 16px;">{{ item.money }}</div>
-          <div class="text-right" style="font-size: 12px;">{{ item.percentage }}</div>
+          <div class="text-weight-bold text-right" style="font-size: 16px;">{{ '$' + item.money }}</div>
+          <div class="text-right text-grey-5" style="font-size: 12px;">{{ '≈￥' + item.moneyRate }}</div>
         </div>
       </div>
 
@@ -101,21 +101,32 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, onMounted } from 'vue';
-import * as echarts from 'echarts'
-import { lineOption, lineThirty, option } from './ts/data';
-import { imageSrc } from 'src/utils/index';
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
+import * as echarts from 'echarts'
+import { userGetAssets } from 'src/apis/wallets';
+import { imageSrc } from 'src/utils/index';
+import { lineOption, lineThirty, option } from './ts/data';
+import { useI18n } from 'vue-i18n';
 
 
-export default {
+export default defineComponent({
   name: 'myProperty',
   setup(props: any, context: any) {
+    const { t } = useI18n()
     const $initStore = InitStore()
+    const $userStore = UserStore()
 
     const state = reactive({
+      // 资产数据
+      form: {
+        moneySum: '',
+        moneyRateSum: '',
+      } as any,
+
       // 点击显示、隐藏金额 
-      moneyShow: false,
+      moneyShow: true,
 
       // 快捷菜单
       quickMenuList: [] as any,
@@ -124,7 +135,7 @@ export default {
       list: [] as any,
 
       //资产账户
-      accountList: [] as any,
+      rows: [] as any,
 
       // 饼、折线图button
       typeList: [
@@ -148,10 +159,30 @@ export default {
     });
 
     context.emit('update', {
-      title: 'MyAssets',
+      title: t('myAssets'),
     })
 
-    state.quickMenuList = $initStore.quickMenu;
+    onMounted(() => {
+      state.quickMenuList = $initStore.quickMenu;
+
+      // 生成饼图
+      const chart = echarts.init(document.getElementById('myChart'))
+      chart.setOption(state.option)
+
+      const lineChart = echarts.init(document.getElementById('lineChart'))
+      lineChart.setOption(lineOption)
+
+      // 执行api
+      getAssets()
+    })
+
+    // 获取用户资产列表
+    const getAssets = () => {
+      userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
+        console.log('资产列表', res)
+        state.form = res.data
+      })
+    }
 
     state.list = [{
       name: '积分',
@@ -172,40 +203,6 @@ export default {
       back: 'background: #F7BA1E;'
     },]
 
-    state.accountList = [{
-      name: 'BTC',
-      percentage: '≈￥20,21',
-      money: '$2650,21',
-      icon: 'btcIcon'
-    },
-    {
-      name: 'My Wallet',
-      percentage: '≈￥20,21',
-      money: '$6932',
-      icon: 'wallet'
-    },
-    {
-      name: 'Integral',
-      percentage: '≈￥20,21',
-      money: '$50,21',
-      icon: 'species'
-    },
-    {
-      name: 'TRC',
-      percentage: '≈￥20,21',
-      money: '$50,21',
-      icon: 'trc'
-    },]
-
-    onMounted(() => {
-      // 生成饼图
-      const chart = echarts.init(document.getElementById('myChart'))
-      chart.setOption(state.option)
-
-      const lineChart = echarts.init(document.getElementById('lineChart'))
-      lineChart.setOption(lineOption)
-    })
-
     // 切换饼、折线图
     const init = (name: string) => {
       state.type = name
@@ -215,9 +212,9 @@ export default {
     const switchDate = (name: string) => {
       const lineChart = echarts.init(document.getElementById('lineChart'))
       if (name == '近7日') {
-        lineChart.setOption(state.lineOption)
+        lineChart.setOption(lineOption)
       } else {
-        lineChart.setOption(state.lineThirty)
+        lineChart.setOption(lineThirty)
       }
       state.lineType = name
     }
@@ -228,7 +225,7 @@ export default {
       switchDate,
     }
   },
-};
+});
 </script>
 <style scoped>
 .border {

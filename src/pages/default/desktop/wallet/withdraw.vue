@@ -33,15 +33,16 @@
         <div class="q-mt-lg">
           <div class="row no-wrap items-center q-mb-md">
             <div class="text-weight-medium q-mr-xs">
-              可用余额：
+              {{ $t('balance') }}
             </div>
-            <div class="text-weight-medium size16" style="color: #F45E0C;">￥{{ Total }}</div>
+            <div class="text-weight-medium size16" style="color: #F45E0C;">{{ '￥' + Total }}</div>
           </div>
 
           <div class="row no-wrap items-center q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mr-xs">提现金额：</div>
+            <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('withdrawAmount') }}</div>
             <q-input suffix="元" type="number" standout v-model="form.money" />
-            <div @click="form.money = Total" class="text-primary q-ml-sm cursor-pointer">全部提现</div>
+            <div @click="form.money = Total" class="text-primary q-ml-sm cursor-pointer">{{ $t('withdrawAllAmount') }}
+            </div>
           </div>
 
         </div>
@@ -89,7 +90,6 @@ import { userGetCard, userWithdraw } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import { number } from 'echarts';
 
 export default {
   name: 'withdrawalIndex',

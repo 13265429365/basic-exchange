@@ -1,12 +1,12 @@
 <template>
   <div class="q-pb-xl">
     <div style="position: relative;">
-      <q-img src="/images/pc/help/bg.png" width="100%" height="240px" fit="fill" />
+      <q-img src="/images/bg.png" width="100%" height="240px" fit="fill" />
       <div class="column justify-center text-center" style="position: absolute;top: 0;width: 100%;height: 100%;">
         <div class="text-white text-h4 text-weight-bolder">News</div>
       </div>
     </div>
-    <div class="q-pt-lg" style="padding: 0 108px;">
+    <div class="q-mt-xl" style="padding: 0 108px;">
       <div class="row">
         <div style="width: 600px;">
           <div>
@@ -14,7 +14,7 @@
             <q-separator style="width: 46px;height: 2px;background: #01AC66;margin: 0;" inset />
           </div>
           <div class="row q-mt-lg">
-            <div class="col-8 q-px-md q-py-lg row radius-8" style="background: #F5FAF8;position: relative;">
+            <div class="col-8 q-px-md q-py-lg row" style="background: #F5FAF8;position: relative;border-radius: 8px;">
               <div class="col-9">
                 <div class="text-color-3 text-h6 text-weight-bold">After talks ？</div>
                 <div class="ellipsis-2-lines text-color-6 text-subtitle2 text-weight-regular q-my-lg">President Biden held
@@ -25,8 +25,8 @@
                 <q-separator style="background: #666666;margin: 0;height: 2px;" inset />
                 <div class="text-color-3 text-h5 text-weight-bold q-my-lg">11/30</div>
               </div>
-              <q-img src="/images/delete/articleListImg.png" width="300px" height="170px"
-                style="position: absolute; right: -210px;top: 0;" />
+              <q-img src="/images/new.png" width="300px" height="170px"
+                style="position: absolute; right: -210px;top: 0;z-index: 99999;" />
             </div>
           </div>
           <div class="row q-col-gutter-none q-mt-lg"
@@ -41,9 +41,9 @@
                   LIVE: President
                   Biden delx</div>
                 <div class="text-weight-medium text-color-6 text-body2">2023-11-30</div>
-                <div class="radius-x q-pl-lg q-pt-md hide"
-                  style="background-color: #01AC66;width: 98.72px;height: 98.72px;position: absolute;right: -44px;bottom: -50px;">
-                  <q-img src="/images/pc/article/right.png" width="19px" height="14px" />
+                <div class=" q-pl-lg q-pt-md hide"
+                  style="background-color: #01AC66;width: 98.72px;height: 98.72px;position: absolute;right: -44px;bottom: -50px;border-radius: 50%;">
+                  <q-icon name="o_east" color="white" size="19px"></q-icon>
                 </div>
               </div>
             </div>
@@ -52,23 +52,29 @@
 
         <!-- 右侧 -->
         <div class="col " style="margin-left: 40px;">
+
           <div>
             <div class="text-color-3 text-h5 text-weight-bold">Latest News</div>
             <div style="background-color: #DDDDDD;" class="q-mt-xs">
-              <q-separator style="width: 46px;height: 2px;background: #01AC66;margin: 0;" inset />
+              <q-separator style="width: 100px;height: 2px;background: #01AC66;margin: 0;" inset />
             </div>
-            <div @click="$router.push({ name: 'ArticleDetails', params: { 'id': item.id } })" class="q-pt-md"
-              v-for="(item, i) in 5" :key="i">
-              <div class="row">
-                <div class="col">
-                  <div class="ellipsis text-color-3 text-subtitle1 text-weight-regular">After talks with Xi, Biden
-                    saysBiden 666666666666666666</div>
-                  <div class="text-weight-medium text-color-6 text-body2">2023-11-30</div>
+
+            <q-scroll-area style="height: 700px;">
+              <div class="q-pt-md cursor-pointer" v-for="(item, i) in articleList" :key="i">
+                <div class="row">
+                  <div class="col">
+                    <div class="ellipsis text-subtitle1 text-weight-bold">{{ item.name }}</div>
+                    <div style="height: 50px;width: 500px;" class="ellipsis text-subtitle1 text-weight-regular"
+                      v-html="item.content">
+                    </div>
+                    <div class="text-weight-medium text-grey-7 text-body2">{{ date.formatDate(item.createdAt * 1000,
+                      'YYYY-MM-DD') }}</div>
+                  </div>
+                  <q-img src="/images/new.png" class="radius-8" width="130px" height="76px" />
                 </div>
-                <q-img src="/images/delete/articleListImg.png" width="130px" height="76px" />
+                <q-separator style="height: 2px;background: #DDDDDD;" inset class="q-my-md q-mx-none" />
               </div>
-              <q-separator style="height: 2px;background: #DDDDDD;" inset class="q-my-md q-mx-none" />
-            </div>
+            </q-scroll-area>
           </div>
         </div>
       </div>
@@ -79,13 +85,15 @@
 <script lang="ts">
 import { onMounted, reactive, toRefs } from 'vue'
 import { getArticle } from 'src/apis/index'
+import { imageSrc } from 'src/utils/index'
+import { date } from 'quasar'
 
 export default {
   name: 'articleNews',
   setup() {
     const state = reactive({
       count: 0,
-      list: [] as any,
+      articleList: [] as any,
     })
 
     onMounted(() => {
@@ -93,12 +101,14 @@ export default {
         types: []
       }
       getArticle(params).then((res: any) => {
-        state.list = res.data
+        state.articleList = res.data
         console.log('文章列表', res);
       })
     })
 
     return {
+      imageSrc,
+      date,
       ...toRefs(state),
     }
   }

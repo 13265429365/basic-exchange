@@ -21,8 +21,10 @@ export default {
     })
     onMounted(() => {
       let params = {
-        id: $route.params.id
+        id: Number($route.query.id)
       }
+      console.log(params);
+
       getArticleInfo(params).then((res: any) => {
         console.log(res);
       })

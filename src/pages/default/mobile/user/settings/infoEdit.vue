@@ -13,12 +13,12 @@
       <div class="q-mt-lg q-px-lg">
         <q-form>
           <div class="q-mb-md">
-            <div class="text-weight-bold q-mb-sm">Name</div>
-            <q-input color="green" standout v-model="params.Name" />
+            <div class="text-weight-bold q-mb-sm">{{ $t('nickname') }}</div>
+            <q-input color="green" standout v-model="form.nickname" />
           </div>
 
           <div class="q-mb-md">
-            <div class="text-weight-bold q-mb-sm">Gender</div>
+            <div class="text-weight-bold q-mb-sm">{{ $t('sex') }}</div>
             <q-btn-dropdown class="text-weight-regular full-width" :label="GenderList[genderIndex].name" unelevated flat
               no-caps dropdown-icon="expand_more"
               style="height: 50px;background: #f5f6fa;border-radius: 10px;color: rgba(0, 0, 0, 0.87);">
@@ -35,11 +35,11 @@
           </div>
 
           <div class="q-mb-md">
-            <div class="text-weight-bold q-mb-sm">Birthday</div>
-            <q-input @click="birthdayPopup = true" standout v-model="params.Birthday" mask="date" class="q-mb-lg">
+            <div class="text-weight-bold q-mb-sm">{{ $t('birthday') }}</div>
+            <q-input @click="birthdayPopup = true" standout v-model="form.birthday" mask="date" class="q-mb-lg">
               <template v-slot:append>
                 <q-popup-proxy v-model="birthdayPopup">
-                  <q-date v-model="params.Birthday">
+                  <q-date v-model="form.birthday">
                     <div class="row items-center justify-end">
                       <q-btn @click="birthdayPopup = false" no-caps label="confirm" color="primary" flat />
                     </div>
@@ -49,8 +49,8 @@
             </q-input>
           </div>
 
-          <q-btn class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;" color="primary"
-            label="Complete Profile" />
+          <q-btn @click="submit" class="full-width q-mb-xl row justify-center" unelevated rounded no-caps
+            style="height: 44px;" color="primary" :label="$t('submit')" />
         </q-form>
       </div>
     </div>
@@ -58,14 +58,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
-import { imageSrc } from 'src/utils';
+import { defineComponent, reactive, toRefs, ref, onMounted, nextTick } from 'vue';
+import { imageSrc } from 'src/utils/index';
+import { getUserInfo, updateInfo } from 'src/apis/user';
+import { UserStore } from 'src/stores/user';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { date } from 'quasar';
+import { useI18n } from 'vue-i18n'
+
 
 export default defineComponent({
   name: 'infoEdit',
   setup(props: any, context: any) {
+    const { t } = useI18n();
     // const router = useRouter();
-    let store = reactive({
+    const $userStore = UserStore();
+
+    let state = reactive({
+      form: {} as any,
+
       toggle: false,
 
       genderIndex: 0,
@@ -85,12 +96,44 @@ export default defineComponent({
     })
 
     context.emit('update', {
-      title: 'AccountManage',
+      title: t('settings'),
     })
+
+    onMounted(() => {
+      UserInfo()
+    })
+
+    // 获取用户信息
+    const UserInfo = () => {
+      getUserInfo().then((res: any) => {
+        console.log('用户信息', res);
+        state.form = res.data
+        state.genderIndex = res.data.sex - 1
+        state.form.birthday = date.formatDate(state.form.birthday * 1000, 'YYYY-MM-DD')
+        $userStore.updateUserInfo(res.data)
+        localStorage.setItem('userInfo', JSON.stringify(res.data))
+      })
+    }
+
+    // 执行接口
+    const submit = () => {
+      let params = {
+        nickname: state.form.nickname,
+        sex: state.genderIndex + 1,
+        birthday: Number(date.formatDate(state.form.birthday, 'X')),
+      }
+      updateInfo(params).then((res: any) => {
+        console.log(res);
+        NotifyPositive('修改成功')
+        UserInfo()
+      })
+    }
 
     return {
       imageSrc,
-      ...toRefs(store),
+      date,
+      ...toRefs(state),
+      submit,
     }
   }
 })
@@ -110,15 +153,10 @@ export default defineComponent({
   z-index: 99;
 }
 
-:deep(.q-btn) {
+:deep(.q-btn-dropdown) {
+
   .q-btn__content {
-    justify-content: start;
+    justify-content: space-between;
   }
-
-  .q-btn-dropdown__arrow {
-    position: absolute;
-    right: 10px;
-  }
-
 }
 </style>

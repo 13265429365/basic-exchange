@@ -42,7 +42,7 @@ background: #F8F9FC;">
             <!-- 银行名称 -->
             <div class="q-mb-lg"
               v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
-              <div class="text-color-3 text-weight-medium q-mb-xs">银行名称：</div>
+              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankName') }}：</div>
               <div class="row justify-between q-px-md q-mb-md q-py-sm"
                 style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
                 <div class="self-center row">
@@ -72,23 +72,23 @@ background: #F8F9FC;">
 
             <!-- 本人姓名 -->
             <div class="q-mb-lg">
-              <div class="text-color-3 text-weight-medium q-mb-xs">本人姓名：</div>
+              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('idName') }}：</div>
               <q-input standout v-model="form.realName" :rules="[val => val && val.length > 0]" />
             </div>
 
             <!-- 银行卡号 -->
             <div class="q-mb-lg">
-              <div class="text-color-3 text-weight-medium q-mb-xs">银行卡号：</div>
+              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankNumber') }}：</div>
               <q-input type="number" standout v-model="form.number" :rules="[val => val && val.length > 0]" />
             </div>
 
             <!-- 银行地址-->
             <div class="q-mb-lg">
-              <div class="text-color-3 text-weight-medium q-mb-xs">银行地址：</div>
+              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('digitalAddress') }}：</div>
               <q-input type="text" standout v-model="form.code" />
             </div>
 
-            <q-btn unelevated rounded color="primary" label="Submit" class="q-my-md" no-caps
+            <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps
               style="height: 40px;width: 144px;" type="submit" />
           </q-form>
         </div>
@@ -133,7 +133,7 @@ import { userPayment, userAddCard, userEditCard, userGetCardInfo } from 'src/api
 import { NotifyPositive } from 'src/utils/notify';
 
 export default {
-  name: 'editCard',
+  name: 'addCard',
   setup() {
     const $route = useRoute()
     const $router = useRouter()

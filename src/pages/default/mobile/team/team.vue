@@ -43,10 +43,14 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { date } from 'quasar';
+import { useRouter } from 'vue-router';
+import { formatDate, imageSrc } from 'src/utils/index'
+import { getTeam } from 'src/apis/user';
+import { UserStore } from 'src/stores/user';
 
-export default {
+export default defineComponent({
   name: 'teamBenefits',
   setup(props: any, context: any) {
     const state = reactive({
@@ -101,5 +105,5 @@ export default {
       date,
     }
   }
-};
+});
 </script>

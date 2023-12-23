@@ -42,7 +42,7 @@
                 <q-date v-model="form['arguments']" style="width: 340px;">
                   <div class="row items-center justify-end q-gutter-sm">
                     <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                    <q-btn :label="$t('confirm')" color="primary" flat v-close-popup />
+                    <q-btn @click="selectDate" :label="$t('confirm')" color="primary" flat v-close-popup />
                   </div>
                 </q-date>
               </q-popup-proxy>
@@ -145,7 +145,7 @@ export default defineComponent({
       state.arguments = state.form.arguments
 
       if (row.title == 'Birthday') {
-        state.form.arguments = date.formatDate(row.content, 'YYYY-MM-DD')
+        state.form.arguments = date.formatDate(row.content * 1000, 'YYYY-MM-DD')
       } else {
         // 如果父页面资料存在，就赋值给本页面的参数值
         state.form.content != '' ?
@@ -207,6 +207,11 @@ export default defineComponent({
 
     }
 
+    const selectDate = () => {
+      // state.form['arguments'] = date.formatDate(state.form['arguments'], 'X')
+      console.log(state.form['arguments']);
+    }
+
     const uploaded = (url: any) => {
       state.form.avatar = url
     }
@@ -217,6 +222,7 @@ export default defineComponent({
       submit,
       uploaded,
       selectSex,
+      selectDate,
     }
   },
 });

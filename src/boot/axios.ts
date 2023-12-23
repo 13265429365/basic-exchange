@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers';
 import axios, { AxiosInstance } from 'axios';
-import { Loading, QSpinnerBars, Quasar } from 'quasar';
+import { Loading, QSpinnerBars } from 'quasar';
 import { InitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
 

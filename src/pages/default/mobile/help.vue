@@ -7,11 +7,10 @@
           <div class="row justify-between q-mt-lg">
             <div class="col-6  ">
               <div class="text-body1 text-white text-weight-bold q-mb-sm">
-                Hi,Can I help you?
+                {{ $t('helperYou') }}
               </div>
               <div style="background: rgba(255, 255, 255, 0.12);padding: 7px 16px;max-width: 131px;border-radius: 19px;"
-                class="text-center text-white ellipsis">24hours
-                online</div>
+                class="text-center text-white ellipsis">{{ $t('24hoursOnline') }}</div>
             </div>
             <q-img :src="imageSrc('')" width="62px" height="79px" />
           </div>
@@ -42,8 +41,8 @@
 
 
         <!-- 帮助中心列表 -->
-        <q-list class="q-ma-md bg-white q-mt-lg text-black" style="border-radius: 8px" v-if="helpersList.length > 0">
-          <q-expansion-item v-for="( helper, helperIndex ) in  helpersList " :key="helperIndex" :label="helper.title">
+        <q-list class="q-ma-md bg-white q-mt-lg text-black" style="border-radius: 8px" v-if="articleList.length > 0">
+          <q-expansion-item v-for="( helper, helperIndex ) in articleList " :key="helperIndex" :label="helper.name">
             <q-card flat>
               <q-card-section>
                 <div class="font-c-6 font-18 text-400" v-html="helper.content"></div>
@@ -58,27 +57,29 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, onMounted } from 'vue';
 import { imageSrc } from 'src/utils/index';
+import { getHelpers } from 'src/apis/index'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'helpCenter',
   setup(props: any, context: any) {
+    const { t } = useI18n();
+
     const state = reactive({
-      helpersList: [{
-        title: 'question',
-        content: '巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉吧'
-      }, {
-        title: 'question',
-        content: '巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉吧'
-      }, {
-        title: 'question',
-        content: '巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉吧'
-      }]
+      articleList: [] as any,
     });
 
     context.emit('update', {
-      title: 'helpers',
+      title: t('helpers'),
+    })
+
+    onMounted(() => {
+      getHelpers().then((res: any) => {
+        state.articleList = res.data.articleList
+        console.log(res);
+      })
     })
 
     return {

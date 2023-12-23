@@ -1,83 +1,130 @@
 <template>
   <div class="column full-height">
-    <q-separator style="background: #F4F5FD;" />
-    <div class="col bg-white  q-pa-md">
-      <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Name</div>
-      <q-input standout v-model="text" class="q-mb-md" />
-      <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">ID Number</div>
-      <q-input standout v-model="text" class="q-mb-md" />
-      <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Phone Number</div>
-      <q-input standout v-model="text" class="q-mb-md" />
+    <q-form @submit="submit" class="full-width">
+      <div class="col bg-white  q-pa-md">
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">{{ $t('email') }}</div>
+        <q-input standout v-model="form.realName" class="q-mb-md" />
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">{{ $t('telephone') }}</div>
+        <q-input standout v-model="form.telephone" class="q-mb-md" />
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">{{ $t('bankNumber') }}</div>
+        <q-input standout v-model="form.number" class="q-mb-md" />
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">{{ $t('digitalAddress') }}</div>
+        <q-input standout v-model="form.address" class="q-mb-md" />
 
-      <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">Document</div>
-      <uploader :value="imgUrl" :listStyle="{
-        height: '186px',
-      }">
-        <template v-slot:noneAdd>
-          <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
-            class="radius-8 column justify-center">
-            <q-icon name="add" size="24px" class="self-center"></q-icon>
-            <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证正面</div>
-          </div>
-        </template>
-      </uploader>
-      <uploader :value="imgUrl2" :listStyle="{
-        height: '186px',
-      }">
-        <template v-slot:noneAdd>
-          <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
-            class="radius-8 column justify-center">
-            <q-icon name="add" size="24px" class="self-center"></q-icon>
-            <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证背面</div>
-          </div>
-        </template>
-      </uploader>
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-sm">{{ $t('idPhoto1').replace('正面',
+          '').replace('1', '') }}</div>
+        <uploader :respValue="form.photo1" @uploaded="uploaded" :listStyle="{
+          height: '186px',
+        }">
+          <template v-slot:noneAdd>
+            <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
+              class="radius-8 column justify-center">
+              <q-icon name="add" size="24px" class="self-center"></q-icon>
+              <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证正面</div>
+            </div>
+          </template>
+        </uploader>
+        <uploader :respValue="form.photo2" @uploaded="uploaded2" :listStyle="{
+          height: '186px',
+        }">
+          <template v-slot:noneAdd>
+            <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
+              class="radius-8 column justify-center">
+              <q-icon name="add" size="24px" class="self-center"></q-icon>
+              <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证背面</div>
+            </div>
+          </template>
+        </uploader>
 
-      <q-btn unelevated rounded color="primary" label="Submit" class="full-width q-my-xl" no-caps
-        @click="yesFun($router)" />
-    </div>
+        <q-btn unelevated rounded color="primary" label="Submit" class="full-width q-my-xl" no-caps type="submit" />
+      </div>
+    </q-form>
+
+
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
 import uploader from 'src/components/uploader.vue';
-export default {
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { userAuth, getUserAuth } from 'src/apis/user';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+
+export default defineComponent({
   name: 'defaultIdentification',
   components: { uploader },
   setup(props: any, context: any) {
+    const { t } = useI18n();
+    const $router = useRouter();
+
     const state = reactive({
-      text: '',
-      imgUrl: '',
-      imgUrl2: '',
-      status: 0
+      form: {
+        realName: '',
+        telephone: '',
+        number: '',
+        address: '',
+        photo1: '',
+        photo2: '',
+      } as any,
     });
 
     context.emit('update', {
-      title: 'realAuth',
+      title: t('realAuth'),
     })
 
-    const yesFun = (router: any) => {
-      // 密码正确
-      router.push({
-        name: 'showMessage',
-        state: {
-          params: JSON.stringify({
-            title: 'Submitted successfully',
-            content: 'Please be patient and keep an eye on the progress at any time',
-            yesBtn: 'OK',
-            logo: '/images/default/success.png',
-            backUrl: ''
-          })
-        }
+    onMounted(() => {
+      getAuth()
+    })
+
+    // 获取实名
+    const getAuth = () => {
+      getUserAuth().then((res: any) => {
+        console.log(res);
+        state.form = res.data
       })
-    };
+    }
+
+    const submit = () => {
+      if (state.form.photo1 == '' || state.form.photo2 == '') {
+        NotifyNegative('请上传证件照')
+        return false
+      }
+      let params = {
+        realName: state.form.realName,
+        telephone: state.form.telephone,
+        number: state.form.number,
+        address: state.form.address,
+        photo1: state.form.photo1,
+        photo2: state.form.photo2,
+      }
+      userAuth(params).then((res: any) => {
+        NotifyPositive(t('submittedSuccess'))
+        $router.push({ name: 'UserIndex' })
+        getAuth()
+        console.log(res);
+      })
+    }
+
+
+    const uploaded = (url: any) => {
+      state.form.photo1 = url
+    }
+
+    const uploaded2 = (url: any) => {
+      state.form.photo2 = url
+    }
+
     return {
       ...toRefs(state),
-      yesFun
+      uploaded,
+      uploaded2,
+      submit,
     }
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

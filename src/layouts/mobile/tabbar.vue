@@ -31,11 +31,13 @@ import { toRefs, reactive, ref } from 'vue';
 import { imageSrc } from 'src/utils';
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
+import { InitStore } from 'src/stores/init';
 
 export default {
   name: 'LayoutsTabbar',
   setup() {
     const $router = useRouter();
+    const $initStore = InitStore();
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
 
@@ -50,7 +52,7 @@ export default {
       { name: '行情', route: '/market', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
       { name: '合约', route: '/contact', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
       { name: '期货', route: '/futures', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-      { name: '我的', route: '/user', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
+      { name: '我的', route: $initStore.userToken != '' && $initStore.userToken ? '/user' : '/login', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
     ];
 
 

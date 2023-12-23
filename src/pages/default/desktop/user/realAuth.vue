@@ -97,7 +97,6 @@ export default defineComponent({
     const $userStore = UserStore()
     const state = reactive({
       //
-      content: '',
       imgUrl: '',
       form: {
         realName: '',

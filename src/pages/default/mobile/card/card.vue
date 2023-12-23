@@ -2,54 +2,31 @@
   <div class="column full-height full-width">
     <div class="col  page_bg q-pa-md full-width column justify-between">
       <div class="col full-width">
-        <div class="q-mb-md"
-          style="height: 125px;background: linear-gradient(90deg, #1EC273 0%, #71D687 100%);border-radius: 14px;overflow: hidden;">
-          <div class="cardTransparent row " style="padding: 15px 20px;">
-            <q-img :src="imageSrc('')" width="34px" height="34px" />
-            <div class="col column justify-between">
-              <div class="row justify-between q-pl-sm">
-                <div>
-                  <div class="text-white text-weight-bold">兴业银行·厦门支行</div>
-                  <div class="text-white text-weight-bold" style="font-size: 10px;">Debit Card</div>
-                </div>
-                <div class="row">
-                  <q-btn outline rounded color="white" class="q-pa-xs" size="13px" style="width: 58px;height: 15px;"
-                    label="Edit" no-caps @click="$router.push({ name: 'EditCard', query: { type: 1 } })" />
-                  <q-btn outline rounded color="white" class="q-pa-xs q-ml-sm" size="13px"
-                    style="width: 58px;height: 15px;" label="Delete" no-caps @click="alertDelete = true" />
-                </div>
-              </div>
 
-              <div>
-                <div class="text-white text-weight-bold" style="font-size: 10px;">Card Number</div>
-                <div class="text-white text-weight-bold" style="font-size: 18px;">6986 3652 9868 2636</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="q-mb-md"
-          style="height: 125px;background: linear-gradient(90deg, #7475BF 0%, #3D8FC9 100%);border-radius: 14px;overflow: hidden;">
+        <div class="q-mb-md" v-for="(card, cardIndex) in cardList" :key="cardIndex"
+          style="height: 125px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);border-radius: 14px;overflow: hidden;">
           <div class="cardTransparent row" style="padding: 15px 20px;">
-            <q-img :src="imageSrc('')" width="34px" height="34px" />
+            <q-img :src="imageSrc(card.icon)" width="34px" height="34px" />
             <div class="col column justify-between">
               <div class="row justify-between q-pl-sm">
                 <div>
-                  <div class="text-white text-weight-bold">USDT-TRC20</div>
-                  <div class="text-white text-weight-bold" style="font-size: 10px;">Digital Currency</div>
+                  <div class="text-white text-weight-bold">{{ card.name }}</div>
+                  <div class="text-white text-weight-bold" style="font-size: 10px;">{{ card.realName }}</div>
                 </div>
                 <div class="row">
                   <q-btn outline rounded color="white" class="q-pa-xs" size="13px" style="width: 58px;height: 15px;"
-                    label="Edit" no-caps @click="$router.push({ name: 'EditCard', query: { type: 2 } })" />
+                    :label="$t('edit')" no-caps
+                    @click="$router.push({ name: `AddCard`, query: { type: 'edit', id: card.id } })" />
                   <q-btn outline rounded color="white" class="q-pa-xs q-ml-sm" size="13px"
-                    style="width: 58px;height: 15px;" label="Delete" no-caps @click="alertDelete = true" />
+                    style="width: 58px;height: 15px;" :label="$t('delete')" no-caps @click="Confirm(card.id)" />
                 </div>
               </div>
 
               <div class="full-width">
-                <div class="text-white text-weight-bold" style="font-size: 10px;">Address</div>
+                <div class="text-white text-weight-bold" style="font-size: 10px;">{{ card.paymentName }}</div>
                 <div class="text-white text-weight-bold ellipsis full-width" style="font-size: 18px;">
-                  09z8we73847zusyd873ez73847zusyd873ez73847zusyd873ez73847zusyd873ez</div>
+                  {{ card.number }}
+                </div>
               </div>
             </div>
           </div>
@@ -59,35 +36,99 @@
 
       <!-- 添加按钮 -->
       <div style="border: 1px dashed #01AC66;height: 54px;background-color: rgba(1, 172, 102, 0.05);"
-        class="radius-8  column justify-center row" @click="$router.push({ name: 'AddCard' })">
+        class="radius-8  column justify-center row" @click="$router.push({ name: 'AddCard', query: { type: 'add' } })">
         <div class="text-center text-primary text-weight-bold self-center row"> <q-icon size="20px" name="add"
             class="self-center" />Add Card
         </div>
       </div>
     </div>
-    <!-- 删除弹窗 -->
-    <q-dialog v-model="alertDelete">
-    </q-dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils/index';
+import { userGetCard, userDelCard } from 'src/apis/wallets';
+import { ConfirmPrompt, NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { InitStore } from 'src/stores/init';
 
 export default {
   name: 'defaultCard',
-  setup() {
+  setup(props: any, context: any) {
+    const { t } = useI18n(); // 获取t函数进行翻译  
+    const $initStore = InitStore()
+
     const state = reactive({
-      alertDelete: false,
+      // 用户卡片列表
+      cardList: [] as any,
+
+      // 当前需要删除的卡片id
+      id: '',
+
+      // 密码弹窗
+      alertPass: false,
+      securityKey: '',
     });
-    const deleteFun = () => {
-      state.alertDelete = false;
-    };
+
+    context.emit('update', {
+      title: t('accountManage')
+    })
+
+    onMounted(() => {
+      getCard()
+    })
+
+    // 获取卡片列表
+    const getCard = () => {
+      userGetCard().then((res: any) => {
+        console.log(res.data);
+        state.cardList = res.data
+      })
+    }
+
+    // 删除卡片
+    const delCard = () => {
+      // 如果有安全码，必须输入安全码
+      if (state.securityKey == '' && $initStore.config.settings.register.showSecurityPass) {
+        NotifyNegative('请输入秘钥')
+        return false
+      }
+      let params = {
+        id: Number(state.id),
+        securityKey: state.securityKey
+      }
+      userDelCard(params).then((res: any) => {
+        console.log(res.data);
+        if (res.code == 0) {
+          getCard()
+          NotifyPositive(t('submittedSuccess'))
+        }
+      })
+    }
+
+    // 打开密码框
+    const updateDialog = () => {
+      state.alertPass = true
+    }
+
+    // 删除卡片提示
+    const Confirm = (id: any) => {
+      state.id = id
+      ConfirmPrompt(
+        t('delete'),
+        t('deleteLabel') + '?',
+        // 如果没有安全码，直接执行删除
+        $initStore.config.settings.register.showSecurityPass ?
+          updateDialog : delCard
+      )
+    }
+
     return {
       imageSrc,
       ...toRefs(state),
-      deleteFun
+      delCard,
+      Confirm
     }
   }
 };

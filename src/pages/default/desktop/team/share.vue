@@ -2,7 +2,7 @@
   <div class="calc">
 
     <div>
-      <div class="background q-mb-xl"></div>
+      <q-img class="q-mb-xl" height="280px" src="/images/banner.png"></q-img>
       <div class="q-pt-xl">
         <div class="row justify-center">
           <div class="relative-position">
@@ -10,9 +10,9 @@
               <div id="qrCode" style="z-index: 999;border-radius: 10px;width: 100px;height: 100px;"></div>
             </div>
             <q-img class="absolute" width="133px" height="225px" style="left: -103px;top:0"
-              src="/images/pc/share/qrcode-left.png"></q-img>
+              src="/images/qrcode-left.png"></q-img>
             <q-img class="absolute" width="115px" height="229px" style="right: -90px;top:0;z-index: -1;"
-              src="/images/pc/share/qrcode-right.png"></q-img>
+              src="/images/qrcode-right.png"></q-img>
           </div>
         </div>
         <div class="text-center q-mt-lg text-color-6" style="font-size: 20px;">Scan to Download the App</div>
@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, onUnmounted, reactive, toRefs } from 'vue';
+import { onMounted, reactive, toRefs } from 'vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { getInvite } from 'src/apis/user';
@@ -75,7 +75,7 @@ export default {
 
 .background {
   width: 100%;
-  background: url('/public/images/pc/share/banner.png');
+  background: url('/public/images/banner.png');
   background-size: cover;
   background-repeat: no-repeat;
   height: 280px;
