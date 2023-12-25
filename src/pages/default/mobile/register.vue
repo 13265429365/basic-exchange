@@ -4,7 +4,7 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-img class="q-mr-sm" :src="imageSrc(lang.icon ? lang.icon : '')"></q-img>
+        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(lang.icon ? lang.icon : '')"></q-img>
         <div>{{ lang.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
@@ -83,7 +83,8 @@
       </q-input>
 
       <!-- 邀请码 -->
-      <q-input class="q-mb-md" standout v-model="params.code" :placeholder="$t('inviteCode')">
+      <q-input v-if="registerSetting.register.islnvite" class="q-mb-md" standout v-model="params.code"
+        :placeholder="$t('inviteCode')">
         <template v-slot:prepend>
           <q-img src="/icons/profile.png" />
         </template>
@@ -95,14 +96,14 @@
           style="height: 50px;background: #f5f6fa;border-radius: 10px;color: #8F959E;">
           <template v-slot:label>
             <div class="row no-wrap items-center">
-              <q-img :src="imageSrc(options[areaCodeIndex].icon ? options[areaCodeIndex].icon : '')" width="24px"
+              <q-img :src="imageSrc(countryList[areaCodeIndex].icon ? countryList[areaCodeIndex].icon : '')" width="24px"
                 height="16px" />
-              <div class="q-ml-sm">+{{ options[areaCodeIndex].code }}</div>
+              <div class="q-ml-sm">+{{ countryList[areaCodeIndex].code }}</div>
             </div>
           </template>
           <!-- 下拉 -->
           <q-list style="min-width: 268px" class="q-py-sm">
-            <q-item @click="areaCodeIndex = i" v-for="(item, i) in options" :key="i" clickable v-close-popup
+            <q-item @click="areaCodeIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
               class="row no-wrap items-center">
               <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
               <div>
@@ -164,7 +165,7 @@ export default defineComponent({
       isPwd2: true,
 
       // 地区选择
-      options: $initStore.countryList as any,
+      countryList: $initStore.countryList as any,
 
       // 确认密码
       password: '',
@@ -184,6 +185,8 @@ export default defineComponent({
         code: '', //邀请码
       }
     });
+
+
 
     onMounted(() => {
       refreshCaptchaFunc();

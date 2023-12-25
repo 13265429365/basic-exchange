@@ -4,7 +4,7 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-img class="q-mr-sm" :src="imageSrc(lang.icon ? lang.icon : '')"></q-img>
+        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(lang.icon ? lang.icon : '')"></q-img>
         <div>{{ lang.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
