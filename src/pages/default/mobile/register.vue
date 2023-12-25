@@ -15,7 +15,7 @@
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('')}`" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('/images/logo.png')}`" />
     </div>
     <div class="row justify-center">
       <div class="text-h6 text-weight-bold">{{ $t('registerSmall') }}</div>
@@ -151,7 +151,6 @@ export default defineComponent({
 
     let state = reactive({
       // 
-      // langIcon: '',
       lang: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) ? $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) : '',
 
       // 注册配置
@@ -185,7 +184,6 @@ export default defineComponent({
         code: '', //邀请码
       }
     });
-    console.log($initStore.languageList);
 
     onMounted(() => {
       refreshCaptchaFunc();

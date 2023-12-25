@@ -4,8 +4,8 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-icon name="o_swap_horiz" />
-        <div>{{ $t('language') }}</div>
+        <q-img class="q-mr-sm" :src="imageSrc(lang.icon ? lang.icon : '')"></q-img>
+        <div>{{ lang.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
     </q-toolbar>
@@ -15,7 +15,7 @@
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('')}`" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('/images/logo.png')}`" />
     </div>
     <div class="row justify-center">
       <div class="text-weight-bold text-h6">{{ $t('loginSmall') }}</div>
@@ -91,6 +91,9 @@ export default defineComponent({
     const $initStore = InitStore();
 
     const state = reactive({
+      // 
+      lang: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) ? $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) : '',
+
       // 登录配置
       loginSetting: $initStore.config.settings as any,
 
@@ -107,7 +110,6 @@ export default defineComponent({
         captchaVal: '', // 验证码
       },
     });
-    console.log($initStore);
 
 
     onMounted(() => {
