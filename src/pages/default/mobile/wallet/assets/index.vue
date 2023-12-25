@@ -84,7 +84,7 @@
 
       <!--  -->
       <div class="q-mt-md q-mb-sm text-weight-bold">资产账户</div>
-      <div @click="$router.push('/wallets/detail')" v-for="(item, i) in form.userAssetsList" :key="i"
+      <div @click="$router.push({ name: 'AssetsDetail' })" v-for="(item, i) in form.userAssetsList" :key="i"
         class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm radius-8">
         <div class="row items-center">
           <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(item.icon)" />
@@ -107,7 +107,6 @@ import { InitStore } from 'src/stores/init';
 import * as echarts from 'echarts'
 import { userGetAssets } from 'src/apis/wallets';
 import { imageSrc } from 'src/utils/index';
-import { lineOption, lineThirty, option } from './ts/data';
 import { useI18n } from 'vue-i18n';
 
 

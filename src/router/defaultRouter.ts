@@ -236,18 +236,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-      // 钱包明细(手机)
-      {
-        name: 'WalletDetail',
-        route: 'wallets/detail',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'wallet/assets/detail.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-        children: [],
-        meta: { requireAuth: false, keepAlive: false },
-      },
       // 我的资产(共用)
       {
         name: 'Assets',
@@ -263,7 +251,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       // 单个资产详情(共用)
       {
         name: 'AssetsDetail',
-        route: '/wallets/assets/index',
+        route: '/wallets/assets/detail',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'wallet/assets/detail.vue'

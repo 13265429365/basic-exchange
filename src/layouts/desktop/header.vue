@@ -62,7 +62,7 @@
           <!-- 头像 -->
           <q-btn class="q-mr-sm" round flat>
             <q-avatar size="34px">
-              <img :src="imageSrc(config.logo)">
+              <q-img :src="imageSrc($userStore.userInfo.avatar ? $userStore.userInfo.avatar : '')"></q-img>
             </q-avatar>
             <q-menu :offset="[160, 15]" class="q-pa-md">
               <q-list style="min-width: 218px;">
@@ -70,7 +70,7 @@
                 <q-item aria-hidden="true">
                   <div class="row no-wrap">
                     <q-avatar size="30px">
-                      <img :src="imageSrc(config.logo)">
+                      <q-img :src="imageSrc($userStore.userInfo.avatar ? $userStore.userInfo.avatar : '')"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
                       <div class="row no-wrap">
