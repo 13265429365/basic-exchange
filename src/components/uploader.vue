@@ -22,7 +22,7 @@
           </q-card>
 
           <!--  显示多图上传 -->
-          <q-scroll-area :style="{ width: '100%', height: listStyle.height }" v-else-if="multiple" :bar-style="barStyle"
+          <!-- <q-scroll-area :style="{ width: '100%', height: listStyle.height }" v-else-if="multiple" :bar-style="barStyle"
             :thumb-style="thumbStyle">
             <div class="row no-wrap">
               <q-card flat bordered v-for="(file, fileIndex) in scope.files" :key="file.__key" :style="listStyle"
@@ -44,7 +44,7 @@
                 </div>
               </q-card>
             </div>
-          </q-scroll-area>
+          </q-scroll-area> -->
         </div>
       </template>
     </q-uploader>

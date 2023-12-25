@@ -33,11 +33,11 @@
                   {{ customize.lv }}
                 </q-chip>
               </q-item-section>
-              <q-item-section class="text-color-6" style="min-width: 215px;">
+              <q-item-section class="text-grey-6" style="min-width: 215px;">
                 {{ formatDate(customize.createdAt) }}
               </q-item-section>
               <q-item-section class="text-primary" style="min-width: 215px;">
-                {{ customize.teamEarnings }}
+                +{{ customize.teamEarnings }}
               </q-item-section>
               <q-item-section style="justify-content:end;min-width: 215px;">
                 <div @click="Team({ id: customize.id })"

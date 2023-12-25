@@ -41,8 +41,8 @@
       </div>
 
 
-      <q-btn @click="OrderLevel" unelevated rounded color="primary" label="Purchase Now" class="full-width q-my-xl"
-        no-caps style="height: 44px;" />
+      <q-btn @click="OrderLevel" unelevated rounded color="primary" :label="$t('buy')" class="full-width q-my-xl" no-caps
+        style="height: 44px;" />
 
     </div>
 

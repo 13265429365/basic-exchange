@@ -8,8 +8,8 @@
         </div>
         <div class="text-h6 text-weight-bold q-mt-md">Solo App</div>
         <div class="text-body2 text-weight-regular q-mt-sm">Caption app news app news</div>
-        <q-btn unelevated rounded color="primary" label="Download" style="width: 269px;height: 44px;margin-top: 40px;"
-          no-caps />
+        <q-btn unelevated rounded color="primary" :label="$t('download')"
+          style="width: 269px;height: 44px;margin-top: 40px;" no-caps />
       </div>
 
     </div>
@@ -21,15 +21,19 @@
 import { reactive, toRefs } from 'vue';
 import { date } from 'quasar';
 import { imageSrc } from 'src/utils/index';
+import { useI18n } from 'vue-i18n';
+
 
 export default {
   name: 'DownloadIndex',
   setup(props: any, context: any) {
+    const { t } = useI18n();
+
     const state = reactive({
     });
 
     context.emit('update', {
-      title: 'Download',
+      title: t('download'),
     })
 
     return {

@@ -6,8 +6,10 @@
       </div> -->
       <div class="row justify-center q-py-lg">
         <div class="relative">
-          <q-img :src="imageSrc('')" width="80px" height="80px" />
-          <q-img class="head_edit cursor-pointer" src="/icons/edit.png" />
+          <q-avatar style="width: 80px;height: 80px;">
+            <q-img :src="form.avatar ? imageSrc(form.avatar) : imageSrc('')" />
+            <uploaderAvatar :respValue="form.avatar" @upload="upload"></uploaderAvatar>
+          </q-avatar>
         </div>
       </div>
       <div class="q-mt-lg q-px-lg">
@@ -58,20 +60,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref, onMounted, nextTick } from 'vue';
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { getUserInfo, updateInfo } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
+import uploaderAvatar from 'src/components/uploaderAvatar.vue';
 import { date } from 'quasar';
 import { useI18n } from 'vue-i18n'
 
 
 export default defineComponent({
   name: 'infoEdit',
+  components: {
+    uploaderAvatar,
+  },
   setup(props: any, context: any) {
     const { t } = useI18n();
-    // const router = useRouter();
     const $userStore = UserStore();
 
     let state = reactive({
@@ -118,6 +123,7 @@ export default defineComponent({
     // 执行接口
     const submit = () => {
       let params = {
+        avatar: state.form.avatar,
         nickname: state.form.nickname,
         sex: state.genderIndex + 1,
         birthday: Number(date.formatDate(state.form.birthday, 'X')),
@@ -129,11 +135,19 @@ export default defineComponent({
       })
     }
 
+    // 执行接口
+    const upload = (url: string) => {
+
+      state.form.avatar = url
+      console.log(state.form.avatar);
+    }
+
     return {
       imageSrc,
       date,
       ...toRefs(state),
       submit,
+      upload,
     }
   }
 })
@@ -144,14 +158,6 @@ export default defineComponent({
   position: relative;
 }
 
-.head_edit {
-  width: 27px;
-  height: 27px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  z-index: 99;
-}
 
 :deep(.q-btn-dropdown) {
 

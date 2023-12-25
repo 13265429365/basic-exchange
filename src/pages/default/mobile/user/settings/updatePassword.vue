@@ -1,6 +1,9 @@
 <template>
   <div>
     <div>
+      <div class="row justify-center q-mt-lg">
+        <div class="text-h6 text-weight-bold">{{ $t('password') }}</div>
+      </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
           <q-input class="q-mb-md" v-model="oldPassword" standout :type="isPwd ? 'password' : 'text'"
@@ -52,10 +55,6 @@ export default defineComponent({
 
       oldPassword: '',
       newPassword: '',
-    })
-
-    context.emit('update', {
-      title: t('password'),
     })
 
     // 执行接口

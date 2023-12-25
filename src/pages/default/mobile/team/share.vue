@@ -5,7 +5,7 @@
 
         <q-img src="/images/delete/logo.png" width="60px" height="60px" />
 
-        <div class="text-color-3 text-h6 q-mt-md">Internet Company</div>
+        <div class="text-color-3 text-h6 q-mt-md">{{ $t('inviteFriends') }}</div>
 
         <q-img src="/images/delete/M.png" style="margin-top: 20px;" width="224px" height="224px" fit="fill" />
 
@@ -17,7 +17,7 @@
         </div>
 
         <q-btn unelevated rounded style="margin: 30px 0 20px 0;width: 230px;height: 40px;" color="primary"
-          label="Copy Code" no-caps @click="copyToClipboardFunc(inviteUrl)" />
+          :label="$t('copy')" no-caps @click="copyToClipboardFunc(inviteUrl)" />
       </div>
     </div>
   </div>
@@ -27,17 +27,19 @@
 import { reactive, toRefs } from 'vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
-
+import { useI18n } from 'vue-i18n';
 
 export default {
   name: 'defaultShare',
   setup(props: any, context: any) {
+    const { t } = useI18n()
+
     const state = reactive({
       inviteUrl: 'http://192.168.3.126:9100/login'
     });
 
     context.emit('update', {
-      title: 'InviteFriends',
+      title: t('inviteFriends'),
     })
 
     // 复制方法

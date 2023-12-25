@@ -9,8 +9,8 @@
           </div>
           <div class="text-h6 text-weight-bold">Solo App</div>
           <div class="text-body2 text-weight-regular q-mt-sm">Caption app news app news</div>
-          <q-btn unelevated rounded color="primary" label="Download" style="width: 269px;height: 44px;margin-top: 40px;"
-            no-caps />
+          <q-btn unelevated rounded color="primary" :label="$t('download')"
+            style="width: 269px;height: 44px;margin-top: 40px;" no-caps />
         </div>
 
       </div>

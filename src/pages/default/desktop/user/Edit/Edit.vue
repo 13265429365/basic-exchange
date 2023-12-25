@@ -14,8 +14,18 @@
           <q-form v-if="form.type == 'info'">
             <div class="q-mb-xs">{{ form.title }}</div>
 
+            <!-- 头像 -->
+            <div v-if="form.title == 'Avatar'" class="row justify-center q-px-md q-mb-md q-py-sm">
+              <div class="relative">
+                <q-avatar style="width: 80px;height: 80px;">
+                  <q-img :src="form['arguments'] ? imageSrc(form['arguments']) : imageSrc('')" />
+                  <uploaderAvatar :respValue="form.avatar" @upload="upload"></uploaderAvatar>
+                </q-avatar>
+              </div>
+            </div>
+
             <!-- 性别 -->
-            <div v-if="form.title == 'Gender'" class="row justify-between q-px-md q-mb-md q-py-sm"
+            <div v-else-if="form.title == 'Gender'" class="row justify-between q-px-md q-mb-md q-py-sm"
               style="border-radius: 4px;border: 1px solid #DDDDDD;">
               <div class="self-center row">
                 <div class="self-center q-ml-sm">{{ sexList[sexIndex].name }}</div>
@@ -36,7 +46,7 @@
             </div>
 
             <!-- 生日 -->
-            <q-input v-if="form.title == 'Birthday'" standout class="q-mb-md" v-model="form['arguments']"
+            <q-input v-else-if="form.title == 'Birthday'" standout class="q-mb-md" v-model="form['arguments']"
               :placeholder="arguments">
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                 <q-date v-model="form['arguments']" style="width: 340px;">
@@ -95,12 +105,18 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
+import uploaderAvatar from 'src/components/uploaderAvatar.vue';
 import { updateInfo, updatePassword, getUserInfo } from 'src/apis/user';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { date } from 'quasar';
+import { imageSrc } from 'src/utils';
+
 
 export default defineComponent({
   name: 'EditIndex',
+  components: {
+    uploaderAvatar,
+  },
   setup(props: any, context: any) {
 
     const state = reactive({
@@ -200,6 +216,10 @@ export default defineComponent({
 
     }
 
+    const upload = (url: string) => {
+      state.form['arguments'] = url
+    }
+
     const selectSex = (sexKey: any) => {
       state.sexIndex = Number(sexKey)
       state.form['arguments'] = state.sexIndex + 1
@@ -217,10 +237,12 @@ export default defineComponent({
     }
 
     return {
+      imageSrc,
       ...toRefs(state),
       showEdit,
       submit,
       uploaded,
+      upload,
       selectSex,
       selectDate,
     }

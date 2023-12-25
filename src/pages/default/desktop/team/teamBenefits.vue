@@ -10,7 +10,7 @@
         <div class="row no-wrap items-center">
           <div class="row no-wrap items-center q-mr-xl">
             <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
-              <q-img :src="imageSrc('')"></q-img>
+              <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')"></q-img>
             </q-avatar>
             <div>
               <div class="text-h6 text-weight-medium">{{ userInfo.userName }}</div>
@@ -100,6 +100,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      state.userInfo = $userStore.userInfo
       TeamDetails({ id: $userStore.userInfo.id })
     })
 

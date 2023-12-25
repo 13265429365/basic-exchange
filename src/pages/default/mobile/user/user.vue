@@ -4,7 +4,7 @@
       <!-- 头像 -->
       <div class="row">
         <q-avatar class="q-mr-md avatar">
-          <q-img :src="imageSrc('')" width="50px" height="50px" />
+          <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')" width="50px" height="50px" />
         </q-avatar>
         <div class="col-8">
           <div class="text-weight-bolder">

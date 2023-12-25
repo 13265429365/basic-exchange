@@ -8,7 +8,7 @@
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="text-weight-bold">{{ item.name }}</q-item-label>
+            <q-item-label class="text-weight-bold">{{ $t(item.name) }}</q-item-label>
           </q-item-section>
 
           <q-item-section side>
@@ -30,18 +30,21 @@ import { defineComponent, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 // 列表
 import { settingList } from './ts/data';
+import { useI18n } from 'vue-i18n'
+
 export default defineComponent({
   name: 'SettingIndex',
   setup(props: any, context: any) {
+    const { t } = useI18n();
     const $router = useRouter();
 
     let store = reactive({
-      list: settingList,
+      list: settingList as any,
       toggle: false
     })
 
     context.emit('update', {
-      title: 'Settings',
+      title: t('settings'),
     })
 
     return {

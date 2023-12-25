@@ -36,7 +36,8 @@
           </template>
         </uploader>
 
-        <q-btn unelevated rounded color="primary" label="Submit" class="full-width q-my-xl" no-caps type="submit" />
+        <q-btn unelevated rounded color="primary" :label="$t('submit')" class="full-width q-my-xl" no-caps
+          type="submit" />
       </div>
     </q-form>
 

@@ -2,31 +2,31 @@
 // setting.vue----------------------------------------------
 export const settingList = [
   {
-    name: 'Notification Settings',
+    name: 'personalSetting',
     icon: 'settings/user.png',
     route: '/settings/info'
   }, {
-    name: 'Login Password',
+    name: 'updatePassword',
     icon: 'settings/pwd.png',
     route: '/settings/password',
   }, {
-    name: 'Secret Key',
+    name: 'updateSecretKey',
     icon: 'settings/key.png',
     route: '/settings/code'
   }, {
-    name: 'Blind Phone Number',
+    name: 'bindTelephone',
     icon: 'settings/mobile.png',
     route: '/settings/bind/phone'
   }, {
-    name: 'Email',
+    name: 'email',
     icon: 'settings/email.png',
     route: '/settings/enter/email'
   }, {
-    name: 'Language',
+    name: 'language',
     icon: 'settings/language.png',
     route: '/settings/language'
   }, {
-    name: 'New Notices',
+    name: 'noticeEnable',
     icon: 'settings/message.png',
     toggle: true
   },

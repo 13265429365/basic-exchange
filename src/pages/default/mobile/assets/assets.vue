@@ -235,9 +235,9 @@ export default defineComponent({
   margin-right: 4px;
 }
 
-:deep .btn>.q-btn .q-btn__content {
+/* :deep .btn>.q-btn .q-btn__content {
   justify-content: start !important;
-}
+} */
 
 :deep .q-btn:before {
   box-shadow: 0 0 0 !important;

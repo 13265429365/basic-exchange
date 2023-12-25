@@ -44,7 +44,7 @@
       <q-space />
 
       <!-- 右侧搜索 -->
-      <q-input dense standout="bg-primary" v-model="search" :placeholder="$t('search')">
+      <q-input dense standout="bg-primary" v-model="searchVal" :placeholder="$t('search')">
         <template v-slot:prepend>
           <q-icon style="color: #999999 !important;" name="o_search" />
         </template>
@@ -183,7 +183,7 @@ export default {
       userInfo: $initStore.userInfo,
 
       // 搜索框
-      search: '',
+      searchVal: '',
 
       //  左侧tabBar菜单
       tabBarList: [] as any,

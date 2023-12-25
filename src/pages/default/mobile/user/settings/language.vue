@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-list bordered class="q-mb-md border-a-8" style="border:0 !important;overflow: hidden;border-radius: 8px;">
-      <div @click="switchLang(item.name)" v-for="(item, i) in list" :key="i" class="bg-white">
+      <div @click="switchLang(item)" v-for="(item, i) in languageList" :key="i" class="bg-white">
         <q-item v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
             <q-img :src="imageSrc(item.icon)" class="country" />
@@ -12,10 +12,7 @@
           </q-item-section>
 
           <q-item-section side>
-            <q-img v-if="shape == item.name" src="/images/default/radio_active.png" class="radioIcon" />
-            <q-img v-else src="/images/default/radio.png" class="radioIcon" />
-            <!-- radio_active.png -->
-            <!-- <q-radio v-model="shape" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" :val="item.name" /> -->
+            <q-icon v-if="locale == item.Alias" name="check_circle" color="primary" size="20px"></q-icon>
           </q-item-section>
         </q-item>
         <q-separator style="background: #F4F5FD;" inset />
@@ -30,33 +27,38 @@ import { useRouter } from 'vue-router';
 import { NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils/index';
+import { useI18n } from 'vue-i18n'
 
 // 列表
 export default defineComponent({
   name: 'languageView',
   setup() {
-    const initStore = InitStore();
+    const { locale } = useI18n({ useScope: 'global' })
+    const $initStore = InitStore();
     const router = useRouter();
-    let store = reactive({
-      list: [] as any,
+    let state = reactive({
+      languageList: [] as any,
       shape: 'China',
+      locale,
     })
 
     onMounted(() => {
-      store.list = initStore.languageList;
-      console.log(initStore.config.defaultLang)
-
+      state.languageList = $initStore.languageList;
     })
 
+    const switchLang = async (language: any) => {
+      // state.locale = language.Alias
+      await $initStore.updateUserLang(language.Alias)
+      NotifyPositive('切换成功')
+      // router.back()
+      setTimeout(() => {
+        location.reload()
+      }, 500)
+    }
+
     return {
-      ...toRefs(store),
-      switchLang(name: string) {
-        store.shape = name
-        NotifyPositive('切换成功')
-        setTimeout(() => {
-          router.back()
-        }, 500)
-      },
+      ...toRefs(state),
+      switchLang,
       imageSrc
     }
   }
@@ -64,11 +66,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.radioIcon {
-  width: 20px;
-  height: 20px;
-}
-
 .country {
   width: 32px;
   height: 21px;

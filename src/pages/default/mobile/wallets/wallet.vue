@@ -22,7 +22,7 @@
           :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm radius-8" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
-            <div>{{ quickMenu.name }}</div>
+            <div>{{ $t(quickMenu.name) }}</div>
           </div>
         </q-btn>
       </div>

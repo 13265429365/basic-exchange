@@ -28,7 +28,7 @@
               Mrh Raju
             </div>
             <div class="text-primary q-ml-md text-weight-bold" @click="copyToClipboardFunc('Mrh Raju')">
-              copy
+              {{ $t('copy') }}
             </div>
           </div>
           <div class="q-mt-md row justify-between no-wrap" style="width: 315px;border-radius: 10px;">
@@ -36,7 +36,7 @@
               5254 7634 8734 7690
             </div>
             <div class="text-primary q-ml-md text-weight-bold" @click="copyToClipboardFunc('5254 7634 8734 7690')">
-              copy
+              {{ $t('copy') }}
             </div>
           </div>
           <div class="q-mt-md row justify-between no-wrap" style="width: 315px;border-radius: 10px;">
@@ -44,7 +44,7 @@
               BBC BANK
             </div>
             <div class="text-primary q-ml-md text-weight-bold" @click="copyToClipboardFunc('BBC BANK')">
-              copy
+              {{ $t('copy') }}
             </div>
           </div>
         </div>

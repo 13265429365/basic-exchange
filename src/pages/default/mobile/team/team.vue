@@ -1,109 +1,100 @@
 <template>
   <div class="column full-height">
-    <div class="col page_bg q-pa-md ">
-      <div class="radius-8 q-px-md q-py-lg row" style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
-        <q-avatar size="50px">
-          <img src="https://cdn.quasar.dev/img/avatar.png">
-        </q-avatar>
-        <div class="q-ml-md text-subtitle1">
-          <div class="text-white text-weight-medium">Carla Schoen</div>
-          <div class="text-white text-weight-medium">{{ $t('teamBenefits') }} : +8971</div>
-        </div>
-      </div>
-
-      <div class="radius-8 bg-white q-px-md q-py-lg  q-mt-md">
-        <div class="text-color-3 text-black text-weight-bold">Beneficial Data</div>
-        <div class="row text-color-3 ">
-          <div class="col-4 q-pt-md" v-for="(i, index) in testData" :key="index">
-            <div class="text-weight-bold text-h6 text-center">{{ i.value }}</div>
-            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">{{ i.name
-            }}</div>
+    <div class="col page_bg column ">
+      <div class="radius-8 q-px-md q-py-lg row justify-between q-ma-md "
+        style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
+        <div class="row">
+          <q-avatar size="50px">
+            <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')"></q-img>
+          </q-avatar>
+          <div class="q-ml-md text-subtitle1">
+            <div class="text-white">
+              <span class="text-weight-medium">{{ userInfo.userName }}</span>
+              <span style="background: rgba(255, 255, 255, 0.12);padding: 3px 10px;"
+                class="radius-x text-caption q-ml-sm">LV{{ userInfo.Level }}</span>
+            </div>
+            <div class="text-white text-weight-medium">{{ $t('teamBenefits') + ':' + '+' + TeamMembers.teamEarnings }}
+            </div>
           </div>
         </div>
+        <div @click="$router.push('/team/earnings/index')" class="text-white">{{ $t('desc') }} <q-icon
+            name="chevron_right" size="16px" /></div>
       </div>
-
-      <div class="q-py-md row">
-        <div class="text-color-3 text-subtitle1 text-weight-bolder column col-3">
-          <span>Transactions</span>
-          <q-separator style="height: 4px;width: 20px;border-radius: 2px;" class="bg-primary self-center" />
+      <div class="bg-white col q-pa-md">
+        <div v-for="(TeamItem, listIndex) in TeamMembers.childUserList" :key="listIndex">
+          <div @click="Team({ id: TeamItem.id })" class="row justify-between bg-white q-py-md">
+            <div class="row">
+              <q-avatar size="32px">
+                <q-img :src="TeamItem.avatar ? imageSrc(TeamItem.avatar) : imageSrc('')"></q-img>
+              </q-avatar>
+              <div class="q-ml-md">
+                <div class="text-color-3 text-subtitle2 text-weight-medium">{{ TeamItem.username }}</div>
+                <div class="text-grey-6 text-caption text-weight-regular text-weight-regular">{{
+                  formatDate(TeamItem.createdAt) }}</div>
+              </div>
+            </div>
+            <div class="row justify-end">
+              <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ TeamItem.teamEarnings }}</div>
+              <q-icon class="self-center" name="chevron_right" size="22px" style="color: #999999;" />
+            </div>
+          </div>
+          <q-separator style="height: 1px;background: #F4F5FD;" />
         </div>
-      </div>
-
-      <div v-for="(transI, transIndex) in transactions" :key="transIndex"
-        class="row justify-between bg-white radius-8 q-pa-md q-mb-md">
-        <div>
-          <div class="text-color-3 text-subtitle2 text-weight-medium">{{ transI.name }}</div>
-          <div class="text-color-6 text-caption text-weight-regular text-weight-regular">{{ date.formatDate(transI.time *
-            1000, 'YYYY/MM/DD HH:mm:ss') }}</div>
+        <div v-if="TeamMembers.childUserList.length <= 0" class="q-py-md row justify-center">
+          暂无成员
         </div>
-        <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ transI.num }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from 'vue';
-import { date } from 'quasar';
-import { useRouter } from 'vue-router';
-import { formatDate, imageSrc } from 'src/utils/index'
-import { getTeam } from 'src/apis/user';
+import { onMounted, reactive, toRefs } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { UserStore } from 'src/stores/user';
+import { imageSrc, formatDate } from 'src/utils';
+import { getTeam } from 'src/apis/user';
 
-export default defineComponent({
-  name: 'teamBenefits',
+
+export default {
+  name: 'TeamIndex',
   setup(props: any, context: any) {
+    const $userStore = UserStore();
+    const { t } = useI18n();
+
     const state = reactive({
-      tab: 'mails',
-      testData: [
-        {
-          name: '邀请人数',
-          value: 26
-        },
-        {
-          name: '邀请收益',
-          value: 201.12
-        }, {
-          name: '购买总金额',
-          value: 126
-        }, {
-          name: '购买收益',
-          value: 2345
-        }, {
-          name: '利润总金额',
-          value: 88
-        }, {
-          name: '利润收益',
-          value: 201
-        }
-      ],
-      transactions: [{
-        time: 1626355200,
-        name: 'Carla Schoen',
-        num: 16
-      }, {
-        time: 1626355200,
-        name: 'Carla Schoen',
-        num: 16
-      }, {
-        time: 1626355200,
-        name: 'Carla Schoen',
-        num: 16
-      }, {
-        time: 1626355200,
-        name: 'Carla Schoen',
-        num: 16
-      }]
+      // 用户资料
+      userInfo: {} as any,
+
+      // 团队成员
+      TeamMembers: {
+        childUserList: [],
+      } as any,
     });
 
     context.emit('update', {
-      title: 'myTeam',
+      title: t('myTeam'),
     })
 
+    onMounted(() => {
+      state.userInfo = $userStore.userInfo
+      Team({ id: $userStore.userInfo.id })
+    })
+
+    // 获取用户团队详情
+    const Team = (params: any) => {
+      getTeam(params).then((res: any) => {
+        console.log(res);
+        state.TeamMembers = res.data
+      })
+    }
+
     return {
+      imageSrc,
+      formatDate,
       ...toRefs(state),
-      date,
+      Team,
     }
   }
-});
+};
 </script>

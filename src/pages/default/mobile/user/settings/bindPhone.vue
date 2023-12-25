@@ -1,40 +1,40 @@
 <template>
   <div>
     <div>
-      <div class="row justify-center q-mb-sm">
-        <div class="size24 text-weight-bold">Bind Phone Number</div>
+      <div class="row justify-center q-mt-lg q-mb-sm">
+        <div class="text-h6 text-weight-bold">{{ $t('bindTelephone') }}</div>
       </div>
       <div class="row justify-center q-px-lg">
-        Please enter your valid phone number. We will send you 4-digit code to verify account.
+        {{ $t('bindTelephoneSmall') }}
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
-          <div class="row no-wrap">
-            <q-select @update:modelValue="newValue($event)" v-model="areaCode" :options="options"
-              class="q-mb-md q-mr-sm select" standout>
-              <template v-slot:prepend>
-                <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
-                <q-icon name="keyboard_arrow_down" />
+          <div class="row no-wrap justify-between">
+            <q-btn-dropdown class="col-4 text-weight-regular" unelevated flat no-caps dropdown-icon="expand_more"
+              style="height: 50px;background: #f5f6fa;border-radius: 10px;color: #8F959E;">
+              <template v-slot:label>
+                <div class="row no-wrap items-center">
+                  <q-img :src="imageSrc(options[areaCodeIndex].icon ? options[areaCodeIndex].icon : '')" width="24px"
+                    height="16px" />
+                  <div class="q-ml-sm">+{{ options[areaCodeIndex].code }}</div>
+                </div>
               </template>
-              <template v-slot:option="scope">
-                <q-item v-bind="scope.itemProps">
-                  <q-item-section avatar>
-                    <q-img class="countryLogo" src="/images/default/china.png" @click.stop.prevent />
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>{{ scope.opt.label }}</q-item-label>
-                    <!-- <q-item-label caption>{{ scope.opt.value }}</q-item-label> -->
-                  </q-item-section>
+              <!-- 下拉 -->
+              <q-list style="min-width: 268px" class="q-py-sm">
+                <q-item @click="areaCodeIndex = i" v-for="(item, i) in options" :key="i" clickable v-close-popup
+                  class="row no-wrap items-center">
+                  <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
+                  <div>
+                    <div style="font-size: 16px;">{{ item.name }}</div>
+                  </div>
                 </q-item>
-              </template>
-              <template v-slot:append>
-                <div>+86</div>
-              </template>
-            </q-select>
-            <q-input placeholder="Enter phone number" class="q-mb-lg full-width" standout v-model="PhoneNumber" />
+              </q-list>
+            </q-btn-dropdown>
+            <q-input style="width: 64%;" :placeholder="$t('telephone')" class="q-mb-lg" standout
+              v-model="form.telephone" />
           </div>
-          <q-btn @click="toVerifyt()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
-            color="primary" label="Send Code" />
+          <q-btn @click="submit" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
+            color="primary" :label="$t('submit')" />
         </q-form>
       </div>
     </div>
@@ -42,31 +42,65 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
+import { imageSrc } from 'src/utils';
+import { InitStore } from 'src/stores/init';
 import { useRouter } from 'vue-router';
+import { UserStore } from 'src/stores/user';
+import { getUserInfo, updateInfo } from 'src/apis/user';
+import { NotifyPositive } from 'src/utils/notify';
+
 // 列表
 export default defineComponent({
   name: 'phoneAuthentication',
   setup() {
-    const router = useRouter();
-    let store = reactive({
-      toggle: false,
+    const $router = useRouter();
+    const $initStore = InitStore();
+    const $userStore = UserStore();
+
+    let state = reactive({
       options: [
-        { label: '+86', value: '中国' },
-        { label: '+866', value: '香港' },
-      ],
-      areaCode: '+86',
-      // 表单数据
-      PhoneNumber: '',
+        { icon: '' }
+      ] as any,
+      // 手机区号
+      areaCodeIndex: 0,
+
+      form: {} as any,
+
     })
+
+    onMounted(() => {
+      state.options = $initStore.countryList
+      UserInfo()
+    })
+
+    // 获取用户信息
+    const UserInfo = () => {
+      getUserInfo().then((res: any) => {
+        console.log('用户信息', res);
+        state.form = res.data
+        $userStore.updateUserInfo(res.data)
+        localStorage.setItem('userInfo', JSON.stringify(res.data))
+      })
+    }
+
+    // 执行接口
+    const submit = () => {
+      let params = {
+        telephone: state.form.telephone,
+      }
+      updateInfo(params).then((res: any) => {
+        console.log(res);
+        NotifyPositive('绑定成功')
+        UserInfo()
+        // $router.push({ name: 'UserIndex' })
+      })
+    }
+
     return {
-      ...toRefs(store),
-      newValue(newValue: void) {
-        console.log(newValue);
-      },
-      toVerifyt() {
-        router.push('verifyt')
-      },
+      imageSrc,
+      ...toRefs(state),
+      submit,
     }
   }
 })
@@ -94,4 +128,5 @@ export default defineComponent({
 
 :deep .q-select .q-field__append .q-icon {
   display: none;
-}</style>
+}
+</style>

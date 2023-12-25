@@ -2,11 +2,11 @@
   <div class="calc">
     <!-- 通用header(app.scss) -->
     <div class="pageHeader">
-      Settings
+      {{ $t('settings') }}
     </div>
     <div class="maxWidth1200">
       <div>
-        <div class="text-weight-bold text-h5">My Profile</div>
+        <div class="text-weight-bold text-h5">{{ $t('personalSetting') }}</div>
         <!-- row -->
         <div v-for="(item, i) in SettingList" :key="i" class="q-mt-lg">
           <div class="row no-wrap justify-between">
@@ -21,7 +21,7 @@
             </div>
             <div class="row items-center">
               <q-avatar v-if="item.avatar" style="width: 34px;height: 34px;">
-                <img src="https://cdn.quasar.dev/img/avatar.png">
+                <q-img :src="imageSrc(item.content ? item.content : '')"></q-img>
               </q-avatar>
               <div v-if="item.title == 'Gender'" class="text-weight-medium">
                 {{ item.text }}
@@ -29,13 +29,14 @@
               <div v-if="item.title == 'Birthday'" class="text-weight-medium">
                 {{ date.formatDate(item.content * 1000, 'YYYY-MM-DD') }}
               </div>
-              <div v-if="item.title != 'Gender' && item.title != 'Birthday'" class="text-weight-medium">{{
-                item.content }}
+              <div v-if="item.title != 'Gender' && item.title != 'Birthday' && item.title != 'Avatar'"
+                class="text-weight-medium">{{
+                  item.content }}
               </div>
 
             </div>
             <div class="row items-end">
-              <q-btn @click="show(item)" class="bg-grey-3" no-caps :label="item.btn"></q-btn>
+              <q-btn @click="show(item)" class="bg-grey-3" no-caps :label="$t(item.btn)"></q-btn>
             </div>
           </div>
           <q-separator class="q-mt-md" style="background: #F1F1F1;" />
@@ -78,25 +79,25 @@ export default defineComponent({
           title: 'Nickname',
           decs: 'Set a customized nickname for your profile.',
           content: '',
-          btn: 'Edit',
+          btn: 'edit',
           arguments: 'nickname',
           type: 'info',
           headTitle: 'Edit Nickname',
         },
-        // {
-        //   title: 'Avatar',
-        //   decs: 'Select an avatar to personalize your account.',
-        //   avatar: '1',
-        //   btn: 'Change',
-        //   arguments: 'avatar',
-        //   type: 'info',
-        //   headTitle: 'Edit Avatar',
-        // },
+        {
+          title: 'Avatar',
+          decs: 'Select an avatar to personalize your account.',
+          avatar: '1',
+          btn: 'edit',
+          arguments: 'avatar',
+          type: 'info',
+          headTitle: 'Edit Avatar',
+        },
         {
           title: 'Gender',
           decs: 'Select your gender.',
           content: '',
-          btn: 'Edit',
+          btn: 'edit',
           arguments: 'sex',
           type: 'info',
           headTitle: 'Edit Gender',
@@ -105,7 +106,7 @@ export default defineComponent({
           title: 'Birthday',
           decs: 'Select your birthday.',
           content: '',
-          btn: 'Edit',
+          btn: 'edit',
           arguments: 'birthday',
           type: 'info',
           headTitle: 'Edit Birthday',
@@ -114,7 +115,7 @@ export default defineComponent({
           title: 'Phone Number',
           decs: 'Set a phonenumber for your profile.',
           content: '',
-          btn: 'Edit',
+          btn: 'edit',
           arguments: 'telephone',
           type: 'info',
           headTitle: 'Bind Phone Number',
@@ -123,7 +124,7 @@ export default defineComponent({
           title: 'E-mail',
           decs: 'Set a E-mail for your profile.',
           content: '',
-          btn: 'Edit',
+          btn: 'edit',
           arguments: 'email',
           type: 'info',
           headTitle: 'Enter Email',
@@ -131,16 +132,16 @@ export default defineComponent({
         {
           title: 'Password',
           decs: 'Set a password for your profile.',
-          btn: 'Change',
-          arguments: 'oldPassword',
+          btn: 'edit',
+          arguments: 'password',
           type: 'secure',
           headTitle: 'Edit Password',
         },
         {
           title: 'Secret Key',
           decs: 'Set a Secret Key for your profile.',
-          btn: 'Change',
-          arguments: 'oldPassword',
+          btn: 'edit',
+          arguments: 'secretKey',
           type: 'secure',
           headTitle: 'Edit Secret Key',
         },

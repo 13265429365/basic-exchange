@@ -5,14 +5,14 @@
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img :src="imageSrc('')" width="40PX" height="28px"></q-img>
-        <div class="q-ml-md"> {{ $route.query.type == 'add' ? 'Add New Card' : 'Edit Card' }}</div>
+        <div class="q-ml-md"> {{ $route.query.type == 'add' ? $t('create') : $t('edit') }}</div>
       </div>
 
       <!--  -->
       <div class="col full-width q-pa-lg">
         <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-px-md" style="border-radius: 2px;
 background: #F8F9FC;">
-          Account Type
+          {{ $t('type') }}
         </div>
 
         <!-- 卡类型选择 -->
@@ -31,7 +31,7 @@ background: #F8F9FC;">
         <!--  -->
         <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-mt-lg q-px-md" style="border-radius: 2px;
 background: #F8F9FC;">
-          Basic Information
+          {{ $t('depositAccountInfo') }}
         </div>
 
 

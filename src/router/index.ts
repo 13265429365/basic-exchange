@@ -66,6 +66,8 @@ export default route(async function ({ store, ssrContext }) {
   store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
   store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
   store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : 'zh-CN';
+  // $cookies.set(UserLangKey, store.state.value.init.userLang)
+
 
   // 每次刷新初始化userinfo
   const local: string | null = LocalStorage.getItem('userInfo');
@@ -88,7 +90,7 @@ export default route(async function ({ store, ssrContext }) {
 
   // userInit   //获取初始化数据
   userInit(params).then((res: any) => {
-    // console.log('初始化数据', res)
+    console.log('初始化数据', res)
 
     // 初始化语言
     res.data.translate.forEach((element: any) => {
