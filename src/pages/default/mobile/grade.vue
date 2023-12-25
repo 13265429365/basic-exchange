@@ -52,7 +52,7 @@
 <script lang="ts">
 import { onMounted, reactive, toRefs } from 'vue';
 import { getLevel, orderLevel } from 'src/apis/user';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { NotifyPositive, NotifyNegative } from 'src/utils/notify';
 import { UserStore } from 'src/stores/user';
 import { getUserInfo } from 'src/apis/user';

@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-
 // 初始化数据
 export const UserStore = defineStore('user', {
   state: () => ({

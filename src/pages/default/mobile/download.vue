@@ -20,7 +20,7 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import { date } from 'quasar';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 
 

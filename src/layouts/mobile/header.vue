@@ -20,7 +20,7 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
-import { assiginRecursion } from 'src/utils/object';
+import { assignRecursion } from 'src/utils/object';
 
 export default {
   name: 'LayoutsHeader',
@@ -47,7 +47,7 @@ export default {
 
     //  更新Header数据方法
     const updateHeaderDataFunc = (data: any) => {
-      state.data = assiginRecursion(state.data, data);
+      state.data = assignRecursion(state.data, data);
     };
 
     return {
