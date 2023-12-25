@@ -2,7 +2,7 @@ import { useRouter } from 'vue-router';
 import { date } from 'quasar'
 
 // 图片处理方法
-export const imageSrc = (url: string) => {
+export const imageSrc = (url: any) => {
   if (url === '') {
     url = '/images/logo.png';
   }
@@ -15,7 +15,7 @@ export const imageSrc = (url: string) => {
 };
 
 // 图标方法
-export const iconSrc = (icon: string) => {
+export const iconSrc = (icon: any) => {
   return icon.indexOf('/') > -1 ? 'img:' + icon : icon;
 };
 

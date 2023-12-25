@@ -111,7 +111,7 @@ export default defineComponent({
       state.rows = []
       const params = {
         // assetsId: {},
-        types: [],
+        types: [1, 11],
         pagination: {
           rowsPerPage: Number(state.pagination.rowsPerPage), //  n条/一页
           page: Number(state.pagination.page), //  当前页数
