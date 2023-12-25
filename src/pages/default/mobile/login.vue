@@ -18,7 +18,7 @@
       <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('')}`" />
     </div>
     <div class="row justify-center">
-      <div class="text-weight-bold" style="font-size: 24px">Welcome Back</div>
+      <div class="text-weight-bold text-h6">{{ $t('loginSmall') }}</div>
     </div>
 
     <q-form class="q-mt-lg q-px-lg">
@@ -49,7 +49,7 @@
         </template>
         <template v-slot:append>
           <q-img no-spinner v-if="params.captchaId !== ''"
-            :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/200-50')" width="120px" height="32px"
+            :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/100-50')" width="100px" height="50px"
             @click="refreshCaptchaFunc"></q-img>
         </template>
       </q-input>
@@ -58,7 +58,7 @@
       <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
       <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
         color="primary" :label="$t('login')" />
-      <div @click="$router.push({ name: 'UserRegister' })" v-if="loginSetting.showRegister"
+      <div @click="$router.push({ name: 'UserRegister' })" v-if="loginSetting.login.showRegister"
         class="text-center text-primary q-mb-xl cursor-pointer">
         {{ $t('toRegister') }}
       </div>
@@ -66,15 +66,9 @@
   </div>
 
   <!-- 客服图标 -->
-  <q-page-sticky v-if="loginSetting.online.showLogin" position="bottom-right" :offset="[18, 18]">
-    <q-fab style="width: 56px;height: 56px;" hide-icon>
-      <template v-slot:label>
-        <q-avatar class="full-width full-height">
-          <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
-        </q-avatar>
-      </template>
-    </q-fab>
-  </q-page-sticky>
+  <q-avatar class="fixed-bottom-right q-mb-md q-mr-md">
+    <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
+  </q-avatar>
 </template>
 
 <script lang="ts">
@@ -82,9 +76,9 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
-import { userLogin, getUserInfo } from 'src/apis/user';
+import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { InitStore, InitStoreState } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 import { NotifyPositive } from 'src/utils/notify';
 
 export default defineComponent({
@@ -98,36 +92,26 @@ export default defineComponent({
 
     const state = reactive({
       // 登录配置
-      loginSetting: {
-        lang: {
-          showLogin: true
-        },
-        online: {
-          showLogin: true
-        },
-        login: {
-          showVerify: false,
-        }
-      } as any,
+      loginSetting: $initStore.config.settings as any,
 
       // 客服图标
-      onlineIcon: '',
+      onlineIcon: $initStore.config.onlineIcon as any,
 
       // 是否显示密码
       isPwd: false,
 
       params: {
-        username: '',
-        password: '',
+        username: '', //用户名
+        password: '', //密码
         captchaId: '', //验证Id
         captchaVal: '', // 验证码
       },
     });
+    console.log($initStore);
+
 
     onMounted(() => {
       refreshCaptchaFunc();
-      state.loginSetting = $initStore.config.settings
-      state.onlineIcon = $initStore.config.onlineIcon
     });
 
     // 获取验证码
@@ -161,14 +145,4 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-:deep(.q-fab > a) {
-  padding: 0;
-
-  .q-fab__label {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    max-height: 100%;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

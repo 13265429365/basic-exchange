@@ -5,7 +5,6 @@
         v-for="(lang, langIndex) in initStore.languageList" :key="langIndex" clickable v-close-popup aria-hidden="true">
         <q-item-section avatar>
           <q-img width="24px" height="24px" :src="imageSrc(lang.icon)" />
-
         </q-item-section>
         <q-item-section>{{ lang.name }}</q-item-section>
       </q-item>
@@ -20,7 +19,7 @@ import { InitStore } from 'src/stores/init';
 
 export default defineComponent({
   name: 'SwitchLanguage',
-  setup() {
+  setup(props: any, context: any) {
     const $initStore = InitStore()
     const state = reactive({})
 

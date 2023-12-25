@@ -4,8 +4,8 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-icon name="o_swap_horiz" />
-        <div>{{ $t('language') }}</div>
+        <q-img class="q-mr-sm" :src="imageSrc(lang.icon ? lang.icon : '')"></q-img>
+        <div>{{ lang.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
     </q-toolbar>
@@ -15,10 +15,10 @@
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('/images/logo.png')}`" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('')}`" />
     </div>
     <div class="row justify-center">
-      <div class="text-h5 text-weight-bold">{{ $t('registerSmall') }}</div>
+      <div class="text-h6 text-weight-bold">{{ $t('registerSmall') }}</div>
     </div>
 
     <q-form class="q-mt-lg q-px-lg">
@@ -69,7 +69,7 @@
         </template>
         <template v-slot:append>
           <q-img no-spinner v-if="params.captchaId !== ''"
-            :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/200-50')" width="120px" height="32px"
+            :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/100-50')" width="100px" height="50px"
             @click="refreshCaptchaFunc"></q-img>
         </template>
       </q-input>
@@ -95,7 +95,8 @@
           style="height: 50px;background: #f5f6fa;border-radius: 10px;color: #8F959E;">
           <template v-slot:label>
             <div class="row no-wrap items-center">
-              <q-img :src="imageSrc(options[areaCodeIndex].icon)" width="24px" height="16px" />
+              <q-img :src="imageSrc(options[areaCodeIndex].icon ? options[areaCodeIndex].icon : '')" width="24px"
+                height="16px" />
               <div class="q-ml-sm">+{{ options[areaCodeIndex].code }}</div>
             </div>
           </template>
@@ -124,15 +125,9 @@
   </div>
 
   <!-- 客服图标 -->
-  <q-page-sticky v-if="registerSetting.online.showRegister" position="bottom-right" :offset="[18, 18]">
-    <q-fab style="width: 56px;height: 56px;" hide-icon>
-      <template v-slot:label>
-        <q-avatar class="full-width full-height">
-          <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
-        </q-avatar>
-      </template>
-    </q-fab>
-  </q-page-sticky>
+  <q-avatar class="fixed-bottom-right q-mb-md q-mr-md">
+    <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
+  </q-avatar>
 </template>
 
 <script lang="ts">
@@ -155,22 +150,12 @@ export default defineComponent({
     const $initStore = InitStore();
 
     let state = reactive({
+      // 
+      // langIcon: '',
+      lang: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) ? $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) : '',
+
       // 注册配置
-      registerSetting: {
-        lang: {
-          showLogin: true
-        },
-        register: {
-          showEmail: false,
-          showCmfPass: false,
-          showVerify: false,
-          showSecurityPass: false,
-          showTelephone: false,
-        },
-        online: {
-          showRegister: true
-        },
-      } as any,
+      registerSetting: $initStore.config.settings as any,
 
       // 客服图标
       onlineIcon: $initStore.config.onlineIcon,
@@ -180,7 +165,7 @@ export default defineComponent({
       isPwd2: true,
 
       // 地区选择
-      options: [] as any,
+      options: $initStore.countryList as any,
 
       // 确认密码
       password: '',
@@ -190,22 +175,19 @@ export default defineComponent({
 
       //
       params: {
-        username: '',
-        password: '',
+        username: '', //用户名
+        password: '', //密码
         captchaId: '', //验证id
         captchaVal: '', // 验证码
-        email: '',
-        telephone: '',
-        securityKey: '',
-        code: ''
+        email: '', //邮箱
+        telephone: '', //电话
+        securityKey: '', //秘钥
+        code: '', //邀请码
       }
     });
-
-    // 获取国家列表
-    state.options = $initStore.countryList
+    console.log($initStore.languageList);
 
     onMounted(() => {
-      state.registerSetting = $initStore.config.settings
       refreshCaptchaFunc();
     })
 
@@ -248,15 +230,5 @@ export default defineComponent({
 .q-img {
   width: 24px;
   height: 24px;
-}
-
-:deep(.q-fab > a) {
-  padding: 0;
-
-  .q-fab__label {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    max-height: 100%;
-  }
 }
 </style>

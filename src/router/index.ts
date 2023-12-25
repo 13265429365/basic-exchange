@@ -54,6 +54,7 @@ export default route(async function ({ store, ssrContext }) {
 
   // 请求初始化数据
   const $platform = process.env.SERVER ? Platform.parseSSR(ssrContext) : Platform;
+
   if (process.env.SERVER) {
     const $cookies = Cookies.parseSSR(ssrContext);
     store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
@@ -61,7 +62,7 @@ export default route(async function ({ store, ssrContext }) {
     store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : '';
 
     //获取初始化数据
-    await userInit({domain: '', lang: store.state.value.init.userLang}).then((res: any) => {
+    await userInit({ domain: '', lang: store.state.value.init.userLang }).then((res: any) => {
       //  初始化配置
       store.state.value.init.config = res.config
 
@@ -85,6 +86,7 @@ export default route(async function ({ store, ssrContext }) {
 
       // 初始化语言列表
       store.state.value.init.languageList = res.languageList
+
     });
   }
 

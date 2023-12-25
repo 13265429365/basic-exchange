@@ -108,15 +108,9 @@ export const InitStore = defineStore('init', {
   },
   getters: {},
   actions: {
-    // 更新初始化数据
-    updateInit(list: any) {
-      Object.assign(this, list)
-    },
-
     //  更新用户Token和语言
     updateUserToken(token: string) {
       this.userToken = token;
-      console.log('更新了token');
       Cookies.set(UserTokenKey, token, { expires: '30d 3h 5m' });
     },
 
@@ -129,10 +123,7 @@ export const InitStore = defineStore('init', {
     //  删除用户Token
     removeUserToken() {
       this.userToken = ''
-      this.userLang = ''
-      console.log('删除了token');
       Cookies.remove(UserTokenKey);
-      Cookies.remove(UserLangKey);
     },
   },
 });
