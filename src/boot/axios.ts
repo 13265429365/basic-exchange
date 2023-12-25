@@ -54,8 +54,9 @@ api.interceptors.response.use(
 
     if (res.hasOwnProperty('code')) {
       if (res.code === 0) {
-        return res;
+        return res.data;
       }
+
       NotifyNegative(res.msg);
       return Promise.reject(res.msg);
     } else {

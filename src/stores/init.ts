@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Cookies, Quasar } from 'quasar';
+import { Cookies } from 'quasar';
 
 export const UserTokenKey = '_UserToken';
 export const UserLangKey = '_UserLang';
@@ -11,7 +11,7 @@ export const InitStoreState = {
   //  用户语言
   userLang: '' as any,
 
-  //  tabbars 菜单（桌面header左侧）
+  //  tabBars 菜单（桌面header左侧）
   tabBars: [] as menuInterface[],
 
   // 用户菜单(桌面左侧menu)

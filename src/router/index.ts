@@ -1,11 +1,9 @@
 import { route } from 'quasar/wrappers';
-import { UserTokenKey, InitStoreState, InitStore, UserLangKey } from 'src/stores/init';
-import { UserStore } from 'src/stores/user';
+import { UserTokenKey, InitStoreState, UserLangKey } from 'src/stores/init';
 import { Cookies, Platform } from 'quasar';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
-import { userInit } from 'src/apis/index';
-import { LocalStorage } from 'quasar'
+import { userInit } from 'src/apis';
 
 import {
   createMemoryHistory,
@@ -39,11 +37,6 @@ export const enUS = {} as any
 export const ch = {} as any
 
 export default route(async function ({ store, ssrContext }) {
-  // 获取init方法
-  const $initStore = InitStore();
-  // 获取user方法
-  const $userStore = UserStore();
-  // 
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history'
@@ -58,60 +51,47 @@ export default route(async function ({ store, ssrContext }) {
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
   });
+
   // 请求初始化数据
-  const $cookies = process.env.SERVER ? Cookies.parseSSR(ssrContext) : Cookies;
-  const $platform = process.env.SERVER
-    ? Platform.parseSSR(ssrContext)
-    : Platform;
-  store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
-  store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
-  store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : 'zh-CN';
-  // $cookies.set(UserLangKey, store.state.value.init.userLang)
+  const $platform = process.env.SERVER ? Platform.parseSSR(ssrContext) : Platform;
+  if (process.env.SERVER) {
+    const $cookies = Cookies.parseSSR(ssrContext);
+    store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
+    store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
+    store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : '';
 
+    //获取初始化数据
+    await userInit({domain: '', lang: store.state.value.init.userLang}).then((res: any) => {
+      //  初始化配置
+      store.state.value.init.config = res.config
 
-  // 每次刷新初始化userinfo
-  const local: string | null = LocalStorage.getItem('userInfo');
-  if (local != null) {
-    $userStore.updateUserInfo(JSON.parse(local))
+      // 初始化TabBar菜单
+      store.state.value.init.tabBars = res.tabBars
 
-  }
+      // 初始化用户菜单
+      store.state.value.init.userMenu = res.userMenu
 
-  // 每次刷新初始化init
-  const init: string | null = LocalStorage.getItem('init');
-  if (init != null) {
-    $initStore.updateInit(JSON.parse(init))
-  }
+      // 初始化首页菜单
+      store.state.value.init.homeMenu = res.homeMenu
 
-  // 请求接口获取菜单
-  const params = {
-    domain: '192.168.229.1',
-    lang: store.state.value.init.userLang,
-  }
+      // 初始化快捷菜单
+      store.state.value.init.quickMenu = res.quickMenu
 
-  // userInit   //获取初始化数据
-  userInit(params).then((res: any) => {
-    console.log('初始化数据', res)
+      // 初始化翻译数据
+      store.state.value.init.translate = res.translate
 
-    // 初始化语言
-    res.data.translate.forEach((element: any) => {
-      if (element.label != '') {
-        enUS[element.label] = element.label
-        ch[element.label] = element.value
-      }
+      // 初始化国家列表
+      store.state.value.init.countryList = res.countryList
+
+      // 初始化语言列表
+      store.state.value.init.languageList = res.languageList
     });
-
-    // 初始化init
-    $initStore.updateInit(res.data)
-    LocalStorage.set('init', JSON.stringify(res.data))
-
-
-  });
+  }
 
   //  动态加载路由
   dynamicRouterFunc(
     Router,
     templateRoutes.get(store.state.value.init.config.template),
-    // templateRoutes.get('default'),
     <boolean>$platform.is.mobile
   );
 

@@ -6,10 +6,18 @@
 import { defineComponent } from 'vue';
 import { useMeta } from 'quasar';
 import { InitStore } from 'src/stores/init';
+import {imageSrc} from 'src/utils';
+import {useI18n} from 'vue-i18n';
+import {setLanguageFunc} from 'boot/i18n';
+
 export default defineComponent({
   name: 'App',
   created: () => {
     const $initStore = InitStore();
+    const $i18n = useI18n()
+
+    // 初始化国际化语言
+    setLanguageFunc($i18n, $initStore.translate, $initStore.userLang)
 
     //  设置客户端Meta信息
     const metaData = {
@@ -23,7 +31,7 @@ export default defineComponent({
       link: {
         material: {
           rel: 'icon',
-          href: process.env.baseURL + $initStore.config.logo,
+          href: imageSrc($initStore.config.logo),
           type: 'image/png',
         },
       },
