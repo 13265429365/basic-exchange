@@ -44,7 +44,7 @@ import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 // import { useRouter } from 'vue-router';
 // 列表
 export default defineComponent({
-  name: 'updatePassword',
+  name: 'EditSecretKey',
   setup(props: any, context: any) {
     const $router = useRouter();
     const { t } = useI18n();

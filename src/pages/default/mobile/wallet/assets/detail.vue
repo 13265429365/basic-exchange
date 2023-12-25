@@ -104,7 +104,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
@@ -117,7 +116,6 @@ export default defineComponent({
   setup(props: any, context: any) {
     const $initStore = InitStore()
     const $userStore = UserStore()
-    const $router = useRouter();
     const { t } = useI18n()
 
     const state = reactive({

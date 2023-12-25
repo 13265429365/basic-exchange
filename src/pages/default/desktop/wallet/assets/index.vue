@@ -54,7 +54,8 @@
               </div>
 
               <div class="row justify-between q-mt-md">
-                <q-btn :to="Assets.route" class="text-primary" rounded no-caps
+                <q-btn @click="$router.push({ name: 'AssetsDetail', query: { id: Assets.id, icon: Assets.icon } })"
+                  :to="Assets.route" class="text-primary" rounded no-caps
                   style="width: 110px;height: 34px;background: rgba(1,172,102,0.1);" :label="$t('more')"></q-btn>
               </div>
             </div>
@@ -87,26 +88,25 @@
       <!-- 表格 horizontal -->
       <q-table class="q-mt-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
         <template v-slot:top>
-          <div class="row justify-between full-width">
+          <div class="row no-wrap justify-between full-width">
             <!-- 左侧tabs -->
             <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-              <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Transactions"
-                label="Transactions" />
-              <q-tab class="text-primary q-pa-none" style="justify-content: flex-start !important;" name="Bill Detail"
-                label="Bill Detail" />
+              <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
+                name="Transactions" label="Transactions" />
+              <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
+                name="Bill Detail" label="Bill Detail" />
             </q-tabs>
 
             <!-- 右侧 -->
-            <div class="q-pr-md">
+            <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
               <!-- 选择 -->
-              <q-btn class="bg-grey-1 text-color-6" no-caps rounded style="border: 1px solid #DDDDDD">
+              <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
                 <div class="q-mr-xs">全部</div>
                 <q-icon name="expand_more"></q-icon>
               </q-btn>
 
               <!-- 日期选择 -->
-              <q-btn class="bg-grey-1 text-color-6 q-ml-md" no-caps rounded
-                style="border: 1px solid #DDDDDD;width: auto;">
+              <q-btn class="bg-grey-1 row no-wrap q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
                 <div class="row items-center">
                   <div class="q-mr-xs">{{ dates.from }}</div>
                   <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
@@ -117,7 +117,7 @@
                   <q-date v-model="dates" range>
                     <div class="row items-center justify-end q-gutter-sm">
                       <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                      <q-btn @click="getBill" :label="$t('confirm')" color="primary" flat v-close-popup />
+                      <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
                     </div>
                   </q-date>
                 </q-popup-proxy>
@@ -129,21 +129,21 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td>
-              {{ date.formatDate(Number(props.row.createdAt * 1000), 'YYYY-MM-DD') }}
+              {{ date.formatDate(Number(props.row.createdAt ? props.row.createdAt * 1000 : props.row.updatedAt * 1000),
+                'YYYY-MM-DD')
+              }}
             </q-td>
             <q-td>
-              <div
-                :class="[{ 'text-primary': props.row.name.indexOf('充值') > -1 }, { 'text-red': props.row.name.indexOf('提现') > -1 }]">
+              <div class="text-primary">
                 {{ props.row.name }}
               </div>
             </q-td>
-            <q-td
-              :class="[{ 'text-primary': props.row.name.indexOf('充值') > -1 }, { 'text-red': props.row.name.indexOf('提现') > -1 }]">
-              {{ props.row.name.indexOf('充值') > -1 ? '+$' + props.row.money : '-$' + props.row.money }}
+            <q-td>
+              +${{ props.row.money }}
             </q-td>
             <q-td class="row justify-between items-center">
               <div>
-                {{ '$' + props.row.balance }}
+                ${{ props.row.balance ? props.row.balance : props.row.fee }}
               </div>
               <div>
                 <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
@@ -184,8 +184,7 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { UserStore } from 'src/stores/user';
 import * as echarts from 'echarts'
-import { lineOption, lineThirty } from './ts/data';
-import { userGetAssets, userGetBill } from 'src/apis/wallets';
+import { userGetAssets, userGetBill, userGetOrder } from 'src/apis/wallets';
 import { imageSrc } from 'src/utils/index';
 import { date } from 'quasar'
 
@@ -230,8 +229,10 @@ export default defineComponent({
         { name: '近30日' },
       ],
       lineType: '近7日' as any,
+
       // 折线图echarts
-      lineOption,
+      lineOption: {} as any,
+      lineThirty: {} as any,
 
       // table数据
       columns: [
@@ -245,8 +246,7 @@ export default defineComponent({
       rows: [] as any,
     });
 
-
-    onMounted(async () => {
+    onMounted(() => {
       // 预设查询时间
       state.dates.from = date.formatDate(Date.now() - 86400000, 'YYYY-MM-DD')
 
@@ -257,8 +257,8 @@ export default defineComponent({
       lineChart.setOption(state.lineOption)
 
       // 执行api
-      await getAssets()
-      getBill()
+      getAssets()
+      getOrder()
     })
 
 
@@ -267,16 +267,42 @@ export default defineComponent({
       userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
         state.form = res.data
+        console.log(state.form);
+
       })
     }
 
 
+    // 切换成获取钱包订单
+    const switchOrder = () => {
+      state.pagination = {
+        rowsPerPage: 5, //  n条/一页
+        page: 1, //  当前页数
+        descending: true,
+        sortBy: 'created_at',
+      }
+      getOrder()
+    }
+
+    // 切换成获取钱包订单
+    const switchBill = () => {
+      state.pagination = {
+        rowsPerPage: 5, //  n条/一页
+        page: 1, //  当前页数
+        descending: true,
+        sortBy: 'created_at',
+      }
+      getBill()
+    }
+
     // 获取用户账单列表
     const getBill = () => {
+      state.tab = 'Bill Detail'
+
       const params = {
         createdAt: {
-          from: date.formatDate(Number(state.dates.from) - 86400 * 2, 'X'),
-          to: date.formatDate(Number(state.dates.to), 'X'),
+          from: date.formatDate(state.dates.from, 'x'),
+          to: date.formatDate(state.dates.to, 'x'),
         },
         types: [],
         pagination: {
@@ -297,12 +323,39 @@ export default defineComponent({
       })
     }
 
+    // 获取钱包订单
+    const getOrder = () => {
+      state.tab = 'Transactions'
+      state.rows = []
+      const params = {
+        // assetsId: {},
+        types: [2, 12],
+        pagination: {
+          rowsPerPage: Number(state.pagination.rowsPerPage), //  n条/一页
+          page: Number(state.pagination.page), //  当前页数
+          descending: state.pagination.descending,
+          sortBy: state.pagination.sortBy,
+        },
+      }
+      userGetOrder(params).then((res: any) => {
+        console.log('钱包订单', res)
+        state.total = res.data.count
+        state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
+        res.data.items.forEach((element: any) => {
+          state.rows.push(element)
+        })
+      })
+    }
+
 
     // 监听加减页
     const changePagination = (val: number) => {
       console.log(`changePagination: ${val}`)
       state.pagination.page = val
-      getBill()
+
+      state.tab == 'Transactions' ?
+        getOrder() :
+        getBill()
     }
 
 
@@ -312,7 +365,10 @@ export default defineComponent({
 
       if (state.toPage <= (state.total / state.rows.length)) {
         state.pagination.page = Number(state.toPage)
-        getBill()
+
+        state.tab == 'Transactions' ?
+          getOrder() :
+          getBill()
       }
     }
 
@@ -321,15 +377,76 @@ export default defineComponent({
     const switchDate = (val: string) => {
       state.lineType = val
       if (val == '近7日') {
-        state.lineOption = lineOption
         const lineChart = echarts.init(document.getElementById('lineChart'))
         lineChart.setOption(state.lineOption)
       } else {
-        state.lineOption = lineThirty
         const lineChart = echarts.init(document.getElementById('lineChart'))
-        lineChart.setOption(state.lineOption)
+        lineChart.setOption(state.lineThirty)
       }
     }
+
+    state.lineOption = {
+      grid: {
+        show: false,
+        left: '4%',
+        top: '3%',
+        right: '2%',
+        // bottom: '0',
+        // containLabel: true,
+        // borderWidth: '1',
+      },
+      legend: {
+        data: ['钻石', 'BTC'],
+        // top: '0',
+        bottom: '5%',
+        itemStyle: {
+          color: 'rgba(0,0,0,0)', // 设置图例背景色为灰色
+          borderColor: 'rgba(0,0,0,0)', // 设置图例边框色为黑色
+        },
+      },
+      xAxis: {
+        type: 'category',
+        data: ['9/10', '9/11', '9/12', '9/13', '9/14', '9/15', '9/16',],
+      },
+      yAxis: {
+        type: 'value',
+        interval: 20, // 设置y轴间隔为50
+        axisLabel: {
+          interval: 80 // 设置标签间隔为500
+        },
+        axisTick: {
+          show: false // 设置为false即可取消y轴刻度线
+        },
+        splitLine: {
+          lineStyle: {
+            type: 'dashed' // 设置为'dashed'即可将x轴改为虚线
+          }
+        }
+      },
+      series: [
+        {
+          name: '钻石',
+          data: [0, 40, 80, 90, 40, 0, 90],
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          lineStyle: {
+            color: '#3F82FE' // 设置线条颜色为红色
+          },
+        },
+        {
+          name: 'BTC',
+          data: [30, 40, 20, 83, 42, 60, 100],
+          type: 'line',
+          smooth: true,
+          symbol: 'none',
+          lineStyle: {
+            color: '#01AC66' // 设置线条颜色为红色
+          },
+        },
+      ]
+    }
+    state.lineThirty = {}
 
     return {
       imageSrc,
@@ -339,6 +456,9 @@ export default defineComponent({
       refreshTableData,
       switchDate,
       getBill,
+      getOrder,
+      switchOrder,
+      switchBill,
     }
   }
 });

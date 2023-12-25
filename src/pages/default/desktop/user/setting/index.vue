@@ -44,12 +44,12 @@
       </div>
       <!--  -->
     </div>
-    <Edit ref="edit" @UserInfo="UserInfo"></Edit>
+    <update ref="edit" @UserInfo="UserInfo"></update>
   </div>
 </template>
 
 <script lang="ts">
-import Edit from './Edit/Edit.vue';
+import update from 'src/pages/default/desktop/user/setting/update.vue';
 
 import { defineComponent, reactive, toRefs, ref, onMounted, nextTick } from 'vue';
 import { imageSrc } from 'src/utils/index';
@@ -61,7 +61,7 @@ import { date } from 'quasar';
 export default defineComponent({
   name: 'userIndex',
   components: {
-    Edit,
+    update,
   },
 
   setup() {
