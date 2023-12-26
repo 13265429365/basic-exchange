@@ -58,7 +58,7 @@ export default route(async function ({ store, ssrContext }) {
   if (process.env.SERVER) {
     const $cookies = Cookies.parseSSR(ssrContext);
     store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
-    store.state.value.init.userToken = <string>$cookies.get(UserTokenKey);
+    store.state.value.init.userToken = <string>$cookies.get(UserTokenKey) ?? '';
     store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : '';
 
     //获取初始化数据

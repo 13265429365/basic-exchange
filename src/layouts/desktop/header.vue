@@ -57,12 +57,12 @@
         <div v-if="isLogin" class="row items-center no-wrap">
           <!-- 右侧Deposit -->
           <q-btn @click="$router.push({ name: 'Deposit' })" rounded flat dense no-wrap
-            class="bg-primary text-white q-mx-md q-px-md" no-caps :label="$t('deposit')"></q-btn>
+            class="bg-primary text-white q-px-md q-mx-sm" no-caps :label="$t('deposit')"></q-btn>
 
           <!-- 头像 -->
-          <q-btn class="q-mr-sm" round flat>
-            <q-avatar size="34px">
-              <q-img :src="imageSrc($userStore.userInfo.avatar ? $userStore.userInfo.avatar : '')"></q-img>
+          <q-btn class="q-mx-xs" round flat>
+            <q-avatar size="28px">
+              <q-img :src="imageSrc(userInfo.avatar)"></q-img>
             </q-avatar>
             <q-menu :offset="[160, 15]" class="q-pa-md">
               <q-list style="min-width: 218px;">
@@ -70,20 +70,20 @@
                 <q-item aria-hidden="true">
                   <div class="row no-wrap">
                     <q-avatar size="30px">
-                      <q-img :src="imageSrc($userStore.userInfo.avatar ? $userStore.userInfo.avatar : '')"></q-img>
+                      <q-img :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
                       <div class="row no-wrap">
-                        <span class="q-mr-sm">{{ $userStore.userInfo.userName }}</span>
-                        <span class="text-grey-7">{{ $userStore.userInfo.email }}</span>
+                        <span class="q-mr-sm">{{ userInfo.username }}</span>
+                        <span class="text-grey-7">{{ userInfo.email }}</span>
                       </div>
                       <div class="row no-wrap q-mt-sm">
                         <q-btn size="xs" icon="verified" rounded flat dense no-wrap class="q-px-sm q-mr-sm" no-caps
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
-                          <div style="font-size: 11px;">Lv{{ $userStore.userInfo.Level }}</div>
+                          <div style="font-size: 11px;">Lv{{ userInfo.level }}</div>
                         </q-btn>
                         <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps>
-                          <div style="font-size: 11px;">{{ $userStore.userInfo.authStatus ? $t('realNameFailed') :
+                          <div style="font-size: 11px;">{{ userInfo.authStatus ? $t('realNameFailed') :
                             $t('alreadyRealName') }}
                           </div>
                         </q-btn>
@@ -119,33 +119,26 @@
           </q-btn>
 
           <!-- 钱包 -->
-          <q-btn @click="$router.push({ name: 'Wallet' })" round dense flat color="grey-8"
-            icon="o_account_balance_wallet"></q-btn>
-
-          <!-- 消息 -->
-          <q-btn round dense flat color="grey-8" icon="o_notifications">
-            <q-badge color="red" text-color="white" rounded floating>
-              2
-            </q-badge>
-          </q-btn>
+          <q-btn @click="$router.push({ name: 'Wallet' })" round dense flat color="grey-8" size="16px"
+            icon="o_account_balance_wallet" class="q-mx-xs"></q-btn>
         </div>
 
         <!-- 未登录状态 -->
         <div v-else>
-          <q-btn @click="dialogOpenLogin(true)" rounded flat dense no-wrap class="bg-white text-grey-7 q-ml-md q-px-md"
+          <q-btn @click="dialogOpenLogin(true)" rounded flat dense no-wrap class="bg-white text-grey-8 q-px-md q-ml-sm"
             no-caps :label="$t('login')"></q-btn>
           <q-btn @click="dialogOpenRegister(true)" rounded flat dense no-wrap
-            class="bg-primary text-white q-mx-md q-px-md" no-caps :label="$t('register')"></q-btn>
+            class="bg-primary text-white q-px-md q-ml-sm" no-caps :label="$t('register')"></q-btn>
         </div>
-        <q-btn v-if="config.settings.lang.showHome" round dense flat color="grey-8" icon="o_language">
+        <q-btn v-if="config.settings.lang.showHome" round dense flat color="grey-8" size="16px" icon="o_language" class="q-mx-xs">
           <switchLanguage :offset="[0, 20]"></switchLanguage>
         </q-btn>
       </div>
 
     </q-toolbar>
 
-    <LoginPages ref="LoginRef" @updateLoginStatus="updateLoginStatus" @switchDialogFunc="switchDialogFunc"></LoginPages>
-    <RegisterPages ref="RegisterRef" @updateLoginStatus="updateLoginStatus" @switchDialogFunc="switchDialogFunc">
+    <LoginPages ref="LoginRef" @switchDialogFunc="switchDialogFunc"></LoginPages>
+    <RegisterPages ref="RegisterRef" @switchDialogFunc="switchDialogFunc">
     </RegisterPages>
   </div>
 </template>
@@ -157,10 +150,8 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { useRouter } from 'vue-router';
 import { reactive, toRefs, ref, watch } from 'vue';
 import { imageSrc } from 'src/utils';
-import { NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 import { UserStore } from 'src/stores/user';
-import { getUserInfo } from 'src/apis/user';
 
 export default {
   name: 'LayoutsHeader',
@@ -174,49 +165,27 @@ export default {
     const RegisterRef = ref(null) as any;
 
     const state = reactive({
+      userInfo: {avatar: '', username: '', email: '', level: 1, authStatus: 0},
+
       // 配置
       config: $initStore.config,
 
       //  是否登录
-      isLogin: $initStore.userToken,
+      isLogin: $initStore.userToken.length > 0,
 
       // 搜索框
       searchVal: '',
 
       //  左侧tabBar菜单
-      tabBarList: [] as any,
+      tabBarList: $initStore.tabBars,
 
       // 左侧快捷菜单
-      quickMenuList: [] as any,
+      quickMenuList: $initStore.quickMenu,
 
       // 右侧头像菜单
-      homeMenuList: [] as any,
+      homeMenuList: $initStore.homeMenu,
     });
-
-    watch(state, () => {
-      UserInfo()
-    })
-
-    // 左侧tabBar菜单
-    state.tabBarList = $initStore.tabBars;
-
-    // 左侧快捷菜单
-    state.quickMenuList = $initStore.quickMenu;
-
-    // 右侧头像菜单
-    state.homeMenuList = $initStore.homeMenu;
-
-
-    // 获取用户信息
-    const UserInfo = () => {
-      if (state.isLogin) {
-        getUserInfo().then((res: any) => {
-          $userStore.updateUserInfo(res)
-          localStorage.setItem('userInfo', JSON.stringify(res))
-        })
-      }
-    }
-
+    state.userInfo = $userStore.userInfo
 
     // dialogOpenFunc 打开登录
     const dialogOpenLogin = (showStatus: boolean) => {
@@ -236,18 +205,15 @@ export default {
 
     // 退出登录
     const Logout = async () => {
-      NotifyPositive('')
       await $initStore.removeUserToken()
       void $router.push({ name: 'HomeIndex' })
-      updateLoginStatus()
     }
 
-    // 更新登录状态
-    const updateLoginStatus = () => {
-      console.log($initStore.userToken);
-      state.isLogin = $initStore.userToken != '' && $initStore.userToken
-    }
-
+    // 监听用户Token
+    watch(() => [$initStore.userToken, $userStore.userInfo], ([userToken, userInfo]) => {
+      state.isLogin = userToken.length > 0
+      state.userInfo = userInfo
+    })
 
     return {
       imageSrc,
@@ -258,8 +224,6 @@ export default {
       dialogOpenRegister,
       switchDialogFunc,
       Logout,
-      updateLoginStatus,
-      $userStore
     };
   },
 };

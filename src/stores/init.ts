@@ -127,9 +127,6 @@ export const InitStore = defineStore('init', {
       this.userToken = ''
       Cookies.remove(UserTokenKey);
     },
-
-    // 切换当前选中语言的icon
-
   },
 });
 

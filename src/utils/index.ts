@@ -6,7 +6,8 @@ export const imageSrc = (url: any) => {
   if (url === '') {
     url = '/images/logo.png';
   }
-  if (url.indexOf('http') > -1) {
+
+  if (url && url.indexOf('http') > -1) {
     return url;
   }
 
