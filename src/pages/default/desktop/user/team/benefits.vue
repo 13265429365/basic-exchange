@@ -5,7 +5,7 @@
         {{ $t('teamBenefits') }}
       </div>
       <!-- 头像 -->
-      <div class="radius-8 q-pa-lg" style="border: 1px solid #DDDDDD;">
+      <div class="rounded-borders q-pa-lg" style="border: 1px solid #DDDDDD;">
         <!-- <q-scroll-area style="max-width: 942px;height: 60px;"> -->
         <div class="row no-wrap items-center">
           <div class="row no-wrap items-center q-mr-xl">
@@ -30,8 +30,8 @@
 
 
       <!-- 表格 -->
-      <q-table class="q-mt-lg q-pa-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="i" hide-bottom
-        hide-header>
+      <q-table class="q-mt-lg q-pa-lg no-shadow rounded-borders" bordered :rows="rows" :columns="columns" row-key="i"
+        hide-bottom hide-header>
         <template v-slot:top>
           <div class="text-h5 text-weight-medium">{{ $t('transactions') }}</div>
         </template>

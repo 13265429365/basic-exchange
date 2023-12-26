@@ -22,7 +22,7 @@
             border: `2px solid ${i == select ? '#01AC66' : '#F5F6FA'}`,
             backgroundColor: i == select ? 'rgba(1, 172, 102, 0.05)' : '#fff',
             height: '140px'
-          }" class="my-content radius-8 column justify-center items-center" @click="select = i">
+          }" class="my-content rounded-borders column justify-center items-center" @click="select = i">
             <div class="text-weight-bold" style="font-size: 16px;">{{ item.name }}</div>
             <div class="self-cneter q-mt-sm text-primary text-h5 text-weight-bold"><span class="text-h6 "> $</span>{{
               item.money
@@ -53,7 +53,6 @@
 import { onMounted, reactive, toRefs } from 'vue';
 import { getLevel, orderLevel } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { NotifyPositive, NotifyNegative } from 'src/utils/notify';
 import { UserStore } from 'src/stores/user';
 import { getUserInfo } from 'src/apis/user';
 import { useRouter } from 'vue-router';
@@ -94,11 +93,9 @@ export default {
     const OrderLevel = () => {
 
       if (state.select < $userStore.userInfo.Level) {
-        NotifyNegative('不能购买比自己等级低的会员')
         return false
       }
       orderLevel({ id: state.levelList[state.select].id }).then((res: any) => {
-        NotifyPositive('购买成功')
         UserInfo()
         console.log(res);
       })

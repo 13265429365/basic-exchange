@@ -8,7 +8,7 @@
     <div class="maxWidth1200">
       <div>
         <!-- 钱包余额 -->
-        <div class="background row items-center justify-between radius-8 q-pa-lg q-pr-xl">
+        <div class="background row items-center justify-between rounded-borders q-pa-lg q-pr-xl">
           <div class="row">
             <q-img class="q-mr-lg" :src="imageSrc($route.query.icon ? $route.query.icon : '')" width="66px"
               height="66px"></q-img>
@@ -134,7 +134,6 @@ import { imageSrc } from 'src/utils/index';
 import { UserStore } from 'src/stores/user';
 import { userGetOrder, userGetBill } from 'src/apis/wallets';
 import { date } from 'quasar'
-import { route } from 'quasar/wrappers';
 
 export default defineComponent({
   name: 'walletDetail',

@@ -39,7 +39,7 @@
       <!-- 店铺、交易管理 -->
       <div class="row justify-between q-mb-md btn">
         <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm radius-8" no-caps unelevated>
+          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ $t(quickMenu.name) }}</div>
@@ -49,7 +49,7 @@
 
 
       <!-- 列表 -->
-      <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md radius-8 no-border">
+      <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md rounded-borders no-border">
         <div v-for="(child, childKey) in item.children" :key="childKey" class="bg-white">
           <q-item @click="$router.push(child.route)" class="q-pa-md" clickable>
             <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
@@ -100,9 +100,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
-import { InitStore, InitStoreState } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 import { UserStore } from 'src/stores/user';
-import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils';
 import { getUserInfo } from 'src/apis/user';
 
@@ -158,7 +157,6 @@ export default defineComponent({
 
     // 退出登录
     const Logout = async () => {
-      NotifyPositive('退出成功')
       await $initStore.removeUserToken()
       localStorage.removeItem('userInfo')
       $router.push({ name: 'HomeIndex' })

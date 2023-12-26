@@ -39,7 +39,6 @@ import { defineComponent, reactive, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { updatePassword } from 'src/apis/user';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 
 // import { useRouter } from 'vue-router';
 // 列表
@@ -66,7 +65,6 @@ export default defineComponent({
       }
       updatePassword(params).then((res: any) => {
         console.log(res);
-        NotifyPositive('修改成功')
         $router.push({ name: 'UserIndex' })
       })
     }

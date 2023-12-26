@@ -1,7 +1,7 @@
 <template>
   <div class="column full-height">
     <div class="col page_bg column ">
-      <div class="radius-8 q-px-md q-py-lg row justify-between q-ma-md "
+      <div class="rounded-borders q-px-md q-py-lg row justify-between q-ma-md "
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <div class="row">
           <q-avatar size="50px">

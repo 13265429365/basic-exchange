@@ -106,8 +106,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import uploaderAvatar from 'src/components/uploaderAvatar.vue';
-import { updateInfo, updatePassword, getUserInfo } from 'src/apis/user';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { updateInfo, updatePassword } from 'src/apis/user';
 import { date } from 'quasar';
 import { imageSrc } from 'src/utils';
 
@@ -185,7 +184,6 @@ export default defineComponent({
         }
         updateInfo(params).then((res: any) => {
           console.log(res);
-          NotifyPositive('修改成功')
           state.show = false
           context.emit('UserInfo')
         })
@@ -194,7 +192,6 @@ export default defineComponent({
 
         // 修改密码
         if (state.form.oldPassword.length < 5 || state.form.newPassword.length < 5) {
-          NotifyNegative('密码长度: 5-28')
           return false
         }
         const params = {
@@ -209,7 +206,6 @@ export default defineComponent({
 
         updatePassword(params).then((res: any) => {
           console.log(res);
-          NotifyPositive('修改成功')
           state.show = false
         })
       }

@@ -1,7 +1,7 @@
 <template>
   <div class="column full-height" style="width: 100vw;">
     <div class="col page_bg column full-width " style=" background: linear-gradient(to right,  #14BF71,#82D880);">
-      <div class="radius-8 bg-white column items-center q-py-md" style="width: 90%;margin: 36px auto;">
+      <div class="rounded-borders bg-white column items-center q-py-md" style="width: 90%;margin: 36px auto;">
 
         <q-img :src="imageSrc('')" class="q-mt-lg" width="60px" height="60px" />
 
@@ -26,7 +26,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { copyToClipboard } from 'quasar';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
 import { getInvite } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
@@ -66,12 +66,8 @@ export default {
     // 复制方法
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
-        .then(() => {
-          NotifyPositive('复制成功！');
-        })
-        .catch(() => {
-          NotifyNegative('复制失败！');
-        });
+        .then(() => { })
+        .catch(() => { });
     };
     return {
       imageSrc,

@@ -36,7 +36,8 @@
 
       <!-- 添加按钮 -->
       <div style="border: 1px dashed #01AC66;height: 54px;background-color: rgba(1, 172, 102, 0.05);"
-        class="radius-8  column justify-center row" @click="$router.push({ name: 'AddCard', query: { type: 'add' } })">
+        class="rounded-borders  column justify-center row"
+        @click="$router.push({ name: 'AddCard', query: { type: 'add' } })">
         <div class="text-center text-primary text-weight-bold self-center row"> <q-icon size="20px" name="add"
             class="self-center" />Add Card
         </div>
@@ -50,10 +51,10 @@ import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { userGetCard, userDelCard } from 'src/apis/wallets';
-import { ConfirmPrompt, NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 
-export default {
+export default defineComponent({
   name: 'defaultCard',
   setup(props: any, context: any) {
     const { t } = useI18n(); // 获取t函数进行翻译  
@@ -91,7 +92,6 @@ export default {
     const delCard = () => {
       // 如果有安全码，必须输入安全码
       if (state.securityKey == '' && $initStore.config.settings.register.showSecurityPass) {
-        NotifyNegative('请输入秘钥')
         return false
       }
       let params = {
@@ -131,7 +131,7 @@ export default {
       Confirm
     }
   }
-};
+});
 </script>
 
 <style lang="scss" scoped>

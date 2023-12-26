@@ -3,7 +3,7 @@
     <div class="col page_bg q-pa-md full-width">
 
       <div style="height: 112px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);padding: 0 20px;"
-        class="row justify-between radius-8 q-mb-md">
+        class="row justify-between rounded-borders q-mb-md">
         <div class="column justify-center">
           <div class="row items-center">
             <div class="text-white">{{ $t('totalAssets') }}</div>
@@ -22,7 +22,7 @@
       <!-- 充值提现 -->
       <div class="row justify-between q-mb-md btn">
         <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm radius-8" no-caps unelevated>
+          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ $t(quickMenu.name) }}</div>
@@ -31,7 +31,7 @@
       </div>
 
       <!-- echarts -->
-      <div class="bg-white q-pa-md radius-8">
+      <div class="bg-white q-pa-md rounded-borders">
         <div class="text-weight-bold q-mb-lg">{{ $t('assetsBlock') }} </div>
         <div class="row justify-center q-mb-lg">
           <div @click="init(item.name)" v-for="(item, i) in typeList" :key="i"
@@ -85,7 +85,7 @@
       <!--  -->
       <div class="q-mt-md q-mb-sm text-weight-bold">资产账户</div>
       <div @click="$router.push({ name: 'AssetsDetail' })" v-for="(item, i) in form.userAssetsList" :key="i"
-        class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm radius-8">
+        class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">
         <div class="row items-center">
           <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(item.icon)" />
           <div class="text-weight-bold">{{ item.name }}</div>

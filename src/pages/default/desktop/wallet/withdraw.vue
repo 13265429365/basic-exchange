@@ -1,6 +1,6 @@
 <template>
   <div class="column" style="padding: 48px 244px;background: #F8F9FC;">
-    <div class="col column justify-between bg-white radius-8">
+    <div class="col column justify-between bg-white rounded-borders">
 
       <!-- 大标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
@@ -84,7 +84,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
 import { userGetCard, userWithdraw } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
@@ -145,28 +145,9 @@ export default {
       state.ActiveCardIndex = typeIndex
     }
 
-    const yesFun = (router: any) => {
-      state.alertPass = false;
-      // 密码正确
-      router.push({
-        name: 'showMessage',
-        state: {
-          params: JSON.stringify({
-            navTitle: 'withdrawal',
-            title: 'Submitted successfully',
-            content: 'Please be patient and keep an eye on the progress at any time',
-            yesBtn: 'OK',
-            logo: '/images/default/wait.png',
-            backUrl: '/info'
-          })
-        }
-      })
-    };
-
     return {
       imageSrc,
       ...toRefs(state),
-      yesFun,
       selectType,
       Withdraw,
     }

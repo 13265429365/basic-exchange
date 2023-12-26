@@ -10,7 +10,7 @@
 
         <!-- 银行卡 -->
         <!-- background: linear-gradient(90deg, #7474BF 0%, #348AC7 100%) -->
-        <div v-for="(card, cardIndex) in cardList" :key="cardIndex" class="q-mb-md q-mr-md radius-8"
+        <div v-for="(card, cardIndex) in cardList" :key="cardIndex" class="q-mb-md q-mr-md rounded-borders"
           style="height: 132px;width: 360px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);overflow: hidden;">
           <div class="cardTransparent row " style="padding: 15px 20px;">
             <q-img :src="imageSrc(card.icon)" width="40px" height="40px" />
@@ -89,7 +89,7 @@ import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { userGetCard, userDelCard } from 'src/apis/wallets';
-import { ConfirmPrompt, NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 
 export default defineComponent({
@@ -126,7 +126,6 @@ export default defineComponent({
     const delCard = () => {
       // 如果有安全码，必须输入安全码
       if (state.securityKey == '' && $initStore.config.settings.register.showSecurityPass) {
-        NotifyNegative('请输入秘钥')
         return false
       }
       let params = {

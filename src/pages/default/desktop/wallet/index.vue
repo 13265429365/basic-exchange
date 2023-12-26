@@ -8,7 +8,7 @@
     <div class="maxWidth1200">
       <div>
         <!-- 钱包余额 -->
-        <div class="background row items-center justify-between radius-8 q-pa-lg q-pr-xl">
+        <div class="background row items-center justify-between rounded-borders q-pa-lg q-pr-xl">
           <div class="row">
             <q-img class="q-mr-lg" :src="imageSrc('/assets/icon/menu/deposit.png')" width="66px" height="66px"></q-img>
             <div class="q-pt-sm">
@@ -47,7 +47,7 @@
               <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
                 <!-- 选择 -->
                 <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
-                  <div class="q-mr-xs">全部</div>
+                  <div class="q-mr-xs">all</div>
                   <q-icon name="expand_more"></q-icon>
                 </q-btn>
 
@@ -128,7 +128,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
 import { UserStore } from 'src/stores/user';
 import { userGetOrder, userGetBill } from 'src/apis/wallets';
@@ -138,7 +137,6 @@ export default defineComponent({
   name: 'walletIndex',
   setup() {
     const $userStore = UserStore()
-    const $router = useRouter();
 
     let state = reactive({
       //选择开始结束日期

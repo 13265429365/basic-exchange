@@ -82,7 +82,7 @@
 <script lang="ts">
 import uploader from 'src/components/uploader.vue';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 import { userAuth, getUserAuth } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
@@ -121,7 +121,6 @@ export default defineComponent({
 
     const submit = () => {
       if (state.form.photo1 == '' || state.form.photo2 == '') {
-        NotifyNegative('请上传证件照')
         return false
       }
       let params = {

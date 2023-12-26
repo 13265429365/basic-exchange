@@ -10,7 +10,7 @@
         <!-- 帮助列表 -->
         <div class="row q-col-gutter-md">
           <div class="col-3" v-for="( social, socialIndex ) in socialList" :key="socialIndex">
-            <div class="radius-8 column justify-center q-py-md bg-white cursor-pointer"
+            <div class="rounded-borders column justify-center q-py-md bg-white cursor-pointer"
               style="border: 1px solid #DDDDDD;height: 144px;">
               <q-img class="self-center" :src="imageSrc(social.icon)" width="56px" height="56px" />
               <div class="self-center text-body1 q-pt-sm text-weight-medium">{{ $t(social.name) }}</div>

@@ -18,7 +18,7 @@
 
     <div class="row q-col-gutter-md justify-center q-mt-xs">
       <div class="col-4 z-top" v-for="( social, socialIndex ) in socialList" :key="socialIndex">
-        <div class="radius-8 bg-white column items-center" style="padding: 20px 0;">
+        <div class="rounded-borders bg-white column items-center" style="padding: 20px 0;">
           <q-img :src="imageSrc(social.icon)" width="41px" height="41px" />
           <div class="text-body2 text-weight-medium q-mt-sm">{{ $t(social.name) }}</div>
         </div>
@@ -28,7 +28,7 @@
 
   <!-- 帮助中心列表 -->
   <div class="bg-grey-1 q-pb-xl">
-    <q-list class="q-ma-md bg-white text-black radius-8">
+    <q-list class="q-ma-md bg-white text-black rounded-borders">
       <q-card flat>
         <q-card-section>
           <div class="text-h6 text-weight-medium">FAQ</div>

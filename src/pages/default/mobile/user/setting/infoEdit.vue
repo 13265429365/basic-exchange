@@ -64,7 +64,6 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { getUserInfo, updateInfo } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
-import { NotifyPositive } from 'src/utils/notify';
 import uploaderAvatar from 'src/components/uploaderAvatar.vue';
 import { date } from 'quasar';
 import { useI18n } from 'vue-i18n'
@@ -130,7 +129,6 @@ export default defineComponent({
       }
       updateInfo(params).then((res: any) => {
         console.log(res);
-        NotifyPositive('修改成功')
         UserInfo()
       })
     }

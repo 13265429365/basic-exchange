@@ -18,7 +18,8 @@
         <div class="text-center q-mt-lg text-color-6" style="font-size: 20px;">Scan to Download the App</div>
         <div class="text-center q-mt-sm text-color-3" style="font-size: 28px;">iOS and Android</div>
         <div class="row justify-center q-mt-lg">
-          <div class="row no-wrap items-center q-py-md q-px-lg radius-8" style="color: #000;border: 1px solid #DDDDDD">
+          <div class="row no-wrap items-center q-py-md q-px-lg rounded-borders"
+            style="color: #000;border: 1px solid #DDDDDD">
             <div class="q-mr-sm">{{ inviteUrl }}</div>
             <q-icon @click="copyToClipboardFunc(inviteUrl)" class="text-color-3 cursor-pointer"
               name="content_copy"></q-icon>
@@ -32,7 +33,6 @@
 <script lang="ts">
 import { onMounted, reactive, toRefs } from 'vue';
 import { copyToClipboard } from 'quasar';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { getInvite } from 'src/apis/user';
 import QRCode from 'qrcode-svg-ts';
 
@@ -68,12 +68,8 @@ export default {
     // 复制方法
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
-        .then(() => {
-          NotifyPositive('复制成功！');
-        })
-        .catch(() => {
-          NotifyNegative('复制失败！');
-        });
+        .then(() => { })
+        .catch(() => { });
     };
     return {
       ...toRefs(state), copyToClipboardFunc

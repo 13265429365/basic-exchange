@@ -86,7 +86,6 @@ import { reactive, toRefs, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
 import { userPayment, userAddCard, userEditCard, userGetCardInfo } from 'src/apis/wallets';
-import { NotifyPositive } from 'src/utils/notify';
 
 
 export default {
@@ -174,7 +173,6 @@ export default {
         }
         userAddCard(params).then((res: any) => {
           console.log(res);
-          NotifyPositive('添加成功')
           $router.push({ name: 'AccountCard' })
         })
       } else {
@@ -188,7 +186,6 @@ export default {
         }
         userEditCard(params).then((res: any) => {
           console.log(res);
-          NotifyPositive('修改成功')
           $router.push({ name: 'AccountCard' })
         })
       }

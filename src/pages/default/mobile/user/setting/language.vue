@@ -24,7 +24,6 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils/index';
 import { useI18n } from 'vue-i18n'
@@ -49,7 +48,6 @@ export default defineComponent({
     const switchLang = async (language: any) => {
       // state.locale = language.Alias
       await $initStore.updateUserLang(language.Alias)
-      NotifyPositive('切换成功')
       // router.back()
       setTimeout(() => {
         location.reload()

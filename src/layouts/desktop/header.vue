@@ -96,7 +96,7 @@
 
                 <!-- 用户列表 -->
                 <q-item @click="$router.push(userMenu.route)" dense v-for="(userMenu, userMenuIndex) in homeMenuList"
-                  :key="userMenuIndex" clickable v-close-popup aria-hidden="true" class="q-py-md radius-8">
+                  :key="userMenuIndex" clickable v-close-popup aria-hidden="true" class="q-py-md rounded-borders">
                   <q-item-section avatar>
                     <q-img width="20px" height="20px" :src="imageSrc(userMenu.icon)"></q-img>
                   </q-item-section>
@@ -108,7 +108,7 @@
                 <q-separator inset />
 
                 <!-- 退出 -->
-                <q-item @click="Logout()" clickable v-close-popup aria-hidden="true" class="radius-8">
+                <q-item @click="Logout()" clickable v-close-popup aria-hidden="true" class="rounded-borders">
                   <q-item-section avatar>
                     <q-icon name="logout" />
                   </q-item-section>

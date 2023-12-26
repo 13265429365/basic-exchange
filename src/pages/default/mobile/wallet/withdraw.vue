@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
 import { userGetCard, userWithdraw } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';

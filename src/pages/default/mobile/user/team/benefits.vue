@@ -1,7 +1,8 @@
 <template>
   <div class="column full-height">
     <div class="col page_bg q-pa-md ">
-      <div class="radius-8 q-px-md q-py-lg row" style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
+      <div class="rounded-borders q-px-md q-py-lg row"
+        style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <q-avatar size="50px">
           <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')"></q-img>
         </q-avatar>
@@ -11,7 +12,7 @@
         </div>
       </div>
 
-      <div class="radius-8 bg-white q-px-md q-py-lg  q-mt-md">
+      <div class="rounded-borders bg-white q-px-md q-py-lg  q-mt-md">
         <div class="text-color-3 text-black text-weight-bold">Beneficial Data</div>
         <div class="row text-color-3 ">
           <div class="col-4 q-pt-md" v-for="(item, index) in TeamBenefit" :key="index">
@@ -30,7 +31,7 @@
       </div>
 
       <div v-for="(row, rowsIndex) in rows" :key="rowsIndex"
-        class="row justify-between bg-white radius-8 q-pa-md q-mb-md">
+        class="row justify-between bg-white rounded-borders q-pa-md q-mb-md">
         <div>
           <div class="text-color-3 text-subtitle2 text-weight-medium">{{ row.userName }}</div>
           <div class="text-color-6 text-caption text-weight-regular text-weight-regular">{{ date.formatDate(row.createdAt
@@ -39,8 +40,8 @@
         </div>
         <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ row.money }}</div>
       </div>
-      <div v-if="rows.length <= 0" class="row justify-center radius-8 q-pa-md q-mb-md">
-        暂无收益
+      <div v-if="rows.length <= 0" class="row justify-center rounded-borders q-pa-md q-mb-md">
+
       </div>
 
     </div>

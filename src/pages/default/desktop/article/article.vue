@@ -70,7 +70,7 @@
                     <div class="text-weight-medium text-grey-7 text-body2">{{ date.formatDate(item.createdAt * 1000,
                       'YYYY-MM-DD') }}</div>
                   </div>
-                  <q-img src="/images/new.png" class="radius-8" width="130px" height="76px" />
+                  <q-img src="/images/new.png" class="rounded-borders" width="130px" height="76px" />
                 </div>
                 <q-separator style="height: 2px;background: #DDDDDD;" inset class="q-my-md q-mx-none" />
               </div>

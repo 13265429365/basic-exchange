@@ -8,7 +8,7 @@
     <div class="maxWidth1200" style="min-width: 1160px;">
       <div>
         <!-- 总金额 -->
-        <div class="page_bg q-pa-md radius-8 row no-wrap items-center" style="width: 220px;">
+        <div class="page_bg q-pa-md rounded-borders row no-wrap items-center" style="width: 220px;">
           <div class="text-primary text-weight-bold" style="font-size: 16px;">
             {{ $t('teamBenefits') }} : {{ TeamMembers.teamEarnings }}
           </div>
@@ -57,7 +57,7 @@
             expand-icon-toggle hide-expand-icon>
             <template v-slot:header>
               <q-item-section>
-                暂无成员
+
               </q-item-section>
             </template>
           </q-expansion-item>

@@ -18,7 +18,6 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { UserStore } from 'src/stores/user';
 import { getUserInfo, updateInfo } from 'src/apis/user';
-import { NotifyPositive } from 'src/utils/notify';
 
 // 列表
 export default defineComponent({
@@ -52,7 +51,6 @@ export default defineComponent({
       }
       updateInfo(params).then((res: any) => {
         console.log(res);
-        NotifyPositive('修改成功')
         UserInfo()
       })
     }

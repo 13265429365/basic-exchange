@@ -3,7 +3,7 @@
     <div class="col page_bg q-pa-md full-width">
 
       <div style="height: 112px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);padding: 0 20px;"
-        class="row justify-between radius-8 q-mb-md">
+        class="row justify-between rounded-borders q-mb-md">
         <div class="column justify-center">
           <div class="row items-center">
             <div class="text-white">{{ $t('totalAssets') }}</div>
@@ -21,7 +21,7 @@
 
       <div class="row justify-between q-mb-xs btn">
         <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm radius-8" no-caps unelevated>
+          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ $t(quickMenu.name) }}</div>
@@ -37,7 +37,7 @@
       </div>
 
       <!-- 明细列表 -->
-      <div v-for="(item, i) in rows" :key="i" class="radius-8 bg-white q-pa-md  q-mb-sm">
+      <div v-for="(item, i) in rows" :key="i" class="rounded-borders bg-white q-pa-md  q-mb-sm">
         <div class="row justify-between">
           <div class="">
             <div class="text-weight-bold">{{ item.name }}</div>

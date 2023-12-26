@@ -47,7 +47,6 @@
 import { onMounted, reactive, toRefs } from 'vue';
 import { getLevel, orderLevel } from 'src/apis/user';
 import { imageSrc } from 'src/utils/index';
-import { NotifyPositive, NotifyNegative } from 'src/utils/notify';
 import { UserStore } from 'src/stores/user';
 import { getUserInfo } from 'src/apis/user';
 import { useRouter } from 'vue-router';
@@ -85,12 +84,10 @@ export default {
       state.actName = name
       state.select = i
       if (state.select < $userStore.userInfo.Level) {
-        NotifyNegative('不能购买比自己等级低的会员')
         return false
       }
 
       orderLevel({ id: state.levelList[state.select].id }).then((res: any) => {
-        NotifyPositive('购买成功')
         UserInfo()
         console.log(res);
       })

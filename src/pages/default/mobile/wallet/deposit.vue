@@ -20,7 +20,7 @@
         </q-scroll-area>
 
         <!-- 数字货币类型 -->
-        <div class="page_bg q-pa-md q-mb-md radius-8">
+        <div class="page_bg q-pa-md q-mb-md rounded-borders">
           <div style="border-bottom: 1px dashed #DDDDDD" class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">
             {{ $t('depositAccountInfo') }}</div>
           <div class="q-mt-md row justify-between no-wrap" style="width: 315px;border-radius: 10px;">
@@ -53,7 +53,8 @@
           <q-input prefix="￥" type="number" standout v-model="form.money" class="q-mb-md" />
 
           <div class="text-color-3 text-subtitle1 text-weight-medium q-pb-xs">{{ $t('bankName') }}</div>
-          <div class="row justify-between q-px-md q-py-sm radius-8 q-mb-md" style="background: #f5f6fa;height: 50px;">
+          <div class="row justify-between q-px-md q-py-sm rounded-borders q-mb-md"
+            style="background: #f5f6fa;height: 50px;">
             <div class="self-center row">
               <q-img
                 :src="imageSrc(cardType[ActiveCardIndex] ? cardType[ActiveCardIndex].items[ActiveBankIndex].icon : '')"
@@ -86,7 +87,7 @@
           }">
             <template v-slot:noneAdd>
               <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
-                class="radius-8 column justify-center">
+                class="rounded-borders column justify-center">
                 <q-icon name="add" size="24px" class="self-center"></q-icon>
               </div>
             </template>
@@ -114,7 +115,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { copyToClipboard } from 'quasar';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
 import uploader from 'src/components/uploader.vue';
 import { userPayment, userDeposit } from 'src/apis/wallets';
@@ -201,12 +202,8 @@ export default {
     // 复制
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
-        .then(() => {
-          NotifyPositive('复制成功！');
-        })
-        .catch(() => {
-          NotifyNegative('复制失败！');
-        });
+        .then(() => { })
+        .catch(() => { });
     };
 
     const yesFun = (router: any) => {

@@ -1,6 +1,6 @@
 <template>
   <div class="column" style="padding: 48px 244px;background: #F8F9FC;">
-    <div class="col column justify-between bg-white radius-8">
+    <div class="col column justify-between bg-white rounded-borders">
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img :src="imageSrc('')" width="40PX" height="40px"></q-img>
@@ -151,7 +151,7 @@
             }">
               <template v-slot:noneAdd>
                 <div style="border: 1px dashed #D7D7D7;width: 120px;height: 120px;background-color: #F5F6FA;"
-                  class="radius-8 column justify-center">
+                  class="rounded-borders column justify-center">
                   <q-icon name="add" size="24px" class="self-center"></q-icon>
                 </div>
               </template>
@@ -198,7 +198,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { copyToClipboard } from 'quasar';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
 import uploader from 'src/components/uploader.vue';
 import { userPayment, userDeposit } from 'src/apis/wallets';
@@ -275,12 +275,8 @@ export default {
     // 复制
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
-        .then(() => {
-          NotifyPositive('复制成功！');
-        })
-        .catch(() => {
-          NotifyNegative('复制失败！');
-        });
+        .then(() => { })
+        .catch(() => { });
     };
 
     const uploaded = (url: any) => {
@@ -289,28 +285,10 @@ export default {
 
     }
 
-    const yesFun = (router: any) => {
-      state.alertPass = false;
-      // 密码正确
-      router.push({
-        name: 'showMessage',
-        state: {
-          params: JSON.stringify({
-            title: 'Created Successfully',
-            content: '',
-            yesBtn: 'OK',
-            logo: '/images/default/success.png',
-            backUrl: ''
-          })
-        }
-      })
-    };
-
     return {
       imageSrc,
       copyToClipboardFunc,
       ...toRefs(state),
-      yesFun,
       selectType,
       Deposit,
       uploaded,

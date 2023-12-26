@@ -8,7 +8,7 @@
       <!-- 钱包余额 -->
       <q-scroll-area style="height: 208px;width: 100%;" :visible="false">
         <div class="row no-wrap">
-          <div class="q-pa-lg radius-8 q-mr-lg"
+          <div class="q-pa-lg rounded-borders q-mr-lg"
             style="height: 208px;width: 287px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
             <div>
               <div class="row items-center" style="height: 49px;">
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div v-for="(Assets, AssetsIndex) in form.userAssetsList" :key="AssetsIndex"
-            class="q-pa-lg radius-8 q-mr-lg border"
+            class="q-pa-lg rounded-borders q-mr-lg border"
             style="height: 208px;width: 287px;background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%);">
             <div>
               <div class="row justify-between" style="height: 49px;">
@@ -64,7 +64,7 @@
       </q-scroll-area>
 
       <!-- 折线图 -->
-      <div class="radius-8 q-mt-lg q-pt-lg q-px-md border">
+      <div class="rounded-borders q-mt-lg q-pt-lg q-px-md border">
         <div class="row no-wrap justify-between">
           <div class="text-h5 text-weight-bold q-px-xl">
             {{ $t('assetsBlock') }}
@@ -86,7 +86,8 @@
       </div>
 
       <!-- 表格 horizontal -->
-      <q-table class="q-mt-lg no-shadow radius-8" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
+      <q-table class="q-mt-lg no-shadow rounded-borders" bordered :rows="rows" :columns="columns" row-key="id"
+        hide-header>
         <template v-slot:top>
           <div class="row no-wrap justify-between full-width">
             <!-- 左侧tabs -->

@@ -18,7 +18,7 @@
         }">
           <template v-slot:noneAdd>
             <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
-              class="radius-8 column justify-center">
+              class="rounded-borders column justify-center">
               <q-icon name="add" size="24px" class="self-center"></q-icon>
               <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证正面</div>
             </div>
@@ -29,7 +29,7 @@
         }">
           <template v-slot:noneAdd>
             <div style="border: 1px dashed #D7D7D7;width: 100%;height: 100%;background-color: #F5F6FA;"
-              class="radius-8 column justify-center">
+              class="rounded-borders column justify-center">
               <q-icon name="add" size="24px" class="self-center"></q-icon>
               <div class="text-body2 text-weight-medium text-color-9 self-center q-mt-sm">身份证背面</div>
             </div>
@@ -48,7 +48,7 @@
 <script lang="ts">
 import uploader from 'src/components/uploader.vue';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
 import { userAuth, getUserAuth } from 'src/apis/user';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -90,7 +90,6 @@ export default defineComponent({
 
     const submit = () => {
       if (state.form.photo1 == '' || state.form.photo2 == '') {
-        NotifyNegative('请上传证件照')
         return false
       }
       let params = {

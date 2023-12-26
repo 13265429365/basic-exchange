@@ -1,6 +1,6 @@
 <template>
   <div class="column bg-grey-2" style="padding: 48px 244px;background: #F8F9FC;">
-    <div class="col column justify-between bg-white radius-8">
+    <div class="col column justify-between bg-white rounded-borders">
       <!-- 大标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
@@ -130,7 +130,6 @@ import { reactive, toRefs, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
 import { userPayment, userAddCard, userEditCard, userGetCardInfo } from 'src/apis/wallets';
-import { NotifyPositive } from 'src/utils/notify';
 
 export default {
   name: 'addCard',
@@ -160,9 +159,9 @@ export default {
     });
 
     // 如果编辑卡片就要获取卡片详情
-    onMounted(async () => {
+    onMounted(() => {
       if ($route.query.type == 'edit') {
-        await getCardInfo()
+        getCardInfo()
       }
       getPayment()
     })
@@ -212,7 +211,6 @@ export default {
         }
         userAddCard(params).then((res: any) => {
           console.log(res);
-          NotifyPositive('添加成功')
           $router.push({ name: 'AccountCard' })
         })
       } else {
@@ -226,7 +224,6 @@ export default {
         }
         userEditCard(params).then((res: any) => {
           console.log(res);
-          NotifyPositive('修改成功')
           $router.push({ name: 'AccountCard' })
         })
       }
