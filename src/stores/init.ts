@@ -57,6 +57,8 @@ export const InitStoreState = {
         showSecurityPass: true,
         //  是否显示手机号码
         showTelephone: true,
+        //  是否显示邀请码
+        isInvite: false,
       },
       //  登录配置
       login: {

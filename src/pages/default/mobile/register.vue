@@ -49,7 +49,7 @@
       </q-input>
 
       <!-- 确认密码 -->
-      <q-input v-if="config.settings.register.showCmfPass" class="q-mb-md" v-model="confirmPassword" standout
+      <q-input v-if="config.settings.register.showCmfPass" class="q-mb-md" v-model="params.cmfPassword" standout
         :type="isConfirmPwd ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
         <template v-slot:prepend>
           <q-img src="/icons/password.png" />
@@ -158,26 +158,29 @@ export default defineComponent({
       // 初始配置信息
       config: $initStore.config,
 
-      // 是否显示密码
-      isPwd: true,
-      isConfirmPwd: true,
-
       // 地区选择
       countryIndex: 0,
       countryList: $initStore.countryList as any,
 
-      // 确认密码
-      confirmPassword: '',
+      // 是否显示密码
+      showTextPassword: {
+        password: false,
+        cmfPassword: false,
+        securityKey: false,
+        cmfSecurityKey: false,
+      },
 
       // 提交参数
       params: {
         username: '', //用户名
         password: '', //密码
+        cmfPassword: '',  // 确认密码
         captchaId: '', //验证id
         captchaVal: '', // 验证码
         email: '', //邮箱
         telephone: '', //电话
         securityKey: '', //秘钥
+        cmfSecurityKey: '',//确认安全密钥
         code: '', //邀请码
       }
     });
@@ -199,7 +202,7 @@ export default defineComponent({
       if (state.params.password !== state.confirmPassword && state.config.settings.register.showCmfPass) {
         NotifyNegative(t('twoPasswordsAreDifferent'));
         return false
-      };
+      }
       userRegister(state.params).then(async (res: any) => {
         await $initStore.updateUserToken(res.token);
         void $router.push({ name: 'HomeIndex' });
@@ -217,9 +220,4 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss" scoped>
-.q-img {
-  width: 24px;
-  height: 24px;
-}
-</style>
+<style lang="scss" scoped></style>
