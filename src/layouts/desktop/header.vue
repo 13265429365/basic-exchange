@@ -237,7 +237,7 @@ export default {
 
     // 退出登录
     const Logout = async () => {
-      NotifyPositive('退出成功')
+      NotifyPositive('')
       await $initStore.removeUserToken()
       void $router.push({ name: 'HomeIndex' })
       updateLoginStatus()

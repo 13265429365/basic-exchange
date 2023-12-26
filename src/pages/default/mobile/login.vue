@@ -22,14 +22,16 @@
 
     <q-form class="q-mt-lg q-px-lg">
       <!-- 账号 -->
-      <q-input class="q-mb-md" standout v-model="params.username" :placeholder="$t('username')">
+      <q-input class="q-mb-md" standout v-model="params.username"
+        :input-style="{ fontSize: '16px', color: '#999999!important' }" :placeholder="$t('username')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/images/icons/username.png" />
         </template>
       </q-input>
 
       <!-- 密码 -->
-      <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
+      <q-input class="q-mb-md" v-model="params.password" standout
+        :input-style="{ fontSize: '16px', color: '#999999!important' }" :type="isPwd ? 'text' : 'password'"
         :placeholder="$t('password')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/images/icons/password.png" />

@@ -11,7 +11,8 @@
 
         <q-form class="q-mt-lg">
           <!-- 邮箱 -->
-          <q-input v-if="config.settings.register.showEmail" :input-style="{ fontSize: '16px' }" standout class="q-mb-md"
+          <q-input v-if="config.settings.register.showEmail"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" standout class="q-mb-md"
             v-model="params.email" :placeholder="$t('email')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/email.png" />
@@ -19,15 +20,16 @@
           </q-input>
 
           <!-- 账号 -->
-          <q-input standout class="q-mb-md" v-model="params.username" :input-style="{ fontSize: '16px' }"
-            :placeholder="$t('username')">
+          <q-input standout class="q-mb-md" v-model="params.username"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" :placeholder="$t('username')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/username.png" />
             </template>
           </q-input>
 
           <!-- 密码 -->
-          <q-input class="q-mb-md" v-model="params.password" :input-style="{ fontSize: '16px' }" standout
+          <q-input class="q-mb-md" v-model="params.password"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" standout
             :type="showTextPassword.password ? 'text' : 'password'" :placeholder="$t('password')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/password.png" />
@@ -40,9 +42,9 @@
           </q-input>
 
           <!-- 确认密码 -->
-          <q-input v-if="config.settings.register.showCmfPass" :input-style="{ fontSize: '16px' }" class="q-mb-md"
-            v-model="params.cmfPassword" standout :type="showTextPassword.cmfPassword ? 'text' : 'password'"
-            :placeholder="$t('cmfPassword')">
+          <q-input v-if="config.settings.register.showCmfPass"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md" v-model="params.cmfPassword"
+            standout :type="showTextPassword.cmfPassword ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/password.png" />
             </template>
@@ -54,7 +56,8 @@
           </q-input>
 
           <!-- 验证码 -->
-          <q-input v-if="config.settings.register.showVerify" :input-style="{ fontSize: '16px' }" class="q-mb-md" standout
+          <q-input v-if="config.settings.register.showVerify"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md" standout
             v-model="params.captchaVal" :placeholder="$t('code')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/code.png" />
@@ -66,8 +69,9 @@
           </q-input>
 
           <!-- 安全秘钥 -->
-          <q-input v-if="config.settings.register.showSecurityPass" :input-style="{ fontSize: '16px' }" class="q-mb-md"
-            standout v-model="params.securityKey" :type="showTextPassword.securityKey ? 'text' : 'password'"
+          <q-input v-if="config.settings.register.showSecurityPass"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md" standout
+            v-model="params.securityKey" :type="showTextPassword.securityKey ? 'text' : 'password'"
             :placeholder="$t('enterSecretKey')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/key.png" />
@@ -80,8 +84,9 @@
           </q-input>
 
           <!-- 确认安全秘钥 -->
-          <q-input v-if="config.settings.register.showSecurityPass" :input-style="{ fontSize: '16px' }" class="q-mb-md"
-            standout v-model="params.cmfSecurityKey" :type="showTextPassword.cmfSecurityKey ? 'text' : 'password'"
+          <q-input v-if="config.settings.register.showSecurityPass"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md" standout
+            v-model="params.cmfSecurityKey" :type="showTextPassword.cmfSecurityKey ? 'text' : 'password'"
             :placeholder="$t('enterSecretKey')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/key.png" />
@@ -94,8 +99,9 @@
           </q-input>
 
           <!-- 邀请码 -->
-          <q-input v-if="config.settings.register.isInvite" :input-style="{ fontSize: '16px' }" class="q-mb-md" standout
-            v-model="params.code" :placeholder="$t('inviteCode')">
+          <q-input v-if="config.settings.register.isInvite"
+            :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md" standout v-model="params.code"
+            :placeholder="$t('inviteCode')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/profile.png" />
             </template>
@@ -123,8 +129,8 @@
               </q-list>
             </q-btn-dropdown>
 
-            <q-input style="width: 64%;" :input-style="{ fontSize: '16px' }" standout v-model="params.telephone"
-              :placeholder="$t('telephone')" />
+            <q-input style="width: 64%;" :input-style="{ fontSize: '16px', color: '#999999!important' }" standout
+              v-model="params.telephone" :placeholder="$t('telephone')" />
           </div>
 
           <!-- 前往登录、点击注册 -->

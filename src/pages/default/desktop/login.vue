@@ -12,16 +12,16 @@
 
         <q-form class="q-mt-lg">
           <!-- 账号 -->
-          <q-input :input-style="{ fontSize: '16px' }" class="q-mb-md" standout v-model="params.username"
-            :placeholder="$t('username')">
+          <q-input :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md" standout
+            v-model="params.username" :placeholder="$t('username')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/username.png" />
             </template>
           </q-input>
 
           <!-- 密码 -->
-          <q-input :input-style="{ fontSize: '16px' }" class="q-mb-md" v-model="params.password" standout
-            :type="isPwd ? 'text' : 'password'" :placeholder="$t('password')">
+          <q-input :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md"
+            v-model="params.password" standout :type="isPwd ? 'text' : 'password'" :placeholder="$t('password')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/password.png" />
             </template>
@@ -32,8 +32,8 @@
           </q-input>
 
           <!-- 验证码 -->
-          <q-input :input-style="{ fontSize: '16px' }" v-if="config.settings.login.showVerify" class="q-mb-sm" standout
-            v-model="params.captchaVal" :placeholder="$t('code')">
+          <q-input :input-style="{ fontSize: '16px', color: '#999999!important' }" v-if="config.settings.login.showVerify"
+            class="q-mb-sm" standout v-model="params.captchaVal" :placeholder="$t('code')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/code.png" />
             </template>
