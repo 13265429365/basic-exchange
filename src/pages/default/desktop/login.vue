@@ -31,15 +31,14 @@
           </q-input>
 
           <!-- 验证码 -->
-          <q-input v-if="loginSetting.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
+          <q-input v-if="config.settings.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
             :placeholder="$t('code')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/icons/code.png" />
             </template>
             <template v-slot:append>
-              <q-img no-spinner v-if="params.captchaId !== ''"
-                :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/100-50')" width="100px" height="50px"
-                @click="refreshCaptchaFunc" class="cursor-pointer"></q-img>
+              <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/100-50'"
+                width="100px" height="50px" @click="refreshCaptchaFunc" class="cursor-pointer"></q-img>
             </template>
           </q-input>
 
@@ -47,7 +46,7 @@
           <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
           <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
             color="primary" :label="$t('login')" />
-          <div @click="toRegister()" v-if="loginSetting.showRegister"
+          <div @click="toRegister()" v-if="config.settings.login.showRegister"
             class="text-center text-primary q-mb-xl cursor-pointer">
             {{ $t('toRegister') }}
           </div>
@@ -64,7 +63,6 @@ import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 
 export default defineComponent({
@@ -74,9 +72,10 @@ export default defineComponent({
     const $initStore = InitStore();
 
     const state = reactive({
+      baseURL: process.env.baseURL,
 
-      // 登录配置
-      loginSetting: $initStore.config.settings.login,
+      // 初始化配置信息
+      config: $initStore.config,
 
       // 登录弹窗
       LoginShow: false,
@@ -85,8 +84,8 @@ export default defineComponent({
       isPwd: false,
 
       params: {
-        username: '',
-        password: '',
+        username: '', //用户名
+        password: '', //密码
         captchaId: '', //验证Id
         captchaVal: '', // 验证码
       },
@@ -105,7 +104,6 @@ export default defineComponent({
         .then(async (res: any) => {
           // 关闭弹窗
           state.LoginShow = false
-          NotifyPositive('欢迎回来')
 
           // 更改配置文件userToken
           $initStore.updateUserToken(res.token);

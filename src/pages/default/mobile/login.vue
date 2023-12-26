@@ -1,6 +1,6 @@
 <template>
   <!-- 语言切换 -->
-  <q-header v-if="config.lang.showLogin" class="bg-white">
+  <q-header v-if="config.settings.lang.showLogin" class="bg-white">
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
@@ -41,15 +41,14 @@
       </q-input>
 
       <!-- 验证码 -->
-      <q-input v-if="config.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
+      <q-input v-if="config.settings.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
         :placeholder="$t('code')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/icons/code.png" />
         </template>
         <template v-slot:append>
-          <q-img no-spinner v-if="params.captchaId !== ''"
-            :src="baseURL + '/captcha/' + params.captchaId + '/100-50'" width="100px" height="50px"
-            @click="refreshCaptchaFunc"></q-img>
+          <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/100-50'"
+            width="100px" height="50px" @click="refreshCaptchaFunc"></q-img>
         </template>
       </q-input>
 
@@ -57,7 +56,7 @@
       <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
       <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
         color="primary" :label="$t('login')" />
-      <div @click="$router.push({ name: 'UserRegister' })" v-if="config.login.showRegister"
+      <div @click="$router.push({ name: 'UserRegister' })" v-if="config.settings.login.showRegister"
         class="text-center text-primary q-mb-xl cursor-pointer">
         {{ $t('toRegister') }}
       </div>
@@ -65,7 +64,7 @@
   </div>
 
   <!-- 客服图标 -->
-  <q-avatar class="fixed-bottom-right q-mb-md q-mr-md">
+  <q-avatar v-if="config.settings.online.showLogin" class="fixed-bottom-right q-mb-md q-mr-md">
     <img :src="imageSrc(config.onlineIcon)" alt="">
   </q-avatar>
 </template>
@@ -109,7 +108,7 @@ export default defineComponent({
       },
     });
 
-
+    console.log(state.config);
     onMounted(() => {
       refreshCaptchaFunc();
     });
@@ -125,7 +124,7 @@ export default defineComponent({
     const submitFunc = () => {
       userLogin(state.params)
         .then(async (res: any) => {
-          await $initStore.updateUserToken(res.data.token);
+          await $initStore.updateUserToken(res.token);
           void $router.push({ name: 'HomeIndex' });
         })
         .catch(() => {

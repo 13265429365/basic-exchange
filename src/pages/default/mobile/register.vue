@@ -1,6 +1,6 @@
 <template>
   <!-- 语言切换 -->
-  <q-header v-if="registerSetting.lang.showLogin" class="bg-white">
+  <q-header v-if="config.settings.lang.showRegister" class="bg-white">
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
@@ -11,11 +11,10 @@
     </q-toolbar>
   </q-header>
 
-  <!--  -->
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('/images/logo.png')}`" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc(config.logo)}`" />
     </div>
     <div class="row justify-center">
       <div class="text-h6 text-weight-bold">{{ $t('registerSmall') }}</div>
@@ -23,7 +22,7 @@
 
     <q-form class="q-mt-lg q-px-lg">
       <!-- 邮箱 -->
-      <q-input v-if="registerSetting.register.showEmail" standout class="q-mb-md" v-model="params.email"
+      <q-input v-if="config.settings.register.showEmail" standout class="q-mb-md" v-model="params.email"
         :placeholder="$t('email')">
         <template v-slot:prepend>
           <q-img src="/icons/email.png" />
@@ -50,7 +49,7 @@
       </q-input>
 
       <!-- 确认密码 -->
-      <q-input v-if="config.register.showCmfPass" class="q-mb-md" v-model="ConfirmPassword" standout
+      <q-input v-if="config.settings.register.showCmfPass" class="q-mb-md" v-model="confirmPassword" standout
         :type="isConfirmPwd ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
         <template v-slot:prepend>
           <q-img src="/icons/password.png" />
@@ -62,20 +61,19 @@
       </q-input>
 
       <!-- 验证码 -->
-      <q-input v-if="registerSetting.register.showVerify" class="q-mb-md" standout v-model="params.captchaVal"
+      <q-input v-if="config.settings.register.showVerify" class="q-mb-md" standout v-model="params.captchaVal"
         :placeholder="$t('code')">
         <template v-slot:prepend>
           <q-img src="/icons/code.png" />
         </template>
         <template v-slot:append>
-          <q-img no-spinner v-if="params.captchaId !== ''"
-            :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/100-50')" width="100px" height="50px"
-            @click="refreshCaptchaFunc"></q-img>
+          <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/100-50'"
+            width="100px" height="50px" @click="refreshCaptchaFunc"></q-img>
         </template>
       </q-input>
 
       <!-- 秘钥 -->
-      <q-input v-if="registerSetting.register.showSecurityPass" class="q-mb-md" standout v-model="params.securityKey"
+      <q-input v-if="config.settings.register.showSecurityPass" class="q-mb-md" standout v-model="params.securityKey"
         :placeholder="$t('enterSecretKey')">
         <template v-slot:prepend>
           <q-img src="/icons/key.png" />
@@ -83,7 +81,7 @@
       </q-input>
 
       <!-- 邀请码 -->
-      <q-input v-if="registerSetting.register.islnvite" class="q-mb-md" standout v-model="params.code"
+      <q-input v-if="config.settings.register.isInvite" class="q-mb-md" standout v-model="params.code"
         :placeholder="$t('inviteCode')">
         <template v-slot:prepend>
           <q-img src="/icons/profile.png" />
@@ -91,19 +89,18 @@
       </q-input>
 
       <!-- 手机号码 -->
-      <div v-if="registerSetting.register.showTelephone" class="row no-wrap justify-between">
+      <div v-if="config.settings.register.showTelephone" class="row no-wrap justify-between">
         <q-btn-dropdown class="col-4 text-weight-regular" unelevated flat no-caps dropdown-icon="expand_more"
           style="height: 50px;background: #f5f6fa;border-radius: 10px;color: #8F959E;">
           <template v-slot:label>
             <div class="row no-wrap items-center">
-              <q-img :src="imageSrc(countryList[areaCodeIndex].icon ? countryList[areaCodeIndex].icon : '')" width="24px"
-                height="16px" />
-              <div class="q-ml-sm">+{{ countryList[areaCodeIndex].code }}</div>
+              <q-img :src="imageSrc(countryList[countryIndex].icon)" width="24px" height="16px" />
+              <div class="q-ml-sm">+{{ countryList[countryIndex].code }}</div>
             </div>
           </template>
           <!-- 下拉 -->
           <q-list style="min-width: 268px" class="q-py-sm">
-            <q-item @click="areaCodeIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
+            <q-item @click="countryIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
               class="row no-wrap items-center">
               <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
               <div>
@@ -126,8 +123,8 @@
   </div>
 
   <!-- 客服图标 -->
-  <q-avatar class="fixed-bottom-right q-mb-md q-mr-md">
-    <img :src="imageSrc(onlineIcon ? onlineIcon : '')" alt="">
+  <q-avatar v-if="config.settings.online.showRegister" class="fixed-bottom-right q-mb-md q-mr-md">
+    <img :src="imageSrc(config.onlineIcon)" alt="">
   </q-avatar>
 </template>
 
@@ -151,10 +148,12 @@ export default defineComponent({
     const $initStore = InitStore();
 
     const state = reactive({
+      baseURL: process.env.baseURL,
+
       // 当前设置的语言信息
       currentLangInfo: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang),
 
-      // 出事配置信息
+      // 初始配置信息
       config: $initStore.config,
 
       // 是否显示密码
@@ -195,8 +194,8 @@ export default defineComponent({
     // 提交注册
     const submitFunc = () => {
       // 判断两次密码是否一致
-      if (state.params.password !== state.confirmPassword && state.registerSetting.showCmfPass) {
-        NotifyNegative('判断两次密码不一致');
+      if (state.params.password !== state.confirmPassword && state.config.settings.register.showCmfPass) {
+        NotifyNegative('');
         return false
       };
       userRegister(state.params).then(async (res: any) => {
