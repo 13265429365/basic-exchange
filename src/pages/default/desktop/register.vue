@@ -2,14 +2,12 @@
   <q-dialog v-model="registerShow">
     <q-card style="width: 410px">
       <q-card-section class="q-pa-lg">
-
         <div class="text-center text-weight-bold text-primary text-h4">
           {{ $t('register') }}
         </div>
-        <div class="text-center text-h6 text-weight-regular">
+        <div class="text-center text-body1 text-weight-regular q-mt-sm text-grey">
           {{ $t('registerSmall') }}
         </div>
-
 
         <q-form class="q-mt-lg">
           <!-- 邮箱 -->
@@ -206,7 +204,7 @@ export default defineComponent({
     };
 
     // 注册弹窗
-    const open = (status: boolean) => {
+    const openDialog = (status: boolean) => {
       refreshCaptchaFunc();
       state.registerShow = status;
     };
@@ -252,7 +250,7 @@ export default defineComponent({
     return {
       ...toRefs(state),
       toLogin,
-      open,
+      openDialog,
       refreshCaptchaFunc,
       submitFunc,
       imageSrc,
@@ -261,9 +259,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.q-img {
-  width: 24px;
-  height: 24px;
-}
-</style>
+<style lang="scss" scoped></style>

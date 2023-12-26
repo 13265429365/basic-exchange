@@ -6,7 +6,7 @@
         <div class="text-center text-weight-bold text-primary text-h4">
           {{ $t('login') }}
         </div>
-        <div class="text-center text-h6 text-weight-regular">
+        <div class="text-center text-body1 text-weight-regular q-mt-sm text-grey">
           {{ $t('loginSmall') }}
         </div>
 
@@ -58,7 +58,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
-// 登录相关
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
@@ -121,7 +120,7 @@ export default defineComponent({
     };
 
     // 打开登录弹窗
-    const open = (status: boolean) => {
+    const openDialog = (status: boolean) => {
       refreshCaptchaFunc();
       state.LoginShow = status
     };
@@ -136,7 +135,7 @@ export default defineComponent({
       ...toRefs(state),
       refreshCaptchaFunc,
       submitFunc,
-      open,
+      openDialog,
       toRegister,
     };
   },

@@ -19,7 +19,7 @@
 
         <div class="col-1"></div>
         <div class="col-2">
-          <div class="text-body1 text-bold">社区</div>
+          <div class="text-body1 text-bold"></div>
           <div class="row items-center q-gutter-sm">
             <div v-for="(community, communityIndex) in communityList" :key="communityIndex">
               <q-img :src="imageSrc(community.icon)" width="32px" height="32px" class="cursor-pointer"
@@ -47,8 +47,7 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { InitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils'
-import { getFooter } from 'src/apis/index'
-
+import { getFooter } from 'src/apis'
 
 export default {
   name: 'LayoutsFooter',

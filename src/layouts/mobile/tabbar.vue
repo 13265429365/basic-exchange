@@ -31,31 +31,18 @@ import { toRefs, reactive, ref } from 'vue';
 import { imageSrc } from 'src/utils';
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
-import { InitStore } from 'src/stores/init';
 
 export default {
-  name: 'LayoutsTabbar',
+  name: 'LayoutsTabBar',
   setup() {
     const $router = useRouter();
-    const $initStore = InitStore();
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
 
     const state = reactive({
       currentTab: '/',
-      tabbarList: [] as any,
+      tabBarList: [] as any,
     });
-
-    //  初始化数据
-    state.tabbarList = [
-      { name: '首页', route: '/', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: false } },
-      { name: '行情', route: '/market', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-      { name: '合约', route: '/contact', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-      { name: '期货', route: '/futures', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-      { name: '我的', route: $initStore.userToken != '' && $initStore.userToken ? '/user' : '/login', icon: '', activeIcon: '', children: [], data: { isMobile: true, isDesktop: true } },
-    ];
-
-
 
     onMounted(() => {
       state.currentTab = $router.currentRoute.value.path;
