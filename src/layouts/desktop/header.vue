@@ -131,8 +131,8 @@
         </div>
 
         <!-- 未登录状态 -->
-        <div v-else class="row no-wrap items-center">
-          <q-btn @click="dialogOpenLogin(true)" rounded flat dense no-wrap class="bg-white text-grey-7 q-mx-md q-px-md"
+        <div v-else>
+          <q-btn @click="dialogOpenLogin(true)" rounded flat dense no-wrap class="bg-white text-grey-7 q-ml-md q-px-md"
             no-caps :label="$t('login')"></q-btn>
           <q-btn @click="dialogOpenRegister(true)" rounded flat dense no-wrap
             class="bg-primary text-white q-mx-md q-px-md" no-caps :label="$t('register')"></q-btn>

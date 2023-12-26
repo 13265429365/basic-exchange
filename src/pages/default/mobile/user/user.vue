@@ -15,7 +15,7 @@
           </div>
           <div class="row no-wrap">
             <q-chip class="q-chip">
-              <q-img src="/images/Vip.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
+              <q-img src="/images/vip_icon.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
               Lv{{ userInfo.Level }}
             </q-chip>
             <q-chip style="background: #fff !important;color: #333333 !important;border: 1px solid #F1F1F1;">
