@@ -34,7 +34,7 @@ export default {
 
     onMounted(() => {
       getDownload().then((res: any) => {
-        state.url = res.data.android
+        state.url = res.android
         console.log(res);
       })
     })

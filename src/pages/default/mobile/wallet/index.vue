@@ -121,8 +121,8 @@ export default defineComponent({
       }
       userGetOrder(params).then((res: any) => {
         console.log('钱包订单', res)
-        state.form = res.data
-        res.data.items.forEach((element: any) => {
+        state.form = res
+        res.items.forEach((element: any) => {
           state.rows.push(element)
         })
       })

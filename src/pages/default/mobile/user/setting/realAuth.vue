@@ -84,7 +84,7 @@ export default defineComponent({
     const getAuth = () => {
       getUserAuth().then((res: any) => {
         console.log(res);
-        state.form = res.data
+        state.form = res
       })
     }
 

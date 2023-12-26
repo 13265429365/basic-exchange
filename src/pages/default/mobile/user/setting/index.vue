@@ -4,7 +4,7 @@
       <div v-for="(item, i) in list" :key="i" class="bg-white">
         <q-item @click="to(item.route, item.toggle)" v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-            <q-img width="20px" height="20px" :src="`/icons/${item.icon}`"></q-img>
+            <q-img width="20px" height="20px" :src="`/images/${item.icon}`"></q-img>
           </q-item-section>
 
           <q-item-section>

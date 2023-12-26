@@ -223,10 +223,10 @@ export default defineComponent({
       }
       userGetOrder(params).then((res: any) => {
         console.log('钱包订单', res)
-        // state.form = res.data
-        state.total = res.data.count
+        // state.form = res
+        state.total = res.count
         state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
-        res.data.items.forEach((element: any) => {
+        res.items.forEach((element: any) => {
           state.rows.push(element)
         })
       })
@@ -252,9 +252,9 @@ export default defineComponent({
       userGetBill(params).then((res: any) => {
         state.rows = []
         console.log('账单列表', res)
-        state.total = res.data.count
+        state.total = res.count
         state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
-        res.data.items.forEach((element: any) => {
+        res.items.forEach((element: any) => {
           state.rows.push(element)
         });
       })

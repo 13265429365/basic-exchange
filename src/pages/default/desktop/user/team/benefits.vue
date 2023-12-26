@@ -108,30 +108,30 @@ export default defineComponent({
     const TeamDetails = (params: any) => {
       getTeamDetails(params).then((res: any) => {
         console.log(res);
-        state.teamEarnings = res.data.teamEarnings
+        state.teamEarnings = res.teamEarnings
         // 团队数据
-        for (const TeamBenefit in res.data) {
+        for (const TeamBenefit in res) {
           if (TeamBenefit != 'teamEarningsIndex') {
             state.TeamBenefit.push({
               name: TeamBenefit,
-              number: res.data[TeamBenefit],
+              number: res[TeamBenefit],
             })
           }
         }
 
 
         // 收益详情
-        if (res.data.teamEarningsIndex.length <= 0) {
+        if (res.teamEarningsIndex.length <= 0) {
           return false
         }
 
-        for (const BenefitDetails in res.data.teamEarningsIndex[0]) {
+        for (const BenefitDetails in res.teamEarningsIndex[0]) {
           state.columns.push({
             name: BenefitDetails,
           })
         }
 
-        res.data.teamEarningsIndex.forEach((element: any) => {
+        res.teamEarningsIndex.forEach((element: any) => {
           state.rows.push(element)
         });
       })

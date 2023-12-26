@@ -101,7 +101,7 @@ export default {
         types: []
       }
       getArticle(params).then((res: any) => {
-        state.articleList = res.data
+        state.articleList = res
         console.log('文章列表', res);
       })
     })

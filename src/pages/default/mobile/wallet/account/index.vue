@@ -82,8 +82,8 @@ export default {
     // 获取卡片列表
     const getCard = () => {
       userGetCard().then((res: any) => {
-        console.log(res.data);
-        state.cardList = res.data
+        console.log(res);
+        state.cardList = res
       })
     }
 
@@ -99,7 +99,7 @@ export default {
         securityKey: state.securityKey
       }
       userDelCard(params).then((res: any) => {
-        console.log(res.data);
+        console.log(res);
         if (res.code == 0) {
           getCard()
           NotifyPositive(t('submittedSuccess'))

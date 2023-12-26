@@ -180,7 +180,7 @@ export default defineComponent({
     const getAssets = () => {
       userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
-        state.form = res.data
+        state.form = res
       })
     }
 

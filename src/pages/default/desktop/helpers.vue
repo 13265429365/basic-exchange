@@ -64,7 +64,7 @@ export default {
 
     onMounted(() => {
       getHelpers().then((res: any) => {
-        state.articleList = res.data.articleList
+        state.articleList = res.articleList
         console.log(res);
       })
     })

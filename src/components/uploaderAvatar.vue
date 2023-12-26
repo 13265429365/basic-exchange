@@ -8,7 +8,7 @@
       <div @click="scope.pickFiles">
         <!-- 单图 -->
         <q-uploader-add-trigger />
-        <q-img class="head_edit cursor-pointer" src="/icons/edit.png" />
+        <q-img class="head_edit cursor-pointer" src="/images/edit.png" />
       </div>
     </template>
   </q-uploader>

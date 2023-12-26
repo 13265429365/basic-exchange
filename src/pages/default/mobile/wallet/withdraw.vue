@@ -13,7 +13,7 @@
               @click="selectType(typeIndex)">
               <q-img class="self-center q-mr-sm" :src="imageSrc(typeI.icon)" width="32px" height="32px" />
               <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.name }}</div>
-              <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/icons/select.png" width="30PX"
+              <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/images/select.png" width="30PX"
                 height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </div>
@@ -85,8 +85,8 @@ export default {
     // 获取卡片列表
     const getCard = () => {
       userGetCard().then((res: any) => {
-        console.log(res.data);
-        state.cardList = res.data
+        console.log(res);
+        state.cardList = res
       })
     }
 
@@ -99,7 +99,7 @@ export default {
       }
       userWithdraw(params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
-        console.log('提现成功', res.data);
+        console.log('提现成功', res);
         $router.push({ name: 'AccountCard' })
       })
     }

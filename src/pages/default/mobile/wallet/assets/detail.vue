@@ -186,7 +186,7 @@ export default defineComponent({
     const getAssets = () => {
       userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
-        state.form = res.data
+        state.form = res
       })
     }
 
@@ -211,7 +211,7 @@ export default defineComponent({
       userGetBill(params).then((res: any) => {
         state.rows = []
         console.log('账单列表', res)
-        res.data.items.forEach((element: any) => {
+        res.items.forEach((element: any) => {
           state.rows.push(element)
         });
       })

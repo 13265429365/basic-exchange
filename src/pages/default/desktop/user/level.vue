@@ -72,11 +72,11 @@ export default {
     const getLevelList = () => {
       state.select = $userStore.userInfo.Level
       getLevel().then((res: any) => {
-        state.levelList = res.data
+        state.levelList = res
         if (state.levelList.length > 0) {
           state.actName = state.levelList[0].name
         }
-        console.log('会员等级列表', res.data);
+        console.log('会员等级列表', res);
       })
     }
 
@@ -99,8 +99,8 @@ export default {
     const UserInfo = () => {
       getUserInfo().then((res: any) => {
         console.log('用户信息', res);
-        $userStore.updateUserInfo(res.data)
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
+        $userStore.updateUserInfo(res)
+        localStorage.setItem('userInfo', JSON.stringify(res))
       })
     }
 

@@ -112,11 +112,11 @@ export default defineComponent({
     const UserInfo = () => {
       getUserInfo().then((res: any) => {
         console.log('用户信息', res);
-        state.form = res.data
-        state.genderIndex = res.data.sex - 1
+        state.form = res
+        state.genderIndex = res.sex - 1
         state.form.birthday = date.formatDate(state.form.birthday * 1000, 'YYYY-MM-DD')
-        $userStore.updateUserInfo(res.data)
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
+        $userStore.updateUserInfo(res)
+        localStorage.setItem('userInfo', JSON.stringify(res))
       })
     }
 

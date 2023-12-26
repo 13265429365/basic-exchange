@@ -15,11 +15,11 @@
           </div>
           <div class="row no-wrap">
             <q-chip class="q-chip">
-              <q-img src="/icons/Vip.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
+              <q-img src="/images/Vip.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
               Lv{{ userInfo.Level }}
             </q-chip>
             <q-chip style="background: #fff !important;color: #333333 !important;border: 1px solid #F1F1F1;">
-              <q-img src="/icons/credit.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
+              <q-img src="/images/credit.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
               {{ $t('creditScore') + userInfo.score }}
             </q-chip>
             <q-chip style="background: #fff !important;color: #01AC66 !important;border: 1px solid #01AC66;">
@@ -149,9 +149,9 @@ export default defineComponent({
       if ($initStore.userToken) {
         getUserInfo().then((res: any) => {
           console.log('用户信息', res);
-          state.userInfo = res.data
-          $userStore.updateUserInfo(res.data)
-          localStorage.setItem('userInfo', JSON.stringify(res.data))
+          state.userInfo = res
+          $userStore.updateUserInfo(res)
+          localStorage.setItem('userInfo', JSON.stringify(res))
         })
       }
     }

@@ -95,7 +95,7 @@ export default defineComponent({
     const Team = (params: any) => {
       getTeam(params).then((res: any) => {
         console.log(res);
-        state.TeamMembers = res.data
+        state.TeamMembers = res
       })
     }
 

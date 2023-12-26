@@ -39,9 +39,9 @@ export default defineComponent({
     const UserInfo = () => {
       getUserInfo().then((res: any) => {
         console.log('用户信息', res);
-        state.form = res.data
-        $userStore.updateUserInfo(res.data)
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
+        state.form = res
+        $userStore.updateUserInfo(res)
+        localStorage.setItem('userInfo', JSON.stringify(res))
       })
     }
 

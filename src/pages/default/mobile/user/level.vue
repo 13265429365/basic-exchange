@@ -2,7 +2,7 @@
   <div class="column full-height" style="width: 100%;">
     <div class="col bg-white  q-pa-md" style="width: 100%;">
       <div class="vipCard q-mt-md row  q-pa-md">
-        <q-img src="/images/vip.png" width="93px" height="66px" style="position: absolute;top: -13px;right: 0;" />
+        <q-img src="/images/vip_icon.png" width="93px" height="66px" style="position: absolute;top: -13px;right: 0;" />
         <div class="col-10 column">
           <div style="color: #FEC183;" class="text-h6">VIP Card</div>
           <div style="color: #FEC183;" class="text-caption full-width col">
@@ -85,8 +85,8 @@ export default {
     // 获取会员等级列表
     const getLevelList = () => {
       getLevel().then((res: any) => {
-        state.levelList = res.data
-        console.log('会员等级列表', res.data);
+        state.levelList = res
+        console.log('会员等级列表', res);
       })
     }
 
@@ -107,8 +107,8 @@ export default {
     const UserInfo = () => {
       getUserInfo().then((res: any) => {
         console.log('用户信息', res);
-        $userStore.updateUserInfo(res.data)
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
+        $userStore.updateUserInfo(res)
+        localStorage.setItem('userInfo', JSON.stringify(res))
         $router.push({ name: 'UserIndex' })
       })
     }

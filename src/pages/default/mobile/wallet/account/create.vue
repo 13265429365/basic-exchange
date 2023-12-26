@@ -11,7 +11,7 @@
               @click="selectType(typeIndex)">
               <q-img class="self-center q-mr-sm" :src="imageSrc(typeI.icon)" width="32px" height="32px" />
               <div class="text-color-3 text-weight-bold self-center">{{ typeI.name }}</div>
-              <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/icons/select.png" width="30PX"
+              <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/images/select.png" width="30PX"
                 height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </div>
@@ -139,16 +139,16 @@ export default {
     // 获取卡片详情
     const getCardInfo = () => {
       userGetCardInfo({ id: Number($route.query.id) }).then((res: any) => {
-        console.log('卡片详情', res.data);
-        state.form = res.data
+        console.log('卡片详情', res);
+        state.form = res
       })
     }
 
     // 获取支付列表
     const getPayment = () => {
       userPayment({ modes: [] }).then((res: any) => {
-        console.log('支付列表', res.data);
-        state.cardType = res.data
+        console.log('支付列表', res);
+        state.cardType = res
         // 预设
         state.cardType.forEach((cardType: any, cardTypeIndex: any) => {
           if (cardType.name == state.form.name) {

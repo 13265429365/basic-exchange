@@ -156,9 +156,9 @@ export default defineComponent({
       getUserInfo().then((res: any) => {
         console.log('用户信息', res);
         state.SettingList.forEach((Setting: any) => {
-          for (const resItem in res.data) {
+          for (const resItem in res) {
             if (Setting.arguments == resItem) {
-              Setting.content = res.data[resItem]
+              Setting.content = res[resItem]
             }
           }
         });
@@ -175,8 +175,8 @@ export default defineComponent({
             }
           }
         })
-        $userStore.updateUserInfo(res.data)
-        localStorage.setItem('userInfo', JSON.stringify(res.data))
+        $userStore.updateUserInfo(res)
+        localStorage.setItem('userInfo', JSON.stringify(res))
       })
     }
 
