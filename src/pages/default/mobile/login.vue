@@ -1,21 +1,20 @@
 <template>
   <!-- 语言切换 -->
-  <q-header v-if="loginSetting.lang.showLogin" class="bg-white">
+  <q-header v-if="config.lang.showLogin" class="bg-white">
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(langInfo.icon ? langInfo.icon : '')"></q-img>
-        <div>{{ langInfo.name }}</div>
+        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(currentLangInfo.icon)"></q-img>
+        <div>{{ currentLangInfo.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
     </q-toolbar>
   </q-header>
 
-  <!--  -->
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc('/images/logo.png')}`" />
+      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="imageSrc(config.logo)" />
     </div>
     <div class="row justify-center">
       <div class="text-weight-bold text-h6">{{ $t('loginSmall') }}</div>
@@ -42,14 +41,14 @@
       </q-input>
 
       <!-- 验证码 -->
-      <q-input v-if="loginSetting.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
+      <q-input v-if="config.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
         :placeholder="$t('code')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/icons/code.png" />
         </template>
         <template v-slot:append>
           <q-img no-spinner v-if="params.captchaId !== ''"
-            :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/100-50')" width="100px" height="50px"
+            :src="baseURL + '/captcha/' + params.captchaId + '/100-50'" width="100px" height="50px"
             @click="refreshCaptchaFunc"></q-img>
         </template>
       </q-input>
@@ -58,7 +57,7 @@
       <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
       <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
         color="primary" :label="$t('login')" />
-      <div @click="$router.push({ name: 'UserRegister' })" v-if="loginSetting.login.showRegister"
+      <div @click="$router.push({ name: 'UserRegister' })" v-if="config.login.showRegister"
         class="text-center text-primary q-mb-xl cursor-pointer">
         {{ $t('toRegister') }}
       </div>
@@ -67,7 +66,7 @@
 
   <!-- 客服图标 -->
   <q-avatar class="fixed-bottom-right q-mb-md q-mr-md">
-    <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
+    <img :src="imageSrc(config.onlineIcon)" alt="">
   </q-avatar>
 </template>
 
@@ -90,18 +89,18 @@ export default defineComponent({
     const $initStore = InitStore();
 
     const state = reactive({
-      // 
-      langInfo: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) ? $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) : '',
+      baseURL: process.env.baseURL,
 
-      // 登录配置
-      loginSetting: $initStore.config.settings as any,
+      // 当前语言信息
+      currentLangInfo: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang),
 
-      // 客服图标
-      onlineIcon: $initStore.config.onlineIcon as any,
+      // 初始化配置信息
+      config: $initStore.config,
 
       // 是否显示密码
       isPwd: false,
 
+      // 提交参数
       params: {
         username: '', //用户名
         password: '', //密码
@@ -126,9 +125,8 @@ export default defineComponent({
     const submitFunc = () => {
       userLogin(state.params)
         .then(async (res: any) => {
-          // 更改配置文件userToken
           await $initStore.updateUserToken(res.data.token);
-          $router.push({ name: 'HomeIndex' });
+          void $router.push({ name: 'HomeIndex' });
         })
         .catch(() => {
           refreshCaptchaFunc();

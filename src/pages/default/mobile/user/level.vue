@@ -125,7 +125,7 @@ export default {
 
 <style lang="scss" scoped>
 .vipCard {
-  background-image: url('/images/vipBg.png');
+  background-image: url('/images/vip-bg.png');
   height: 80px;
   width: 100%;
   background-size: 100% 100%;

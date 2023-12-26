@@ -4,8 +4,8 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(langInfo.icon ? langInfo.icon : '')"></q-img>
-        <div>{{ langInfo.name }}</div>
+        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(currentLangInfo.icon)"></q-img>
+        <div>{{ currentLangInfo.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
     </q-toolbar>
@@ -50,7 +50,7 @@
       </q-input>
 
       <!-- 确认密码 -->
-      <q-input v-if="registerSetting.register.showCmfPass" class="q-mb-md" v-model="ConfirmPassword" standout
+      <q-input v-if="config.register.showCmfPass" class="q-mb-md" v-model="ConfirmPassword" standout
         :type="isConfirmPwd ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
         <template v-slot:prepend>
           <q-img src="/icons/password.png" />
@@ -127,7 +127,7 @@
 
   <!-- 客服图标 -->
   <q-avatar class="fixed-bottom-right q-mb-md q-mr-md">
-    <img :src="imageSrc(onlineIcon ? onlineIcon : '')">
+    <img :src="imageSrc(onlineIcon ? onlineIcon : '')" alt="">
   </q-avatar>
 </template>
 
@@ -150,30 +150,25 @@ export default defineComponent({
     const $router = useRouter();
     const $initStore = InitStore();
 
-    let state = reactive({
-      // 
-      langInfo: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) ? $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) : '',
+    const state = reactive({
+      // 当前设置的语言信息
+      currentLangInfo: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang),
 
-      // 注册配置
-      registerSetting: $initStore.config.settings as any,
-
-      // 客服图标
-      onlineIcon: $initStore.config.onlineIcon,
+      // 出事配置信息
+      config: $initStore.config,
 
       // 是否显示密码
       isPwd: true,
       isConfirmPwd: true,
 
       // 地区选择
+      countryIndex: 0,
       countryList: $initStore.countryList as any,
 
       // 确认密码
-      ConfirmPassword: '',
+      confirmPassword: '',
 
-      // 手机区号
-      areaCodeIndex: 0,
-
-      //
+      // 提交参数
       params: {
         username: '', //用户名
         password: '', //密码
@@ -185,8 +180,6 @@ export default defineComponent({
         code: '', //邀请码
       }
     });
-
-
 
     onMounted(() => {
       refreshCaptchaFunc();
@@ -202,19 +195,17 @@ export default defineComponent({
     // 提交注册
     const submitFunc = () => {
       // 判断两次密码是否一致
-      if (state.params.password !== state.ConfirmPassword && state.registerSetting.showCmfPass) {
+      if (state.params.password !== state.confirmPassword && state.registerSetting.showCmfPass) {
         NotifyNegative('判断两次密码不一致');
         return false
       };
       userRegister(state.params).then(async (res: any) => {
-        // 更改配置文件userToken
         await $initStore.updateUserToken(res.token);
-        $router.push({ name: 'HomeIndex' });
+        void $router.push({ name: 'HomeIndex' });
       }).catch(() => {
         refreshCaptchaFunc();
       });
     }
-
 
     return {
       ...toRefs(state),
