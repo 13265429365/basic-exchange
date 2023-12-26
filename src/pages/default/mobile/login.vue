@@ -43,8 +43,8 @@
       </q-input>
 
       <!-- 验证码 -->
-      <q-input v-if="config.settings.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
-        :placeholder="$t('code')">
+      <q-input v-if="config.settings.login.showVerify" :input-style="{ fontSize: '16px', color: '#999999!important' }"
+        class="q-mb-sm" standout v-model="params.captchaVal" :placeholder="$t('code')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/images/icons/code.png" />
         </template>
