@@ -5,7 +5,7 @@
       <q-toolbar-title @click="$router.push({ name: 'HomeIndex' })" shrink class="cursor-pointer text-black"
         style="margin-right: 88px;">
         <q-avatar>
-          <img width="42px" height="42px" :src="imageSrc(config.logo)">
+          <img width="42px" height="42px" :src="imageSrc(config.logo)" alt="">
         </q-avatar>
         <span class="q-ml-sm">{{ config.name }}</span>
       </q-toolbar-title>
@@ -44,7 +44,7 @@
       <q-space />
 
       <!-- 右侧搜索 -->
-      <q-input dense standout="bg-primary" v-model="searchVal" :placeholder="$t('search')">
+      <q-input dense rounded outlined v-model="searchVal" :placeholder="$t('search')">
         <template v-slot:prepend>
           <q-icon style="color: #999999 !important;" name="o_search" />
         </template>

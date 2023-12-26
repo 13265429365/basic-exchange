@@ -10,18 +10,18 @@
           {{ $t('loginSmall') }}
         </div>
 
-        <q-form class="q-mt-lg">
+        <q-form class="q-mt-xl q-gutter-sm">
           <!-- 账号 -->
-          <q-input :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md" standout
-            v-model="params.username" :placeholder="$t('username')">
+          <q-input :input-style="{ fontSize: '16px' }" outlined
+            v-model="params.username" :label="$t('username')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/username.png" />
             </template>
           </q-input>
 
           <!-- 密码 -->
-          <q-input :input-style="{ fontSize: '16px', color: '#999999!important' }" class="q-mb-md"
-            v-model="params.password" standout :type="isPwd ? 'text' : 'password'" :placeholder="$t('password')">
+          <q-input :input-style="{ fontSize: '16px', }" outlined
+            v-model="params.password" :type="isPwd ? 'text' : 'password'" :label="$t('password')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/password.png" />
             </template>
@@ -32,8 +32,8 @@
           </q-input>
 
           <!-- 验证码 -->
-          <q-input :input-style="{ fontSize: '16px', color: '#999999!important' }" v-if="config.settings.login.showVerify"
-            class="q-mb-sm" standout v-model="params.captchaVal" :placeholder="$t('code')">
+          <q-input :input-style="{ fontSize: '16px' }" v-if="config.settings.login.showVerify" outlined
+            v-model="params.captchaVal" :label="$t('code')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/code.png" />
             </template>
@@ -44,8 +44,10 @@
           </q-input>
 
           <!-- 忘记密码、登录、注册 -->
-          <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
-          <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
+          <div class="row justify-end q-mb-lg">
+            <div class="text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
+          </div>
+          <q-btn @click="submitFunc()" class="full-width" unelevated rounded no-caps style="height: 44px"
             color="primary" :label="$t('login')" />
           <div @click="toRegister()" v-if="config.settings.login.showRegister"
             class="text-center text-primary q-mb-sm cursor-pointer">
