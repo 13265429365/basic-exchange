@@ -112,7 +112,7 @@ export default defineComponent({
             context.emit('updateLoginStatus')
           } else {
             context.emit('updateLoginStatus')
-            $router.push({ name: 'HomeIndex' });
+            void $router.push({ name: 'HomeIndex' });
           }
         })
         .catch(() => {

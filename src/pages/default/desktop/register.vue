@@ -216,7 +216,7 @@ export default defineComponent({
           NotifyNegative(t('twoPasswordsAreDifferent'));
           return false
         }
-      };
+      }
 
       // 判断两次安全秘钥是否一致
       if (state.config.settings.register.showSecurityPass) {
@@ -224,7 +224,7 @@ export default defineComponent({
           NotifyNegative(t('twoSecretKeyAreDifferent'));
           return false
         }
-      };
+      }
 
       userRegister(state.params).then(async (res: any) => {
         // 更改配置文件userToken
@@ -234,7 +234,7 @@ export default defineComponent({
           context.emit('updateLoginStatus')
         } else {
           context.emit('updateLoginStatus')
-          $router.push({ name: 'HomeIndex' });
+          void $router.push({ name: 'HomeIndex' });
         }
       }).catch(() => {
         refreshCaptchaFunc();
@@ -245,7 +245,6 @@ export default defineComponent({
     const toLogin = () => {
       context.emit('switchDialogFunc', true, false);
     }
-
 
     return {
       ...toRefs(state),
