@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
-import { copyToClipboard, useQuasar } from 'quasar';
+import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
 import { getInvite } from 'src/apis/user';
@@ -36,8 +36,6 @@ export default {
   name: 'ShareIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
-    const $q = useQuasar()
-    console.log($q);
 
     const state = reactive({
       inviteUrl: '',
@@ -50,8 +48,8 @@ export default {
 
     onMounted(() => {
       getInvite().then((res: any) => {
-        state.inviteUrl = document.documentURI + `?code=${res.code}`
-        const qrcode = new QRCode({
+        state.inviteUrl = location.origin + `/register?code=${res.code}`
+        const qrCode = new QRCode({
           content: state.inviteUrl,
           padding: 0,
           width: 175,
@@ -60,7 +58,7 @@ export default {
           background: '#ffffff',
           ecl: 'M',
         });
-        state.inviteImage = qrcode.toDataURL()
+        state.inviteImage = qrCode.toDataURL()
         console.log(res);
       })
     })

@@ -1,5 +1,5 @@
 <template>
-  <q-uploader flat auto-upload :url="baseURL + 'api/v1/upload'" :field-name="name" :style="uploaderStyle" :accept="accept"
+  <q-uploader flat auto-upload :url="baseURL + '/upload'" :field-name="name" :style="uploaderStyle" :accept="accept"
     :class="uploaderClass" :multiple="multiple" max-files="9" @uploaded="uploadedFunc" @start="uploaderStartFunc"
     @finish="uploaderFinishFunc" @rejected="uploaderRejectedFunc"
     :headers="[{ name: 'Authorization', value: 'Bearer ' + userToken }]">

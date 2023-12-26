@@ -47,9 +47,11 @@ export default {
     });
 
     onMounted(() => {
+      console.log(location);
+
       getInvite().then((res: any) => {
-        state.inviteUrl = document.documentURI + `?code=${res.code}`
-        const qrcode = new QRCode({
+        state.inviteUrl = location.origin + `/register?code=${res.code}`
+        const qrCode = new QRCode({
           content: state.inviteUrl,
           padding: 0,
           width: 175,
@@ -58,7 +60,7 @@ export default {
           background: '#ffffff',
           ecl: 'M',
         });
-        state.inviteImage = qrcode.toDataURL()
+        state.inviteImage = qrCode.toDataURL()
         console.log(res);
       })
     })

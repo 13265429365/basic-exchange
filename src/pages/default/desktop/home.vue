@@ -92,15 +92,9 @@
   </div>
 
   <!-- 客服图标 -->
-  <q-page-sticky v-if="loginSetting.online.showLogin" position="bottom-right" :offset="[18, 18]">
-    <q-fab class="bg-white" style="width: 56px;height: 56px;" hide-icon>
-      <template v-slot:label>
-        <q-avatar class="full-width full-height">
-          <q-img width="56px" height="56px" :src="imageSrc(onlineIcon ? onlineIcon : '')"></q-img>
-        </q-avatar>
-      </template>
-    </q-fab>
-  </q-page-sticky>
+  <q-avatar v-if="config.settings.online.showRegister" class="fixed-bottom-right q-mb-md q-mr-md cursor-pointer shadow-1">
+    <img :src="imageSrc(config.onlineIcon)" alt="">
+  </q-avatar>
 </template>
 
 <script lang="ts">
@@ -115,7 +109,7 @@ export default {
     const state = reactive({
 
       // 登录配置
-      loginSetting: $initStore.config.settings,
+      config: $initStore.config,
 
       // 客服图标
       onlineIcon: $initStore.config.onlineIcon,
@@ -146,16 +140,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-:deep(.q-fab > a) {
-  padding: 0;
-
-  .q-fab__label {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    max-height: 100%;
-  }
-}
-
 :deep(.q-expansion-item .q-item) {
   padding: 0;
   margin-bottom: 16px;

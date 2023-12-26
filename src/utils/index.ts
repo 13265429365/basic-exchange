@@ -27,7 +27,7 @@ export const routerTo = (route: string) => {
   }
 
   if (route.indexOf('://') > -1) {
-    // window.location.href = route;
+    window.location.href = route;
     return;
   }
 

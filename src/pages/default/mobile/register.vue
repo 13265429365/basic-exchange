@@ -142,7 +142,7 @@
   </div>
 
   <!-- 客服图标 -->
-  <q-avatar v-if="config.settings.online.showRegister" class="fixed-bottom-right q-mb-md q-mr-md">
+  <q-avatar v-if="config.settings.online.showRegister" class="fixed-bottom-right q-mb-md q-mr-md shadow-1">
     <img :src="imageSrc(config.onlineIcon)" alt="">
   </q-avatar>
 </template>

@@ -195,6 +195,8 @@ export default defineComponent({
       // 注册弹窗
       registerShow: false,
     });
+    console.log(state.params.code);
+
 
     // 获取验证码
     const refreshCaptchaFunc = () => {
