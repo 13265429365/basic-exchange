@@ -14,15 +14,15 @@
             {{ userInfo.email }}
           </div>
           <div class="row no-wrap">
-            <q-chip class="q-chip">
-              <q-img src="/images/vip_icon.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
-              Lv{{ userInfo.Level }}
+            <q-chip class="text-white" size="sm" style="background: #322B19;border: 1px solid #F7DEB6;">
+              <q-img src="/images/icons/vip-icon.png" class="q-mr-xs" width="11px" height="11px" />
+              <span style="color: #F7DEB6;">Lv{{ userInfo.Level }}</span>
             </q-chip>
-            <q-chip style="background: #fff !important;color: #333333 !important;border: 1px solid #F1F1F1;">
-              <q-img src="/images/credit.png" class="q-mr-xs" style="width: 11px;height: 11px;" />
+            <q-chip class="text-grey-9 bg-white" size="sm" style="border: 1px solid #F1F1F1;">
+              <q-img src="/images/icons/credit.png" class="q-mr-xs" width="11px" height="11px" />
               {{ $t('creditScore') + userInfo.score }}
             </q-chip>
-            <q-chip style="background: #fff !important;color: #01AC66 !important;border: 1px solid #01AC66;">
+            <q-chip class="text-primary bg-white" size="sm" style="border: 1px solid #01AC66;">
               {{ userInfo.authStatus ? $t('realNameFailed') : $t('alreadyRealName') }}
               <q-icon class="text-primary" name="keyboard_arrow_right" size="11px"></q-icon>
             </q-chip>
@@ -183,18 +183,5 @@ export default defineComponent({
 
 .q-dialog__inner>div>div {
   padding: 10px 20px 50px 20px;
-}
-
-
-/* 头像下按钮 */
-.q-chip {
-  height: 19px;
-  font-size: 10px;
-  color: #F7DEB6 !important;
-  background: #322B19 !important;
-  border: 1px solid #F7DEB6;
-  margin: 0;
-  margin-right: 4px;
-  padding: 4px 5px;
 }
 </style>

@@ -13,7 +13,7 @@
       <!-- 左侧tabBar菜单 -->
       <div class="row no-wrap items-center">
         <q-btn-dropdown v-show="tabBar.data.isDesktop" v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex"
-          :menu-offset="[80, 18]" class="text-black q-mr-sm" :label="$t(tabBar.name)" flat no-wrap no-caps
+          :menu-offset="[80, 18]" class="text-grey-10 q-mr-sm" :label="$t(tabBar.name)" flat no-wrap no-caps
           :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
           <q-list v-if="tabBar.children.length > 0">
             <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
@@ -28,7 +28,7 @@
       </div>
 
       <!-- 左侧快捷菜单 -->
-      <q-btn-dropdown :menu-offset="[50, 18]" class="text-black" :label="$t('more')" flat no-caps
+      <q-btn-dropdown :menu-offset="[50, 18]" class="text-grey-10" :label="$t('more')" flat no-caps
         dropdown-icon="expand_more">
         <q-list>
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
@@ -96,7 +96,7 @@
 
                 <!-- 用户列表 -->
                 <q-item @click="$router.push(userMenu.route)" dense v-for="(userMenu, userMenuIndex) in homeMenuList"
-                  :key="userMenuIndex" clickable v-close-popup aria-hidden="true" class="q-py-md">
+                  :key="userMenuIndex" clickable v-close-popup aria-hidden="true" class="q-py-md radius-8">
                   <q-item-section avatar>
                     <q-img width="20px" height="20px" :src="imageSrc(userMenu.icon)"></q-img>
                   </q-item-section>
@@ -108,9 +108,9 @@
                 <q-separator inset />
 
                 <!-- 退出 -->
-                <q-item @click="Logout()" clickable v-close-popup aria-hidden="true">
+                <q-item @click="Logout()" clickable v-close-popup aria-hidden="true" class="radius-8">
                   <q-item-section avatar>
-                    <q-icon name="o_logout" />
+                    <q-icon name="logout" />
                   </q-item-section>
                   <q-item-section>{{ $t('logout') }}</q-item-section>
                 </q-item>
@@ -180,8 +180,6 @@ export default {
       //  是否登录
       isLogin: $initStore.userToken,
 
-      userInfo: $initStore.userInfo,
-
       // 搜索框
       searchVal: '',
 
@@ -200,7 +198,7 @@ export default {
     })
 
     // 左侧tabBar菜单
-    state.tabBarList = $initStore.tabbars;
+    state.tabBarList = $initStore.tabBars;
 
     // 左侧快捷菜单
     state.quickMenuList = $initStore.quickMenu;
@@ -220,11 +218,12 @@ export default {
     }
 
 
-    // dialogOpenFunc 打开登录注册
+    // dialogOpenFunc 打开登录
     const dialogOpenLogin = (showStatus: boolean) => {
       LoginRef.value?.openDialog(showStatus)
     }
 
+    // dialogOpenFunc 打开注册
     const dialogOpenRegister = (showStatus: boolean) => {
       RegisterRef.value?.openDialog(showStatus)
     }

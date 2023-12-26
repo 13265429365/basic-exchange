@@ -14,13 +14,13 @@ export const defaultRouter: TemplateRouteInterface[] = [
     name: 'Layouts',
     route: '/',
     componentMobile: LayoutsMobilePath('tabbar.vue'),
-    componentDesktop: LayoutsDesktopPath('setting.vue'),
+    componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
       {
         name: 'HomeIndex',
         route: '/',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'home.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
         children: [],
         meta: {},
       },
@@ -68,14 +68,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
     componentMobile: LayoutsMobilePath('full.vue'),
     componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
-      {
-        name: 'HomeIndex',
-        route: '/',
-        componentMobile: PagesTemplateMobilePath(TemplateName, ''),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
-        children: [],
-        meta: { requireAuth: false, keepAlive: false },
-      },
       {
         name: 'UserLogin',
         route: '/login',
