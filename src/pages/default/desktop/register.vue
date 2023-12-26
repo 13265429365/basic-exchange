@@ -40,14 +40,14 @@
           </q-input>
 
           <!-- 确认密码 -->
-          <q-input v-if="registerSetting.showCmfPass" class="q-mb-md" v-model="password" standout
-            :type="isPwd2 ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
+          <q-input v-if="registerSetting.showCmfPass" class="q-mb-md" v-model="ConfirmPassword" standout
+            :type="isConfirmPwd ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
             <template v-slot:prepend>
               <q-img src="/icons/password.png" />
             </template>
             <template v-slot:append>
-              <q-icon class="text-grey-7 cursor-pointer" :name="isPwd2 ? 'visibility' : 'visibility_off'"
-                @click="isPwd2 = !isPwd2" />
+              <q-icon class="text-grey-7 cursor-pointer" :name="isConfirmPwd ? 'visibility' : 'visibility_off'"
+                @click="isConfirmPwd = !isConfirmPwd" />
             </template>
           </q-input>
 
@@ -59,8 +59,8 @@
             </template>
             <template v-slot:append>
               <q-img no-spinner v-if="params.captchaId !== ''"
-                :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/200-50')" width="120px" height="32px"
-                @click="refreshCaptchaFunc"></q-img>
+                :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/100-50')" width="100px" height="50px"
+                @click="refreshCaptchaFunc" class="cursor-pointer"></q-img>
             </template>
           </q-input>
 
@@ -118,13 +118,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { defineComponent, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
-import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
+import { NotifyNegative } from 'src/utils/notify';
+
 export default defineComponent({
   name: 'registerDialog',
   setup(props: any, context: any) {
@@ -137,13 +138,13 @@ export default defineComponent({
 
       // 是否显示密码
       isPwd: false,
-      isPwd2: false,
+      isConfirmPwd: false,
 
       // 地区选择
-      options: [] as any,
+      options: $initStore.countryList as any,
 
       // 确认密码
-      password: '',
+      ConfirmPassword: '',
 
       // 手机区号
       areaCodeIndex: 0,
@@ -160,12 +161,9 @@ export default defineComponent({
         code: ''
       },
 
-      // 登录弹窗
+      // 注册弹窗
       registerShow: false,
     });
-
-    // 获取国家列表
-    state.options = $initStore.countryList
 
     // 获取验证码
     const refreshCaptchaFunc = () => {
@@ -183,15 +181,13 @@ export default defineComponent({
     // 提交注册
     const submitFunc = () => {
       // 判断两次密码是否一致
-      if (state.params.password !== state.password && state.registerSetting.showCmfPass) {
+      if (state.params.password !== state.ConfirmPassword && state.registerSetting.showCmfPass) {
         NotifyNegative('判断两次密码不一致');
         return false
       };
       userRegister(state.params).then(async (res: any) => {
-        NotifyPositive('注册成功')
-
         // 更改配置文件userToken
-        await $initStore.updateUserToken(res.data.token);
+        await $initStore.updateUserToken(res.token);
         state.registerShow = false;
         if ($router.currentRoute.value.path == '/') {
           context.emit('updateLoginStatus')

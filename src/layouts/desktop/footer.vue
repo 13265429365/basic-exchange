@@ -66,8 +66,8 @@ export default {
 
     const getFooterList = () => {
       getFooter().then((res: any) => {
-        state.articleList = res.data.items
-        state.communityList = res.data.socialList
+        state.articleList = res.items
+        state.communityList = res.socialList
       })
     }
 

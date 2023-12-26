@@ -214,8 +214,8 @@ export default {
       if (state.isLogin) {
         getUserInfo().then((res: any) => {
           console.log('用户信息', res);
-          $userStore.updateUserInfo(res.data)
-          localStorage.setItem('userInfo', JSON.stringify(res.data))
+          $userStore.updateUserInfo(res)
+          localStorage.setItem('userInfo', JSON.stringify(res))
         })
       }
     }

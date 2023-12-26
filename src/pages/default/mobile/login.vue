@@ -4,8 +4,8 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(lang.icon ? lang.icon : '')"></q-img>
-        <div>{{ lang.name }}</div>
+        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(langInfo.icon ? langInfo.icon : '')"></q-img>
+        <div>{{ langInfo.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
     </q-toolbar>
@@ -79,7 +79,6 @@ import { CaptchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
-import { NotifyPositive } from 'src/utils/notify';
 
 export default defineComponent({
   name: 'userLogin',
@@ -92,7 +91,7 @@ export default defineComponent({
 
     const state = reactive({
       // 
-      lang: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) ? $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) : '',
+      langInfo: $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) ? $initStore.languageList.find((item: any) => item.alias == $initStore.userLang) : '',
 
       // 登录配置
       loginSetting: $initStore.config.settings as any,
@@ -127,8 +126,6 @@ export default defineComponent({
     const submitFunc = () => {
       userLogin(state.params)
         .then(async (res: any) => {
-          NotifyPositive('欢迎回来')
-
           // 更改配置文件userToken
           await $initStore.updateUserToken(res.data.token);
           $router.push({ name: 'HomeIndex' });

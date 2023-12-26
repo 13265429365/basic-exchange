@@ -37,9 +37,9 @@
               <q-img width="24px" height="24px" src="/icons/code.png" />
             </template>
             <template v-slot:append>
-              <q-img class="cursor-pointer" no-spinner v-if="params.captchaId !== ''"
-                :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/200-50')" width="120px" height="32px"
-                @click="refreshCaptchaFunc"></q-img>
+              <q-img no-spinner v-if="params.captchaId !== ''"
+                :src="imageSrc('/api/v1/captcha/' + params.captchaId + '/100-50')" width="100px" height="50px"
+                @click="refreshCaptchaFunc" class="cursor-pointer"></q-img>
             </template>
           </q-input>
 
@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { defineComponent, reactive, toRefs } from 'vue';
 // 登录相关
 import { useRouter } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
@@ -74,8 +74,6 @@ export default defineComponent({
     const $initStore = InitStore();
 
     const state = reactive({
-      // 悬浮按钮
-      fabShow: false,
 
       // 登录配置
       loginSetting: $initStore.config.settings.login,
@@ -110,7 +108,7 @@ export default defineComponent({
           NotifyPositive('欢迎回来')
 
           // 更改配置文件userToken
-          $initStore.updateUserToken(res.data.token);
+          $initStore.updateUserToken(res.token);
 
           if ($router.currentRoute.value.path == '/') {
             context.emit('updateLoginStatus')
