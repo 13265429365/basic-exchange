@@ -24,7 +24,7 @@
       <!-- 账号 -->
       <q-input class="q-mb-md" standout v-model="params.username" :placeholder="$t('username')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/username.png" />
+          <q-img width="24px" height="24px" src="/images/icons/username.png" />
         </template>
       </q-input>
 
@@ -32,7 +32,7 @@
       <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
         :placeholder="$t('password')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/password.png" />
+          <q-img width="24px" height="24px" src="/images/icons/password.png" />
         </template>
         <template v-slot:append>
           <q-icon style="color: #999999" :name="isPwd ? 'visibility' : 'visibility_off'" class="cursor-pointer"
@@ -44,11 +44,11 @@
       <q-input v-if="config.settings.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
         :placeholder="$t('code')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/code.png" />
+          <q-img width="24px" height="24px" src="/images/icons/code.png" />
         </template>
         <template v-slot:append>
-          <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/100-50'"
-            width="100px" height="50px" @click="refreshCaptchaFunc"></q-img>
+          <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/150-50'"
+            width="150px" height="50px" @click="refreshCaptchaFunc"></q-img>
         </template>
       </q-input>
 

@@ -14,11 +14,11 @@
 
     <q-footer reveal bordered class="bg-white text-black text-caption">
       <q-tabs v-model="currentTab" dense indicator-color="transparent" active-color="primary">
-        <q-route-tab v-for="(tab, tabIndex) in tabbarList" :key="tabIndex" :name="tab.route" :icon="'img:' +
+        <q-route-tab v-for="(tab, tabIndex) in tabBarList" :key="tabIndex" :name="tab.route" :icon="'img:' +
           imageSrc(tab.route == currentTab ? tab.activeIcon : tab.icon)
           " :ripple="false" :to="tab.route">
           <template v-slot:default>
-            <div class="text-caption">{{ tab.name }}</div>
+            <div class="text-caption">{{ $t(tab.name) }}</div>
           </template>
         </q-route-tab>
       </q-tabs>
@@ -31,17 +31,19 @@ import { toRefs, reactive, ref } from 'vue';
 import { imageSrc } from 'src/utils';
 import { useRouter } from 'vue-router';
 import { onMounted } from 'vue';
+import { InitStore } from 'src/stores/init';
 
 export default {
   name: 'LayoutsTabBar',
   setup() {
     const $router = useRouter();
+    const $initStore = InitStore();
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
 
     const state = reactive({
       currentTab: '/',
-      tabBarList: [] as any,
+      tabBarList: $initStore.tabBars as any,
     });
 
     onMounted(() => {

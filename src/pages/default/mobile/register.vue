@@ -25,14 +25,14 @@
       <q-input v-if="config.settings.register.showEmail" standout class="q-mb-md" v-model="params.email"
         :placeholder="$t('email')">
         <template v-slot:prepend>
-          <q-img src="/images/email.png" />
+          <q-img width="24px" height="24px" src="/images/icons/email.png" />
         </template>
       </q-input>
 
       <!-- 账号 -->
       <q-input standout class="q-mb-md" v-model="params.username" :placeholder="$t('username')">
         <template v-slot:prepend>
-          <q-img src="/images/username.png" />
+          <q-img width="24px" height="24px" src="/images/icons/username.png" />
         </template>
       </q-input>
 
@@ -40,7 +40,7 @@
       <q-input class="q-mb-md" v-model="params.password" standout :type="showTextPassword.password ? 'text' : 'password'"
         :placeholder="$t('password')">
         <template v-slot:prepend>
-          <q-img src="/images/password.png" />
+          <q-img width="24px" height="24px" src="/images/icons/password.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer" :name="showTextPassword.password ? 'visibility' : 'visibility_off'"
@@ -52,7 +52,7 @@
       <q-input v-if="config.settings.register.showCmfPass" class="q-mb-md" v-model="params.cmfPassword" standout
         :type="showTextPassword.cmfPassword ? 'text' : 'password'" :placeholder="$t('cmfPassword')">
         <template v-slot:prepend>
-          <q-img src="/images/password.png" />
+          <q-img width="24px" height="24px" src="/images/icons/password.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer"
@@ -65,11 +65,11 @@
       <q-input v-if="config.settings.register.showVerify" class="q-mb-md" standout v-model="params.captchaVal"
         :placeholder="$t('code')">
         <template v-slot:prepend>
-          <q-img src="/images/code.png" />
+          <q-img width="24px" height="24px" src="/images/icons/code.png" />
         </template>
         <template v-slot:append>
-          <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/100-50'"
-            width="100px" height="50px" @click="refreshCaptchaFunc"></q-img>
+          <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/150-50'"
+            width="150px" height="50px" @click="refreshCaptchaFunc"></q-img>
         </template>
       </q-input>
 
@@ -77,7 +77,7 @@
       <q-input v-if="config.settings.register.showSecurityPass" class="q-mb-md" standout v-model="params.securityKey"
         :type="showTextPassword.securityKey ? 'text' : 'password'" :placeholder="$t('enterSecretKey')">
         <template v-slot:prepend>
-          <q-img src="/images/key.png" />
+          <q-img width="24px" height="24px" src="/images/icons/key.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer"
@@ -90,7 +90,7 @@
       <q-input v-if="config.settings.register.showSecurityPass" class="q-mb-md" standout v-model="params.cmfSecurityKey"
         :type="showTextPassword.cmfSecurityKey ? 'text' : 'password'" :placeholder="$t('enterSecretKey')">
         <template v-slot:prepend>
-          <q-img src="/images/key.png" />
+          <q-img width="24px" height="24px" src="/images/icons/key.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer"
@@ -103,7 +103,7 @@
       <q-input v-if="config.settings.register.isInvite" class="q-mb-md" standout v-model="params.code"
         :placeholder="$t('inviteCode')">
         <template v-slot:prepend>
-          <q-img src="/images/profile.png" />
+          <q-img width="24px" height="24px" src="/images/icons/profile.png" />
         </template>
       </q-input>
 

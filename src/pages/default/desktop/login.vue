@@ -12,17 +12,18 @@
 
         <q-form class="q-mt-lg">
           <!-- 账号 -->
-          <q-input class="q-mb-md" standout v-model="params.username" :placeholder="$t('username')">
+          <q-input :input-style="{ fontSize: '16px' }" class="q-mb-md" standout v-model="params.username"
+            :placeholder="$t('username')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/username.png" />
+              <q-img width="24px" height="24px" src="/images/icons/username.png" />
             </template>
           </q-input>
 
           <!-- 密码 -->
-          <q-input class="q-mb-md" v-model="params.password" standout :type="isPwd ? 'text' : 'password'"
-            :placeholder="$t('password')">
+          <q-input :input-style="{ fontSize: '16px' }" class="q-mb-md" v-model="params.password" standout
+            :type="isPwd ? 'text' : 'password'" :placeholder="$t('password')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/password.png" />
+              <q-img width="24px" height="24px" src="/images/icons/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999" :name="isPwd ? 'visibility' : 'visibility_off'" class="cursor-pointer"
@@ -31,14 +32,14 @@
           </q-input>
 
           <!-- 验证码 -->
-          <q-input v-if="config.settings.login.showVerify" class="q-mb-sm" standout v-model="params.captchaVal"
-            :placeholder="$t('code')">
+          <q-input :input-style="{ fontSize: '16px' }" v-if="config.settings.login.showVerify" class="q-mb-sm" standout
+            v-model="params.captchaVal" :placeholder="$t('code')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/code.png" />
+              <q-img width="24px" height="24px" src="/images/icons/code.png" />
             </template>
             <template v-slot:append>
-              <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/100-50'"
-                width="100px" height="50px" @click="refreshCaptchaFunc" class="cursor-pointer"></q-img>
+              <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/150-50'"
+                width="150px" height="50px" @click="refreshCaptchaFunc" class="cursor-pointer"></q-img>
             </template>
           </q-input>
 
@@ -47,7 +48,7 @@
           <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
             color="primary" :label="$t('login')" />
           <div @click="toRegister()" v-if="config.settings.login.showRegister"
-            class="text-center text-primary q-mb-xl cursor-pointer">
+            class="text-center text-primary q-mb-sm cursor-pointer">
             {{ $t('toRegister') }}
           </div>
         </q-form>
