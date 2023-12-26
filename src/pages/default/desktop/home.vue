@@ -106,7 +106,7 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
-import { InitStore, InitStoreState } from 'src/stores/init';
+import { InitStore } from 'src/stores/init';
 export default {
   name: 'homeIndex',
   setup() {

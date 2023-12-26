@@ -139,7 +139,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
@@ -151,6 +151,7 @@ export default defineComponent({
   name: 'registerDialog',
   setup(props: any, context: any) {
     const $router = useRouter();
+    const $route = useRoute();
     const $initStore = InitStore();
     const { t } = useI18n();
 
@@ -188,7 +189,7 @@ export default defineComponent({
         telephone: '', //电话
         securityKey: '', //安全秘钥
         cmfSecurityKey: '',//确认安全密钥
-        code: '', //邀请码
+        code: $route.query.code ? $route.query.code as any : '', //邀请码
       },
 
       // 注册弹窗
@@ -216,7 +217,7 @@ export default defineComponent({
           NotifyNegative(t('twoPasswordsAreDifferent'));
           return false
         }
-      };
+      }
 
       // 判断两次安全秘钥是否一致
       if (state.config.settings.register.showSecurityPass) {
@@ -224,7 +225,7 @@ export default defineComponent({
           NotifyNegative(t('twoSecretKeyAreDifferent'));
           return false
         }
-      };
+      }
 
       userRegister(state.params).then(async (res: any) => {
         // 更改配置文件userToken

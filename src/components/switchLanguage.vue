@@ -19,7 +19,7 @@ import { InitStore } from 'src/stores/init';
 
 export default defineComponent({
   name: 'SwitchLanguage',
-  setup(props: any, context: any) {
+  setup() {
     const $initStore = InitStore()
     const state = reactive({})
 

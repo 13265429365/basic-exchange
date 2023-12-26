@@ -3,13 +3,13 @@
     <div class="col page_bg column full-width " style=" background: linear-gradient(to right,  #14BF71,#82D880);">
       <div class="radius-8 bg-white column items-center q-py-md" style="width: 90%;margin: 36px auto;">
 
-        <q-img src="/images/delete/logo.png" width="60px" height="60px" />
+        <q-img :src="imageSrc('')" class="q-mt-lg" width="60px" height="60px" />
 
         <div class="text-color-3 text-h6 q-mt-md">{{ $t('inviteFriends') }}</div>
 
-        <q-img src="/images/delete/M.png" style="margin-top: 20px;" width="224px" height="224px" fit="fill" />
+        <vueQr style="width: 224px;height: 224px;" :text="inviteUrl"></vueQr>
 
-        <div class="text-color-6 text-weight-medium text-body1" style="margin: 20px 0 10px 0;">Copy invitation link</div>
+        <div class="text-grey-7 text-weight-medium" style="margin: 20px 0 10px 0;">Copy invitation link</div>
 
         <div class="text-weight-regular text-black ellipsis  q-pa-sm text-body1"
           style="background-color: #F4F5F8;width: 238px;border-radius: 10px;">
@@ -24,22 +24,35 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
-import { copyToClipboard } from 'quasar';
+import { reactive, toRefs, onMounted } from 'vue';
+import { copyToClipboard, useQuasar } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
+import { getInvite } from 'src/apis/user';
+import vueQr from 'vue-qr/src/packages/vue-qr.vue';
+import { imageSrc } from 'src/utils';
 
 export default {
-  name: 'defaultShare',
+  name: 'ShareIndex',
+  components: { vueQr },
   setup(props: any, context: any) {
     const { t } = useI18n()
+    const $q = useQuasar()
+    console.log($q);
 
     const state = reactive({
-      inviteUrl: 'http://192.168.3.126:9100/login'
+      inviteUrl: ''
     });
 
     context.emit('update', {
       title: t('inviteFriends'),
+    })
+
+    onMounted(() => {
+      getInvite().then((res: any) => {
+        state.inviteUrl = location.href + `?code=${res.code}`
+        console.log(res);
+      })
     })
 
     // 复制方法
@@ -53,6 +66,7 @@ export default {
         });
     };
     return {
+      imageSrc,
       ...toRefs(state),
       copyToClipboardFunc,
     }
