@@ -108,7 +108,7 @@
           </q-input>
 
           <!-- 手机号码 -->
-          <div v-if="config.settings.register.showTelephone" class="row no-wrap justify-between">
+          <div v-if="!config.settings.register.showTelephone" class="row no-wrap justify-between">
             <q-btn-dropdown class="col-4" color="grey" outline no-caps dropdown-icon="expand_more"
               style="height: 56px;">
               <template v-slot:label>
@@ -154,6 +154,7 @@ import { CaptchaAPI } from 'src/apis';
 import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
+import { UserStore} from 'stores/user';
 import { NotifyNegative } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
 
@@ -163,6 +164,7 @@ export default defineComponent({
     const $router = useRouter();
     const $route = useRoute();
     const $initStore = InitStore();
+    const $userStore = UserStore()
     const { t } = useI18n();
 
     let state = reactive({
@@ -205,8 +207,6 @@ export default defineComponent({
       // 注册弹窗
       registerShow: false,
     });
-    console.log(state.params.code);
-
 
     // 获取验证码
     const refreshCaptchaFunc = () => {
@@ -239,16 +239,12 @@ export default defineComponent({
         }
       }
 
+      //  用户注册
       userRegister(state.params).then(async (res: any) => {
-        // 更改配置文件userToken
+        $userStore.updateUserInfo(res.userInfo)
         await $initStore.updateUserToken(res.token);
         state.registerShow = false;
-        if ($router.currentRoute.value.path == '/') {
-          context.emit('updateLoginStatus')
-        } else {
-          context.emit('updateLoginStatus')
-          void $router.push({ name: 'HomeIndex' });
-        }
+        void $router.push({ name: 'HomeIndex' });
       }).catch(() => {
         refreshCaptchaFunc();
       });

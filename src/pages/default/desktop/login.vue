@@ -66,12 +66,14 @@ import { CaptchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
+import {UserStore} from 'stores/user';
 
 export default defineComponent({
   name: 'userLogin',
   setup(props: any, context: any) {
     const $router = useRouter();
     const $initStore = InitStore();
+    const $userStore = UserStore()
 
     const state = reactive({
       baseURL: process.env.baseURL,
@@ -104,18 +106,10 @@ export default defineComponent({
     const submitFunc = () => {
       userLogin(state.params)
         .then(async (res: any) => {
-          // 关闭弹窗
           state.LoginShow = false
-
-          // 更改配置文件userToken
-          $initStore.updateUserToken(res.token);
-
-          if ($router.currentRoute.value.path == '/') {
-            context.emit('updateLoginStatus')
-          } else {
-            context.emit('updateLoginStatus')
-            void $router.push({ name: 'HomeIndex' });
-          }
+          $userStore.updateUserInfo(res.userInfo)
+          await $initStore.updateUserToken(res.token);
+          void $router.push({ name: 'HomeIndex' });
         })
         .catch(() => {
           refreshCaptchaFunc();
