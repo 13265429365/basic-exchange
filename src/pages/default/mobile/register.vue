@@ -137,6 +137,7 @@ import { userRegister } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'userRegister',
@@ -146,6 +147,7 @@ export default defineComponent({
   setup() {
     const $router = useRouter();
     const $initStore = InitStore();
+    const { t } = useI18n();
 
     const state = reactive({
       baseURL: process.env.baseURL,
@@ -195,7 +197,7 @@ export default defineComponent({
     const submitFunc = () => {
       // 判断两次密码是否一致
       if (state.params.password !== state.confirmPassword && state.config.settings.register.showCmfPass) {
-        NotifyNegative('');
+        NotifyNegative(t('twoPasswordsAreDifferent'));
         return false
       };
       userRegister(state.params).then(async (res: any) => {
