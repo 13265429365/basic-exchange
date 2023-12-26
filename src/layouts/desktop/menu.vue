@@ -44,7 +44,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { InitStoreState, InitStore } from 'src/stores/init';
 
 export default defineComponent({
@@ -56,9 +56,6 @@ export default defineComponent({
     let state = reactive({
       // 项目logo
       config: InitStoreState.config,
-
-      // 选中菜单
-      activeRouter: '/wallet/account/index',
 
       // 菜单列表
       menuList: [] as any,
@@ -78,19 +75,4 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="scss" scoped>
-.active {
-  background: rgba(1, 172, 102, 0.1);
-}
-
-:deep(.q-item) {
-  margin-bottom: 16px;
-  font-weight: 500;
-  font-size: 16px;
-  border-radius: 8px;
-
-  .q-item__section--avatar {
-    min-width: auto;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

@@ -213,7 +213,6 @@ export default {
     const UserInfo = () => {
       if (state.isLogin) {
         getUserInfo().then((res: any) => {
-          console.log('用户信息', res);
           $userStore.updateUserInfo(res)
           localStorage.setItem('userInfo', JSON.stringify(res))
         })
@@ -223,25 +222,24 @@ export default {
 
     // dialogOpenFunc 打开登录注册
     const dialogOpenLogin = (showStatus: boolean) => {
-      LoginRef.value?.open(showStatus)
+      LoginRef.value?.openDialog(showStatus)
     }
 
     const dialogOpenRegister = (showStatus: boolean) => {
-      RegisterRef.value?.open(showStatus)
+      RegisterRef.value?.openDialog(showStatus)
     }
 
     // switchDialogFunc 切换注册登录dialog
     const switchDialogFunc = (LoginStatus: boolean, RegisterStatus: boolean) => {
-      LoginRef.value?.open(LoginStatus)
-      RegisterRef.value?.open(RegisterStatus)
+      LoginRef.value?.openDialog(LoginStatus)
+      RegisterRef.value?.openDialog(RegisterStatus)
     }
 
     // 退出登录
     const Logout = async () => {
       NotifyPositive('退出成功')
       await $initStore.removeUserToken()
-      await localStorage.removeItem('userInfo')
-      $router.push({ name: 'HomeIndex' })
+      void $router.push({ name: 'HomeIndex' })
       updateLoginStatus()
     }
 
@@ -268,34 +266,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-// input样式
-:deep(.q-field .q-field__control) {
-  border-radius: 20px !important;
-  height: 40px !important;
-  min-height: 40px !important;
-
-  .q-field__marginal {
-    height: 40px !important;
-  }
-}
-
-:deep(.q-item) {
-  border-radius: 8px;
-
-  .q-item__section {
-    color: #333;
-  }
-}
-
-:deep(.q-item .q-item__section) {
-  min-width: auto;
-  padding-right: 10px;
-}
-
-:deep(.q-btn .q-btn-dropdown__arrow) {
-  margin-left: 0;
-  font-size: 12px;
-  color: #666;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -38,27 +38,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-:deep(.pageHeader) {
-  padding: 33px 100px;
-  font-size: 28px;
-  font-weight: bold;
-  background: #FAFAFA;
-}
-
-:deep(.calc) {
-  width: 100%;
-}
-
-:deep(.maxWidth1200) {
-  display: flex;
-  justify-content: center;
-  padding: 48px 100px;
-  width: 100%;
-
-  &>div {
-    min-width: 1000px;
-    max-width: 1200px;
-  }
-}
-</style>
+<style lang="scss" scoped></style>
