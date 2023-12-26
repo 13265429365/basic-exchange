@@ -12,31 +12,36 @@
 
       <!-- 左侧tabBar菜单 -->
       <div class="row no-wrap items-center">
-        <q-btn-dropdown v-show="tabBar.data.isDesktop" v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex"
-          :menu-offset="[80, 18]" class="text-grey-10 q-mr-sm" :label="$t(tabBar.name)" flat no-wrap no-caps
-          :dropdown-icon="tabBar.children.length > 0 ? 'expand_more' : ' '">
-          <q-list v-if="tabBar.children.length > 0">
-            <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
-              aria-hidden="true">
-              <q-item-section avatar>
-                <q-img width="34px" height="34px" :src="imageSrc(children.icon)"></q-img>
-              </q-item-section>
-              <q-item-section>{{ $t(children.name) }}</q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
+        <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
+
+          <q-btn-dropdown v-if="tabBar.children.length > 0" v-show="tabBar.data.isDesktop" :menu-offset="[80, 18]"
+            class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t(tabBar.name)" dense flat no-wrap no-caps
+            dropdown-icon="expand_more">
+            <q-list v-if="tabBar.children.length > 0">
+              <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
+                aria-hidden="true">
+                <q-item-section avatar style="min-width:auto">
+                  <q-img width="30px" height="30px" :src="imageSrc(children.icon ?? '')"></q-img>
+                </q-item-section>
+                <q-item-section class="text-grey-8">{{ $t(children.name) }}</q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+          <q-btn v-else v-show="tabBar.data.isDesktop" class="text-grey-8 q-mr-sm q-py-xs q-px-md"
+            :label="$t(tabBar.name)" dense flat no-wrap no-caps></q-btn>
+        </div>
       </div>
 
       <!-- 左侧快捷菜单 -->
-      <q-btn-dropdown :menu-offset="[50, 18]" class="text-grey-10" :label="$t('more')" flat no-caps
+      <q-btn-dropdown :menu-offset="[50, 18]" class="text-grey-8" :label="$t('more')" flat no-caps
         dropdown-icon="expand_more">
         <q-list>
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
             :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
-            <q-item-section avatar>
+            <q-item-section avatar style="min-width:auto">
               <q-img width="34px" height="34px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
-            <q-item-section>{{ $t(quickMenu.name) }}</q-item-section>
+            <q-item-section class="text-grey-8">{{ $t(quickMenu.name) }}</q-item-section>
           </q-item>
         </q-list>
       </q-btn-dropdown>
@@ -97,7 +102,7 @@
                 <!-- 用户列表 -->
                 <q-item @click="$router.push(userMenu.route)" dense v-for="(userMenu, userMenuIndex) in homeMenuList"
                   :key="userMenuIndex" clickable v-close-popup aria-hidden="true" class="q-py-md rounded-borders">
-                  <q-item-section avatar>
+                  <q-item-section avatar style="min-width:auto">
                     <q-img width="20px" height="20px" :src="imageSrc(userMenu.icon)"></q-img>
                   </q-item-section>
                   <q-item-section>
@@ -105,12 +110,12 @@
                   </q-item-section>
                 </q-item>
 
-                <q-separator inset />
+                <q-separator inset class="q-my-sm" />
 
                 <!-- 退出 -->
                 <q-item @click="Logout()" clickable v-close-popup aria-hidden="true" class="rounded-borders">
-                  <q-item-section avatar>
-                    <q-icon name="logout" />
+                  <q-item-section avatar style="min-width:auto">
+                    <q-icon size="20px" name="logout" />
                   </q-item-section>
                   <q-item-section>{{ $t('logout') }}</q-item-section>
                 </q-item>
@@ -130,7 +135,8 @@
           <q-btn @click="dialogOpenRegister(true)" rounded flat dense no-wrap
             class="bg-primary text-white q-px-md q-ml-sm" no-caps :label="$t('register')"></q-btn>
         </div>
-        <q-btn v-if="config.settings.lang.showHome" round dense flat color="grey-8" size="16px" icon="o_language" class="q-mx-xs">
+        <q-btn v-if="config.settings.lang.showHome" round dense flat color="grey-8" size="16px" icon="o_language"
+          class="q-mx-xs">
           <switchLanguage :offset="[0, 20]"></switchLanguage>
         </q-btn>
       </div>
@@ -165,7 +171,7 @@ export default {
     const RegisterRef = ref(null) as any;
 
     const state = reactive({
-      userInfo: {avatar: '', username: '', email: '', level: 1, authStatus: 0},
+      userInfo: { avatar: '', username: '', email: '', level: 1, authStatus: 0 },
 
       // 配置
       config: $initStore.config,
@@ -185,6 +191,7 @@ export default {
       // 右侧头像菜单
       homeMenuList: $initStore.homeMenu,
     });
+    console.log(state.tabBarList);
     state.userInfo = $userStore.userInfo
 
     // dialogOpenFunc 打开登录

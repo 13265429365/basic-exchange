@@ -1,6 +1,6 @@
 <template>
   <div style="padding: 36px" class="text-white column items-center">
-    <div class="row full-width">
+    <div class="row full-width" style="max-width: 1200px;">
       <div class="col-9">
         <div class="row justify-center">
           <div v-for="(article, articleIndex) in articleList" :key="articleIndex" class="col-3">
