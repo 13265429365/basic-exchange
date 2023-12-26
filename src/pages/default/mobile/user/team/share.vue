@@ -7,7 +7,7 @@
 
         <div class="text-color-3 text-h6 q-mt-md">{{ $t('inviteFriends') }}</div>
 
-        <vueQr style="width: 224px;height: 224px;" :text="inviteUrl"></vueQr>
+        <img :src="inviteImage" alt="">
 
         <div class="text-grey-7 text-weight-medium" style="margin: 20px 0 10px 0;">Copy invitation link</div>
 
@@ -29,19 +29,19 @@ import { copyToClipboard, useQuasar } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
 import { getInvite } from 'src/apis/user';
-import vueQr from 'vue-qr/src/packages/vue-qr.vue';
 import { imageSrc } from 'src/utils';
+import QRCode from 'qrcode-svg-ts';
 
 export default {
   name: 'ShareIndex',
-  components: { vueQr },
   setup(props: any, context: any) {
     const { t } = useI18n()
     const $q = useQuasar()
     console.log($q);
 
     const state = reactive({
-      inviteUrl: ''
+      inviteUrl: '',
+      inviteImage: '',
     });
 
     context.emit('update', {
@@ -50,7 +50,17 @@ export default {
 
     onMounted(() => {
       getInvite().then((res: any) => {
-        state.inviteUrl = location.href + `?code=${res.code}`
+        state.inviteUrl = document.documentURI + `?code=${res.code}`
+        const qrcode = new QRCode({
+          content: state.inviteUrl,
+          padding: 0,
+          width: 175,
+          height: 175,
+          color: '#000000',
+          background: '#ffffff',
+          ecl: 'M',
+        });
+        state.inviteImage = qrcode.toDataURL()
         console.log(res);
       })
     })

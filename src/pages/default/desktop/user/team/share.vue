@@ -7,7 +7,7 @@
         <div class="row justify-center">
           <div class="relative-position">
             <div class="qrcode bg-white" style="z-index: 999;">
-              <vueQr class="full-width full-height" :text="inviteUrl"></vueQr>
+              <img :src="inviteImage" alt="">
             </div>
             <q-img class="absolute" width="133px" height="225px" style="left: -103px;top:0"
               src="/images/qrcode-left.png"></q-img>
@@ -34,19 +34,31 @@ import { onMounted, reactive, toRefs } from 'vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { getInvite } from 'src/apis/user';
-import vueQr from 'vue-qr/src/packages/vue-qr.vue';
+import QRCode from 'qrcode-svg-ts';
 
 export default {
   name: 'ShareIndex',
-  components: { vueQr },
   setup() {
+
+
     const state = reactive({
-      inviteUrl: ''
+      inviteUrl: '',
+      inviteImage: '',
     });
 
     onMounted(() => {
       getInvite().then((res: any) => {
-        state.inviteUrl = location.href + `?code=${res.code}`
+        state.inviteUrl = document.documentURI + `?code=${res.code}`
+        const qrcode = new QRCode({
+          content: state.inviteUrl,
+          padding: 0,
+          width: 175,
+          height: 175,
+          color: '#000000',
+          background: '#ffffff',
+          ecl: 'M',
+        });
+        state.inviteImage = qrcode.toDataURL()
         console.log(res);
       })
     })
