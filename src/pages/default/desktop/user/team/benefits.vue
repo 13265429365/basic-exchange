@@ -1,5 +1,5 @@
 <template>
-  <div class="calc">
+  <div style="width: calc(100% - 284px);">
     <div style="padding: 48px 100px;">
       <div class="text-weight-medium q-mb-lg" style="font-size: 28px;">
         {{ $t('teamBenefits') }}

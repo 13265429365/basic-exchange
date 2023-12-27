@@ -18,7 +18,7 @@
             class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t(tabBar.name)" dense flat no-wrap no-caps>
             <q-list v-if="tabBar.children.length > 0">
               <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
-                aria-hidden="true">
+                aria-hidden="true" :to="children.route">
                 <q-item-section avatar style="min-width:auto">
                   <q-img width="30px" height="30px" :src="imageSrc(children.icon ?? '')"></q-img>
                 </q-item-section>
@@ -29,7 +29,7 @@
 
           <!-- 没有子级 -->
           <q-btn v-else v-show="tabBar.data.isDesktop" class="text-grey-8 q-mr-sm q-py-xs q-px-md"
-            :label="$t(tabBar.name)" dense flat no-wrap no-caps></q-btn>
+            :label="$t(tabBar.name)" dense flat no-wrap no-caps :to="tabBar.route"></q-btn>
         </div>
       </div>
 
@@ -75,7 +75,7 @@
                 <!-- 固定头部 -->
                 <q-item aria-hidden="true">
                   <div class="row no-wrap">
-                    <q-avatar size="30px">
+                    <q-avatar size="35px">
                       <q-img :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
@@ -84,10 +84,19 @@
                         <span class="text-grey-7">{{ userInfo.email }}</span>
                       </div>
                       <div class="row no-wrap q-mt-sm">
-                        <q-btn size="xs" icon="verified" rounded flat dense no-wrap class="q-px-sm q-mr-sm" no-caps
+                        <!-- 会员等级 -->
+                        <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs" no-caps
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
-                          <div style="font-size: 11px;">Lv{{ userInfo.level }}</div>
+                          <q-img width="13px" height="12px" src="/images/icons/vip-icon.png"></q-img>
+                          <div class="q-ml-xs" style="font-size: 11px;">Lv{{ userInfo.level }}</div>
                         </q-btn>
+                        <!-- 信用分 -->
+                        <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs" no-caps
+                          style="border: 1px solid #F1F1F1;">
+                          <q-img width="13px" height="13px" src="/images/icons/credit.png"></q-img>
+                          <div class="q-ml-xs" style="font-size: 11px;">{{ $t('creditScore') + userInfo.score }}</div>
+                        </q-btn>
+                        <!-- 实名 -->
                         <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps>
                           <div style="font-size: 11px;">{{ userInfo.authStatus ? $t('realNameFailed') :
                             $t('alreadyRealName') }}
@@ -131,7 +140,7 @@
 
         <!-- 未登录状态 -->
         <div v-else>
-          <q-btn @click="dialogOpenLogin(true)" rounded flat dense no-wrap class="bg-white text-grey-8 q-px-md q-ml-sm"
+          <q-btn @click="dialogOpenLogin(true)" rounded flat dense no-wrap class="bg-grey-4 text-grey-8 q-px-md q-ml-sm"
             no-caps :label="$t('login')"></q-btn>
           <q-btn @click="dialogOpenRegister(true)" rounded flat dense no-wrap
             class="bg-primary text-white q-px-md q-ml-sm" no-caps :label="$t('register')"></q-btn>
@@ -172,7 +181,7 @@ export default {
     const RegisterRef = ref(null) as any;
 
     const state = reactive({
-      userInfo: { avatar: '', username: '', email: '', level: 1, authStatus: 0 },
+      userInfo: { avatar: '', username: '', email: '', level: 1, authStatus: 0 } as any,
 
       // 配置
       config: $initStore.config,

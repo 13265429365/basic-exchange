@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="window-height">
     <div>Contact</div>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: 'ContactIndex',
   setup() {
     const state = reactive({});
@@ -16,5 +16,5 @@ export default {
       ...toRefs(state),
     };
   },
-};
+});
 </script>

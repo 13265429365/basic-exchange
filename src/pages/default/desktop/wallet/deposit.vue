@@ -146,16 +146,6 @@
                 </template>
               </uploader>
             </div>
-            <!-- <uploader @uploaded="uploaded" :listStyle="{
-              height: '120px',
-            }">
-              <template v-slot:noneAdd>
-                <div style="border: 1px dashed #D7D7D7;width: 120px;height: 120px;background-color: #F5F6FA;"
-                  class="rounded-borders column justify-center">
-                  <q-icon name="add" size="24px" class="self-center"></q-icon>
-                </div>
-              </template>
-            </uploader> -->
           </div>
         </div>
         <div class="q-mt-lg q-mb-md text-color-6">
@@ -275,8 +265,9 @@ export default {
     // 复制
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
-        .then(() => { })
-        .catch(() => { });
+        .then(() => {
+          console.log('复制成功')
+        })
     };
 
     const uploaded = (url: any) => {

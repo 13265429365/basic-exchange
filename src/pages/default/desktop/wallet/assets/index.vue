@@ -1,9 +1,12 @@
 <template>
-  <div class="calc">
-    <!-- 通用header(app.scss) -->
-    <div class="pageHeader">
-      {{ $t('myAssets') }}
-    </div>
+  <div style="width: calc(100% - 284px);">
+    <!-- 页面标题 -->
+    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
+      <q-toolbar-title class="text-h5 text-weight-bold">
+        {{ $t('myAssets') }}
+      </q-toolbar-title>
+    </q-toolbar>
+
     <div style="padding: 48px 100px;">
       <!-- 钱包余额 -->
       <q-scroll-area style="height: 208px;width: 100%;" :visible="false">

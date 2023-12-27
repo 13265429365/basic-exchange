@@ -1,49 +1,49 @@
 <template>
-  <div class="calc">
-    <!-- 通用header(app.scss) -->
-    <div class="pageHeader">
-      {{ $t('settings') }}
-    </div>
-    <div class="maxWidth1200">
-      <div>
-        <div class="text-weight-bold text-h5">{{ $t('personalSetting') }}</div>
-        <!-- row -->
-        <div v-for="(item, i) in SettingList" :key="i" class="q-mt-lg">
-          <div class="row no-wrap justify-between">
-            <div>
-              <div class="row" style="min-width: 260px;">
-                <q-img class="q-mr-sm" width="24px" height="24px" :src="imageSrc('')"></q-img>
-                <div>
-                  <div class="text-h6 text-color-3 text-weight-bold">{{ $t(item.arguments) }}</div>
-                  <div style="font-size: 12px;">{{ item.decs }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="row items-center">
-              <q-avatar v-if="item.avatar" style="width: 34px;height: 34px;">
-                <q-img :src="imageSrc(item.content ? item.content : '')"></q-img>
-              </q-avatar>
-              <div v-if="item.title == 'Gender'" class="text-weight-medium">
-                {{ item.text }}
-              </div>
-              <div v-if="item.title == 'Birthday'" class="text-weight-medium">
-                {{ date.formatDate(item.content * 1000, 'YYYY-MM-DD') }}
-              </div>
-              <div v-if="item.title != 'Gender' && item.title != 'Birthday' && item.title != 'Avatar'"
-                class="text-weight-medium">{{
-                  item.content }}
-              </div>
+  <div style="width: calc(100% - 284px);">
+    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
+      <q-toolbar-title class="text-h5 text-weight-bold">
+        {{ $t('settings') }}
+      </q-toolbar-title>
+    </q-toolbar>
 
-            </div>
-            <div class="row items-end">
-              <q-btn @click="show(item)" class="bg-grey-3" no-caps :label="$t(item.btn)"></q-btn>
+    <div>
+      <div class="text-weight-bold text-h5">{{ $t('personalSetting') }}</div>
+      <!-- row -->
+      <div v-for="(item, i) in SettingList" :key="i" class="q-mt-lg">
+        <div class="row no-wrap justify-between">
+          <div>
+            <div class="row" style="min-width: 260px;">
+              <q-img class="q-mr-sm" width="24px" height="24px" :src="imageSrc('')"></q-img>
+              <div>
+                <div class="text-h6 text-color-3 text-weight-bold">{{ $t(item.arguments) }}</div>
+                <div style="font-size: 12px;">{{ item.decs }}</div>
+              </div>
             </div>
           </div>
-          <q-separator class="q-mt-md" style="background: #F1F1F1;" />
+          <div class="row items-center">
+            <q-avatar v-if="item.avatar" style="width: 34px;height: 34px;">
+              <q-img :src="imageSrc(item.content ? item.content : '')"></q-img>
+            </q-avatar>
+            <div v-if="item.title == 'Gender'" class="text-weight-medium">
+              {{ item.text }}
+            </div>
+            <div v-if="item.title == 'Birthday'" class="text-weight-medium">
+              {{ date.formatDate(item.content * 1000, 'YYYY-MM-DD') }}
+            </div>
+            <div v-if="item.title != 'Gender' && item.title != 'Birthday' && item.title != 'Avatar'"
+              class="text-weight-medium">{{
+                item.content }}
+            </div>
+
+          </div>
+          <div class="row items-end">
+            <q-btn @click="show(item)" class="bg-grey-3" no-caps :label="$t(item.btn)"></q-btn>
+          </div>
         </div>
+        <q-separator class="q-mt-md" style="background: #F1F1F1;" />
       </div>
-      <!--  -->
     </div>
+    <!--  -->
     <update ref="edit" @UserInfo="UserInfo"></update>
   </div>
 </template>

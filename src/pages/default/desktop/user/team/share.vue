@@ -1,5 +1,5 @@
 <template>
-  <div class="calc">
+  <div style="width: calc(100% - 284px);">
 
     <div>
       <q-img class="q-mb-xl" height="280px" src="/images/banner.png"></q-img>

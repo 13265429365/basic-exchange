@@ -5,7 +5,7 @@
       <q-expansion-item accordion :header-style="{ borderRadius: '4px' }" v-if="menu.children.length > 0" default-opened>
         <!-- 父级 -->
         <template v-slot:header>
-          <q-item-section avatar>
+          <q-item-section avatar style="min-width: auto">
             <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
           </q-item-section>
           <q-item-section avatar>
@@ -28,7 +28,7 @@
 
       <!-- 不含子级的列表 -->
       <q-item v-else class="rounded-borders" :active="$route.path == menu.route" :to="menu.route">
-        <q-item-section avatar>
+        <q-item-section avatar style="min-width: auto">
           <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
         </q-item-section>
         <q-item-section>

@@ -1,5 +1,5 @@
 <template>
-  <div class="calc row items-center justify-center">
+  <div class="row items-center justify-center" style="width: calc(100% - 284px);">
     <div class="column">
       <div class="col">
         <div class="column justify-between items-center q-mb-xl">

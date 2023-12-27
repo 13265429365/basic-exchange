@@ -1,81 +1,80 @@
 <template>
-  <div class="calc">
-    <!-- 通用header(app.scss) -->
-    <div class="pageHeader">
-      {{ $t('realAuth') }}
-    </div>
+  <div style="width: calc(100% - 284px);">
+    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
+      <q-toolbar-title class="text-h5 text-weight-bold">
+        {{ $t('realAuth') }}
+      </q-toolbar-title>
+    </q-toolbar>
 
-    <div class="maxWidth1200">
-      <!-- input -->
-      <q-form @submit="submit" class="full-width">
-        <div class="row no-wrap justify-between">
-          <div class="q-mr-md" style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">{{ $t('email') }}</div>
-            <q-input :rules="[
-              val => val !== null && val !== ''
-            ]" standout class="q-mb-lg" v-model="form.realName" :placeholder="$t('email')" />
-          </div>
-          <div style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">{{ $t('telephone') }}</div>
-            <q-input :rules="[
-              val => val !== null && val !== ''
-            ]" standout class="q-mb-lg" v-model="form.telephone" :placeholder="$t('telephone')" />
-          </div>
+    <!-- input -->
+    <q-form @submit="submit" class="full-width">
+      <div class="row no-wrap justify-between">
+        <div class="q-mr-md" style="width: 48.5%;">
+          <div class="q-mb-xs text-color-6">{{ $t('email') }}</div>
+          <q-input :rules="[
+            val => val !== null && val !== ''
+          ]" standout class="q-mb-lg" v-model="form.realName" :placeholder="$t('email')" />
         </div>
-        <div class="row no-wrap justify-between">
-          <div class="q-mr-md" style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">{{ $t('bankNumber') }}</div>
-            <q-input :rules="[
-              val => val !== null && val !== ''
-            ]" standout class="q-mb-lg" v-model="form.number" :placeholder="$t('bankNumber')" />
-          </div>
-          <div style="width: 48.5%;">
-            <div class="q-mb-xs text-color-6">{{ $t('digitalAddress') }}</div>
-            <q-input :rules="[
-              val => val !== null && val !== ''
-            ]" standout class="q-mb-lg" v-model="form.address" :placeholder="$t('digitalAddress')" />
-          </div>
+        <div style="width: 48.5%;">
+          <div class="q-mb-xs text-color-6">{{ $t('telephone') }}</div>
+          <q-input :rules="[
+            val => val !== null && val !== ''
+          ]" standout class="q-mb-lg" v-model="form.telephone" :placeholder="$t('telephone')" />
         </div>
+      </div>
+      <div class="row no-wrap justify-between">
+        <div class="q-mr-md" style="width: 48.5%;">
+          <div class="q-mb-xs text-color-6">{{ $t('bankNumber') }}</div>
+          <q-input :rules="[
+            val => val !== null && val !== ''
+          ]" standout class="q-mb-lg" v-model="form.number" :placeholder="$t('bankNumber')" />
+        </div>
+        <div style="width: 48.5%;">
+          <div class="q-mb-xs text-color-6">{{ $t('digitalAddress') }}</div>
+          <q-input :rules="[
+            val => val !== null && val !== ''
+          ]" standout class="q-mb-lg" v-model="form.address" :placeholder="$t('digitalAddress')" />
+        </div>
+      </div>
 
-        <!-- 上传身份证 -->
-        <div class="q-mb-xs text-color-6">{{ $t('idPhoto1').replace('正面', '').replace('1', '') }}</div>
-        <div class="row justify-between">
-          <div class="q-mb-xl" style="width: 48.5%;">
-            <uploader :respValue="form.photo1" @uploaded="uploaded" :value="imgUrl" :listStyle="{
-              height: '155px',
-            }">
-              <template v-slot:noneAdd>
-                <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
-                  <q-icon name="add" size="29px" />
-                </div>
-              </template>
-            </uploader>
-            <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto1') }}</div>
-          </div>
-
-          <!--  -->
-          <div class="q-mb-xl" style="width: 48.5%;">
-            <uploader :respValue="form.photo2" @uploaded="uploaded2" :value="imgUrl" :listStyle="{
-              height: '155px',
-            }">
-              <template v-slot:noneAdd>
-                <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
-                  <q-icon name="add" size="29px" />
-                </div>
-              </template>
-            </uploader>
-            <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto2') }}</div>
-          </div>
+      <!-- 上传身份证 -->
+      <div class="q-mb-xs text-color-6">{{ $t('idPhoto1').replace('正面', '').replace('1', '') }}</div>
+      <div class="row justify-between">
+        <div class="q-mb-xl" style="width: 48.5%;">
+          <uploader :respValue="form.photo1" @uploaded="uploaded" :value="imgUrl" :listStyle="{
+            height: '155px',
+          }">
+            <template v-slot:noneAdd>
+              <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
+                <q-icon name="add" size="29px" />
+              </div>
+            </template>
+          </uploader>
+          <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto1') }}</div>
         </div>
 
-        <!-- sub按钮 -->
-        <div class="q-mt-xl row justify-center">
-          <q-btn rounded color="primary" type="submit" no-caps :label="$t('submit')"
-            style="width: 170px;height: 48px;"></q-btn>
+        <!--  -->
+        <div class="q-mb-xl" style="width: 48.5%;">
+          <uploader :respValue="form.photo2" @uploaded="uploaded2" :value="imgUrl" :listStyle="{
+            height: '155px',
+          }">
+            <template v-slot:noneAdd>
+              <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
+                <q-icon name="add" size="29px" />
+              </div>
+            </template>
+          </uploader>
+          <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto2') }}</div>
         </div>
-      </q-form>
+      </div>
 
-    </div>
+      <!-- sub按钮 -->
+      <div class="q-mt-xl row justify-center">
+        <q-btn rounded color="primary" type="submit" no-caps :label="$t('submit')"
+          style="width: 170px;height: 48px;"></q-btn>
+      </div>
+    </q-form>
+
   </div>
 </template>
 
