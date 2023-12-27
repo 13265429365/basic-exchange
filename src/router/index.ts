@@ -3,7 +3,7 @@ import { UserTokenKey, InitStoreState, UserLangKey } from 'src/stores/init';
 import { Cookies, Platform } from 'quasar';
 import { dynamicRouterFunc } from 'src/router/routes';
 import { templateRoutes } from 'src/router/routes';
-import { userInit } from 'src/apis';
+import { initAPI } from 'src/apis';
 
 import {
   createMemoryHistory,
@@ -62,7 +62,7 @@ export default route(async function ({ store, ssrContext }) {
     store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : '';
 
     //获取初始化数据
-    await userInit({ domain: '', lang: store.state.value.init.userLang }).then((res: any) => {
+    await initAPI({ domain: '', lang: store.state.value.init.userLang }).then((res: any) => {
       //  初始化配置
       store.state.value.init.config = res.config
 
