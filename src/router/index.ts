@@ -101,7 +101,7 @@ export default route(async function ({ store, ssrContext }) {
       store.state.value.init.userToken &&
       store.state.value.init.userToken.length > 0
     ) {
-      next({ name: 'Home' });
+      next('/');
     } else {
       // 验证是否跳转到登录页面
       if (
@@ -109,7 +109,7 @@ export default route(async function ({ store, ssrContext }) {
         (store.state.value.init.userToken == null ||
           store.state.value.init.userToken.length === 0)
       ) {
-        next({ name: 'UserLogin' });
+        next('/login');
       } else {
         next();
       }
