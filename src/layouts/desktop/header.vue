@@ -16,9 +16,9 @@
           <!-- 有子级 -->
           <q-btn-dropdown v-if="tabBar.children.length > 0" v-show="tabBar.data.isDesktop" :menu-offset="[80, 18]"
             class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t(tabBar.name)" dense flat no-wrap no-caps>
-            <q-list v-if="tabBar.children.length > 0">
+            <q-list v-if="tabBar.children.length > 0" class="q-ma-sm">
               <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
-                aria-hidden="true" :to="children.route">
+                aria-hidden="true" :to="children.route" class="rounded-borders">
                 <q-item-section avatar style="min-width:auto">
                   <q-img width="30px" height="30px" :src="imageSrc(children.icon ?? '')"></q-img>
                 </q-item-section>
@@ -36,8 +36,9 @@
       <!-- 左侧快捷菜单 -->
       <q-btn-dropdown :menu-offset="[50, 18]" class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t('more')" dense flat
         no-caps>
-        <q-list>
+        <q-list class="q-ma-sm">
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
+                  class="rounded-borders"
             :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
             <q-item-section avatar style="min-width:auto">
               <q-img width="34px" height="34px" :src="imageSrc(quickMenu.icon)"></q-img>

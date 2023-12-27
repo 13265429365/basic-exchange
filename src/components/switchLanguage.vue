@@ -1,7 +1,7 @@
 <template>
   <q-menu>
-    <q-list>
-      <q-item @click="switchLang(lang)" :active="initStore.userLang == lang.alias"
+    <q-list class="q-ma-sm">
+      <q-item @click="switchLang(lang)" :active="initStore.userLang == lang.alias" class="rounded-borders"
         v-for="(lang, langIndex) in initStore.languageList" :key="langIndex" clickable v-close-popup aria-hidden="true">
         <q-item-section avatar>
           <q-img width="24px" height="24px" :src="imageSrc(lang.icon)" />

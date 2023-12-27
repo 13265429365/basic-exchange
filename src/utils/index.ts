@@ -20,21 +20,6 @@ export const iconSrc = (icon: any) => {
   return icon.indexOf('/') > -1 ? 'img:' + icon : icon;
 };
 
-// 跳转路由
-export const routerTo = (route: string) => {
-  const $router = useRouter();
-  if (route == '') {
-    return;
-  }
-
-  if (route.indexOf('://') > -1) {
-    window.location.href = route;
-    return;
-  }
-
-  $router.push(route);
-};
-
 // 日期格式化
 export const formatDate = (time: string) => {
   return date.formatDate(Number(time) * 1000, 'YYYY-MM-DD HH:mm:ss')

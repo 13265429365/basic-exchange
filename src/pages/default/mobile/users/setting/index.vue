@@ -40,7 +40,7 @@ export default defineComponent({
       list: [
         {
           name: 'personalSetting',
-          icon: 'settings/user.png',
+          icon: 'settings/users.png',
           route: '/settings/info'
         }, {
           name: 'updatePassword',
