@@ -13,10 +13,9 @@
       <!-- 左侧tabBar菜单 -->
       <div class="row no-wrap items-center">
         <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
-
+          <!-- 有子级 -->
           <q-btn-dropdown v-if="tabBar.children.length > 0" v-show="tabBar.data.isDesktop" :menu-offset="[80, 18]"
-            class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t(tabBar.name)" dense flat no-wrap no-caps
-            dropdown-icon="expand_more">
+            class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t(tabBar.name)" dense flat no-wrap no-caps>
             <q-list v-if="tabBar.children.length > 0">
               <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
                 aria-hidden="true">
@@ -27,14 +26,16 @@
               </q-item>
             </q-list>
           </q-btn-dropdown>
+
+          <!-- 没有子级 -->
           <q-btn v-else v-show="tabBar.data.isDesktop" class="text-grey-8 q-mr-sm q-py-xs q-px-md"
             :label="$t(tabBar.name)" dense flat no-wrap no-caps></q-btn>
         </div>
       </div>
 
       <!-- 左侧快捷菜单 -->
-      <q-btn-dropdown :menu-offset="[50, 18]" class="text-grey-8" :label="$t('more')" flat no-caps
-        dropdown-icon="expand_more">
+      <q-btn-dropdown :menu-offset="[50, 18]" class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t('more')" dense flat
+        no-caps>
         <q-list>
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
             :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
@@ -191,7 +192,7 @@ export default {
       // 右侧头像菜单
       homeMenuList: $initStore.homeMenu,
     });
-    console.log(state.tabBarList);
+
     state.userInfo = $userStore.userInfo
 
     // dialogOpenFunc 打开登录
