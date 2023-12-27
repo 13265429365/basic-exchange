@@ -62,7 +62,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
-import { CaptchaAPI } from 'src/apis';
+import { captchaAPI } from 'src/apis';
 import { userLogin } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
@@ -97,7 +97,7 @@ export default defineComponent({
 
     // 获取验证码
     const refreshCaptchaFunc = () => {
-      CaptchaAPI().then((res: any) => {
+      captchaAPI().then((res: any) => {
         state.params.captchaId = res;
       });
     };

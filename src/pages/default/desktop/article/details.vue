@@ -8,7 +8,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { getArticleInfo } from 'src/apis'
+import { articleInfoAPI } from 'src/apis'
 
 export default {
   name: 'ArticleDetails',
@@ -21,7 +21,7 @@ export default {
     })
 
     onMounted(() => {
-      getArticleInfo({ id: Number($route.query.id) }).then((res: any) => {
+      articleInfoAPI({ id: Number($route.query.id) }).then((res: any) => {
         state.content = res.content
         state.name = res.name
       })

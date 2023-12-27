@@ -69,6 +69,8 @@ api.interceptors.response.use(
       switch (err.response.status) {
         case 401:
           NotifyNegative('No permission to execute');
+          const $initStore = InitStore();
+          $initStore.updateUserToken('');
           break;
         case 500:
           NotifyNegative('The system is busy, please try again');

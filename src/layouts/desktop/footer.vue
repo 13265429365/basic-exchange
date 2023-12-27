@@ -47,7 +47,7 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { InitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils'
-import { getFooter } from 'src/apis'
+import { footerInfoAPI } from 'src/apis'
 import { useRouter } from 'vue-router';
 
 export default {
@@ -63,7 +63,7 @@ export default {
     })
 
     onMounted(() => {
-      getFooter().then((res: any) => {
+      footerInfoAPI().then((res: any) => {
         state.footerList = res.items
         state.socialInfo = res.socialInfo
       })

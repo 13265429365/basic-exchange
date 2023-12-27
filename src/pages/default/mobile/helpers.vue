@@ -47,8 +47,8 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
-import { imageSrc } from 'src/utils/index';
-import { getHelpers } from 'src/apis/index'
+import { imageSrc } from 'src/utils';
+import { helpersInfoAPI } from 'src/apis'
 import { useI18n } from 'vue-i18n'
 
 export default {
@@ -69,7 +69,7 @@ export default {
     })
 
     onMounted(() => {
-      getHelpers().then((res: any) => {
+      helpersInfoAPI().then((res: any) => {
         state.articleList = res.articleList
         state.socialList = res.socialList
         console.log(res);

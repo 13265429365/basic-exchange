@@ -19,9 +19,8 @@
 
 <script lang="ts">
 import { onMounted, reactive, toRefs } from 'vue';
-import { date } from 'quasar';
-import { imageSrc } from 'src/utils/index';
-import { getDownload } from 'src/apis';
+import { imageSrc } from 'src/utils';
+import { downloadInfoAPI } from 'src/apis';
 import { InitStore } from 'src/stores/init';
 
 export default {
@@ -37,16 +36,13 @@ export default {
     });
 
     onMounted(() => {
-      // 获取下载地址
-      getDownload().then((res: any) => {
+      downloadInfoAPI().then((res: any) => {
         state.downloadUrl = res
-        console.log(res);
       })
     })
 
     return {
       imageSrc,
-      date,
       ...toRefs(state),
     }
   }
