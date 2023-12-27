@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import update from 'src/pages/default/desktop/user/setting/update.vue';
+import update from 'pages/default/desktop/users/setting/update.vue';
 
 import { defineComponent, reactive, toRefs, ref, onMounted, nextTick } from 'vue';
 import { imageSrc } from 'src/utils/index';
