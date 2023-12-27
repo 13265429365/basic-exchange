@@ -10,7 +10,6 @@
           <div class="z-top" v-if="type === 'avatar'">
             <q-uploader-add-trigger />
             <img style="width: 27px;height: 27px;" src="/images/icons/edit.png" alt="" />
-            <!-- <q-img width="27px" height="27px" class="cursor-pointer" src="/images/icons/edit.png"></q-img> -->
           </div>
 
           <!-- 单图 -->
@@ -26,32 +25,6 @@
               </div>
             </div>
           </q-card>
-
-
-          <!--  显示多图上传 -->
-          <!-- <q-scroll-area :style="{ width: '100%', height: listStyle.height }" v-else-if="multiple" :bar-style="barStyle"
-            :thumb-style="thumbStyle">
-            <div class="row no-wrap">
-              <q-card flat bordered v-for="(file, fileIndex) in scope.files" :key="file.__key" :style="listStyle"
-                class="q-mr-sm">
-                <q-card-section class="no-padding">
-                  <q-img no-spinner :src="file.__img.src"></q-img>
-                  <div style="position: absolute; top: 0; right: 0">
-                    <q-btn flat dense color="negative" @click.stop="deleteImagesFunc(fileIndex, scope.files)"
-                      icon="sym_o_delete"></q-btn>
-                  </div>
-                </q-card-section>
-              </q-card>
-
-              <q-card flat bordered :style="listStyle" class="cursor-pointer">
-                <div class="column justify-center items-center" style="height: 100%">
-                  <q-icon name="add" :size="size">
-                    <q-uploader-add-trigger />
-                  </q-icon>
-                </div>
-              </q-card>
-            </div>
-          </q-scroll-area> -->
         </div>
       </template>
     </q-uploader>
@@ -65,11 +38,10 @@ import { Loading, QSpinnerBars } from 'quasar';
 import { InitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
 
-
 export default {
   name: 'UploaderComponents',
   props: {
-    // 
+    //
     name: { type: String, default: 'file' },
 
     // 文件大小
@@ -118,7 +90,7 @@ export default {
       // api路径
       baseURL: process.env.baseURL,
 
-      // 
+      // 返回数据
       respValue: '' as any,
 
       // upload样式
@@ -193,14 +165,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.q-card--bordered {
-  border: 0px !important;
-}
-
-:deep(.q-uploader .q-uploader__list) {
-  padding: 0 !important;
-  overflow: hidden;
-  min-height: 27px;
-}
-</style>
+<style scoped lang="scss"></style>

@@ -75,7 +75,7 @@
                 <!-- 固定头部 -->
                 <q-item aria-hidden="true">
                   <div class="row items-center">
-                    <q-avatar size="40px" class="q-mt-sm">
+                    <q-avatar size="40px" class="q-mt-sm" @click="$router.push({name: 'SettingIndex'})">
                       <q-img :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">

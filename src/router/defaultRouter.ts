@@ -258,7 +258,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
     componentMobile: LayoutsMobilePath('header.vue'),
     componentDesktop: LayoutsDesktopPath('setting.vue'),
     children: [
-      // 卡片管理(共用)
       {
         name: 'AccountCard',
         route: '/wallets/account/index',
@@ -270,7 +269,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-      // 我的钱包(共用)
       {
         name: 'Wallet',
         route: '/wallets/index',
@@ -282,7 +280,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-      // 我的资产(共用)
       {
         name: 'Assets',
         route: '/wallets/assets/index',
@@ -342,9 +339,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-
-
-      // 下载(共用)
       {
         name: 'Download',
         route: '/download',
@@ -393,10 +387,9 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-      // 用户设置页面(共用)
       {
-        name: 'userSettings',
-        route: '/user/settings',
+        name: 'SettingIndex',
+        route: '/user/setting/index',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'users/setting/index.vue'),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/setting/index.vue'),
         children: [],
