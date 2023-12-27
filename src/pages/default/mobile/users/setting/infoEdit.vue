@@ -8,7 +8,9 @@
         <div class="relative">
           <q-avatar style="width: 80px;height: 80px;">
             <q-img :src="form.avatar ? imageSrc(form.avatar) : imageSrc('')" />
-            <uploaderAvatar :respValue="form.avatar" @upload="upload"></uploaderAvatar>
+            <uploader type="avatar"
+              :uploaderStyle="{ position: 'absolute', right: '0', bottom: '0', width: '27px', height: '27px', background: 'transparent' }"
+              :respValue="form.avatar" @upload="upload"></uploader>
           </q-avatar>
         </div>
       </div>
@@ -64,7 +66,7 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { getUserInfo, updateInfo } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
-import uploaderAvatar from 'src/components/uploaderAvatar.vue';
+import uploader from 'src/components/uploader.vue';
 import { date } from 'quasar';
 import { useI18n } from 'vue-i18n'
 
@@ -72,7 +74,7 @@ import { useI18n } from 'vue-i18n'
 export default defineComponent({
   name: 'infoEdit',
   components: {
-    uploaderAvatar,
+    uploader,
   },
   setup(props: any, context: any) {
     const { t } = useI18n();

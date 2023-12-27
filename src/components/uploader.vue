@@ -7,8 +7,14 @@
       <template v-slot:header></template>
       <template v-slot:list="scope">
         <div @click="scope.pickFiles">
+          <div class="z-top" v-if="type === 'avatar'">
+            <q-uploader-add-trigger />
+            <img style="width: 27px;height: 27px;" src="/images/icons/edit.png" alt="" />
+            <!-- <q-img width="27px" height="27px" class="cursor-pointer" src="/images/icons/edit.png"></q-img> -->
+          </div>
+
           <!-- 单图 -->
-          <q-card flat bordered :style="listStyle" class="cursor-pointer" v-if="type === 'avatar'">
+          <q-card flat bordered :style="listStyle" class="cursor-pointer" v-else>
             <div class="row justify-center items-center" style="border-radius: 8px;overflow: hidden;">
               <q-uploader-add-trigger />
               <div v-if="respValue" class="row justify-center items-center"
@@ -20,6 +26,7 @@
               </div>
             </div>
           </q-card>
+
 
           <!--  显示多图上传 -->
           <!-- <q-scroll-area :style="{ width: '100%', height: listStyle.height }" v-else-if="multiple" :bar-style="barStyle"
@@ -98,7 +105,7 @@ export default {
     accept: { type: String, default: '.jpg,.png,.gif,image/*' },
 
     //  avatar | multiple
-    type: { type: String, default: 'avatar' },
+    type: { type: String, default: 'upload' },
   },
   setup(props: any, context: any) {
     let $initStore = InitStore()
@@ -192,7 +199,9 @@ export default {
 }
 
 :deep(.q-uploader .q-uploader__list) {
-  // padding: 8px !important;
+  background: transparent;
+  padding: 0 !important;
   overflow: hidden;
+  min-height: 27px;
 }
 </style>
