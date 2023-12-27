@@ -73,7 +73,7 @@ background: #F8F9FC;">
             <!-- 本人姓名 -->
             <div class="q-mb-lg">
               <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('idName') }}：</div>
-              <q-input standout v-model="form.realName" :rules="[val => val && val.length > 0]" />
+              <q-input outlined v-model="form.realName" :rules="[val => val && val.length > 0]" />
             </div>
 
             <!-- 银行卡号 -->

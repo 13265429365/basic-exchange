@@ -1,11 +1,11 @@
 <template>
-  <q-layout view="hHh LpR fFf" style="min-width: 1200px">
+  <q-layout view="hhh LpR fFf" style="min-width: 1200px">
     <q-header bordered class="bg-white">
       <HeaderLayouts></HeaderLayouts>
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <router-view :key="$route.fullPath" />
     </q-page-container>
 
     <FooterLayouts style="background: #021736;"></FooterLayouts>

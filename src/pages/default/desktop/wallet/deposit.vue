@@ -97,7 +97,7 @@
         <div class="q-mt-lg">
           <div class="row no-wrap items-center q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('depositAmount') }}：</div>
-            <q-input suffix="元" type="number" standout v-model="form.money" />
+            <q-input type="number" outlined :input-style="{ height: '40px' }" v-model="form.money" />
           </div>
 
           <!-- 银行名称 -->
@@ -298,30 +298,6 @@ export default {
 .select {
   background-color: rgba(241, 250, 246, 1) !important;
   border: 1px solid $primary;
-}
-
-:deep(.q-scrollarea__thumb) {
-  display: none !important;
-}
-
-// pc版input样式
-:deep .q-field--standout .q-field__native {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-:deep .q-field--standout .q-field__suffix {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-:deep .q-field--standout .q-field__control {
-  width: 230px;
-  background: #fff !important;
-  height: 40px !important;
-  min-height: 40px !important;
-  outline: none !important;
-  border: 1px solid #DDDDDD;
-  box-shadow: none !important;
-  border-radius: 4px;
 }
 
 .q-badge {

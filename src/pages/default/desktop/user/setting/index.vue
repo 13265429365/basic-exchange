@@ -6,7 +6,7 @@
       </q-toolbar-title>
     </q-toolbar>
 
-    <div>
+    <div style="padding: 48px 100px;">
       <div class="text-weight-bold text-h5">{{ $t('personalSetting') }}</div>
       <!-- row -->
       <div v-for="(item, i) in SettingList" :key="i" class="q-mt-lg">

@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh LpR fff" style="min-width: 1200px">
+  <q-layout view="hhh LpR fff" style="min-width: 1200px">
     <q-header bordered class="bg-white">
       <HeaderLayouts></HeaderLayouts>
     </q-header>
@@ -7,7 +7,7 @@
     <q-page-container>
       <div class="row no-wrap" style="margin-bottom: 200px;">
         <MenuLayouts></MenuLayouts>
-        <router-view />
+        <router-view :key="$route.fullPath" />
       </div>
     </q-page-container>
 
