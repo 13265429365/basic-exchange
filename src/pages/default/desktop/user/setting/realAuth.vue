@@ -7,19 +7,19 @@
     </q-toolbar>
 
     <!-- input -->
-    <q-form @submit="submit" class="full-width">
+    <q-form @submit="submit" class="full-width" style="padding: 48px 100px;">
       <div class="row no-wrap justify-between">
         <div class="q-mr-md" style="width: 48.5%;">
           <div class="q-mb-xs text-color-6">{{ $t('email') }}</div>
           <q-input :rules="[
             val => val !== null && val !== ''
-          ]" standout class="q-mb-lg" v-model="form.realName" :placeholder="$t('email')" />
+          ]" outlined class="q-mb-lg" v-model="form.realName" :placeholder="$t('email')" />
         </div>
         <div style="width: 48.5%;">
           <div class="q-mb-xs text-color-6">{{ $t('telephone') }}</div>
           <q-input :rules="[
             val => val !== null && val !== ''
-          ]" standout class="q-mb-lg" v-model="form.telephone" :placeholder="$t('telephone')" />
+          ]" outlined class="q-mb-lg" v-model="form.telephone" :placeholder="$t('telephone')" />
         </div>
       </div>
       <div class="row no-wrap justify-between">
@@ -27,13 +27,13 @@
           <div class="q-mb-xs text-color-6">{{ $t('bankNumber') }}</div>
           <q-input :rules="[
             val => val !== null && val !== ''
-          ]" standout class="q-mb-lg" v-model="form.number" :placeholder="$t('bankNumber')" />
+          ]" outlined class="q-mb-lg" v-model="form.number" :placeholder="$t('bankNumber')" />
         </div>
         <div style="width: 48.5%;">
           <div class="q-mb-xs text-color-6">{{ $t('digitalAddress') }}</div>
           <q-input :rules="[
             val => val !== null && val !== ''
-          ]" standout class="q-mb-lg" v-model="form.address" :placeholder="$t('digitalAddress')" />
+          ]" outlined class="q-mb-lg" v-model="form.address" :placeholder="$t('digitalAddress')" />
         </div>
       </div>
 

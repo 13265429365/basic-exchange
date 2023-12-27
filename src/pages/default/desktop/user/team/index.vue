@@ -6,7 +6,7 @@
       </q-toolbar-title>
     </q-toolbar>
 
-    <div>
+    <div style="padding: 48px 100px;">
       <!-- 总金额 -->
       <div class="page_bg q-pa-md rounded-borders row no-wrap items-center" style="width: 220px;">
         <div class="text-primary text-weight-bold" style="font-size: 16px;">

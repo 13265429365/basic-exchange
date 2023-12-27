@@ -1,5 +1,5 @@
 <template>
-  <div class="background q-py-xl">
+  <div class="q-py-xl" style="width: calc(100% - 284px);padding: 48px 100px;">
     <div class="text-center text-weight-bold q-mt-lg" style="font-size: 32px;">Pick your plan</div>
     <div class="text-center text-color-6 q-mt-sm q-mb-xl">
       Choose your perfect plan and get started.
@@ -124,12 +124,6 @@ export default {
   font-size: 20px;
 }
 
-.background {
-  background: url('/public/images/pc/vip/bg.png');
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 1000px;
-}
 
 .gradeBackground {
   background: linear-gradient(180deg, #10BE70 0%, #91DB82 100%);

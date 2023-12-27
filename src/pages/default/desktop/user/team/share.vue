@@ -68,8 +68,10 @@ export default {
     // 复制方法
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
-        .then(() => { })
-        .catch(() => { });
+        .then(() => {
+          console.log('复制');
+
+        })
     };
     return {
       ...toRefs(state), copyToClipboardFunc

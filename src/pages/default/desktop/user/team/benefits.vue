@@ -1,9 +1,11 @@
 <template>
   <div style="width: calc(100% - 284px);">
-    <div style="padding: 48px 100px;">
-      <div class="text-weight-medium q-mb-lg" style="font-size: 28px;">
+    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
+      <q-toolbar-title class="text-h5 text-weight-bold">
         {{ $t('teamBenefits') }}
-      </div>
+      </q-toolbar-title>
+    </q-toolbar>
+    <div style="padding: 48px 100px;">
       <!-- 头像 -->
       <div class="rounded-borders q-pa-lg" style="border: 1px solid #DDDDDD;">
         <!-- <q-scroll-area style="max-width: 942px;height: 60px;"> -->
