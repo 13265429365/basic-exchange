@@ -1,5 +1,5 @@
 <template>
-  <div class="window-height"></div>
+  <div class="window-height">home</div>
   <!-- 客服图标 -->
   <q-avatar v-if="config.settings.online.showRegister"
     class="fixed-bottom-right q-mb-md q-mr-md cursor-pointer shadow-1 z-top">
