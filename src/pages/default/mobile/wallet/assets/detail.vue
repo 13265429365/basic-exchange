@@ -58,7 +58,7 @@
     <!-- 筛选对话框 -->
     <q-dialog v-model="dialog" :maximized="true" position="right" full-height style="padding: 0;">
       <q-card style="width: 320px">
-        <q-card-section class="relative full-height">
+        <q-card-section class="relative-position full-height">
 
           <div class="text-weight-bold q-mb-md size15">{{ $t('filter') }}</div>
           <div class="text-weight-bold q-mb-sm size15">{{ $t('type') }}</div>
@@ -229,10 +229,6 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.relative {
-  position: relative;
-}
-
 .absolute {
   position: absolute;
   left: 15px;

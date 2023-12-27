@@ -25,26 +25,6 @@
           </div>
         </div>
 
-        <!-- 银行卡类型 -->
-        <!-- <div class="q-mb-xl">
-          <div class="text-center text-color-6 text-weight-medium" style="margin: 60px 0 16px 0;">充币地址二维码</div>
-          <div class="row justify-center">
-            <q-img src="/images/delete/M.png" width="170px" height="170px" />
-          </div>
-
-          <div class="row justify-center q-mt-lg">
-            <div class="q-py-md q-px-md row justify-between no-wrap"
-              style="width: 430px;border-radius: 10px;border: 1px solid #DDDDDD;">
-              <div class="ellipsis">
-                {{ inviteUrl }}
-              </div>
-              <div class="text-primary q-ml-md cursor-pointer" @click="copyToClipboardFunc(inviteUrl)">
-                copy
-              </div>
-            </div>
-          </div>
-        </div> -->
-
         <!-- 数字货币类型 -->
         <div class="q-pa-md">
           <div style="border-bottom: 1px dashed #DDDDDD">
@@ -97,7 +77,7 @@
         <div class="q-mt-lg">
           <div class="row no-wrap items-center q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('depositAmount') }}：</div>
-            <q-input type="number" outlined :input-style="{ height: '40px' }" v-model="form.money" />
+            <q-input type="number" outlined v-model="form.money" />
           </div>
 
           <!-- 银行名称 -->

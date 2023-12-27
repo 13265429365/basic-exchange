@@ -33,14 +33,14 @@
         <div class="q-mt-lg">
           <div class="row no-wrap items-center q-mb-md">
             <div class="text-weight-medium q-mr-xs">
-              {{ $t('balance') }}
+              {{ $t('balance') }}：
             </div>
-            <div class="text-weight-medium size16" style="color: #F45E0C;">{{ '￥' + Total }}</div>
+            <div class="text-weight-medium size16" style="color: #F45E0C;">{{ '$' + Total }}</div>
           </div>
 
           <div class="row no-wrap items-center q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('withdrawAmount') }}</div>
-            <q-input suffix="元" type="number" standout v-model="form.money" />
+            <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('withdrawAmount') }}：</div>
+            <q-input type="number" outlined v-model="form.money" />
             <div @click="form.money = Total" class="text-primary q-ml-sm cursor-pointer">{{ $t('withdrawAllAmount') }}
             </div>
           </div>
@@ -159,25 +159,5 @@ export default {
 .select {
   background-color: rgba(241, 250, 246, 1) !important;
   border: 1px solid $primary;
-}
-
-// pc版input样式
-:deep .q-field--standout .q-field__native {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-:deep .q-field--standout .q-field__suffix {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-:deep .q-field--standout .q-field__control {
-  width: 230px;
-  background: #fff !important;
-  height: 40px !important;
-  min-height: 40px !important;
-  outline: none !important;
-  border: 1px solid #DDDDDD;
-  box-shadow: none !important;
-  border-radius: 4px;
 }
 </style>

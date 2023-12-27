@@ -1,7 +1,7 @@
 <template>
-  <div style="padding: 80px 108px">
+  <div class="q-pa-lg">
     <!-- 文章详情页面 -->
-    <div class="text-h5 text-weight-bold text-center q-mb-lg">{{ name }}</div>
+    <div class="text-h6 text-primary text-weight-bold q-mb-sm text-center">{{ name }}</div>
     <div class="content" v-html="content"></div>
   </div>
 </template>

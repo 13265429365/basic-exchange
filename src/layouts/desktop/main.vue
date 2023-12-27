@@ -5,7 +5,7 @@
     </q-header>
 
     <q-page-container>
-      <router-view :key="$route.fullPath" />
+      <router-view style="min-height: 90vh;" :key="$route.fullPath" />
     </q-page-container>
 
     <FooterLayouts style="background: #021736;"></FooterLayouts>

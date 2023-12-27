@@ -220,7 +220,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/article',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          ''
+          'article/details.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/details.vue'),
         children: [],

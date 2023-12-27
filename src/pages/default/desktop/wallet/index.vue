@@ -343,28 +343,6 @@ export default defineComponent({
   background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);
 }
 
-// pc版input样式
-:deep .q-field--standout .q-field__native {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-:deep .q-field--standout .q-field__suffix {
-  color: #DDDDDD;
-  line-height: 28px;
-  flex-wrap: nowrap;
-}
-
-:deep .q-field--standout .q-field__control {
-  padding: 0 6px;
-  background: #fff !important;
-  height: 28px !important;
-  min-height: 28px !important;
-  outline: none !important;
-  border: 1px solid #DDDDDD;
-  box-shadow: none !important;
-  border-radius: 0 4px 4px 0;
-}
-
 // 分页样式
 :deep .q-pagination .q-btn {
   width: 28px;
