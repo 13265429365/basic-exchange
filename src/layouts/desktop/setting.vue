@@ -7,8 +7,8 @@
     <q-page-container>
       <div class="row no-wrap" style="margin-bottom: 200px;">
         <MenuLayouts></MenuLayouts>
-        <div style="width: calc(100% - 284px);">
-          <router-view style="min-height: 90vh;" :key="$route.fullPath" />
+        <div style="width: calc(100% - 284px);min-height: 90vh;">
+          <router-view :key="$route.fullPath" />
         </div>
       </div>
     </q-page-container>
