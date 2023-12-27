@@ -3,16 +3,12 @@
     <div class="column">
       <div>
         <div class="column justify-between items-center q-mb-xl">
-          <div class="column justify-center shadow-1 q-mt-xl" style="width: 80px;height: 80px;border-radius: 15px;">
-            <q-img class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
-          </div>
+          <q-img class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
           <div class="text-h6 text-weight-bold q-mt-md">{{ config.name }}</div>
           <q-btn unelevated rounded color="primary" :label="$t('download')" class="q-mt-lg"
             style="width: 269px;height: 44px" no-caps />
         </div>
-
       </div>
-      <q-img src="/images/download.png" width="240px" height="163px" class="self-center q-my-xl" />
     </div>
   </div>
 </template>
