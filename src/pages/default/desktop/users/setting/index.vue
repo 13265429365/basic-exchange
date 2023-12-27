@@ -53,7 +53,21 @@
             </q-avatar>
           </div>
 
-          <div v-else-if="currentSetting.params == 'nickname'">
+          <div v-if="currentSetting.params == 'password' || currentSetting.params == 'secretKey'">
+            <q-input v-model="params.oldPassword" outlined dense class="q-mb-md" :type="ShowPwd ? 'password' : 'text'">
+              <template v-slot:append>
+                <q-icon @click="ShowPwd = !ShowPwd" :name="ShowPwd ? 'o_visibility' : 'o_visibility_off'"></q-icon>
+              </template>
+            </q-input>
+            <q-input v-model="params.newPassword" outlined dense class="q-mb-md" :type="ShowCfmPwd ? 'password' : 'text'">
+              <template v-slot:append>
+                <q-icon @click="ShowCfmPwd = !ShowCfmPwd"
+                  :name="ShowCfmPwd ? 'o_visibility' : 'o_visibility_off'"></q-icon>
+              </template>
+            </q-input>
+          </div>
+
+          <div v-else>
             <q-input outlined dense v-model="currentSetting.value"></q-input>
           </div>
         </q-card-section>
@@ -68,7 +82,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { getUserInfo, updateInfo, updatePassword } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { UserStore } from 'stores/user';
@@ -85,6 +99,9 @@ export default defineComponent({
 
     const userInfo = $userStore.userInfo
     const state = reactive({
+      ShowPwd: false,
+      ShowCfmPwd: false,
+
       dialogShow: false,
 
       // 弹窗数据
@@ -95,7 +112,7 @@ export default defineComponent({
       settingsList: [
         { name: 'avatar', params: 'avatar', type: 'avatar', desc: 'avatarSmall', value: '' },
         { name: 'nickname', params: 'nickname', type: 'text', desc: 'nicknameSmall', value: '' },
-        { name: 'email', params: 'email', type: 'text', desc: 'emailSmall', value: userInfo.email },
+        { name: 'email', params: 'email', type: 'text', desc: 'emailSmall', value: '' },
         { name: 'password', params: 'password', type: 'password', desc: 'passwordSmall', value: '' },
         { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: '' },
         { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: '' },
@@ -122,21 +139,20 @@ export default defineComponent({
           oldPassword: state.params.oldPassword,
           newPassword: state.params.newPassword,
         }
-        updatePassword(state.params).then((res: any) => {
-          $userStore.updateUserInfo(res)
+        updatePassword(state.params).then(async (res: any) => {
+          await $userStore.updateUserInfo(res)
+          updateUserInfo()
         })
       } else {
         // 修改个人信息
         state.params[state.currentSetting.params] = state.currentSetting.value
-        updateInfo(state.params).then((res: any) => {
-          $userStore.updateUserInfo(res)
+        updateInfo(state.params).then(async (res: any) => {
+          await $userStore.updateUserInfo(res)
+          updateUserInfo()
         })
       }
 
-      setTimeout(() => {
-        updateUserInfo()
-        state.dialogShow = false
-      }, 1000)
+      state.dialogShow = false
     }
 
     // 更新当前用户信息
@@ -145,14 +161,14 @@ export default defineComponent({
         console.log(res);
         $userStore.updateUserInfo(res)
         state.settingsList.forEach((item: any) => {
-          item.value = userInfo[item.name]
+          item.value = res[item.name]
         })
-        console.log(state.settingsList);
-
       })
     }
 
-    updateUserInfo()
+    onMounted(() => {
+      updateUserInfo()
+    })
 
     // 更改头像
     const uploaded = (url: any) => {
