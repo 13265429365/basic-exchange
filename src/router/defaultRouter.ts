@@ -247,7 +247,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'DownloadDesktop',
+        name: 'DownloadApp',
         route: '/download',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
@@ -255,7 +255,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'download.vue'),
         children: [],
-        meta: { requireAuth: true, keepAlive: false },
+        meta: { requireAuth: false, keepAlive: false },
       },
 
       // 帮助中心(共用)
