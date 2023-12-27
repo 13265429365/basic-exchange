@@ -1,126 +1,118 @@
 <template>
-  <div style="width: calc(100% - 284px);">
-    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
-      <q-toolbar-title class="text-h5 text-weight-bold">
-        {{ $t('myWallet') }}
-      </q-toolbar-title>
-    </q-toolbar>
-
-    <div style="padding: 48px 100px;">
-      <!-- 钱包余额 -->
-      <div class="background row items-center justify-between rounded-borders q-pa-lg q-pr-xl">
-        <div class="row">
-          <q-img class="q-mr-lg" :src="imageSrc('/assets/icon/menu/deposit.png')" width="66px" height="66px"></q-img>
-          <div class="q-pt-sm">
-            <div class="row items-center">
-              <div class="text-white text-h6 q-mr-xs">{{ $t('balance') }}</div>
-              <q-img @click="moneyShow = !moneyShow" class="cursor-pointer"
-                :src="`/images/pc/wallet/${moneyShow ? 'show' : 'noShow'}.png`" width="14px" height="14px"></q-img>
-            </div>
-            <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
-            </div>
+  <div style="padding: 48px 100px;">
+    <!-- 钱包余额 -->
+    <div class="background row items-center justify-between rounded-borders q-pa-lg q-pr-xl">
+      <div class="row">
+        <q-img class="q-mr-lg" :src="imageSrc('/assets/icon/menu/deposit.png')" width="66px" height="66px"></q-img>
+        <div class="q-pt-sm">
+          <div class="row items-center">
+            <div class="text-white text-h6 q-mr-xs">{{ $t('balance') }}</div>
+            <q-img @click="moneyShow = !moneyShow" class="cursor-pointer"
+              :src="`/images/pc/wallet/${moneyShow ? 'show' : 'noShow'}.png`" width="14px" height="14px"></q-img>
           </div>
-        </div>
-
-        <!-- btn -->
-        <div class="row">
-          <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="text-primary bg-white no-shadow" rounded no-caps
-            :label="$t('deposit')"></q-btn>
-          <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" class="text-primary bg-white no-shadow q-ml-md"
-            rounded no-caps :label="$t('withdraw')"></q-btn>
+          <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
+          </div>
         </div>
       </div>
 
-      <!-- 表格 horizontal -->
-      <q-table class="q-mt-lg no-shadow" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
-        <template v-slot:top>
-          <div class="row no-wrap justify-between full-width">
-            <!-- 左侧tabs -->
-            <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-              <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-                name="Transactions" label="Transactions" />
-              <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-                name="Bill Detail" label="Bill Detail" />
-            </q-tabs>
-
-            <!-- 右侧 -->
-            <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
-              <!-- 选择 -->
-              <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
-                <div class="q-mr-xs">all</div>
-                <q-icon name="expand_more"></q-icon>
-              </q-btn>
-
-              <!-- 日期选择 -->
-              <q-btn class="bg-grey-1 row no-wrap q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
-                <div class="row items-center">
-                  <div class="q-mr-xs">{{ dates.from }}</div>
-                  <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
-                  <div class="q-mr-xs">{{ dates.to }}</div>
-                  <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
-                </div>
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="dates" range>
-                    <div class="row items-center justify-end q-gutter-sm">
-                      <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                      <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-btn>
-            </div>
-
-          </div>
-        </template>
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td>
-              {{ date.formatDate(Number(props.row.createdAt ? props.row.createdAt * 1000 : props.row.updatedAt * 1000),
-                'YYYY-MM-DD') }}
-            </q-td>
-            <q-td>
-              <div class="text-primary">
-                {{ props.row.name }}
-              </div>
-            </q-td>
-            <q-td>
-              +${{ props.row.money }}
-            </q-td>
-            <q-td class="row justify-between items-center">
-              <div>
-                ${{ props.row.balance ? props.row.balance : props.row.fee }}
-              </div>
-              <div>
-                <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
-                  :name="props.expand ? 'expand_less' : 'expand_more'" />
-              </div>
-            </q-td>
-          </q-tr>
-          <q-tr v-show="props.expand" :props="props">
-            <q-td colspan="100%">
-              <div class="text-left text-red">fail reasons，fail reasons fail reasons</div>
-            </q-td>
-          </q-tr>
-        </template>
-
-        <template v-slot:bottom>
-          <div class="q-pa-md row items-center no-wrap">
-            <div class="text-color-9 q-mr-md">
-              共{{ total }}条,
-              {{ pagination.rowsPerPage }}条/页
-            </div>
-            <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
-              @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
-            </q-pagination>
-            <div class="row nowrap">
-              <div class="to">跳至</div>
-              <q-input :disable="pageTotal <= 1" standout v-model="toPage" @keyup.enter="refreshTableData" suffix="页"
-                style="width: 50px;mi-height: 28px;"></q-input>
-            </div>
-          </div>
-        </template>
-      </q-table>
+      <!-- btn -->
+      <div class="row">
+        <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="text-primary bg-white no-shadow" rounded no-caps
+          :label="$t('deposit')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" class="text-primary bg-white no-shadow q-ml-md" rounded
+          no-caps :label="$t('withdraw')"></q-btn>
+      </div>
     </div>
+
+    <!-- 表格 horizontal -->
+    <q-table class="q-mt-lg no-shadow" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
+      <template v-slot:top>
+        <div class="row no-wrap justify-between full-width">
+          <!-- 左侧tabs -->
+          <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
+            <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
+              name="Transactions" label="Transactions" />
+            <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
+              name="Bill Detail" label="Bill Detail" />
+          </q-tabs>
+
+          <!-- 右侧 -->
+          <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
+            <!-- 选择 -->
+            <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
+              <div class="q-mr-xs">all</div>
+              <q-icon name="expand_more"></q-icon>
+            </q-btn>
+
+            <!-- 日期选择 -->
+            <q-btn class="bg-grey-1 row no-wrap q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
+              <div class="row items-center">
+                <div class="q-mr-xs">{{ dates.from }}</div>
+                <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
+                <div class="q-mr-xs">{{ dates.to }}</div>
+                <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
+              </div>
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="dates" range>
+                  <div class="row items-center justify-end q-gutter-sm">
+                    <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
+                    <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-btn>
+          </div>
+
+        </div>
+      </template>
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td>
+            {{ date.formatDate(Number(props.row.createdAt ? props.row.createdAt * 1000 : props.row.updatedAt * 1000),
+              'YYYY-MM-DD') }}
+          </q-td>
+          <q-td>
+            <div class="text-primary">
+              {{ props.row.name }}
+            </div>
+          </q-td>
+          <q-td>
+            +${{ props.row.money }}
+          </q-td>
+          <q-td class="row justify-between items-center">
+            <div>
+              ${{ props.row.balance ? props.row.balance : props.row.fee }}
+            </div>
+            <div>
+              <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
+                :name="props.expand ? 'expand_less' : 'expand_more'" />
+            </div>
+          </q-td>
+        </q-tr>
+        <q-tr v-show="props.expand" :props="props">
+          <q-td colspan="100%">
+            <div class="text-left text-red">fail reasons，fail reasons fail reasons</div>
+          </q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:bottom>
+        <div class="q-pa-md row items-center no-wrap">
+          <div class="text-color-9 q-mr-md">
+            共{{ total }}条,
+            {{ pagination.rowsPerPage }}条/页
+          </div>
+          <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
+            @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
+          </q-pagination>
+          <div class="row nowrap">
+            <div class="to">跳至</div>
+            <q-input :disable="pageTotal <= 1" standout v-model="toPage" @keyup.enter="refreshTableData" suffix="页"
+              style="width: 50px;mi-height: 28px;"></q-input>
+          </div>
+        </div>
+      </template>
+    </q-table>
   </div>
 </template>
 

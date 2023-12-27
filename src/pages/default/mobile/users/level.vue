@@ -53,7 +53,7 @@
 import { onMounted, reactive, toRefs } from 'vue';
 import { getLevel, orderLevel } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { UserStore } from 'src/stores/user';
+import { UserStore, UserInfoKey } from 'src/stores/user';
 import { getUserInfo } from 'src/apis/user';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -105,7 +105,7 @@ export default {
       getUserInfo().then((res: any) => {
         console.log('用户信息', res);
         $userStore.updateUserInfo(res)
-        localStorage.setItem('userInfo', JSON.stringify(res))
+        localStorage.setItem(UserInfoKey, JSON.stringify(res))
         $router.push({ name: 'UserIndex' })
       })
     }

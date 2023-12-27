@@ -1,86 +1,78 @@
 <template>
-  <div style="width: calc(100% - 284px);">
-    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
-      <q-toolbar-title class="text-h5 text-weight-bold">
-        {{ $t('accountManage') }}
-      </q-toolbar-title>
-    </q-toolbar>
-
-    <div class="row" style="padding: 48px 100px;">
-      <div class="row">
-        <!-- 银行卡 -->
-        <!-- background: linear-gradient(90deg, #7474BF 0%, #348AC7 100%) -->
-        <div v-for="(card, cardIndex) in cardList" :key="cardIndex" class="q-mb-md q-mr-md rounded-borders"
-          style="height: 132px;width: 360px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);overflow: hidden;">
-          <div class="cardTransparent row " style="padding: 15px 20px;">
-            <q-img :src="imageSrc(card.icon)" width="40px" height="40px" />
-            <div class="col column justify-between">
-              <div class="row justify-between q-pl-sm">
-                <div>
-                  <div class="row items-center">
-                    <div class="text-white size16">
-                      {{ card.name }}
-                    </div>
-                    <div @click="$router.push({ name: `WalletAccountCreate`, query: { type: 'edit', id: card.id } })"
-                      class="row btn justify-center items-center q-ml-md">
-                      {{ $t('edit') }}</div>
+  <div class="row" style="padding: 48px 100px;">
+    <div class="row">
+      <!-- 银行卡 -->
+      <!-- background: linear-gradient(90deg, #7474BF 0%, #348AC7 100%) -->
+      <div v-for="(card, cardIndex) in cardList" :key="cardIndex" class="q-mb-md q-mr-md rounded-borders"
+        style="height: 132px;width: 360px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);overflow: hidden;">
+        <div class="cardTransparent row " style="padding: 15px 20px;">
+          <q-img :src="imageSrc(card.icon)" width="40px" height="40px" />
+          <div class="col column justify-between">
+            <div class="row justify-between q-pl-sm">
+              <div>
+                <div class="row items-center">
+                  <div class="text-white size16">
+                    {{ card.name }}
                   </div>
-                  <div class="text-white" style="font-size: 12px;">{{ card.realName }}</div>
+                  <div @click="$router.push({ name: `WalletAccountCreate`, query: { type: 'edit', id: card.id } })"
+                    class="row btn justify-center items-center q-ml-md">
+                    {{ $t('edit') }}</div>
                 </div>
-                <div class="row">
-                  <q-icon @click="Confirm(card.id)" name="o_highlight_off" color="white" class="cursor-pointer"
-                    size="24px"></q-icon>
-                </div>
+                <div class="text-white" style="font-size: 12px;">{{ card.realName }}</div>
               </div>
+              <div class="row">
+                <q-icon @click="Confirm(card.id)" name="o_highlight_off" color="white" class="cursor-pointer"
+                  size="24px"></q-icon>
+              </div>
+            </div>
 
-              <div class="q-pl-sm  q-mt-md">
-                <div style="font-size: 10px;color: rgba(255,255,255,0.7);">{{ card.paymentName }}</div>
-                <div class="text-white text-weight-medium ellipsis" style="font-size: 18px;width: 272px;">{{ card.number
-                }}</div>
-              </div>
+            <div class="q-pl-sm  q-mt-md">
+              <div style="font-size: 10px;color: rgba(255,255,255,0.7);">{{ card.paymentName }}</div>
+              <div class="text-white text-weight-medium ellipsis" style="font-size: 18px;width: 272px;">{{ card.number
+              }}</div>
             </div>
           </div>
         </div>
-
-        <!-- 添加按钮 (本页定义css) -->
-        <div @click="$router.push({ name: 'WalletAccountCreate', query: { type: 'add' } })"
-          class="column justify-center row add-btn cursor-pointer">
-          <div class="text-center text-color-9">
-            <q-icon size="28px" name="add" class="self-center" />
-            <div>Add Card</div>
-          </div>
-        </div>
-
       </div>
-    </div>
 
-    <!-- 输入密码 -->
-    <q-dialog v-model="alertPass">
-      <q-card style="width: 380px;">
-        <q-card-section style="padding: 20px;">
-          <div class="row no-wrap">
-            <div class="text-weight-bold text-color-3 size20">
-              {{ $t('enterSecretKey') }}
-            </div>
-            <q-space />
-            <q-btn class="text-color-6" icon="close" flat round dense v-close-popup />
-          </div>
-          <div class="q-mt-lg">
-            <q-form>
-              <q-input standout class="q-mb-md" type="password" v-model="securityKey" :placeholder="$t('enterSecretKey')">
-              </q-input>
-              <div class="row justify-center q-mt-lg">
-                <q-btn class="q-mr-md text-color-3" unelevated rounded no-caps @click="alertPass = false"
-                  style="background: #F3F5F5;height: 40px;width: 160px;" :label="$t('cancel')"></q-btn>
-                <q-btn @click="delCard" class="" unelevated rounded no-caps style="height: 40px;width: 160px;"
-                  color="primary" :label="$t('confirm')" />
-              </div>
-            </q-form>
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog>
+      <!-- 添加按钮 (本页定义css) -->
+      <div @click="$router.push({ name: 'WalletAccountCreate', query: { type: 'add' } })"
+        class="column justify-center row add-btn cursor-pointer">
+        <div class="text-center text-color-9">
+          <q-icon size="28px" name="add" class="self-center" />
+          <div>Add Card</div>
+        </div>
+      </div>
+
+    </div>
   </div>
+
+  <!-- 输入密码 -->
+  <q-dialog v-model="alertPass">
+    <q-card style="width: 380px;">
+      <q-card-section style="padding: 20px;">
+        <div class="row no-wrap">
+          <div class="text-weight-bold text-color-3 size20">
+            {{ $t('enterSecretKey') }}
+          </div>
+          <q-space />
+          <q-btn class="text-color-6" icon="close" flat round dense v-close-popup />
+        </div>
+        <div class="q-mt-lg">
+          <q-form>
+            <q-input standout class="q-mb-md" type="password" v-model="securityKey" :placeholder="$t('enterSecretKey')">
+            </q-input>
+            <div class="row justify-center q-mt-lg">
+              <q-btn class="q-mr-md text-color-3" unelevated rounded no-caps @click="alertPass = false"
+                style="background: #F3F5F5;height: 40px;width: 160px;" :label="$t('cancel')"></q-btn>
+              <q-btn @click="delCard" class="" unelevated rounded no-caps style="height: 40px;width: 160px;"
+                color="primary" :label="$t('confirm')" />
+            </div>
+          </q-form>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="ts">

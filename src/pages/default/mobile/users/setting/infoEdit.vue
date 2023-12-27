@@ -65,7 +65,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { getUserInfo, updateInfo } from 'src/apis/user';
-import { UserStore } from 'src/stores/user';
+import { UserStore, UserInfoKey } from 'src/stores/user';
 import uploader from 'src/components/uploader.vue';
 import { date } from 'quasar';
 import { useI18n } from 'vue-i18n'
@@ -120,7 +120,7 @@ export default defineComponent({
 
         state.form.birthday = date.formatDate(state.form.birthday * 1000, 'YYYY-MM-DD')
         $userStore.updateUserInfo(res)
-        localStorage.setItem('userInfo', JSON.stringify(res))
+        localStorage.setItem(UserInfoKey, JSON.stringify(res))
       })
     }
 

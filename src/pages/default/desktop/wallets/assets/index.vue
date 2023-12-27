@@ -1,185 +1,175 @@
 <template>
-  <div style="width: calc(100% - 284px);">
-    <!-- 页面标题 -->
-    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
-      <q-toolbar-title class="text-h5 text-weight-bold">
-        {{ $t('myAssets') }}
-      </q-toolbar-title>
-    </q-toolbar>
-
-    <div style="padding: 48px 100px;">
-      <!-- 钱包余额 -->
-      <q-scroll-area style="height: 208px;width: 100%;" :visible="false">
-        <div class="row no-wrap">
-          <div class="q-pa-lg rounded-borders q-mr-lg"
-            style="height: 208px;width: 287px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
-            <div>
-              <div class="row items-center" style="height: 49px;">
-                <div class="text-white text-h5">{{ $t('totalAssets') }}</div>
-                <q-icon color="white" @click="moneyShow = !moneyShow"
-                  :name="moneyShow ? 'o_visibility' : 'o_visibility_off'" class="q-ml-xs cursor-pointer"
-                  size="18px"></q-icon>
-              </div>
-
-              <!-- 点击显示、隐藏金额 -->
-              <div style="height: 64px;">
-                <div v-if="moneyShow" class="text-white">
-                  <div class="text-h5">${{ form.moneySum }}</div>
-                  <div class="text-h6">≈￥{{ form.moneyRateSum }} </div>
-                </div>
-                <div v-else class="text-white text-weight-bold " style="font-size: 22px;height: 54px;">**** </div>
-              </div>
-
-              <div class="row justify-between q-mt-md">
-                <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="bg-white text-primary" rounded
-                  style="width: 110px;height: 34px;" :label="$t('deposit')"></q-btn>
-                <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" class="bg-white text-primary" rounded
-                  style="width: 110px;height: 34px;" :label="$t('withdraw')"></q-btn>
-              </div>
+  <div style="padding: 48px 100px;">
+    <!-- 钱包余额 -->
+    <q-scroll-area style="height: 208px;width: 100%;" :visible="false">
+      <div class="row no-wrap">
+        <div class="q-pa-lg rounded-borders q-mr-lg"
+          style="height: 208px;width: 287px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
+          <div>
+            <div class="row items-center" style="height: 49px;">
+              <div class="text-white text-h5">{{ $t('totalAssets') }}</div>
+              <q-icon color="white" @click="moneyShow = !moneyShow"
+                :name="moneyShow ? 'o_visibility' : 'o_visibility_off'" class="q-ml-xs cursor-pointer"
+                size="18px"></q-icon>
             </div>
-          </div>
-          <div v-for="(Assets, AssetsIndex) in form.userAssetsList" :key="AssetsIndex"
-            class="q-pa-lg rounded-borders q-mr-lg border"
-            style="height: 208px;width: 287px;background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%);">
-            <div>
-              <div class="row justify-between" style="height: 49px;">
-                <div class=" text-h5">{{ Assets.name }}</div>
-                <q-img :src="imageSrc(Assets.icon)" class="q-ml-xs" width="50px" height="50px" />
-              </div>
 
-              <!-- 点击显示、隐藏金额 -->
-              <div style="height: 64px;">
-                <div v-if="moneyShow">
-                  <div class="text-h5">${{ Assets.money }}</div>
-                  <div class="text-grey-6">≈￥{{ Assets.moneyRate }}</div>
-                </div>
-                <div v-else class="text-weight-bold text-color-9" style="font-size: 22px;height: 54px;">**** </div>
+            <!-- 点击显示、隐藏金额 -->
+            <div style="height: 64px;">
+              <div v-if="moneyShow" class="text-white">
+                <div class="text-h5">${{ form.moneySum }}</div>
+                <div class="text-h6">≈￥{{ form.moneyRateSum }} </div>
               </div>
+              <div v-else class="text-white text-weight-bold " style="font-size: 22px;height: 54px;">**** </div>
+            </div>
 
-              <div class="row justify-between q-mt-md">
-                <q-btn @click="$router.push({ name: 'AssetsDetail', query: { id: Assets.id, icon: Assets.icon } })"
-                  :to="Assets.route" class="text-primary" rounded no-caps
-                  style="width: 110px;height: 34px;background: rgba(1,172,102,0.1);" :label="$t('more')"></q-btn>
-              </div>
+            <div class="row justify-between q-mt-md">
+              <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="bg-white text-primary" rounded
+                style="width: 110px;height: 34px;" :label="$t('deposit')"></q-btn>
+              <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" class="bg-white text-primary" rounded
+                style="width: 110px;height: 34px;" :label="$t('withdraw')"></q-btn>
             </div>
           </div>
         </div>
-      </q-scroll-area>
+        <div v-for="(Assets, AssetsIndex) in form.userAssetsList" :key="AssetsIndex"
+          class="q-pa-lg rounded-borders q-mr-lg border"
+          style="height: 208px;width: 287px;background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%);">
+          <div>
+            <div class="row justify-between" style="height: 49px;">
+              <div class=" text-h5">{{ Assets.name }}</div>
+              <q-img :src="imageSrc(Assets.icon)" class="q-ml-xs" width="50px" height="50px" />
+            </div>
 
-      <!-- 折线图 -->
-      <div class="rounded-borders q-mt-lg q-pt-lg q-px-md border">
-        <div class="row no-wrap justify-between">
-          <div class="text-h5 text-weight-bold q-px-xl">
-            {{ $t('assetsBlock') }}
-          </div>
-          <div class="row justify-end q-mb-md">
-            <div class="bg-grey-1 q-pa-xs row" style="border-radius: 4px;">
-              <div @click="switchDate(item.name)" v-for="(item, i) in lineDate" :key="i"
-                :class="['q-px-sm q-py-xs cursor-pointer', { 'bg-white': item.name == lineType, 'text-grey-8': item.name != lineType, 'bg-grey-1': item.name != lineType, }]"
-                style="border-radius: 2px;">
-                {{ item.name }}
+            <!-- 点击显示、隐藏金额 -->
+            <div style="height: 64px;">
+              <div v-if="moneyShow">
+                <div class="text-h5">${{ Assets.money }}</div>
+                <div class="text-grey-6">≈￥{{ Assets.moneyRate }}</div>
               </div>
+              <div v-else class="text-weight-bold text-color-9" style="font-size: 22px;height: 54px;">**** </div>
+            </div>
+
+            <div class="row justify-between q-mt-md">
+              <q-btn @click="$router.push({ name: 'AssetsDetail', query: { id: Assets.id, icon: Assets.icon } })"
+                :to="Assets.route" class="text-primary" rounded no-caps
+                style="width: 110px;height: 34px;background: rgba(1,172,102,0.1);" :label="$t('more')"></q-btn>
             </div>
           </div>
-        </div>
-        <div class="row justify-center q-mb-sm">
-          <div id="lineChart" style="height: 300px;width: 100%;"></div>
-          <!-- <div v-show="lineType=='近30日'" id="lineThirty" style="height: 300px;width: 900px;"></div> -->
         </div>
       </div>
+    </q-scroll-area>
 
-      <!-- 表格 horizontal -->
-      <q-table class="q-mt-lg no-shadow rounded-borders" bordered :rows="rows" :columns="columns" row-key="id"
-        hide-header>
-        <template v-slot:top>
-          <div class="row no-wrap justify-between full-width">
-            <!-- 左侧tabs -->
-            <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-              <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-                name="Transactions" label="Transactions" />
-              <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-                name="Bill Detail" label="Bill Detail" />
-            </q-tabs>
-
-            <!-- 右侧 -->
-            <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
-              <!-- 选择 -->
-              <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
-                <div class="q-mr-xs">全部</div>
-                <q-icon name="expand_more"></q-icon>
-              </q-btn>
-
-              <!-- 日期选择 -->
-              <q-btn class="bg-grey-1 row no-wrap q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
-                <div class="row items-center">
-                  <div class="q-mr-xs">{{ dates.from }}</div>
-                  <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
-                  <div class="q-mr-xs">{{ dates.to }}</div>
-                  <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
-                </div>
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="dates" range>
-                    <div class="row items-center justify-end q-gutter-sm">
-                      <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                      <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-btn>
-            </div>
-
-          </div>
-        </template>
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td>
-              {{ date.formatDate(Number(props.row.createdAt ? props.row.createdAt * 1000 : props.row.updatedAt * 1000),
-                'YYYY-MM-DD')
-              }}
-            </q-td>
-            <q-td>
-              <div class="text-primary">
-                {{ props.row.name }}
-              </div>
-            </q-td>
-            <q-td>
-              +${{ props.row.money }}
-            </q-td>
-            <q-td class="row justify-between items-center">
-              <div>
-                ${{ props.row.balance ? props.row.balance : props.row.fee }}
-              </div>
-              <div>
-                <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
-                  :name="props.expand ? 'expand_less' : 'expand_more'" />
-              </div>
-            </q-td>
-          </q-tr>
-          <q-tr v-show="props.expand" :props="props">
-            <q-td colspan="100%">
-              <div class="text-left text-red">fail reasons，fail reasons fail reasons</div>
-            </q-td>
-          </q-tr>
-        </template>
-
-        <template v-slot:bottom>
-          <div class="q-pa-md row items-center no-wrap">
-            <div class="text-color-9 q-mr-md">
-              共{{ total }}条,
-              {{ pagination.rowsPerPage }}条/页
-            </div>
-            <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
-              @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
-            </q-pagination>
-            <div class="row nowrap">
-              <div class="to">跳至</div>
-              <q-input :disable="pageTotal <= 1" standout v-model="toPage" @keyup.enter="refreshTableData" suffix="页"
-                style="width: 50px;mi-height: 28px;"></q-input>
+    <!-- 折线图 -->
+    <div class="rounded-borders q-mt-lg q-pt-lg q-px-md border">
+      <div class="row no-wrap justify-between">
+        <div class="text-h5 text-weight-bold q-px-xl">
+          {{ $t('assetsBlock') }}
+        </div>
+        <div class="row justify-end q-mb-md">
+          <div class="bg-grey-1 q-pa-xs row" style="border-radius: 4px;">
+            <div @click="switchDate(item.name)" v-for="(item, i) in lineDate" :key="i"
+              :class="['q-px-sm q-py-xs cursor-pointer', { 'bg-white': item.name == lineType, 'text-grey-8': item.name != lineType, 'bg-grey-1': item.name != lineType, }]"
+              style="border-radius: 2px;">
+              {{ item.name }}
             </div>
           </div>
-        </template>
-      </q-table>
+        </div>
+      </div>
+      <div class="row justify-center q-mb-sm">
+        <div id="lineChart" style="height: 300px;width: 100%;"></div>
+        <!-- <div v-show="lineType=='近30日'" id="lineThirty" style="height: 300px;width: 900px;"></div> -->
+      </div>
     </div>
+
+    <!-- 表格 horizontal -->
+    <q-table class="q-mt-lg no-shadow rounded-borders" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
+      <template v-slot:top>
+        <div class="row no-wrap justify-between full-width">
+          <!-- 左侧tabs -->
+          <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
+            <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
+              name="Transactions" label="Transactions" />
+            <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
+              name="Bill Detail" label="Bill Detail" />
+          </q-tabs>
+
+          <!-- 右侧 -->
+          <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
+            <!-- 选择 -->
+            <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
+              <div class="q-mr-xs">全部</div>
+              <q-icon name="expand_more"></q-icon>
+            </q-btn>
+
+            <!-- 日期选择 -->
+            <q-btn class="bg-grey-1 row no-wrap q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
+              <div class="row items-center">
+                <div class="q-mr-xs">{{ dates.from }}</div>
+                <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
+                <div class="q-mr-xs">{{ dates.to }}</div>
+                <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
+              </div>
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="dates" range>
+                  <div class="row items-center justify-end q-gutter-sm">
+                    <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
+                    <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-btn>
+          </div>
+
+        </div>
+      </template>
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td>
+            {{ date.formatDate(Number(props.row.createdAt ? props.row.createdAt * 1000 : props.row.updatedAt * 1000),
+              'YYYY-MM-DD')
+            }}
+          </q-td>
+          <q-td>
+            <div class="text-primary">
+              {{ props.row.name }}
+            </div>
+          </q-td>
+          <q-td>
+            +${{ props.row.money }}
+          </q-td>
+          <q-td class="row justify-between items-center">
+            <div>
+              ${{ props.row.balance ? props.row.balance : props.row.fee }}
+            </div>
+            <div>
+              <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
+                :name="props.expand ? 'expand_less' : 'expand_more'" />
+            </div>
+          </q-td>
+        </q-tr>
+        <q-tr v-show="props.expand" :props="props">
+          <q-td colspan="100%">
+            <div class="text-left text-red">fail reasons，fail reasons fail reasons</div>
+          </q-td>
+        </q-tr>
+      </template>
+
+      <template v-slot:bottom>
+        <div class="q-pa-md row items-center no-wrap">
+          <div class="text-color-9 q-mr-md">
+            共{{ total }}条,
+            {{ pagination.rowsPerPage }}条/页
+          </div>
+          <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
+            @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
+          </q-pagination>
+          <div class="row nowrap">
+            <div class="to">跳至</div>
+            <q-input :disable="pageTotal <= 1" standout v-model="toPage" @keyup.enter="refreshTableData" suffix="页"
+              style="width: 50px;mi-height: 28px;"></q-input>
+          </div>
+        </div>
+      </template>
+    </q-table>
   </div>
 </template>
 

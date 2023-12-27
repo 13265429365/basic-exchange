@@ -1,51 +1,43 @@
 <template>
-  <div style="width: calc(100% - 284px);">
-    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
-      <q-toolbar-title class="text-h5 text-weight-bold">
-        {{ $t('settings') }}
-      </q-toolbar-title>
-    </q-toolbar>
-
-    <div style="padding: 48px 100px;">
-      <div class="text-weight-bold text-h5">{{ $t('personalSetting') }}</div>
-      <!-- row -->
-      <div v-for="(item, i) in SettingList" :key="i" class="q-mt-lg">
-        <div class="row no-wrap justify-between">
-          <div>
-            <div class="row" style="min-width: 260px;">
-              <q-img class="q-mr-sm" width="24px" height="24px" :src="imageSrc('')"></q-img>
-              <div>
-                <div class="text-h6 text-color-3 text-weight-bold">{{ $t(item.arguments) }}</div>
-                <div style="font-size: 12px;">{{ item.decs }}</div>
-              </div>
+  <div style="padding: 48px 100px;">
+    <div class="text-weight-bold text-h5">{{ $t('personalSetting') }}</div>
+    <!-- row -->
+    <div v-for="(item, i) in SettingList" :key="i" class="q-mt-lg">
+      <div class="row no-wrap justify-between">
+        <div>
+          <div class="row" style="min-width: 260px;">
+            <q-img class="q-mr-sm" width="24px" height="24px" :src="imageSrc('')"></q-img>
+            <div>
+              <div class="text-h6 text-color-3 text-weight-bold">{{ $t(item.arguments) }}</div>
+              <div style="font-size: 12px;">{{ item.decs }}</div>
             </div>
-          </div>
-          <div class="row items-center">
-            <q-avatar v-if="item.avatar" style="width: 34px;height: 34px;">
-              <q-img :src="imageSrc(item.content ? item.content : '')"></q-img>
-            </q-avatar>
-            <div v-if="item.title == 'Gender'" class="text-weight-medium">
-              {{ item.text }}
-            </div>
-            <div v-if="item.title == 'Birthday'" class="text-weight-medium">
-              {{ date.formatDate(item.content * 1000, 'YYYY-MM-DD') }}
-            </div>
-            <div v-if="item.title != 'Gender' && item.title != 'Birthday' && item.title != 'Avatar'"
-              class="text-weight-medium">{{
-                item.content }}
-            </div>
-
-          </div>
-          <div class="row items-end">
-            <q-btn @click="show(item)" class="bg-grey-3" no-caps :label="$t(item.btn)"></q-btn>
           </div>
         </div>
-        <q-separator class="q-mt-md" style="background: #F1F1F1;" />
+        <div class="row items-center">
+          <q-avatar v-if="item.avatar" style="width: 34px;height: 34px;">
+            <q-img :src="imageSrc(item.content ? item.content : '')"></q-img>
+          </q-avatar>
+          <div v-if="item.title == 'Gender'" class="text-weight-medium">
+            {{ item.text }}
+          </div>
+          <div v-if="item.title == 'Birthday'" class="text-weight-medium">
+            {{ date.formatDate(item.content * 1000, 'YYYY-MM-DD') }}
+          </div>
+          <div v-if="item.title != 'Gender' && item.title != 'Birthday' && item.title != 'Avatar'"
+            class="text-weight-medium">{{
+              item.content }}
+          </div>
+
+        </div>
+        <div class="row items-end">
+          <q-btn @click="show(item)" class="bg-grey-3" no-caps :label="$t(item.btn)"></q-btn>
+        </div>
       </div>
+      <q-separator class="q-mt-md" style="background: #F1F1F1;" />
     </div>
-    <!--  -->
-    <update ref="edit" @UserInfo="UserInfo"></update>
   </div>
+  <!--  -->
+  <update ref="edit" @UserInfo="UserInfo"></update>
 </template>
 
 <script lang="ts">
@@ -54,7 +46,7 @@ import update from 'pages/default/desktop/users/setting/update.vue';
 import { defineComponent, reactive, toRefs, ref, onMounted, nextTick } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { getUserInfo } from 'src/apis/user';
-import { UserStore } from 'src/stores/user';
+import { UserStore, UserInfoKey } from 'src/stores/user';
 import { date } from 'quasar';
 
 
@@ -176,7 +168,7 @@ export default defineComponent({
           }
         })
         $userStore.updateUserInfo(res)
-        localStorage.setItem('userInfo', JSON.stringify(res))
+        localStorage.setItem(UserInfoKey, JSON.stringify(res))
       })
     }
 

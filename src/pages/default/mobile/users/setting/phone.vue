@@ -46,7 +46,7 @@ import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import { useRouter } from 'vue-router';
-import { UserStore } from 'src/stores/user';
+import { UserStore, UserInfoKey } from 'src/stores/user';
 import { getUserInfo, updateInfo } from 'src/apis/user';
 
 // 列表
@@ -79,7 +79,7 @@ export default defineComponent({
         console.log('用户信息', res);
         state.form = res
         $userStore.updateUserInfo(res)
-        localStorage.setItem('userInfo', JSON.stringify(res))
+        localStorage.setItem(UserInfoKey, JSON.stringify(res))
       })
     }
 

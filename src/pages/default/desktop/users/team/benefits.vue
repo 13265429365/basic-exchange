@@ -1,74 +1,67 @@
 <template>
-  <div style="width: calc(100% - 284px);">
-    <q-toolbar class="bg-grey-1" style="padding: 33px 100px;">
-      <q-toolbar-title class="text-h5 text-weight-bold">
-        {{ $t('teamBenefits') }}
-      </q-toolbar-title>
-    </q-toolbar>
-    <div style="padding: 48px 100px;">
-      <!-- 头像 -->
-      <div class="rounded-borders q-pa-lg" style="border: 1px solid #DDDDDD;">
-        <!-- <q-scroll-area style="max-width: 942px;height: 60px;"> -->
-        <div class="row no-wrap items-center">
-          <div class="row no-wrap items-center q-mr-xl">
-            <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
-              <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')"></q-img>
-            </q-avatar>
-            <div>
-              <div class="text-h6 text-weight-medium">{{ userInfo.userName }}</div>
-              <div class="text-weight-medium text-primary" style="font-size: 17px;">+{{ teamEarnings }}</div>
-            </div>
-          </div>
-          <div v-for="(item, i) in TeamBenefit" :key="i" class="row no-wrap">
-            <div class="separation"></div>
-            <div>
-              <div class="text-h5 text-center text-weight-medium noWrap">{{ item.number }}</div>
-              <div class="text-color-6 text-center noWrap">{{ $t(item.name) }}</div>
-            </div>
+  <div style="padding: 48px 100px;">
+    <!-- 头像 -->
+    <div class="rounded-borders q-pa-lg" style="border: 1px solid #DDDDDD;">
+      <!-- <q-scroll-area style="max-width: 942px;height: 60px;"> -->
+      <div class="row no-wrap items-center">
+        <div class="row no-wrap items-center q-mr-xl">
+          <q-avatar class="q-mr-md" style="width: 60px;height: 60px;">
+            <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')"></q-img>
+          </q-avatar>
+          <div>
+            <div class="text-h6 text-weight-medium">{{ userInfo.userName }}</div>
+            <div class="text-weight-medium text-primary" style="font-size: 17px;">+{{ teamEarnings }}</div>
           </div>
         </div>
-        <!-- </q-scroll-area> -->
+        <div v-for="(item, i) in TeamBenefit" :key="i" class="row no-wrap">
+          <div class="separation"></div>
+          <div>
+            <div class="text-h5 text-center text-weight-medium noWrap">{{ item.number }}</div>
+            <div class="text-color-6 text-center noWrap">{{ $t(item.name) }}</div>
+          </div>
+        </div>
       </div>
-
-
-      <!-- 表格 -->
-      <q-table class="q-mt-lg q-pa-lg no-shadow rounded-borders" bordered :rows="rows" :columns="columns" row-key="i"
-        hide-bottom hide-header>
-        <template v-slot:top>
-          <div class="text-h5 text-weight-medium">{{ $t('transactions') }}</div>
-        </template>
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td>
-              <div class="text-body1">
-                {{ props.row.id }}
-              </div>
-            </q-td>
-            <q-td>
-              <div class="text-body1">
-                {{ props.row.userName }}
-              </div>
-            </q-td>
-            <q-td>
-              <div class="text-body1">
-                {{ formatDate(props.row.createdAt) }}
-              </div>
-            </q-td>
-            <q-td>
-              <div class="text-body1">
-                {{ $t(props.row.name) }}
-              </div>
-            </q-td>
-            <q-td>
-              <div :class="['text-body1', { 'text-primary': props.row.name == 'Recharge' }]">
-                {{ props.row.money }}
-              </div>
-            </q-td>
-          </q-tr>
-        </template>
-      </q-table>
-
+      <!-- </q-scroll-area> -->
     </div>
+
+
+    <!-- 表格 -->
+    <q-table class="q-mt-lg q-pa-lg no-shadow rounded-borders" bordered :rows="rows" :columns="columns" row-key="i"
+      hide-bottom hide-header>
+      <template v-slot:top>
+        <div class="text-h5 text-weight-medium">{{ $t('transactions') }}</div>
+      </template>
+      <template v-slot:body="props">
+        <q-tr :props="props">
+          <q-td>
+            <div class="text-body1">
+              {{ props.row.id }}
+            </div>
+          </q-td>
+          <q-td>
+            <div class="text-body1">
+              {{ props.row.userName }}
+            </div>
+          </q-td>
+          <q-td>
+            <div class="text-body1">
+              {{ formatDate(props.row.createdAt) }}
+            </div>
+          </q-td>
+          <q-td>
+            <div class="text-body1">
+              {{ $t(props.row.name) }}
+            </div>
+          </q-td>
+          <q-td>
+            <div :class="['text-body1', { 'text-primary': props.row.name == 'Recharge' }]">
+              {{ props.row.money }}
+            </div>
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
+
   </div>
 </template>
 
