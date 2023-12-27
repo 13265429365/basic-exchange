@@ -41,7 +41,7 @@
                   class="rounded-borders"
             :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
             <q-item-section avatar style="min-width:auto">
-              <q-img width="34px" height="34px" :src="imageSrc(quickMenu.icon)"></q-img>
+              <q-img width="30px" height="30px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
             <q-item-section class="text-grey-8">{{ $t(quickMenu.name) }}</q-item-section>
           </q-item>
@@ -71,36 +71,54 @@
             <q-avatar size="28px">
               <q-img :src="imageSrc(userInfo.avatar)"></q-img>
             </q-avatar>
-            <q-menu :offset="[160, 15]" class="q-pa-md">
+            <q-menu :offset="[300, 15]" class="q-pa-sm">
               <q-list style="min-width: 218px;">
                 <!-- 固定头部 -->
                 <q-item aria-hidden="true">
-                  <div class="row no-wrap">
-                    <q-avatar size="35px">
+                  <div class="row items-center">
+                    <q-avatar size="40px" class="q-mt-sm">
                       <q-img :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
-                      <div class="row no-wrap">
-                        <span class="q-mr-sm">{{ userInfo.username }}</span>
-                        <span class="text-grey-7">{{ userInfo.email }}</span>
+                      <div class="row items-center">
+                        <span class="q-mr-xs text-body1">{{ userInfo.username }}</span>
+                        <span class="text-grey-7 text-caption">(ID:{{ userInfo.id }})</span>
                       </div>
-                      <div class="row no-wrap q-mt-sm">
+                      <div class="row no-wrap q-mt-xs">
                         <!-- 会员等级 -->
                         <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs" no-caps
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
                           <q-img width="13px" height="12px" src="/images/icons/vip-icon.png"></q-img>
-                          <div class="q-ml-xs" style="font-size: 11px;">Lv{{ userInfo.level }}</div>
+                          <div class="q-ml-xs" style="font-size: 10px;">Lv{{ userInfo.level }}</div>
                         </q-btn>
                         <!-- 信用分 -->
-                        <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs" no-caps
-                          style="border: 1px solid #F1F1F1;">
+                        <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs bg-grey-4 text-primary" v-if="userInfo.score > 60">
                           <q-img width="13px" height="13px" src="/images/icons/credit.png"></q-img>
-                          <div class="q-ml-xs" style="font-size: 11px;">{{ $t('creditScore') + userInfo.score }}</div>
+                          <div class="q-ml-xs" style="font-size: 10px;">{{ $t('creditScore') + userInfo.score }}</div>
+                        </q-btn>
+                        <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs bg-grey-4 text-red" v-else>
+                          <q-img width="13px" height="13px" src="/images/icons/credit.png"></q-img>
+                          <div class="q-ml-xs" style="font-size: 10px;">{{ $t('creditScore') + userInfo.score }}</div>
                         </q-btn>
                         <!-- 实名 -->
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps>
-                          <div style="font-size: 11px;">{{ userInfo.authStatus ? $t('realNameFailed') :
-                            $t('alreadyRealName') }}
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-grey-4 text-red q-px-sm" no-caps v-if="userInfo.authStatus == 0">
+                          <div style="font-size: 10px">
+                            {{$t('alreadyRealName')}}
+                          </div>
+                        </q-btn>
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-info text-white q-px-sm" no-caps v-else-if="userInfo.authStatus == 10">
+                          <div style="font-size: 10px">
+                            {{$t('pendingRealName')}}
+                          </div>
+                        </q-btn>
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps v-else-if="userInfo.authStatus == 20">
+                          <div style="font-size: 10px">
+                            {{$t('realNameFailed')}}
+                          </div>
+                        </q-btn>
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-negative text-white q-px-sm" no-caps v-else>
+                          <div style="font-size: 10px">
+                            {{$t('notRealName')}}
                           </div>
                         </q-btn>
                       </div>
@@ -114,10 +132,10 @@
                 <q-item @click="$router.push(userMenu.route)" dense v-for="(userMenu, userMenuIndex) in homeMenuList"
                   :key="userMenuIndex" clickable v-close-popup aria-hidden="true" class="q-py-md rounded-borders">
                   <q-item-section avatar style="min-width:auto">
-                    <q-img width="20px" height="20px" :src="imageSrc(userMenu.icon)"></q-img>
+                    <q-img no-spinner width="24px" height="24px" :src="imageSrc(userMenu.icon)"></q-img>
                   </q-item-section>
-                  <q-item-section>
-                    <div>{{ $t(userMenu.name) }}</div>
+                  <q-item-section class="text-grey-8 text-body1">
+                    {{ $t(userMenu.name) }}
                   </q-item-section>
                 </q-item>
 
@@ -126,9 +144,9 @@
                 <!-- 退出 -->
                 <q-item @click="Logout()" clickable v-close-popup aria-hidden="true" class="rounded-borders">
                   <q-item-section avatar style="min-width:auto">
-                    <q-icon size="20px" name="logout" />
+                    <q-icon size="24px" name="logout" />
                   </q-item-section>
-                  <q-item-section>{{ $t('logout') }}</q-item-section>
+                  <q-item-section class="text-grey-8 text-body1">{{ $t('logout') }}</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
