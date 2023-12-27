@@ -30,14 +30,12 @@ export default {
 
     const state = reactive({
       config: $initStore.config,
-
-      // 获取下载地址
-      downloadUrl: {} as any,
+      downloadInfo: {android: '', ios: ''} as any,
     });
 
     onMounted(() => {
       downloadInfoAPI().then((res: any) => {
-        state.downloadUrl = res
+        state.downloadInfo = res
       })
     })
 
@@ -49,11 +47,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.logo {
-  width: 80px;
-  height: 80px;
-  margin-top: 60px;
-  border-radius: 15px;
-}
-</style>
+<style lang="scss" scoped></style>

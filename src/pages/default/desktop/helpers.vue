@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue'
-import { getHelpers } from 'src/apis/index'
+import { helpersInfoAPI } from 'src/apis'
 import { imageSrc } from 'src/utils'
 
 export default {
@@ -58,7 +58,7 @@ export default {
     })
 
     onMounted(() => {
-      getHelpers().then((res: any) => {
+      helpersInfoAPI().then((res: any) => {
         state.articleList = res.articleList
         state.socialList = res.socialList
         console.log(res);
@@ -73,16 +73,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.bg {
-  background: url("/images/bg.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 240px;
-}
-
-::v-deep(.q-expansion-item) {
-  padding-left: 9px;
-  border-bottom: 1px solid #F4F5FD;
-}
-</style>
+<style lang="scss" scoped></style>

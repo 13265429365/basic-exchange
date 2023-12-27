@@ -1,4 +1,3 @@
-import { useRouter } from 'vue-router';
 import { date } from 'quasar'
 
 // 图片处理方法

@@ -75,7 +75,7 @@
                 <!-- 固定头部 -->
                 <q-item aria-hidden="true">
                   <div class="row items-center">
-                    <q-avatar size="40px" class="q-mt-sm" @click="$router.push({name: 'SettingIndex'})">
+                    <q-avatar size="40px" class="q-mt-sm cursor-pointer" @click="$router.push({name: 'SettingIndex'})">
                       <q-img :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
@@ -182,7 +182,7 @@ import LoginPages from 'src/pages/default/desktop/login.vue';
 import RegisterPages from 'src/pages/default/desktop/register.vue';
 import switchLanguage from 'src/components/switchLanguage.vue';
 import { useRouter } from 'vue-router';
-import { reactive, toRefs, ref, watch } from 'vue';
+import { reactive, toRefs, ref, watch, onMounted } from 'vue';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import { UserStore } from 'src/stores/user';
@@ -219,8 +219,11 @@ export default {
       // 右侧头像菜单
       homeMenuList: $initStore.homeMenu,
     });
-
     state.userInfo = $userStore.userInfo
+
+    onMounted(() => {
+      console.log($router.currentRoute.value.path)
+    })
 
     // dialogOpenFunc 打开登录
     const dialogOpenLogin = (showStatus: boolean) => {

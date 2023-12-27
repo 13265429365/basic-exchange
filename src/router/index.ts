@@ -33,9 +33,6 @@ import routes from 'src/router/routes';
  * with the Router instance.
  */
 
-export const enUS = {} as any
-export const ch = {} as any
-
 export default route(async function ({ store, ssrContext }) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
