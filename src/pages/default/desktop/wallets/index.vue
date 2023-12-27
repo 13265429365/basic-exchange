@@ -7,15 +7,15 @@
         <div class="q-pt-sm">
           <div class="row items-center">
             <div class="text-white text-h6 q-mr-xs">{{ $t('balance') }}</div>
-            <q-img @click="moneyShow = !moneyShow" class="cursor-pointer"
-              :src="`/images/pc/wallet/${moneyShow ? 'show' : 'noShow'}.png`" width="14px" height="14px"></q-img>
+            <q-icon @click="moneyShow = !moneyShow" class="cursor-pointer" color="white" size="20px"
+              :name="moneyShow ? 'o_visibility_off' : 'o_visibility'"></q-icon>
           </div>
           <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
           </div>
         </div>
       </div>
 
-      <!-- btn -->
+      <!-- 充值、提现 -->
       <div class="row">
         <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="text-primary bg-white no-shadow" rounded no-caps
           :label="$t('deposit')"></q-btn>
@@ -39,13 +39,11 @@
           <!-- 右侧 -->
           <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
             <!-- 选择 -->
-            <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
-              <div class="q-mr-xs">all</div>
-              <q-icon name="expand_more"></q-icon>
-            </q-btn>
+            <q-select outlined dense rounded v-model="typeValue" :options="typeList" option-value="value"
+              option-label="name" emit-value map-options dropdown-icon="expand_more" />
 
             <!-- 日期选择 -->
-            <q-btn class="bg-grey-1 row no-wrap q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
+            <q-btn class="bg-grey-1 q-ml-md" unelevated no-caps dense rounded>
               <div class="row items-center">
                 <div class="q-mr-xs">{{ dates.from }}</div>
                 <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
@@ -129,6 +127,17 @@ export default defineComponent({
     const $userStore = UserStore()
 
     let state = reactive({
+      // 过滤类型
+      typeList: [
+        { name: '全部', value: '' },
+        { name: '充值类型', value: 1 },
+        { name: '提现类型', value: 11 },
+        { name: '购买', value: 21 },
+        { name: '收益', value: 51 },
+        { name: '奖励', value: 61 },
+      ],
+      typeValue: '',
+
       //选择开始结束日期
       dates: {
         from: '',
@@ -320,15 +329,6 @@ export default defineComponent({
   border-radius: 3px;
   left: 50%;
   transform: translateX(-50%) !important;
-}
-
-.q-btn {
-  width: 100px;
-  height: 34px;
-}
-
-.q-btn::before {
-  box-shadow: none;
 }
 
 .background {
