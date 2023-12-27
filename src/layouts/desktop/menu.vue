@@ -40,16 +40,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { defineComponent, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { InitStoreState, InitStore } from 'src/stores/init';
 
 export default defineComponent({
   name: 'LayoutsMenu',
   setup() {
-    const $router = useRouter();
-    const $route = useRoute();
     const $initStore = InitStore()
 
     let state = reactive({
