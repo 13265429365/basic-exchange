@@ -63,7 +63,7 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { captchaAPI } from 'src/apis';
-import { userLogin } from 'src/apis/user';
+import { userLoginAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import {UserStore} from 'stores/user';
@@ -104,7 +104,7 @@ export default defineComponent({
 
     // 提交登录
     const submitFunc = () => {
-      userLogin(state.params)
+      userLoginAPI(state.params)
         .then(async (res: any) => {
           state.LoginShow = false
           $userStore.updateUserInfo(res.userInfo)

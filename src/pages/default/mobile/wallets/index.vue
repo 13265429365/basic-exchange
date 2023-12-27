@@ -59,7 +59,7 @@ import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
-import { userGetOrder } from 'src/apis/wallets';
+import { walletsOrderIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 import { useI18n } from 'vue-i18n';
 
@@ -117,7 +117,7 @@ export default defineComponent({
           sortBy: state.pagination.sortBy,
         },
       }
-      userGetOrder(params).then((res: any) => {
+      walletsOrderIndexAPI(params).then((res: any) => {
         console.log('钱包订单', res)
         state.form = res
         res.items.forEach((element: any) => {

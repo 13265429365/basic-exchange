@@ -159,7 +159,7 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { captchaAPI } from 'src/apis';
-import { userRegister } from 'src/apis/user';
+import { userRegisterAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import { NotifyNegative } from 'src/utils/notify';
@@ -243,7 +243,7 @@ export default defineComponent({
         }
       }
 
-      userRegister(state.params).then(async (res: any) => {
+      userRegisterAPI(state.params).then(async (res: any) => {
         await $initStore.updateUserToken(res.token);
         void $router.push({ name: 'HomeIndex' });
       }).catch(() => {

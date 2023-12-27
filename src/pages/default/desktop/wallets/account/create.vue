@@ -129,7 +129,7 @@
 import { reactive, toRefs, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
-import { userPayment, userAddCard, userEditCard, userGetCardInfo } from 'src/apis/wallets';
+import { walletsPaymentIndexAPI, walletsAccountCreateAPI, walletsAccountUpdateAPI, walletsAccountInfoAPI } from 'src/apis/wallets';
 
 export default {
   name: 'addCard',
@@ -175,7 +175,7 @@ export default {
 
     // 获取卡片详情
     const getCardInfo = () => {
-      userGetCardInfo({ id: Number($route.query.id) }).then((res: any) => {
+      walletsAccountInfoAPI({ id: Number($route.query.id) }).then((res: any) => {
         console.log('卡片详情', res);
         state.form = res
       })
@@ -183,7 +183,7 @@ export default {
 
     // 获取支付列表
     const getPayment = () => {
-      userPayment({ modes: [] }).then((res: any) => {
+      walletsPaymentIndexAPI({ modes: [] }).then((res: any) => {
         console.log('支付列表', res);
         state.cardType = res
         // 预设
@@ -209,7 +209,7 @@ export default {
           number: state.form.number,
           code: state.form.code,
         }
-        userAddCard(params).then((res: any) => {
+        walletsAccountCreateAPI(params).then((res: any) => {
           console.log(res);
           $router.push({ name: 'AccountCard' })
         })
@@ -222,7 +222,7 @@ export default {
           number: state.form.number,
           code: state.form.code,
         }
-        userEditCard(params).then((res: any) => {
+        walletsAccountUpdateAPI(params).then((res: any) => {
           console.log(res);
           $router.push({ name: 'AccountCard' })
         })

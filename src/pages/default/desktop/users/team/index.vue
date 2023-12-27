@@ -61,7 +61,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { formatDate, imageSrc } from 'src/utils/index'
-import { getTeam } from 'src/apis/user';
+import { teamIndexAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 
 export default defineComponent({
@@ -83,7 +83,7 @@ export default defineComponent({
 
     // 获取用户团队详情
     const Team = (params: any) => {
-      getTeam(params).then((res: any) => {
+      teamIndexAPI(params).then((res: any) => {
         console.log(res);
         state.TeamMembers = res
       })

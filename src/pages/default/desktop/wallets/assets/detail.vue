@@ -122,7 +122,7 @@ import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
 import { UserStore } from 'src/stores/user';
-import { userGetOrder, userGetBill } from 'src/apis/wallets';
+import { walletsOrderIndexAPI, walletsBillIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 
 export default defineComponent({
@@ -210,7 +210,7 @@ export default defineComponent({
           sortBy: state.pagination.sortBy,
         },
       }
-      userGetOrder(params).then((res: any) => {
+      walletsOrderIndexAPI(params).then((res: any) => {
         console.log('钱包订单', res)
         // state.form = res
         state.total = res.count
@@ -238,7 +238,7 @@ export default defineComponent({
           sortBy: state.pagination.sortBy,
         },
       }
-      userGetBill(params).then((res: any) => {
+      walletsBillIndexAPI(params).then((res: any) => {
         state.rows = []
         console.log('账单列表', res)
         state.total = res.count

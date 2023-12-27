@@ -103,7 +103,7 @@ import { useRouter } from 'vue-router';
 import { InitStore } from 'src/stores/init';
 import { UserStore, UserInfoKey } from 'src/stores/user';
 import { imageSrc } from 'src/utils';
-import { getUserInfo } from 'src/apis/user';
+import { userInfoAPI } from 'src/apis/user';
 
 export default defineComponent({
   name: 'userIndex',
@@ -146,7 +146,7 @@ export default defineComponent({
     // 获取用户信息
     const UserInfo = () => {
       if ($initStore.userToken) {
-        getUserInfo().then((res: any) => {
+        userInfoAPI().then((res: any) => {
           console.log('用户信息', res);
           state.userInfo = res
           $userStore.updateUserInfo(res)

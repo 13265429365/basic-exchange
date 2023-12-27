@@ -105,7 +105,7 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
 import * as echarts from 'echarts'
-import { userGetAssets } from 'src/apis/wallets';
+import { walletsUserAssetsIndexAPI } from 'src/apis/wallets';
 import { imageSrc } from 'src/utils/index';
 import { useI18n } from 'vue-i18n';
 
@@ -124,7 +124,7 @@ export default defineComponent({
         moneyRateSum: '',
       } as any,
 
-      // 点击显示、隐藏金额 
+      // 点击显示、隐藏金额
       moneyShow: true,
 
       // 快捷菜单
@@ -178,7 +178,7 @@ export default defineComponent({
 
     // 获取用户资产列表
     const getAssets = () => {
-      userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
+      walletsUserAssetsIndexAPI({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
         state.form = res
       })

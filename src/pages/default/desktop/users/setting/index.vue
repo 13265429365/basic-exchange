@@ -82,8 +82,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { getUserInfo, updateInfo, updatePassword } from 'src/apis/user';
+import { defineComponent, reactive, toRefs, onMounted } from 'vue';
+import { userInfoAPI, updateInfoAPI, updatePasswordAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { UserStore } from 'stores/user';
 import { date } from 'quasar';
@@ -139,14 +139,14 @@ export default defineComponent({
           oldPassword: state.params.oldPassword,
           newPassword: state.params.newPassword,
         }
-        updatePassword(state.params).then(async (res: any) => {
+        updatePasswordAPI(state.params).then(async (res: any) => {
           await $userStore.updateUserInfo(res)
           updateUserInfo()
         })
       } else {
         // 修改个人信息
         state.params[state.currentSetting.params] = state.currentSetting.value
-        updateInfo(state.params).then(async (res: any) => {
+        updateInfoAPI(state.params).then(async (res: any) => {
           await $userStore.updateUserInfo(res)
           updateUserInfo()
         })
@@ -157,7 +157,7 @@ export default defineComponent({
 
     // 更新当前用户信息
     const updateUserInfo = () => {
-      getUserInfo().then((res: any) => {
+      userInfoAPI().then((res: any) => {
         console.log(res);
         $userStore.updateUserInfo(res)
         state.settingsList.forEach((item: any) => {

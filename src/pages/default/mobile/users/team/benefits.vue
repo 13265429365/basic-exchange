@@ -51,7 +51,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { imageSrc } from 'src/utils/index';
-import { getTeamDetails } from 'src/apis/user';
+import { teamDetailsAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
 import { date } from 'quasar';
@@ -90,7 +90,7 @@ export default defineComponent({
 
     // 获取用户团队详情
     const TeamDetails = (params: any) => {
-      getTeamDetails(params).then((res: any) => {
+      teamDetailsAPI(params).then((res: any) => {
         console.log(res);
         state.teamEarnings = res.teamEarnings
         // 团队数据

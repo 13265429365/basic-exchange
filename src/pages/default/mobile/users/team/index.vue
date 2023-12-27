@@ -53,7 +53,7 @@ import { onMounted, reactive, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UserStore } from 'src/stores/user';
 import { imageSrc, formatDate } from 'src/utils';
-import { getTeam } from 'src/apis/user';
+import { teamIndexAPI } from 'src/apis/user';
 
 
 export default {
@@ -83,7 +83,7 @@ export default {
 
     // 获取用户团队详情
     const Team = (params: any) => {
-      getTeam(params).then((res: any) => {
+      teamIndexAPI(params).then((res: any) => {
         console.log(res);
         state.TeamMembers = res
       })

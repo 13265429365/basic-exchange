@@ -151,7 +151,7 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { captchaAPI } from 'src/apis';
-import { userRegister } from 'src/apis/user';
+import { userRegisterAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import { UserStore} from 'stores/user';
@@ -240,7 +240,7 @@ export default defineComponent({
       }
 
       //  用户注册
-      userRegister(state.params).then(async (res: any) => {
+      userRegisterAPI(state.params).then(async (res: any) => {
         $userStore.updateUserInfo(res.userInfo)
         await $initStore.updateUserToken(res.token);
         state.registerShow = false;

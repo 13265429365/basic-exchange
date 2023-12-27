@@ -46,7 +46,7 @@
 import { reactive, toRefs, onMounted } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
-import { userGetCard, userWithdraw } from 'src/apis/wallets';
+import { walletsAccountIndexAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -84,7 +84,7 @@ export default {
 
     // 获取卡片列表
     const getCard = () => {
-      userGetCard().then((res: any) => {
+      walletsAccountIndexAPI().then((res: any) => {
         console.log(res);
         state.cardList = res
       })
@@ -97,7 +97,7 @@ export default {
         money: Number(state.form.money),
         securityKey: '',
       }
-      userWithdraw(params).then((res: any) => {
+      walletsWithdrawCreateAPI(params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
         console.log('提现成功', res);
         $router.push({ name: 'AccountCard' })

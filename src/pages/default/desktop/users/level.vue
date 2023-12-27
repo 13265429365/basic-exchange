@@ -45,10 +45,10 @@
 
 <script lang="ts">
 import { onMounted, reactive, toRefs } from 'vue';
-import { getLevel, orderLevel } from 'src/apis/user';
+import { levelIndexAPI, levelCreateAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils/index';
 import { UserStore, UserInfoKey } from 'src/stores/user';
-import { getUserInfo } from 'src/apis/user';
+import { userInfoAPI } from 'src/apis/user';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -70,7 +70,7 @@ export default {
     // 获取会员等级列表
     const getLevelList = () => {
       state.select = $userStore.userInfo.Level
-      getLevel().then((res: any) => {
+      levelIndexAPI().then((res: any) => {
         state.levelList = res
         if (state.levelList.length > 0) {
           state.actName = state.levelList[0].name
@@ -87,14 +87,14 @@ export default {
         return false
       }
 
-      orderLevel({ id: state.levelList[state.select].id }).then((res: any) => {
+      levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
         UserInfo()
         console.log(res);
       })
     }
 
     const UserInfo = () => {
-      getUserInfo().then((res: any) => {
+      userInfoAPI().then((res: any) => {
         console.log('用户信息', res);
         $userStore.updateUserInfo(res)
         localStorage.setItem(UserInfoKey, JSON.stringify(res))

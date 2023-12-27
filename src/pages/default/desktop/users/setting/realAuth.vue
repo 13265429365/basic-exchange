@@ -73,7 +73,7 @@
 import uploader from 'src/components/uploader.vue';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
-import { userAuth, getUserAuth } from 'src/apis/user';
+import { realAuthCreateAPI, realAuthInfoAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
 
@@ -103,7 +103,7 @@ export default defineComponent({
     })
 
     const getAuth = () => {
-      getUserAuth().then((res: any) => {
+      realAuthInfoAPI().then((res: any) => {
         console.log(res);
         state.form = res
       })
@@ -121,7 +121,7 @@ export default defineComponent({
         photo1: state.form.photo1,
         photo2: state.form.photo2,
       }
-      userAuth(params).then((res: any) => {
+      realAuthCreateAPI(params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
         getAuth()
         console.log(res);

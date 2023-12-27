@@ -28,7 +28,7 @@ import { reactive, toRefs, onMounted } from 'vue';
 import { copyToClipboard } from 'quasar';
 import { NotifyPositive } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
-import { getInvite } from 'src/apis/user';
+import { inviteInfoAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import QRCode from 'qrcode-svg-ts';
 
@@ -47,7 +47,7 @@ export default {
     })
 
     onMounted(() => {
-      getInvite().then((res: any) => {
+      inviteInfoAPI().then((res: any) => {
         state.inviteUrl = location.origin + `/register?code=${res.code}`
         const qrCode = new QRCode({
           content: state.inviteUrl,
