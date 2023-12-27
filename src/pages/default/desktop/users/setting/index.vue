@@ -18,9 +18,6 @@
               <q-img no-spinner :src="imageSrc(setting.value)"></q-img>
             </q-avatar>
           </div>
-          <div v-else-if="setting.type == 'datePicker'">
-            {{ date.formatDate(setting.value * 1000, 'YYYY/MM/DD') }}
-          </div>
           <div v-else class="text-body2">
             <div v-if="setting.params == 'sex'">
               <div v-if="setting.value == 1">{{ $t('male') }}</div>
@@ -59,15 +56,18 @@
           </div>
 
           <div v-else-if="currentSetting.params == 'birthday'">
-            <q-input outlined dense v-model="currentSetting.value" :placeholder="$t(currentSetting.params)">
-              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date v-model="currentSetting.value" style="width: 340px;">
-                  <div class="row items-center justify-end q-gutter-sm">
-                    <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                    <q-btn :label="$t('confirm')" color="primary" flat v-close-popup />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
+            <q-input outlined dense v-model="currentSetting.value" :placeholder="$t(currentSetting.params)" mask="date">
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="currentSetting.value">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup :label="$t('confirm')" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
             </q-input>
           </div>
 
@@ -191,7 +191,11 @@ export default defineComponent({
         console.log(res);
         $userStore.updateUserInfo(res)
         state.settingsList.forEach((item: any) => {
-          item.value = res[item.name]
+          if (item.name == 'birthday') {
+            item.value = date.formatDate(res[item.name] * 1000, 'YYYY-MM-DD')
+          } else {
+            item.value = res[item.name]
+          }
         })
       })
     }
