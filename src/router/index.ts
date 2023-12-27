@@ -98,7 +98,7 @@ export default route(async function ({ store, ssrContext }) {
   Router.beforeEach((to, form, next) => {
     if (
       (to.name === 'UserLogin' || to.name === 'UserRegister') &&
-      store.state.value.init.userToken != null &&
+      store.state.value.init.userToken &&
       store.state.value.init.userToken.length > 0
     ) {
       next({ name: 'Home' });
