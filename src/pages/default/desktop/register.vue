@@ -108,7 +108,7 @@
           </q-input>
 
           <!-- 手机号码 -->
-          <div v-if="!config.settings.register.showTelephone" class="row no-wrap justify-between">
+          <div v-if="config.settings.register.showTelephone" class="row no-wrap justify-between">
             <q-btn-dropdown class="col-4" color="grey" outline no-caps dropdown-icon="expand_more"
               style="height: 56px;">
               <template v-slot:label>
