@@ -20,11 +20,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'errorIndex',
+  name: 'ErrorIndex',
   setup() {
-    return {
-
-    };
+    return {};
   },
 });
 </script>
