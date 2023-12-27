@@ -203,21 +203,21 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: false, keepAlive: false },
       },
       // 文章(桌面)
+      // {
+      //   name: 'Article',
+      //   route: '/article',
+      //   componentMobile: PagesTemplateMobilePath(
+      //     TemplateName,
+      //     ''
+      //   ),
+      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/article.vue'),
+      //   children: [],
+      //   meta: { requireAuth: false, keepAlive: false },
+      // },
+      // 文章(桌面)
       {
         name: 'Article',
         route: '/article',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          ''
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/article.vue'),
-        children: [],
-        meta: { requireAuth: false, keepAlive: false },
-      },
-      // 文章(桌面)
-      {
-        name: 'ArticleDetails',
-        route: '/article/details',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           ''

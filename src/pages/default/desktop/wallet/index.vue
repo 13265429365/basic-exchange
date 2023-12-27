@@ -6,7 +6,7 @@
       </q-toolbar-title>
     </q-toolbar>
 
-    <div>
+    <div style="padding: 48px 100px;">
       <!-- 钱包余额 -->
       <div class="background row items-center justify-between rounded-borders q-pa-lg q-pr-xl">
         <div class="row">
