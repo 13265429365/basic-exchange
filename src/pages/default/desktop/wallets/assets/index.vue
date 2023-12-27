@@ -31,10 +31,10 @@
               </div>
 
               <div class="row justify-between q-mt-md">
-                <q-btn class="bg-white text-primary" rounded style="width: 110px;height: 34px;"
-                  :label="$t('deposit')"></q-btn>
-                <q-btn class="bg-white text-primary" rounded style="width: 110px;height: 34px;"
-                  :label="$t('withdraw')"></q-btn>
+                <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="bg-white text-primary" rounded
+                  style="width: 110px;height: 34px;" :label="$t('deposit')"></q-btn>
+                <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" class="bg-white text-primary" rounded
+                  style="width: 110px;height: 34px;" :label="$t('withdraw')"></q-btn>
               </div>
             </div>
           </div>

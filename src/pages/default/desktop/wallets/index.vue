@@ -24,10 +24,10 @@
 
         <!-- btn -->
         <div class="row">
-          <q-btn @click="$router.push({ name: 'Deposit' })" class="text-primary bg-white no-shadow" rounded no-caps
+          <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="text-primary bg-white no-shadow" rounded no-caps
             :label="$t('deposit')"></q-btn>
-          <q-btn @click="$router.push({ name: 'Withdraw' })" class="text-primary bg-white no-shadow q-ml-md" rounded
-            no-caps :label="$t('withdraw')"></q-btn>
+          <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" class="text-primary bg-white no-shadow q-ml-md"
+            rounded no-caps :label="$t('withdraw')"></q-btn>
         </div>
       </div>
 
