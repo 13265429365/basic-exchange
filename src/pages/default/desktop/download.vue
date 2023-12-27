@@ -1,7 +1,7 @@
 <template>
   <div class="row items-center justify-center">
     <div class="column">
-      <div class="col">
+      <div>
         <div class="column justify-between items-center q-mb-xl">
           <div class="column justify-center shadow-1 q-mt-xl" style="width: 80px;height: 80px;border-radius: 15px;">
             <q-img class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
@@ -30,7 +30,7 @@ export default {
 
     const state = reactive({
       config: $initStore.config,
-      downloadInfo: {android: '', ios: ''} as any,
+      downloadInfo: { android: '', ios: '' } as any,
     });
 
     onMounted(() => {

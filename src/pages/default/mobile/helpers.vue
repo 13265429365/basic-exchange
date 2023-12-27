@@ -20,7 +20,7 @@
       <div class="col-4 z-top" v-for="( social, socialIndex ) in socialList" :key="socialIndex">
         <div class="rounded-borders bg-white column items-center" style="padding: 20px 0;">
           <q-img :src="imageSrc(social.icon)" width="41px" height="41px" />
-          <div class="text-body2 text-weight-medium q-mt-sm">{{ $t(social.name) }}</div>
+          <div class="text-body2 text-weight-medium q-mt-sm">{{ social.name }}</div>
         </div>
       </div>
     </div>

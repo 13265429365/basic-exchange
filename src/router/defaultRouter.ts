@@ -80,10 +80,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-
     ],
     meta: {},
   },
+
 
   //  全屏的布局文件
   {
@@ -221,19 +221,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-      // 文章(桌面)
-      // {
-      //   name: 'Article',
-      //   route: '/article',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     ''
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/article.vue'),
-      //   children: [],
-      //   meta: { requireAuth: false, keepAlive: false },
-      // },
-      // 文章(桌面)
+      // 文章(共用)
       {
         name: 'Article',
         route: '/article',
@@ -244,6 +232,55 @@ export const defaultRouter: TemplateRouteInterface[] = [
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/details.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
+      },
+
+      // 邀请好友
+      {
+        name: 'ShareDesktop',
+        route: '/team/share',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/team/share.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/share.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'DownloadDesktop',
+        route: '/download',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'download.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'download.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+
+      // 帮助中心(共用)
+      {
+        name: 'HelpCenterDesktop',
+        route: '/helpers',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'helpers.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'helpers.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      // 手机版会员权益(共用)
+      {
+        name: 'Level',
+        route: '/user/level',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/level.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/level.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
       },
     ],
     meta: {},
@@ -324,54 +361,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
           'users/team/benefits.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/benefits.vue'),
-        children: [],
-        meta: { requireAuth: true, keepAlive: false },
-      },
-      // 团队分享(共用)
-      {
-        name: 'Share',
-        route: '/team/share',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'users/team/share.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/share.vue'),
-        children: [],
-        meta: { requireAuth: true, keepAlive: false },
-      },
-      {
-        name: 'Download',
-        route: '/download',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'download.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'download.vue'),
-        children: [],
-        meta: { requireAuth: true, keepAlive: false },
-      },
-
-      // 帮助中心(共用)
-      {
-        name: 'HelpCenter',
-        route: '/helpers',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'helpers.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'helpers.vue'),
-        children: [],
-        meta: { requireAuth: true, keepAlive: false },
-      },
-      // 手机版会员权益(共用)
-      {
-        name: 'Level',
-        route: '/user/level',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'users/level.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/level.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },

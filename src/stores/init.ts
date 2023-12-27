@@ -114,6 +114,7 @@ export const InitStore = defineStore('init', {
     updateUserToken(token: string) {
       this.userToken = token;
       Cookies.set(UserTokenKey, token, { expires: '30d 3h 5m' });
+
     },
 
     //  更新用户语言

@@ -11,25 +11,22 @@
 
         <q-form class="q-mt-xl q-gutter-sm">
           <!-- 邮箱 -->
-          <q-input v-if="config.settings.register.showEmail"
-            :input-style="{ fontSize: '16px' }" outlined :label="$t('email')"
-            v-model="params.email">
+          <q-input v-if="config.settings.register.showEmail" :input-style="{ fontSize: '16px' }" outlined
+            :label="$t('email')" v-model="params.email">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/email2.png" />
             </template>
           </q-input>
 
           <!-- 账号 -->
-          <q-input outlined v-model="params.username"
-            :input-style="{ fontSize: '16px'}" :label="$t('username')">
+          <q-input outlined v-model="params.username" :input-style="{ fontSize: '16px' }" :label="$t('username')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/username.png" />
             </template>
           </q-input>
 
           <!-- 密码 -->
-          <q-input v-model="params.password" outlined
-            :input-style="{ fontSize: '16px' }"
+          <q-input v-model="params.password" outlined :input-style="{ fontSize: '16px' }"
             :type="showTextPassword.password ? 'text' : 'password'" :label="$t('password')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/password.png" />
@@ -42,8 +39,8 @@
           </q-input>
 
           <!-- 确认密码 -->
-          <q-input v-if="config.settings.register.showCmfPass" outlined
-            :input-style="{ fontSize: '16px' }" v-model="params.cmfPassword" :type="showTextPassword.cmfPassword ? 'text' : 'password'"
+          <q-input v-if="config.settings.register.showCmfPass" outlined :input-style="{ fontSize: '16px' }"
+            v-model="params.cmfPassword" :type="showTextPassword.cmfPassword ? 'text' : 'password'"
             :label="$t('cmfPassword')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/password.png" />
@@ -56,8 +53,7 @@
           </q-input>
 
           <!-- 验证码 -->
-          <q-input v-if="config.settings.register.showVerify" outlined
-            :input-style="{ fontSize: '16px' }"
+          <q-input v-if="config.settings.register.showVerify" outlined :input-style="{ fontSize: '16px' }"
             v-model="params.captchaVal" :label="$t('code')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/code.png" />
@@ -69,8 +65,7 @@
           </q-input>
 
           <!-- 安全秘钥 -->
-          <q-input v-if="config.settings.register.showSecurityPass"
-            :input-style="{ fontSize: '16px' }" outlined
+          <q-input v-if="config.settings.register.showSecurityPass" :input-style="{ fontSize: '16px' }" outlined
             v-model="params.securityKey" :type="showTextPassword.securityKey ? 'text' : 'password'"
             :label="$t('enterSecretKey')">
             <template v-slot:prepend>
@@ -84,8 +79,7 @@
           </q-input>
 
           <!-- 确认安全秘钥 -->
-          <q-input v-if="config.settings.register.showSecurityPass"
-            :input-style="{ fontSize: '16px' }" outlined
+          <q-input v-if="config.settings.register.showSecurityPass" :input-style="{ fontSize: '16px' }" outlined
             v-model="params.cmfSecurityKey" :type="showTextPassword.cmfSecurityKey ? 'text' : 'password'"
             :label="$t('enterSecretKey')">
             <template v-slot:prepend>
@@ -99,9 +93,8 @@
           </q-input>
 
           <!-- 邀请码 -->
-          <q-input v-if="config.settings.register.isInvite" outlined
-            :input-style="{ fontSize: '16px' }" v-model="params.code"
-            :label="$t('inviteCode')">
+          <q-input v-if="config.settings.register.isInvite" outlined :input-style="{ fontSize: '16px' }"
+            v-model="params.code" :label="$t('inviteCode')">
             <template v-slot:prepend>
               <q-img width="24px" height="24px" src="/images/icons/profile.png" />
             </template>
@@ -109,8 +102,7 @@
 
           <!-- 手机号码 -->
           <div v-if="config.settings.register.showTelephone" class="row no-wrap justify-between">
-            <q-btn-dropdown class="col-4" color="grey" outline no-caps dropdown-icon="expand_more"
-              style="height: 56px;">
+            <q-btn-dropdown class="col-4" color="grey" outline no-caps dropdown-icon="expand_more" style="height: 56px;">
               <template v-slot:label>
                 <div class="row no-wrap items-center">
                   <q-img :src="imageSrc(countryList[currentCountryIndex].icon)" width="24px" height="16px" />
@@ -119,8 +111,8 @@
               </template>
               <!-- 下拉 -->
               <q-list class="q-py-sm">
-                <q-item @click="currentCountryIndex = countryIndex" v-for="(country, countryIndex) in countryList" :key="countryIndex" clickable v-close-popup
-                  class="row no-wrap items-center">
+                <q-item @click="currentCountryIndex = countryIndex" v-for="(country, countryIndex) in countryList"
+                  :key="countryIndex" clickable v-close-popup class="row no-wrap items-center">
                   <q-img no-spinner class="q-mr-sm" :src="imageSrc(country.icon)" width="38px" height="38px" />
                   <div>
                     <div style="font-size: 16px;">{{ country.name }}</div>
@@ -130,8 +122,8 @@
             </q-btn-dropdown>
 
             <div class="col-8">
-              <q-input :input-style="{ fontSize: '16px' }" outlined class="q-ml-sm"
-                       v-model="params.telephone" :label="$t('telephone')" />
+              <q-input :input-style="{ fontSize: '16px' }" outlined class="q-ml-sm" v-model="params.telephone"
+                :label="$t('telephone')" />
             </div>
           </div>
 
@@ -154,7 +146,7 @@ import { captchaAPI } from 'src/apis';
 import { userRegisterAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
-import { UserStore} from 'stores/user';
+import { UserStore } from 'stores/user';
 import { NotifyNegative } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
 
@@ -239,6 +231,8 @@ export default defineComponent({
         }
       }
 
+      //拼接手机区号 
+      state.params.telephone = state.countryList[state.currentCountryIndex].code + '|' + state.params.telephone
       //  用户注册
       userRegisterAPI(state.params).then(async (res: any) => {
         $userStore.updateUserInfo(res.userInfo)

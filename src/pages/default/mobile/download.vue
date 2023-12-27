@@ -21,7 +21,7 @@ import { date } from 'quasar';
 import { imageSrc } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 import { InitStore } from 'src/stores/init';
-import { getDownload } from 'src/apis';
+import { downloadInfoAPI } from 'src/apis';
 
 export default {
   name: 'DownloadIndex',
@@ -42,7 +42,7 @@ export default {
 
     onMounted(() => {
       // 获取下载地址
-      getDownload().then((res: any) => {
+      downloadInfoAPI().then((res: any) => {
         state.downloadUrl = res
         console.log(res);
       })

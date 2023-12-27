@@ -7,7 +7,7 @@
           style="height: 208px;width: 287px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
           <div>
             <div class="row items-center" style="height: 49px;">
-              <div class="text-white text-h5">{{ $t('totalAssets') }}</div>
+              <div class="text-white text-h6">{{ $t('totalAssets') }}</div>
               <q-icon color="white" @click="moneyShow = !moneyShow"
                 :name="moneyShow ? 'o_visibility' : 'o_visibility_off'" class="q-ml-xs cursor-pointer"
                 size="18px"></q-icon>
@@ -16,8 +16,8 @@
             <!-- 点击显示、隐藏金额 -->
             <div style="height: 64px;">
               <div v-if="moneyShow" class="text-white">
-                <div class="text-h5">${{ form.moneySum }}</div>
-                <div class="text-h6">≈￥{{ form.moneyRateSum }} </div>
+                <div class="text-body1">${{ form.moneySum }}</div>
+                <div>≈￥{{ form.moneyRateSum }} </div>
               </div>
               <div v-else class="text-white text-weight-bold " style="font-size: 22px;height: 54px;">**** </div>
             </div>
@@ -86,10 +86,8 @@
         <div class="row no-wrap justify-between full-width">
           <!-- 左侧tabs -->
           <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-            <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-              name="Transactions" label="Transactions" />
-            <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-              name="Bill Detail" label="Bill Detail" />
+            <q-tab @click="switchOrder" class="text-primary q-pa-none" name="Transactions" label="Transactions" />
+            <q-tab @click="switchBill" class="text-primary q-pa-none" name="Bill Detail" label="Bill Detail" />
           </q-tabs>
 
           <!-- 右侧 -->

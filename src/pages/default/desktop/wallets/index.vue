@@ -30,25 +30,34 @@
         <div class="row no-wrap justify-between full-width">
           <!-- 左侧tabs -->
           <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-            <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-              name="Transactions" label="Transactions" />
-            <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-              name="Bill Detail" label="Bill Detail" />
+            <q-tab @click="switchOrder" class="text-primary q-pa-none" name="Transactions" label="Transactions" />
+            <q-tab @click="switchBill" class="text-primary q-pa-none" name="Bill Detail" label="Bill Detail" />
           </q-tabs>
 
           <!-- 右侧 -->
-          <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
+          <div v-if="tab == 'Bill Detail'" class="row q-pr-md">
             <!-- 选择 -->
-            <q-select outlined dense rounded v-model="typeValue" :options="typeList" option-value="value"
-              option-label="name" emit-value map-options dropdown-icon="expand_more" />
+            <q-btn class="bg-grey-1 row no-wrap" unelevated no-caps rounded
+              style="border: 1px solid #DDDDDD;height: 32px;">
+              <div class="q-mr-xs">{{ typeList[typeIndex].name }}</div>
+              <q-icon name="expand_more"></q-icon>
+              <q-menu>
+                <q-list style="min-width: 100px">
+                  <q-item @click="typeIndex = index" clickable v-close-popup v-for="(type, index) in typeList"
+                    :key="index">
+                    <q-item-section>{{ type.name }}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn>
 
             <!-- 日期选择 -->
-            <q-btn class="bg-grey-1 q-ml-md" unelevated no-caps dense rounded>
+            <q-btn class="bg-grey-1 q-ml-md" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
               <div class="row items-center">
-                <div class="q-mr-xs">{{ dates.from }}</div>
+                <div class="q-mr-xs text-caption">{{ dates.from }}</div>
                 <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
-                <div class="q-mr-xs">{{ dates.to }}</div>
-                <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
+                <div class="q-mr-xs text-caption">{{ dates.to }}</div>
+                <q-icon class="q-ml-sm" size="15px" name="calendar_today"></q-icon>
               </div>
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                 <q-date v-model="dates" range>
@@ -136,12 +145,12 @@ export default defineComponent({
         { name: '收益', value: 51 },
         { name: '奖励', value: 61 },
       ],
-      typeValue: '',
+      typeIndex: 0,
 
       //选择开始结束日期
       dates: {
-        from: '',
-        to: '',
+        from: date.formatDate(Date.now(), 'YYYY-MM-DD'),
+        to: date.formatDate(Date.now(), 'YYYY-MM-DD'),
       },
 
       money: 0,

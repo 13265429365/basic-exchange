@@ -119,13 +119,13 @@
           style="height: 50px;background: #f5f6fa;border-radius: 10px;color: #8F959E;">
           <template v-slot:label>
             <div class="row no-wrap items-center">
-              <q-img :src="imageSrc(countryList[countryIndex].icon)" width="24px" height="16px" />
-              <div class="q-ml-sm">+{{ countryList[countryIndex].code }}</div>
+              <q-img :src="imageSrc(countryList[currentCountryIndex].icon)" width="24px" height="16px" />
+              <div class="q-ml-sm">+{{ countryList[currentCountryIndex].code }}</div>
             </div>
           </template>
           <!-- 下拉 -->
           <q-list style="min-width: 268px" class="q-py-sm">
-            <q-item @click="countryIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
+            <q-item @click="currentCountryIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
               class="row no-wrap items-center">
               <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
               <div>
@@ -186,7 +186,7 @@ export default defineComponent({
       config: $initStore.config,
 
       // 地区选择
-      countryIndex: 0,
+      currentCountryIndex: 0,
       countryList: $initStore.countryList as any,
 
       // 是否显示密码
@@ -243,6 +243,8 @@ export default defineComponent({
         }
       }
 
+      //拼接手机区号 
+      state.params.telephone = state.countryList[state.currentCountryIndex].code + '|' + state.params.telephone
       userRegisterAPI(state.params).then(async (res: any) => {
         await $initStore.updateUserToken(res.token);
         void $router.push({ name: 'HomeIndex' });

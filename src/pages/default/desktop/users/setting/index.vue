@@ -91,7 +91,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn @click="updateUserInfo" flat :label="$t('cancel')" color="grey" v-close-popup />
+          <q-btn flat :label="$t('cancel')" color="grey" v-close-popup />
           <q-btn @click="submitFunc" flat :label="$t('submit')" color="primary" />
         </q-card-actions>
       </q-card>
@@ -135,15 +135,15 @@ export default defineComponent({
       // 接口参数
       params: {} as any,
       settingsList: [
-        { name: 'avatar', params: 'avatar', type: 'avatar', desc: 'avatarSmall', value: '' as any },
-        { name: 'nickname', params: 'nickname', type: 'text', desc: 'nicknameSmall', value: '' as any },
-        { name: 'email', params: 'email', type: 'text', desc: 'emailSmall', value: '' as any },
-        { name: 'password', params: 'password', type: 'password', desc: 'passwordSmall', value: '' as any },
-        { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: '' as any },
-        { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: '' as any },
-        { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: '' as any },
-        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: '' as any },
-        { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: '' as any },
+        { name: 'avatar', params: 'avatar', type: 'avatar', desc: 'avatarSmall', value: userInfo.avatar as any },
+        { name: 'nickname', params: 'nickname', type: 'text', desc: 'nicknameSmall', value: userInfo.nickname as any },
+        { name: 'email', params: 'email', type: 'text', desc: 'emailSmall', value: userInfo.email as any },
+        { name: 'password', params: 'password', type: 'password', desc: 'passwordSmall', value: userInfo.password as any },
+        { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: userInfo.secretKey as any },
+        { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: userInfo.telephone as any },
+        { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: userInfo.sex as any },
+        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: userInfo.birthday as any },
+        { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: userInfo.desc as any },
       ]
     });
 
@@ -164,7 +164,7 @@ export default defineComponent({
         }
         updatePasswordAPI(state.params).then(async (res: any) => {
           await $userStore.updateUserInfo(res)
-          updateUserInfo()
+          // updateUserInfo()
         })
       } else {
         // 修改个人信息
@@ -177,7 +177,7 @@ export default defineComponent({
         }
         updateInfoAPI(state.params).then(async (res: any) => {
           await $userStore.updateUserInfo(res)
-          updateUserInfo()
+          // updateUserInfo()
         })
       }
       // 清空params
@@ -186,23 +186,23 @@ export default defineComponent({
     }
 
     // 更新当前用户信息
-    const updateUserInfo = () => {
-      userInfoAPI().then((res: any) => {
-        console.log(res);
-        $userStore.updateUserInfo(res)
-        state.settingsList.forEach((item: any) => {
-          if (item.name == 'birthday') {
-            item.value = date.formatDate(res[item.name] * 1000, 'YYYY-MM-DD')
-          } else {
-            item.value = res[item.name]
-          }
-        })
-      })
-    }
+    // const updateUserInfo = () => {
+    //   userInfoAPI().then((res: any) => {
+    //     console.log(res);
+    //     $userStore.updateUserInfo(res)
+    //     state.settingsList.forEach((item: any) => {
+    //       if (item.name == 'birthday') {
+    //         item.value = date.formatDate(res[item.name] * 1000, 'YYYY-MM-DD')
+    //       } else {
+    //         item.value = res[item.name]
+    //       }
+    //     })
+    //   })
+    // }
 
-    onMounted(() => {
-      updateUserInfo()
-    })
+    // onMounted(() => {
+    //   updateUserInfo()
+    // })
 
     // 更改头像
     const uploaded = (url: any) => {
@@ -214,7 +214,7 @@ export default defineComponent({
       imageSrc,
       date,
       ...toRefs(state),
-      updateUserInfo,
+      // updateUserInfo,
       openUpdateDialog,
       submitFunc,
       uploaded,
