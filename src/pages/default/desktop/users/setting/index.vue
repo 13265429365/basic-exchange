@@ -54,7 +54,7 @@
           </div>
 
           <div v-else-if="currentSetting.params == 'nickname'">
-            <q-input outlined v-model="currentSetting.value"></q-input>
+            <q-input outlined dense v-model="currentSetting.value"></q-input>
           </div>
         </q-card-section>
 
@@ -93,15 +93,15 @@ export default defineComponent({
       // 接口参数
       params: {} as any,
       settingsList: [
-        { name: 'avatar', params: 'avatar', type: 'avatar', desc: 'avatarSmall', value: userInfo.avatar },
-        { name: 'nickname', params: 'nickname', type: 'text', desc: 'nicknameSmall', value: userInfo.nickname },
+        { name: 'avatar', params: 'avatar', type: 'avatar', desc: 'avatarSmall', value: '' },
+        { name: 'nickname', params: 'nickname', type: 'text', desc: 'nicknameSmall', value: '' },
         { name: 'email', params: 'email', type: 'text', desc: 'emailSmall', value: userInfo.email },
         { name: 'password', params: 'password', type: 'password', desc: 'passwordSmall', value: '' },
         { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: '' },
-        { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: userInfo.telephone },
-        { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: userInfo.sex },
-        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: userInfo.birthday },
-        { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: userInfo.desc },
+        { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: '' },
+        { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: '' },
+        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: '' },
+        { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: '' },
       ]
     });
 
@@ -115,12 +115,28 @@ export default defineComponent({
 
     // 更新用户信息
     const submitFunc = () => {
-      updateInfo(state.params).then((res: any) => {
-        $userStore.updateUserInfo(res)
-      })
-      updatePassword(state.params).then((res: any) => {
-        $userStore.updateUserInfo(res)
-      })
+      // 修改登录密码
+      if (state.currentSetting.params == 'password' || state.currentSetting.params == 'secretKey') {
+        state.params = {
+          type: state.currentSetting.params == 'password' ? 1 : 2,
+          oldPassword: state.params.oldPassword,
+          newPassword: state.params.newPassword,
+        }
+        updatePassword(state.params).then((res: any) => {
+          $userStore.updateUserInfo(res)
+        })
+      } else {
+        // 修改个人信息
+        state.params[state.currentSetting.params] = state.currentSetting.value
+        updateInfo(state.params).then((res: any) => {
+          $userStore.updateUserInfo(res)
+        })
+      }
+
+      setTimeout(() => {
+        updateUserInfo()
+        state.dialogShow = false
+      }, 1000)
     }
 
     // 更新当前用户信息
@@ -131,6 +147,8 @@ export default defineComponent({
         state.settingsList.forEach((item: any) => {
           item.value = userInfo[item.name]
         })
+        console.log(state.settingsList);
+
       })
     }
 
