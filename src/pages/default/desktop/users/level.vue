@@ -1,5 +1,5 @@
 <template>
-  <div class="q-py-xl" style="width: calc(100% - 284px);padding: 48px 100px;">
+  <div class="q-py-xl" style="padding: 48px 100px;">
     <div class="text-center text-weight-bold q-mt-lg" style="font-size: 32px;">Pick your plan</div>
     <div class="text-center text-color-6 q-mt-sm q-mb-xl">
       Choose your perfect plan and get started.
