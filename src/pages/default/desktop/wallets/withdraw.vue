@@ -40,7 +40,7 @@
 
           <div class="row no-wrap items-center q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('withdrawAmount') }}：</div>
-            <q-input type="number" outlined v-model="form.money" />
+            <q-input type="number" dense outlined v-model="form.money" />
             <div @click="form.money = Total" class="text-primary q-ml-sm cursor-pointer">{{ $t('withdrawAllAmount') }}
             </div>
           </div>

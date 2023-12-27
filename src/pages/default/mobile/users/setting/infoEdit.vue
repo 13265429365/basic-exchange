@@ -10,7 +10,7 @@
             <q-img :src="form.avatar ? imageSrc(form.avatar) : imageSrc('')" />
             <uploader type="avatar"
               :uploaderStyle="{ position: 'absolute', right: '0', bottom: '0', width: '27px', height: '27px', background: 'transparent' }"
-              :respValue="form.avatar" @upload="upload"></uploader>
+              :respValue="form.avatar" @uploaded="upload"></uploader>
           </q-avatar>
         </div>
       </div>
@@ -114,7 +114,10 @@ export default defineComponent({
       getUserInfo().then((res: any) => {
         console.log('用户信息', res);
         state.form = res
-        state.genderIndex = res.sex - 1
+        if (res.sex != 0) {
+          state.genderIndex = res.sex - 1
+        }
+
         state.form.birthday = date.formatDate(state.form.birthday * 1000, 'YYYY-MM-DD')
         $userStore.updateUserInfo(res)
         localStorage.setItem('userInfo', JSON.stringify(res))

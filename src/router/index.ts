@@ -100,7 +100,7 @@ export default route(async function ({ store, ssrContext }) {
   //  路由守卫
   Router.beforeEach((to, form, next) => {
     if (
-      (to.name === 'Login' || to.name === 'Register') &&
+      (to.name === 'UserLogin' || to.name === 'UserRegister') &&
       store.state.value.init.userToken != null &&
       store.state.value.init.userToken.length > 0
     ) {
@@ -112,7 +112,7 @@ export default route(async function ({ store, ssrContext }) {
         (store.state.value.init.userToken == null ||
           store.state.value.init.userToken.length === 0)
       ) {
-        next({ name: 'Login' });
+        next({ name: 'UserLogin' });
       } else {
         next();
       }

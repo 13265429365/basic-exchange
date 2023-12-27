@@ -10,8 +10,8 @@
 
       <!--  -->
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-px-md" style="border-radius: 2px;
-background: #F8F9FC;">
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-px-md"
+          style="border-radius: 2px;background: #F8F9FC;">
           {{ $t('type') }}
         </div>
 
@@ -29,8 +29,8 @@ background: #F8F9FC;">
         </div>
 
         <!--  -->
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-mt-lg q-px-md" style="border-radius: 2px;
-background: #F8F9FC;">
+        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-mt-lg q-px-md"
+          style="border-radius: 2px;background: #F8F9FC;">
           {{ $t('depositAccountInfo') }}
         </div>
 
@@ -38,7 +38,7 @@ background: #F8F9FC;">
 
         <!-- 卡片类型1 -->
         <div class="q-mt-lg q-pa-md">
-          <q-form @submit="submit" class="q-gutter-md">
+          <q-form @submit="submit" class="q-gutter-md" style="width:40%;">
             <!-- 银行名称 -->
             <div class="q-mb-lg"
               v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
@@ -72,20 +72,20 @@ background: #F8F9FC;">
 
             <!-- 本人姓名 -->
             <div class="q-mb-lg">
-              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('idName') }}：</div>
-              <q-input outlined v-model="form.realName" :rules="[val => val && val.length > 0]" />
+              <div class="text-weight-medium q-mb-xs">{{ $t('idName') }}：</div>
+              <q-input dense outlined v-model="form.realName" :rules="[val => val && val.length > 0]" />
             </div>
 
             <!-- 银行卡号 -->
             <div class="q-mb-lg">
-              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankNumber') }}：</div>
-              <q-input type="number" standout v-model="form.number" :rules="[val => val && val.length > 0]" />
+              <div class="text-weight-medium q-mb-xs">{{ $t('bankNumber') }}：</div>
+              <q-input type="number" dense outlined v-model="form.number" :rules="[val => val && val.length > 0]" />
             </div>
 
             <!-- 银行地址-->
             <div class="q-mb-lg">
-              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('digitalAddress') }}：</div>
-              <q-input type="text" standout v-model="form.code" />
+              <div class="text-weight-medium q-mb-xs">{{ $t('digitalAddress') }}：</div>
+              <q-input type="text" dense outlined v-model="form.code" />
             </div>
 
             <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps
@@ -263,16 +263,5 @@ export default {
 .select {
   background-color: rgba(241, 250, 246, 1) !important;
   border: 1px solid $primary;
-}
-
-:deep(.q-field--standout .q-field__control) {
-  width: 420px;
-  height: 40px !important;
-  min-height: 40px !important;
-
-  .q-field__append {
-    height: 40px !important;
-    min-height: 40px !important;
-  }
 }
 </style>

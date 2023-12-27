@@ -199,7 +199,6 @@ export default {
 }
 
 :deep(.q-uploader .q-uploader__list) {
-  background: transparent;
   padding: 0 !important;
   overflow: hidden;
   min-height: 27px;

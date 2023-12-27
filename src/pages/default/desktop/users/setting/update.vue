@@ -21,7 +21,7 @@
                   <q-img :src="form['arguments'] ? imageSrc(form['arguments']) : imageSrc('')" />
                   <uploader type="avatar"
                     :uploaderStyle="{ position: 'absolute', right: '0', bottom: '0', width: '27px', height: '27px', background: 'transparent' }"
-                    :respValue="form.avatar" @upload="upload"></uploader>
+                    :respValue="form.avatar" @uploaded="uploads"></uploader>
                 </q-avatar>
               </div>
             </div>
@@ -48,7 +48,7 @@
             </div>
 
             <!-- 生日 -->
-            <q-input v-else-if="form.title == 'Birthday'" standout class="q-mb-md" v-model="form['arguments']"
+            <q-input v-else-if="form.title == 'Birthday'" outlined dense class="q-mb-md" v-model="form['arguments']"
               :placeholder="arguments">
               <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                 <q-date v-model="form['arguments']" style="width: 340px;">
@@ -60,7 +60,7 @@
               </q-popup-proxy>
             </q-input>
 
-            <q-input v-else standout class="q-mb-md" v-model="form['arguments']" :placeholder="arguments">
+            <q-input v-else outlined dense class="q-mb-md" v-model="form['arguments']" :placeholder="arguments">
             </q-input>
 
             <div class="row justify-center q-mt-lg">
@@ -75,7 +75,7 @@
           <q-form v-else>
             <div>
               <div class="q-mb-xs">{{ form.title }}</div>
-              <q-input standout class="q-mb-md" :type="isPwd ? 'password' : 'text'" v-model="form.oldPassword"
+              <q-input outlined dense class="q-mb-md" :type="isPwd ? 'password' : 'text'" v-model="form.oldPassword"
                 placeholder="oldPassword">
                 <template v-slot:append>
                   <q-icon @click="isPwd = !isPwd" :name="isPwd ? 'o_visibility' : 'o_visibility_off'"></q-icon>
@@ -84,7 +84,7 @@
             </div>
             <div>
               <div class="q-mb-xs">Confirm {{ form.title }}</div>
-              <q-input standout class="q-mb-md" :type="isPwd2 ? 'password' : 'text'" v-model="form.newPassword"
+              <q-input outlined dense class="q-mb-md" :type="isPwd2 ? 'password' : 'text'" v-model="form.newPassword"
                 placeholder="newPassword">
                 <template v-slot:append>
                   <q-icon @click="isPwd2 = !isPwd2" :name="isPwd2 ? 'o_visibility' : 'o_visibility_off'"></q-icon>
@@ -140,7 +140,7 @@ export default defineComponent({
       sexList: [
         { name: 'male', value: 1 },
         { name: 'female', value: 2 },
-      ],
+      ] as any,
       sexIndex: 0,
     });
 
@@ -214,8 +214,11 @@ export default defineComponent({
 
     }
 
-    const upload = (url: string) => {
+    const uploads = (url: string) => {
+      console.log(url);
+
       state.form['arguments'] = url
+      console.log(state.form['arguments']);
     }
 
     const selectSex = (sexKey: any) => {
@@ -240,7 +243,7 @@ export default defineComponent({
       showEdit,
       submit,
       uploaded,
-      upload,
+      uploads,
       selectSex,
       selectDate,
     }

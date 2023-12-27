@@ -1,10 +1,10 @@
 <template>
   <div>
     <q-list bordered class="q-mb-md border-a-8" style="border:0 !important;overflow: hidden;border-radius: 8px;">
-      <div v-for="(item, i) in list" :key="i" class="bg-white">
+      <div v-for="(item, i) in settingList" :key="i" class="bg-white">
         <q-item @click="to(item.route, item.toggle)" v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-            <q-img width="20px" height="20px" :src="`/images/${item.icon}`"></q-img>
+            <q-img width="20px" height="20px" :src="item.icon"></q-img>
           </q-item-section>
 
           <q-item-section>
@@ -37,34 +37,34 @@ export default defineComponent({
     const $router = useRouter();
 
     let store = reactive({
-      list: [
+      settingList: [
         {
           name: 'personalSetting',
-          icon: 'settings/users.png',
+          icon: '/images/icons/user.png',
           route: '/settings/info'
         }, {
           name: 'updatePassword',
-          icon: 'settings/pwd.png',
+          icon: '/images/icons/pwd.png',
           route: '/settings/password',
         }, {
           name: 'updateSecretKey',
-          icon: 'settings/key.png',
+          icon: '/images/icons/key.png',
           route: '/settings/code'
         }, {
           name: 'bindTelephone',
-          icon: 'settings/mobile.png',
+          icon: '/images/icons/mobile.png',
           route: '/settings/bind/phone'
         }, {
           name: 'email',
-          icon: 'settings/email.png',
+          icon: '/images/icons/email.png',
           route: '/settings/enter/email'
         }, {
           name: 'language',
-          icon: 'settings/language.png',
+          icon: '/images/icons/language.png',
           route: '/settings/language'
         }, {
           name: 'noticeEnable',
-          icon: 'settings/message.png',
+          icon: '/images/icons/message.png',
           toggle: true
         },
         // {

@@ -38,8 +38,7 @@
         no-caps>
         <q-list class="q-ma-sm">
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-                  class="rounded-borders"
-            :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
+            class="rounded-borders" :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
             <q-item-section avatar style="min-width:auto">
               <q-img width="34px" height="34px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
@@ -63,7 +62,7 @@
         <!-- 登录状态 -->
         <div v-if="isLogin" class="row items-center no-wrap">
           <!-- 右侧Deposit -->
-          <q-btn @click="$router.push({ name: 'Deposit' })" rounded flat dense no-wrap
+          <q-btn @click="$router.push({ name: 'WalletsDeposit' })" rounded flat dense no-wrap
             class="bg-primary text-white q-px-md q-mx-sm" no-caps :label="$t('deposit')"></q-btn>
 
           <!-- 头像 -->

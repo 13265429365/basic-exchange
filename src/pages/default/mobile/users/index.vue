@@ -8,7 +8,7 @@
         </q-avatar>
         <div class="col-8">
           <div class="text-weight-bolder">
-            {{ userInfo.userName }}
+            {{ userInfo.username }}
           </div>
           <div>
             {{ userInfo.email }}
@@ -16,7 +16,7 @@
           <div class="row no-wrap">
             <q-chip class="text-white" size="sm" style="background: #322B19;border: 1px solid #F7DEB6;">
               <q-img src="/images/icons/vip-icon.png" class="q-mr-xs" width="11px" height="11px" />
-              <span style="color: #F7DEB6;">Lv{{ userInfo.Level }}</span>
+              <span style="color: #F7DEB6;">Lv{{ userInfo.level }}</span>
             </q-chip>
             <q-chip class="text-grey-9 bg-white" size="sm" style="border: 1px solid #F1F1F1;">
               <q-img src="/images/icons/credit.png" class="q-mr-xs" width="11px" height="11px" />

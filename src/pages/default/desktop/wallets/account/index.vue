@@ -6,7 +6,7 @@
       </q-toolbar-title>
     </q-toolbar>
 
-    <div class="row justify-center" style="padding: 48px 100px;">
+    <div class="row" style="padding: 48px 100px;">
       <div class="row">
         <!-- 银行卡 -->
         <!-- background: linear-gradient(90deg, #7474BF 0%, #348AC7 100%) -->
@@ -21,7 +21,7 @@
                     <div class="text-white size16">
                       {{ card.name }}
                     </div>
-                    <div @click="$router.push({ name: `AddCard`, query: { type: 'edit', id: card.id } })"
+                    <div @click="$router.push({ name: `WalletAccountCreate`, query: { type: 'edit', id: card.id } })"
                       class="row btn justify-center items-center q-ml-md">
                       {{ $t('edit') }}</div>
                   </div>
@@ -43,7 +43,7 @@
         </div>
 
         <!-- 添加按钮 (本页定义css) -->
-        <div @click="$router.push({ name: 'AddCard', query: { type: 'add' } })"
+        <div @click="$router.push({ name: 'WalletAccountCreate', query: { type: 'add' } })"
           class="column justify-center row add-btn cursor-pointer">
           <div class="text-center text-color-9">
             <q-icon size="28px" name="add" class="self-center" />
@@ -86,16 +86,18 @@
 <script lang="ts">
 import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { userGetCard, userDelCard } from 'src/apis/wallets';
 import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'cardIndex',
   setup() {
     const { t } = useI18n(); // 获取t函数进行翻译  
     const $initStore = InitStore()
+
 
     let state = reactive({
       // 用户卡片列表
