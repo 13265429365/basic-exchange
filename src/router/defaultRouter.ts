@@ -389,7 +389,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       {
         name: 'SettingIndex',
-        route: '/user/setting/index',
+        route: '/user/settings',
         componentMobile: PagesTemplateMobilePath(TemplateName, 'users/setting/index.vue'),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/setting/index.vue'),
         children: [],

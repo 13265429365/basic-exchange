@@ -165,4 +165,14 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.q-card--bordered {
+  border: 0px !important;
+}
+
+:deep(.q-uploader .q-uploader__list) {
+  padding: 0 !important;
+  overflow: hidden;
+  min-height: 27px;
+}
+</style>
