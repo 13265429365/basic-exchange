@@ -222,7 +222,14 @@ export default {
     state.userInfo = $userStore.userInfo
 
     onMounted(() => {
-      console.log($router.currentRoute.value.path)
+      switch ($router.currentRoute.value.name) {
+        case 'UserLogin':
+          dialogOpenLogin(true)
+          break
+        case 'UserRegister':
+          dialogOpenRegister(true)
+          break
+      }
     })
 
     // dialogOpenFunc 打开登录
