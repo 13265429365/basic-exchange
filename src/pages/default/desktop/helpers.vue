@@ -6,34 +6,37 @@
         <div class="text-white text-h4 text-weight-bolder">{{ $t('helpers') }}</div>
       </div>
 
-      <div class="q-mt-xl relative-position" style="padding: 0 200px;">
+      <div class="q-mt-xl relative-position" style="padding: 0 270px;margin-top: -50px;">
         <!-- 帮助列表 -->
-        <div class="row q-col-gutter-md">
-          <div class="col-3" v-for="( social, socialIndex ) in socialList" :key="socialIndex">
+        <!-- <div class="row q-col-gutter-md justify-center">
+          <div class="col-2" v-for="( social, socialIndex ) in socialList" :key="socialIndex">
             <div class="rounded-borders column justify-center q-py-md bg-white cursor-pointer"
-              style="border: 1px solid #DDDDDD;height: 144px;">
+              style="border: 1px solid #DDDDDD;height: 144px;border-radius: 15px;">
               <q-img class="self-center" :src="imageSrc(social.icon)" width="56px" height="56px" />
-              <div class="self-center text-body1 q-pt-sm text-weight-medium">{{ social.name }}</div>
+              <div class="self-center text-body1 q-pt-sm">{{ social.name }}</div>
             </div>
           </div>
 
-        </div>
+        </div> -->
 
         <!-- 文章列表 -->
-        <q-list class="q-ma-md bg-white q-mt-lg text-black" style="border-radius: 8px" v-if="articleList.length > 0">
-          <div class="q-px-md q-pt-sm text-h6 text-weight-medium">FAQ</div>
-          <q-expansion-item v-for="( helper, helperIndex ) in  articleList " :key="helperIndex" :label="helper.title">
-            <template v-slot:header>
-              <div class="full-width text-subtitle1 text-weight-medium">
-                {{ helper.name }}
-              </div>
-            </template>
-            <q-card flat>
-              <q-card-section>
-                <div v-html="helper.content"></div>
-              </q-card-section>
-            </q-card>
-          </q-expansion-item>
+        <q-list class="bg-white q-mt-lg q-mb-xl q-pa-lg shadow-2" style="border-radius: 8px;">
+          <div class="q-mb-lg text-h5 text-weight-medium">FAQ</div>
+          <div v-for="( helper, helperIndex ) in  articleList " :key="helperIndex">
+            <q-expansion-item :label="helper.title" default-opened expand-icon-class="text-grey-6">
+              <template v-slot:header>
+                <div class="full-width text-subtitle1 text-weight-medium">
+                  {{ helper.name }}
+                </div>
+              </template>
+              <q-card flat>
+                <q-card-section>
+                  <div class="text-grey-6">{{ helper.content }}</div>
+                </q-card-section>
+              </q-card>
+            </q-expansion-item>
+            <q-separator />
+          </div>
         </q-list>
 
       </div>
@@ -73,4 +76,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.bg {
+  background: url("/images/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 220px;
+}
+</style>

@@ -13,8 +13,8 @@
           </div>
 
           <!-- 单图 -->
-          <q-card flat bordered :style="listStyle" class="cursor-pointer" v-else>
-            <div class="row justify-center items-center" style="border-radius: 8px;overflow: hidden;">
+          <q-card flat :style="listStyle" style="border: none;" class="cursor-pointer" v-else>
+            <div class="row justify-center items-center">
               <q-uploader-add-trigger />
               <div v-if="respValue" class="row justify-center items-center"
                 :style="{ width: '100%', height: listStyle.height }">
@@ -164,13 +164,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.q-card--bordered {
-  border: 0px !important;
-}
-
 :deep(.q-uploader .q-uploader__list) {
   padding: 0 !important;
-  overflow: hidden;
-  min-height: 27px;
+  min-height: 0 !important;
 }
 </style>

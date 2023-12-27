@@ -277,7 +277,7 @@ export default defineComponent({
       imageSrc,
       date,
       ...toRefs(state),
-      // updateUserInfo,
+      updateUserInfo,
       openUpdateDialog,
       submitFunc,
     }

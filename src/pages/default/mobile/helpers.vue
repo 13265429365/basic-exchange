@@ -12,7 +12,7 @@
           class="text-center text-white ellipsis">{{ $t('24hoursOnline') }}</div>
       </div>
       <div class="column justify-end">
-        <q-img style="margin-bottom: -15px;margin-right: 20px;" src="/images/help.png" width="62px" height="79px" />
+        <q-img style="margin-bottom: -15px;margin-right: 20px;" src="/images/helpers.png" width="62px" height="79px" />
       </div>
     </div>
 

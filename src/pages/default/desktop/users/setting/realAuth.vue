@@ -1,72 +1,70 @@
 <template>
-  <!-- input -->
-  <q-form @submit="submit" class="full-width" style="padding: 48px 100px;">
-    <div class="row no-wrap justify-between">
-      <div class="q-mr-md" style="width: 48.5%;">
-        <div class="q-mb-xs text-color-6">{{ $t('email') }}</div>
-        <q-input :rules="[
-          val => val !== null && val !== ''
-        ]" outlined dense class="q-mb-lg" v-model="form.realName" :placeholder="$t('email')" />
-      </div>
-      <div style="width: 48.5%;">
-        <div class="q-mb-xs text-color-6">{{ $t('telephone') }}</div>
-        <q-input :rules="[
-          val => val !== null && val !== ''
-        ]" outlined dense class="q-mb-lg" v-model="form.telephone" :placeholder="$t('telephone')" />
-      </div>
-    </div>
-    <div class="row no-wrap justify-between">
-      <div class="q-mr-md" style="width: 48.5%;">
-        <div class="q-mb-xs text-color-6">{{ $t('bankNumber') }}</div>
-        <q-input :rules="[
-          val => val !== null && val !== ''
-        ]" outlined dense class="q-mb-lg" v-model="form.number" :placeholder="$t('bankNumber')" />
-      </div>
-      <div style="width: 48.5%;">
-        <div class="q-mb-xs text-color-6">{{ $t('digitalAddress') }}</div>
-        <q-input :rules="[
-          val => val !== null && val !== ''
-        ]" outlined dense class="q-mb-lg" v-model="form.address" :placeholder="$t('digitalAddress')" />
-      </div>
-    </div>
+  <div style="margin-top: 60px;">
+    <div class="row justify-center">
+      <div class="col-6">
+        <div class="text-h5 q-mb-xl">{{ $t('realAuth') }}</div>
+        <div class="q-gutter-md">
+          <div>
+            <div class="q-mb-xs text-color-6">{{ $t('idName') }}</div>
+            <q-input outlined dense v-model="params.realName" :placeholder="$t('idName')" />
+          </div>
+          <div>
+            <div class="q-mb-xs text-color-6">{{ $t('idNumber') }}</div>
+            <q-input outlined dense v-model="params.number" :placeholder="$t('idNumber')" />
+          </div>
+          <div>
+            <div class="q-mb-xs text-color-6">{{ $t('telephone') }}</div>
+            <q-input outlined dense v-model="params.telephone" :placeholder="$t('telephone')" />
+          </div>
+          <div>
+            <div class="q-mb-xs text-color-6">{{ $t('address') }}</div>
+            <q-input outlined dense v-model="params.address" :placeholder="$t('address')" />
+          </div>
 
-    <!-- 上传身份证 -->
-    <div class="q-mb-xs text-color-6">{{ $t('idPhoto1').replace('正面', '').replace('1', '') }}</div>
-    <div class="row justify-between">
-      <div class="q-mb-xl" style="width: 48.5%;">
-        <uploader :respValue="form.photo1" @uploaded="uploaded" :value="imgUrl" :listStyle="{
-          height: '155px',
-        }">
-          <template v-slot:noneAdd>
-            <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
-              <q-icon name="add" size="29px" />
+
+          <div>
+            <div>{{ $t('idPhoto') }}</div>
+
+            <div class="row q-mt-sm">
+              <div class="col q-mr-xs">
+                <uploader :respValue="params.photo1" @uploaded="uploaded" :value="imgUrl" :listStyle="{
+                  height: '155px',
+                }">
+                  <template v-slot:noneAdd>
+                    <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
+                      <q-icon name="add" class="text-grey-6" size="40px" />
+                    </div>
+                  </template>
+                </uploader>
+                <div class="text-caption text-weight-medium text-center q-mt-sm">{{ $t('idPhoto1') }}</div>
+              </div>
+
+              <!--  -->
+              <div class="col q-ml-xs">
+                <uploader :respValue="params.photo2" @uploaded="uploaded2" :value="imgUrl" :listStyle="{
+                  height: '155px',
+                }">
+                  <template v-slot:noneAdd>
+                    <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
+                      <q-icon name="add" class="text-grey-6" size="40px" />
+                    </div>
+                  </template>
+                </uploader>
+                <div class="text-caption text-weight-medium text-center q-mt-sm">{{ $t('idPhoto2') }}</div>
+              </div>
             </div>
-          </template>
-        </uploader>
-        <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto1') }}</div>
-      </div>
+          </div>
 
-      <!--  -->
-      <div class="q-mb-xl" style="width: 48.5%;">
-        <uploader :respValue="form.photo2" @uploaded="uploaded2" :value="imgUrl" :listStyle="{
-          height: '155px',
-        }">
-          <template v-slot:noneAdd>
-            <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
-              <q-icon name="add" size="29px" />
-            </div>
-          </template>
-        </uploader>
-        <div class="text-body2 text-weight-medium text-center q-mt-lg">{{ $t('idPhoto2') }}</div>
+          <div class="q-mt-xl row justify-end">
+            <q-btn rounded unelevated color="primary" no-caps :label="$t('submit')"
+              style="width: 170px;height: 48px;"></q-btn>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <!-- sub按钮 -->
-    <div class="q-mt-xl row justify-center">
-      <q-btn rounded color="primary" type="submit" no-caps :label="$t('submit')"
-        style="width: 170px;height: 48px;"></q-btn>
-    </div>
-  </q-form>
+  <!-- sub按钮 -->
 </template>
 
 <script lang="ts">
@@ -88,7 +86,7 @@ export default defineComponent({
     const state = reactive({
       //
       imgUrl: '',
-      form: {
+      params: {
         realName: '',
         telephone: '',
         number: '',
@@ -105,21 +103,21 @@ export default defineComponent({
     const getAuth = () => {
       realAuthInfoAPI().then((res: any) => {
         console.log(res);
-        state.form = res
+        state.params = res
       })
     }
 
     const submit = () => {
-      if (state.form.photo1 == '' || state.form.photo2 == '') {
+      if (state.params.photo1 == '' || state.params.photo2 == '') {
         return false
       }
       let params = {
-        realName: state.form.realName,
-        telephone: state.form.telephone,
-        number: state.form.number,
-        address: state.form.address,
-        photo1: state.form.photo1,
-        photo2: state.form.photo2,
+        realName: state.params.realName,
+        telephone: state.params.telephone,
+        number: state.params.number,
+        address: state.params.address,
+        photo1: state.params.photo1,
+        photo2: state.params.photo2,
       }
       realAuthCreateAPI(params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
@@ -129,11 +127,11 @@ export default defineComponent({
     }
 
     const uploaded = (url: any) => {
-      state.form.photo1 = url
+      state.params.photo1 = url
     }
 
     const uploaded2 = (url: any) => {
-      state.form.photo2 = url
+      state.params.photo2 = url
     }
 
     return {
