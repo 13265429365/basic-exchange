@@ -178,7 +178,7 @@ import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { UserStore } from 'src/stores/user';
 import * as echarts from 'echarts'
-import { userGetAssets, userGetBill, userGetOrder } from 'src/apis/wallets';
+import { walletsUserAssetsIndexAPI, walletsBillIndexAPI, walletsOrderIndexAPI } from 'src/apis/wallets';
 import { imageSrc } from 'src/utils/index';
 import { date } from 'quasar'
 
@@ -258,7 +258,7 @@ export default defineComponent({
 
     // 获取用户资产列表
     const getAssets = () => {
-      userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
+      walletsUserAssetsIndexAPI({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
         state.form = res
         console.log(state.form);
@@ -306,7 +306,7 @@ export default defineComponent({
           sortBy: state.pagination.sortBy,
         },
       }
-      userGetBill(params).then((res: any) => {
+      walletsBillIndexAPI(params).then((res: any) => {
         state.rows = []
         console.log('账单列表', res)
         state.total = res.count
@@ -331,7 +331,7 @@ export default defineComponent({
           sortBy: state.pagination.sortBy,
         },
       }
-      userGetOrder(params).then((res: any) => {
+      walletsOrderIndexAPI(params).then((res: any) => {
         console.log('钱包订单', res)
         state.total = res.count
         state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)

@@ -38,7 +38,7 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { updatePassword } from 'src/apis/user';
+import { updatePasswordAPI } from 'src/apis/user';
 
 // import { useRouter } from 'vue-router';
 // 列表
@@ -63,7 +63,7 @@ export default defineComponent({
         oldPassword: state.oldPassword,
         newPassword: state.newPassword,
       }
-      updatePassword(params).then((res: any) => {
+      updatePasswordAPI(params).then((res: any) => {
         console.log(res);
         $router.push({ name: 'UserIndex' })
       })

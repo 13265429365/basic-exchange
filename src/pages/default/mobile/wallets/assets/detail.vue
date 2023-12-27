@@ -107,7 +107,7 @@ import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils/index';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
-import { userGetAssets, userGetBill } from 'src/apis/wallets';
+import { walletsUserAssetsIndexAPI, walletsBillIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 import { useI18n } from 'vue-i18n';
 
@@ -184,7 +184,7 @@ export default defineComponent({
 
     // 获取用户资产列表
     const getAssets = () => {
-      userGetAssets({ id: Number($userStore.userInfo.id) }).then((res: any) => {
+      walletsUserAssetsIndexAPI({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
         state.form = res
       })
@@ -208,7 +208,7 @@ export default defineComponent({
       }
       console.log(params);
 
-      userGetBill(params).then((res: any) => {
+      walletsBillIndexAPI(params).then((res: any) => {
         state.rows = []
         console.log('账单列表', res)
         res.items.forEach((element: any) => {

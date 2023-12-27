@@ -30,7 +30,7 @@
 <script lang="ts">
 import { onMounted, reactive, toRefs } from 'vue';
 import { copyToClipboard } from 'quasar';
-import { getInvite } from 'src/apis/user';
+import { inviteInfoAPI } from 'src/apis/user';
 import QRCode from 'qrcode-svg-ts';
 
 export default {
@@ -46,7 +46,7 @@ export default {
     onMounted(() => {
       console.log(location);
 
-      getInvite().then((res: any) => {
+      inviteInfoAPI().then((res: any) => {
         state.inviteUrl = location.origin + `/register?code=${res.code}`
         const qrCode = new QRCode({
           content: state.inviteUrl,

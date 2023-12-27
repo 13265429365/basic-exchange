@@ -77,7 +77,7 @@
 import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
-import { userGetCard, userDelCard } from 'src/apis/wallets';
+import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
 import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 import { useRouter } from 'vue-router';
@@ -85,7 +85,7 @@ import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'cardIndex',
   setup() {
-    const { t } = useI18n(); // 获取t函数进行翻译  
+    const { t } = useI18n(); // 获取t函数进行翻译
     const $initStore = InitStore()
 
 
@@ -107,7 +107,7 @@ export default defineComponent({
 
     // 获取卡片列表
     const getCard = () => {
-      userGetCard().then((res: any) => {
+      walletsAccountIndexAPI().then((res: any) => {
         console.log(res);
         state.cardList = res
       })
@@ -123,7 +123,7 @@ export default defineComponent({
         id: Number(state.id),
         securityKey: state.securityKey
       }
-      userDelCard(params).then((res: any) => {
+      walletsAccountDeleteAPI(params).then((res: any) => {
         console.log(res);
         if (res.code == 0) {
           getCard()

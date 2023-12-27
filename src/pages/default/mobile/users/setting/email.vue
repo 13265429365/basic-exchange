@@ -17,7 +17,7 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { UserStore, UserInfoKey } from 'src/stores/user';
-import { getUserInfo, updateInfo } from 'src/apis/user';
+import { userInfoAPI, updateInfoAPI } from 'src/apis/user';
 
 // 列表
 export default defineComponent({
@@ -36,7 +36,7 @@ export default defineComponent({
 
     // 获取用户信息
     const UserInfo = () => {
-      getUserInfo().then((res: any) => {
+      userInfoAPI().then((res: any) => {
         console.log('用户信息', res);
         state.form = res
         $userStore.updateUserInfo(res)
@@ -49,7 +49,7 @@ export default defineComponent({
       let params = {
         email: state.form.email,
       }
-      updateInfo(params).then((res: any) => {
+      updateInfoAPI(params).then((res: any) => {
         console.log(res);
         UserInfo()
       })

@@ -171,7 +171,7 @@ import { copyToClipboard } from 'quasar';
 import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
 import uploader from 'src/components/uploader.vue';
-import { userPayment, userDeposit } from 'src/apis/wallets';
+import { walletsPaymentIndexAPI, walletsDepositCreateAPI } from 'src/apis/wallets';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -205,7 +205,7 @@ export default {
 
     // 获取支付列表
     const getPayment = () => {
-      userPayment({ modes: [1, 2] }).then((res: any) => {
+      walletsPaymentIndexAPI({ modes: [1, 2] }).then((res: any) => {
         console.log('支付列表', res);
         state.cardType = res
         // 预设
@@ -229,7 +229,7 @@ export default {
         money: Number(state.form.money),
         voucher: state.form.voucher,
       }
-      userDeposit(params).then((res: any) => {
+      walletsDepositCreateAPI(params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
         console.log('充值成功', res);
         $router.push({ name: 'AccountCard' })

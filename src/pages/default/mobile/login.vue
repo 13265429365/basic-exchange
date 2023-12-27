@@ -76,7 +76,7 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { captchaAPI } from 'src/apis';
-import { userLogin } from 'src/apis/user';
+import { userLoginAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 
@@ -123,7 +123,7 @@ export default defineComponent({
 
     // 提交登录
     const submitFunc = () => {
-      userLogin(state.params)
+      userLoginAPI(state.params)
         .then(async (res: any) => {
           await $initStore.updateUserToken(res.token);
           void $router.push({ name: 'HomeIndex' });
