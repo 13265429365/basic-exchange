@@ -19,7 +19,9 @@
               <div class="relative">
                 <q-avatar style="width: 80px;height: 80px;">
                   <q-img :src="form['arguments'] ? imageSrc(form['arguments']) : imageSrc('')" />
-                  <uploaderAvatar :respValue="form.avatar" @upload="upload"></uploaderAvatar>
+                  <uploader type="avatar"
+                    :uploaderStyle="{ position: 'absolute', right: '0', bottom: '0', width: '27px', height: '27px', background: 'transparent' }"
+                    :respValue="form.avatar" @upload="upload"></uploader>
                 </q-avatar>
               </div>
             </div>
@@ -105,7 +107,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
-import uploaderAvatar from 'src/components/uploaderAvatar.vue';
+import uploader from 'src/components/uploader.vue';
 import { updateInfo, updatePassword } from 'src/apis/user';
 import { date } from 'quasar';
 import { imageSrc } from 'src/utils';
@@ -114,7 +116,7 @@ import { imageSrc } from 'src/utils';
 export default defineComponent({
   name: 'EditIndex',
   components: {
-    uploaderAvatar,
+    uploader,
   },
   setup(props: any, context: any) {
 
