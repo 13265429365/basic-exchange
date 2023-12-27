@@ -53,7 +53,25 @@
             </q-avatar>
           </div>
 
-          <div v-if="currentSetting.params == 'password' || currentSetting.params == 'secretKey'">
+          <div v-else-if="currentSetting.params == 'sex'">
+            <q-select outlined dense v-model="currentSetting.value" :options="sexList" option-value="value"
+              option-label="name" map-options dropdown-icon="expand_more" />
+          </div>
+
+          <div v-else-if="currentSetting.params == 'birthday'">
+            <q-input outlined dense v-model="currentSetting.value" :placeholder="$t(currentSetting.params)">
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="currentSetting.value" style="width: 340px;">
+                  <div class="row items-center justify-end q-gutter-sm">
+                    <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
+                    <q-btn :label="$t('confirm')" color="primary" flat v-close-popup />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-input>
+          </div>
+
+          <div v-else-if="currentSetting.params == 'password' || currentSetting.params == 'secretKey'">
             <q-input v-model="params.oldPassword" outlined dense class="q-mb-md" :type="ShowPwd ? 'password' : 'text'">
               <template v-slot:append>
                 <q-icon @click="ShowPwd = !ShowPwd" :name="ShowPwd ? 'o_visibility' : 'o_visibility_off'"></q-icon>
@@ -68,7 +86,7 @@
           </div>
 
           <div v-else>
-            <q-input outlined dense v-model="currentSetting.value"></q-input>
+            <q-input outlined dense v-model="currentSetting.value" :placeholder="$t(currentSetting.params)"></q-input>
           </div>
         </q-card-section>
 
@@ -99,6 +117,13 @@ export default defineComponent({
 
     const userInfo = $userStore.userInfo
     const state = reactive({
+      // 性别列表
+      sexList: [
+        { name: 'male', value: 1 },
+        { name: 'female', value: 2 },
+      ],
+
+      // 是否显示密码
       ShowPwd: false,
       ShowCfmPwd: false,
 
@@ -110,15 +135,15 @@ export default defineComponent({
       // 接口参数
       params: {} as any,
       settingsList: [
-        { name: 'avatar', params: 'avatar', type: 'avatar', desc: 'avatarSmall', value: '' },
-        { name: 'nickname', params: 'nickname', type: 'text', desc: 'nicknameSmall', value: '' },
-        { name: 'email', params: 'email', type: 'text', desc: 'emailSmall', value: '' },
-        { name: 'password', params: 'password', type: 'password', desc: 'passwordSmall', value: '' },
-        { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: '' },
-        { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: '' },
-        { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: '' },
-        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: '' },
-        { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: '' },
+        { name: 'avatar', params: 'avatar', type: 'avatar', desc: 'avatarSmall', value: '' as any },
+        { name: 'nickname', params: 'nickname', type: 'text', desc: 'nicknameSmall', value: '' as any },
+        { name: 'email', params: 'email', type: 'text', desc: 'emailSmall', value: '' as any },
+        { name: 'password', params: 'password', type: 'password', desc: 'passwordSmall', value: '' as any },
+        { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: '' as any },
+        { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: '' as any },
+        { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: '' as any },
+        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: '' as any },
+        { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: '' as any },
       ]
     });
 
@@ -126,8 +151,6 @@ export default defineComponent({
     const openUpdateDialog = (setting: any) => {
       state.dialogShow = true
       state.currentSetting = setting
-      console.log(setting);
-
     }
 
     // 更新用户信息
@@ -145,13 +168,20 @@ export default defineComponent({
         })
       } else {
         // 修改个人信息
-        state.params[state.currentSetting.params] = state.currentSetting.value
+        if (state.currentSetting.params == 'birthday') {
+          state.params[state.currentSetting.params] = Number(date.formatDate(state.currentSetting.value, 'X'))
+        } else if (state.currentSetting.params == 'sex') {
+          state.params[state.currentSetting.params] = state.currentSetting.value.value
+        } else {
+          state.params[state.currentSetting.params] = state.currentSetting.value
+        }
         updateInfoAPI(state.params).then(async (res: any) => {
           await $userStore.updateUserInfo(res)
           updateUserInfo()
         })
       }
-
+      // 清空params
+      state.params = {}
       state.dialogShow = false
     }
 
