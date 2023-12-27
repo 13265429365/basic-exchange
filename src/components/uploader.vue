@@ -120,8 +120,6 @@ export default {
       } else {
         state.respValue = imagePath[0];
       }
-      console.log(state.respValue);
-
       context.emit('uploaded', state.respValue);
     };
 
