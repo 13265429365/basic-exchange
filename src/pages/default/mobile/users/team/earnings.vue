@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { teamDetailsAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
@@ -58,7 +58,7 @@ import { date } from 'quasar';
 
 
 export default defineComponent({
-  name: 'teamBenefitsIndex',
+  name: 'TeamEarnings',
   setup(props: any, context: any) {
     const $userStore = UserStore();
     const { t } = useI18n();

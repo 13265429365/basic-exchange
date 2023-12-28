@@ -212,7 +212,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
           TemplateName,
           'users/setting/language.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/setting/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -325,32 +325,28 @@ export const defaultRouter: TemplateRouteInterface[] = [
       //   children: [],
       //   meta: { requireAuth: true, keepAlive: false },
       // },
-      // {
-      //   name: 'Team',
-      //   route: '/team/index',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'users/team/index.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/index.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'TeamBenefits',
-      //   route: '/team/earnings/index',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'users/team/benefits.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/benefits.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-
-
-
-
+      {
+        name: 'TeamIndex',
+        route: '/team/index',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/team/index.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/index.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'TeamEarnings',
+        route: '/team/earnings',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/team/earnings.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/earnings.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
 
       {
         name: 'UserRealAuth',

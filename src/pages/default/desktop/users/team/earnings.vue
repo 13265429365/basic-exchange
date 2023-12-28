@@ -68,13 +68,13 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { imageSrc, formatDate } from 'src/utils/index';
+import { imageSrc, formatDate } from 'src/utils';
 import { teamDetailsAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 
 
 export default defineComponent({
-  name: 'benefitIndex',
+  name: 'TeamEarnings',
   setup() {
     const $router = useRouter();
     const $userStore = UserStore();

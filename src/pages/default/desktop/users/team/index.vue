@@ -65,7 +65,7 @@ import { teamIndexAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 
 export default defineComponent({
-  name: 'teamIndex',
+  name: 'TeamIndex',
   setup() {
     const $router = useRouter();
     const $userStore = UserStore();
