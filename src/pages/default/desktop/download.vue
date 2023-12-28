@@ -1,27 +1,35 @@
 <template>
-  <div class="row justify-center" style="padding-top: 200px;">
-    <q-img class=" col-3 q-mr-xl" src="/images/bt.jpg"></q-img>
-    <div class="q-pl-xl">
-      <div class="text-h3 text-weight-bold">{{ config.name }}</div>
-      <div class="text-h4 text-grey-7 q-mt-md">The People's Exchange</div>
+  <div>
+    <div class="row items-center justify-center" :style="{background: 'url(/images/label-bg.png)', height: '200px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}">
+      <div class="text-white text-h4">{{ $t('download') }}</div>
+    </div>
 
-      <div class="row no-wrap q-mt-lg">
-        <div>
-          <div class="text-h6 q-mt-lg q-mb-sm">IOS</div>
-          <img style="width: 150px;" class="cursor-pointer" src="/images/ios.svg">
-          <div class="text-h6 q-mt-lg q-mb-sm">Android</div>
-          <img style="width: 150px;" class="cursor-pointer" src="/images/android.svg">
+    <div style="padding: 80px 0 260px">
+      <div class="row justify-center items-center">
+        <div class="col text-right">
+          <q-img class="q-mr-xl" width="300px" src="/images/download-bg.svg"></q-img>
         </div>
-        <div class="q-ml-xl row items-end">
-          <div class="q-pa-lg rounded-borders" style="border: 1px solid rgba(0,20,42,0.12)">
-            <img :src="downloadImage" alt="">
+        <div class="col-1"></div>
+        <div class="col-6">
+          <div class="text-h3 text-bold">{{ config.name }}</div>
+          <div class="text-h6 text-grey q-mt-sm">{{ $t('downloadSmall')}}</div>
+
+          <div class="row no-wrap" style="margin-top: 60px">
+            <div>
+              <div class="text-body1 text-bold q-mb-xs">IOS</div>
+              <img style="width: 150px;" class="cursor-pointer" src="/images/ios.svg" alt="" @click="downloadFunc(downloadInfo.ios)">
+              <div class="text-body1 text-bold q-mt-lg q-mb-xs">Android</div>
+              <img style="width: 150px;" class="cursor-pointer" src="/images/android.svg" alt="" @click="downloadFunc(downloadInfo.android)">
+            </div>
+            <div class="q-ml-xl row items-end">
+              <div class="q-pa-lg rounded-borders" style="border: 1px solid rgba(0,20,42,0.12)">
+                <img :src="downloadImage" alt="">
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
-    <!-- <q-btn unelevated rounded color="primary" :label="$t('download')" class="q-mt-lg"
-            style="width: 269px;height: 44px" no-caps /> -->
   </div>
 </template>
 
@@ -33,7 +41,7 @@ import { InitStore } from 'src/stores/init';
 import QRCode from 'qrcode-svg-ts';
 
 export default {
-  name: 'defaultDownload',
+  name: 'DownloadIndex',
   setup() {
     const $initStore = InitStore();
 
@@ -46,7 +54,7 @@ export default {
     onMounted(() => {
       downloadInfoAPI().then((res: any) => {
         const qrCode = new QRCode({
-          content: "http://localhost:8089/download",
+          content: window.location.href,
           width: 130,
           height: 130,
           color: '#000000',
@@ -58,12 +66,20 @@ export default {
       })
     })
 
+    // 下载方法
+    const downloadFunc = (url: string) => {
+      if (url == '') {
+        return
+      }
+      window.location.href = imageSrc(url)
+    }
+
     return {
       imageSrc,
+      downloadFunc,
       ...toRefs(state),
     }
   }
 };
 </script>
-
 <style lang="scss" scoped></style>
