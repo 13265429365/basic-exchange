@@ -1,9 +1,7 @@
 <template>
   <div style="padding: 48px 100px;">
     <!-- 头像 -->
-    <div class="text-h5 q-mb-md">{{ $t('teamEarnings') }}</div>
-
-    <div class="rounded-borders q-pa-lg" style="border: 1px solid #DDDDDD;">
+    <div class="rounded-borders q-pa-lg text-white" style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
       <q-scroll-area style="height: 60px; max-width: 100%" :thumb-style="{ display: 'none' }">
         <div class="row no-wrap items-center">
           <!-- 固定头像 -->
@@ -13,13 +11,13 @@
             </q-avatar>
             <div>
               <div class="text-h6 text-weight-medium">{{ TeamBenefit.currentInfo.username ?? '' }}</div>
-              <div class="text-weight-medium text-primary" style="font-size: 17px;">+{{ TeamBenefit.teamEarnings }}</div>
+              <div class="text-weight-medium" style="font-size: 17px;">+{{ TeamBenefit.teamEarnings }}</div>
             </div>
           </div>
 
           <div class="row no-wrap">
             <div class="row no-wrap items-center">
-              <div style="width: 1px;background: #DDDDDD;height: 42px;margin: 0 27px;"></div>
+              <div style="width: 1px;background: #fff;height: 42px;margin: 0 27px;"></div>
               <div style="width: 110px;">
                 <div class="text-h5 text-center text-weight-medium">{{ TeamBenefit.buyAmount }}</div>
                 <div class="text-center">{{ $t('buyAmount') }}</div>
