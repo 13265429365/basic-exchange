@@ -106,12 +106,12 @@ import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
 import * as echarts from 'echarts'
 import { walletsUserAssetsIndexAPI } from 'src/apis/wallets';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 
 
 export default defineComponent({
-  name: 'myProperty',
+  name: 'WalletsAssetsIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
     const $initStore = InitStore()

@@ -68,7 +68,6 @@
     <div class="text-h5 q-mb-md q-my-lg">{{ $t('transactions') }}</div>
     <!-- 表格 -->
     <div class="q-mt-lg q-pa-lg rounded-borders">
-
       <div v-for="(team, teamIndex) in TeamBenefit.children" :key="teamIndex">
         <div class="row justify-between items-center q-mb-lg q-px-md">
           <div class="col">
@@ -109,7 +108,6 @@ import { UserStore } from 'src/stores/user';
 import { useRoute } from 'vue-router';
 import { date } from 'quasar';
 
-
 export default defineComponent({
   name: 'TeamEarnings',
   setup() {
@@ -119,7 +117,6 @@ export default defineComponent({
     let state = reactive({
       // 用户资料
       userInfo: $userStore.userInfo as any,
-
       // 团队收益
       TeamBenefit: {
         currentInfo: {}
@@ -134,13 +131,9 @@ export default defineComponent({
     // 获取用户团队详情
     const TeamDetails = (params: any) => {
       teamDetailsAPI(params).then((res: any) => {
-        console.log(res);
-
-        // 团队收益
         state.TeamBenefit = res
       })
     }
-
 
     return {
       imageSrc,

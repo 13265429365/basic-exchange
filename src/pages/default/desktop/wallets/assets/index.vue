@@ -177,11 +177,11 @@ import { useRouter } from 'vue-router';
 import { UserStore } from 'src/stores/user';
 import * as echarts from 'echarts'
 import { walletsUserAssetsIndexAPI, walletsBillIndexAPI, walletsOrderIndexAPI } from 'src/apis/wallets';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { date } from 'quasar'
 
 export default defineComponent({
-  name: 'assetsIndex',
+  name: 'WalletsAssetsIndex',
   setup() {
     const router = useRouter();
     const $userStore = UserStore()

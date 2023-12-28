@@ -281,19 +281,19 @@ export const defaultRouter: TemplateRouteInterface[] = [
     componentMobile: LayoutsMobilePath('header.vue'),
     componentDesktop: LayoutsDesktopPath('setting.vue'),
     children: [
-      // {
-      //   name: 'AccountCard',
-      //   route: '/wallets/account/index',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'wallets/account/index.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/index.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
       {
-        name: 'Wallet',
+        name: 'WalletsAccountIndex',
+        route: '/wallets/account/index',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/account/index.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/index.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'WalletsIndex',
         route: '/wallets/index',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
@@ -303,28 +303,28 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
-      // {
-      //   name: 'Assets',
-      //   route: '/wallets/assets/index',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'wallets/assets/index.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/assets/index.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'AssetsDetail',
-      //   route: '/wallets/assets/detail',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'wallets/assets/detail.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/assets/detail.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
+      {
+        name: 'WalletsAssetsIndex',
+        route: '/wallets/assets/index',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/assets/index.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/assets/index.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'WalletsAssetsDetails',
+        route: '/wallets/assets/details',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/assets/details.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/assets/details.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
       {
         name: 'TeamIndex',
         route: '/team/index',

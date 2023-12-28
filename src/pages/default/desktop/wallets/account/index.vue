@@ -80,10 +80,9 @@ import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
 import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
-import { useRouter } from 'vue-router';
 
 export default defineComponent({
-  name: 'cardIndex',
+  name: 'WalletsAccountIndex',
   setup() {
     const { t } = useI18n(); // 获取t函数进行翻译
     const $initStore = InitStore()
