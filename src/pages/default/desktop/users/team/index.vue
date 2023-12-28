@@ -12,7 +12,7 @@
           {{ TeamMembers.username }}
           {{ '(ID:' + TeamMembers.id + ')' }}
         </div>
-        <div no-caps unelevated class="row no-wrap items-center q-mt-sm">
+        <div class="row no-wrap items-center q-mt-sm">
           <div class="text-white text-weight-bold">
             {{ $t('teamEarnings') }} ： + {{ TeamMembers.earnings }}
           </div>
@@ -51,7 +51,7 @@
         </div>
         <q-separator />
       </div>
-      <div>
+      <div v-if="TeamMembers.children == null || TeamMembers.children.length <= 0">
         <div class="text-center q-my-lg text-h6 text-grey-8">
           {{ $t('noData') }}
         </div>

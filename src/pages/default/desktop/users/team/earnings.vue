@@ -95,7 +95,6 @@
         <div class="text-center q-my-lg text-h6 text-grey-8">
           {{ $t('noData') }}
         </div>
-        <q-separator />
       </div>
     </div>
 
