@@ -49,13 +49,13 @@
 <script lang="ts">
 import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
 import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'src/stores/init';
 
 export default defineComponent({
-  name: 'defaultCard',
+  name: 'WalletsAccountIndex',
   setup(props: any, context: any) {
     const { t } = useI18n(); // 获取t函数进行翻译
     const $initStore = InitStore()

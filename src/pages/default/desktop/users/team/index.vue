@@ -12,7 +12,7 @@
           {{ TeamMembers.username }}
           {{ '(ID:' + TeamMembers.id + ')' }}
         </div>
-        <div no-caps unelevated class="row no-wrap items-center q-mt-sm">
+        <div class="row no-wrap items-center q-mt-sm">
           <div class="text-white text-weight-bold">
             {{ $t('teamEarnings') }} ： + {{ TeamMembers.earnings }}
           </div>
@@ -23,9 +23,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
 
     <div class="q-mt-xl">
       <div v-for="(team, teamIndex) in TeamMembers.children" :key="teamIndex">
@@ -64,7 +62,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
-import { imageSrc } from 'src/utils/index'
+import { imageSrc } from 'src/utils'
 import { teamIndexAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 import { date } from 'quasar';
@@ -86,7 +84,6 @@ export default defineComponent({
     // 获取用户团队详情
     const getTeam = (params: any) => {
       teamIndexAPI(params).then((res: any) => {
-        console.log(res);
         state.TeamMembers = res
       })
     }

@@ -125,13 +125,13 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { UserStore } from 'src/stores/user';
 import { walletsOrderIndexAPI, walletsBillIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 
 export default defineComponent({
-  name: 'walletIndex',
+  name: 'WalletsIndex',
   setup() {
     const $userStore = UserStore()
 

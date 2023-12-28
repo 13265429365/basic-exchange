@@ -126,7 +126,7 @@ import { walletsOrderIndexAPI, walletsBillIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 
 export default defineComponent({
-  name: 'walletDetail',
+  name: 'WalletsAssetsDetails',
   setup() {
     const $userStore = UserStore()
     const $route = useRoute();
