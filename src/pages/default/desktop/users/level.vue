@@ -1,45 +1,51 @@
 <template>
+  <div class="row items-center justify-center"
+    :style="{ background: 'url(/images/label-bg.png)', height: '200px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }">
+    <div class="text-white text-h4">{{ $t('memberVip') }}</div>
+  </div>
   <div class="q-py-xl" style="padding: 48px 100px;">
     <div class="text-center text-weight-bold q-mt-lg" style="font-size: 32px;">Pick your plan</div>
     <div class="text-center text-color-6 q-mt-sm q-mb-xl">
       Choose your perfect plan and get started.
     </div>
-    <div class="row justify-center q-pt-lg">
-      <q-card v-for="(item, i) in levelList" :key="i" style="width: 288px;"
-        :class="['border-a-20 q-mr-lg q-mb-xl', { 'border': i == select }]">
-        <div :class="['text-weight-medium', { 'gradeBackground': i != select, 'text-white': i != select }]"
-          style="height: 152px;">
-          <q-img class="absolute" :src="imageSrc(item.icon)" width="66px" height="64px"
-            style="top: 0; left: 50%; transform: translate(-50%, -36%);z-index: 999;"></q-img>
-          <!-- 占位符 -->
-          <div style="height: 64px;"></div>
-          <div class="text-center size20">{{ item.name }}</div>
-          <div class="text-center" style="font-size: 28px;">
-            <span class="size20">$</span>
-            <span>{{ item.money }}</span>
-          </div>
-        </div>
-        <q-card-section>
-          <div class="row justify-center q-mt-sm">
-            <q-btn @click="OrderLevel(item.name, i)" class="text-weight-regular"
-              :class="[item.name == actName ? 'text-white bg-primary' : 'text-primary bg-white border']"
-              style="width: 248px;min-height: 38px" unelevated rounded no-caps :label="$t('buy')" />
-          </div>
-          <div class="row no-wrap q-mt-lg q-px-sm">
-            <q-icon class="q-mt-sm q-mr-sm" name="lens" size="5px" style="color: #999999;"></q-icon>
-            <div>
-              Vip the mounth However mean your life
+    <q-scroll-area style="height: 500px; max-width: 100%">
+      <div class="row no-wrap q-pt-lg">
+        <q-card v-for="(item, i) in levelList" :key="i" style="width: 288px;"
+          :class="['border-a-20 q-mr-lg q-mb-xl', { 'border': i == select }]">
+          <div :class="['text-weight-medium', { 'gradeBackground': i != select, 'text-white': i != select }]"
+            style="height: 152px;">
+            <q-img class="absolute" :src="imageSrc(item.icon)" width="66px" height="64px"
+              style="top: 0; left: 50%; transform: translate(-50%, -36%);z-index: 999;"></q-img>
+
+            <div style="height: 64px;"></div>
+            <div class="text-center size20">{{ item.name }}</div>
+            <div class="text-center" style="font-size: 28px;">
+              <span class="size20">$</span>
+              <span>{{ item.money }}</span>
             </div>
           </div>
-          <div class="row no-wrap q-mt-lg q-mb-xl q-px-sm">
-            <q-icon class="q-mt-sm q-mr-sm" name="lens" size="5px" style="color: #999999;"></q-icon>
-            <div>
-              Vip the mounth However mean your lifeHowever mean your life
+          <q-card-section>
+            <div class="row justify-center q-mt-sm">
+              <q-btn @click="OrderLevel(item.name, i)" class="text-weight-regular"
+                :class="[item.name == actName ? 'text-white bg-primary' : 'text-primary bg-white border']"
+                style="width: 248px;min-height: 38px" unelevated rounded no-caps :label="$t('buy')" />
             </div>
-          </div>
-        </q-card-section>
-      </q-card>
-    </div>
+            <div class="row no-wrap q-mt-lg q-px-sm">
+              <q-icon class="q-mt-sm q-mr-sm" name="lens" size="5px" style="color: #999999;"></q-icon>
+              <div>
+                Vip the mounth However mean your life
+              </div>
+            </div>
+            <div class="row no-wrap q-mt-lg q-mb-xl q-px-sm">
+              <q-icon class="q-mt-sm q-mr-sm" name="lens" size="5px" style="color: #999999;"></q-icon>
+              <div>
+                Vip the mounth However mean your lifeHowever mean your life
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </div>
+    </q-scroll-area>
   </div>
 </template>
 
@@ -49,15 +55,14 @@ import { levelIndexAPI, levelCreateAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils/index';
 import { UserStore, UserInfoKey } from 'src/stores/user';
 import { userInfoAPI } from 'src/apis/user';
-import { useRouter } from 'vue-router';
 
 export default {
   name: 'defaultShare',
   setup() {
     const $userStore = UserStore()
-    const $router = useRouter()
 
     const state = reactive({
+      slide: 0,
       actName: '',
       select: 0,
       levelList: [] as any,
