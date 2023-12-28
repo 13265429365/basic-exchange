@@ -1,73 +1,50 @@
 <template>
   <div style="padding: 48px 100px;">
     <!-- 总金额 -->
-    <div class="page_bg q-pa-md rounded-borders row no-wrap items-center" style="width: 220px;">
-      <div class="text-primary text-weight-bold" style="font-size: 16px;">
-        {{ $t('teamBenefits') }} : {{ TeamMembers.teamEarnings }}
+    <q-btn color="primary" no-caps unelevated class="bg-grey-2">
+      <div class="text-primary text-weight-bold">
+        {{ $t('teamEarnings') }} : {{ TeamMembers.teamEarnings }}
       </div>
-      <q-icon class="q-ml-sm" name="arrow_forward_ios"></q-icon>
+      <q-icon size="14px" class="q-ml-md text-grey-7" name="arrow_forward_ios"></q-icon>
+    </q-btn>
+
+    <div class="q-mt-lg">
+      <div v-for="(team, teamIndex) in TeamMembers.childUserList" :key="teamIndex">
+        <div class="row justify-between items-center q-my-lg">
+          <div class="col-5 row items-center">
+            <q-avatar>
+              <q-img width="40px" height="40px" :src="imageSrc(team.avatar ?? '')"></q-img>
+            </q-avatar>
+            <div class="text-body1 q-ml-sm">{{ team.username }} {{ '(ID:' + team.id + ')' }}</div>
+          </div>
+          <div class="col text-grey-7">
+            {{ date.formatDate(team.createdAt * 1000, 'YYYY/MM/DD') }}
+          </div>
+          <div class="col text-primary">
+            + {{ team.teamEarnings }}
+          </div>
+          <div class="row q-gutter-sm">
+            <q-btn @click="getTeam({ id: team.id })" size="sm" flat rounded no-caps :label="$t('desc')"
+              class="bg-grey-1 text-grey-8" style="border: 1px solid;"></q-btn>
+          </div>
+        </div>
+        <q-separator />
+      </div>
     </div>
 
-    <!-- 树级 -->
-    <q-list class="rounded-borders team">
-      <q-expansion-item v-for="(customize, customizeIndex) in TeamMembers.childUserList" :key="customizeIndex"
-        expand-icon-toggle hide-expand-icon v-model="customize.expanded">
-        <!-- 第一级 -->
-        <template v-slot:header>
-          <q-item-section avatar>
-            <q-avatar style="width: 40;height: 40px;">
-              <q-img :src="imageSrc('')"></q-img>
-            </q-avatar>
-          </q-item-section>
-          <q-item-section style="justify-content:start">
-            <div>{{ customize.username }}</div>
-            <q-chip v-if="customize.lv" class="text-primary q-ml-lg"
-              style="background: rgba(1,172,102,0.1);font-size: 10px;">
-              {{ customize.lv }}
-            </q-chip>
-          </q-item-section>
-          <q-item-section class="text-grey-6" style="min-width: 215px;">
-            {{ formatDate(customize.createdAt) }}
-          </q-item-section>
-          <q-item-section class="text-primary" style="min-width: 215px;">
-            +{{ customize.teamEarnings }}
-          </q-item-section>
-          <q-item-section style="justify-content:end;min-width: 215px;">
-            <div @click="Team({ id: customize.id })" class="btn row justify-center items-center q-mr-sm cursor-pointer">
-              <div>{{ $t('more') }}</div>
-              <!-- <q-icon class="q-ml-xs" :name="customize.expanded ? 'expand_less' : 'expand_more'"></q-icon> -->
-            </div>
-            <div @click="$router.push('/team/earnings/index')" class="btn row justify-center items-center cursor-pointer">
-              {{ $t('desc') }}
-            </div>
-          </q-item-section>
-        </template>
-      </q-expansion-item>
-
-      <!-- 没有成员时显示 -->
-      <q-expansion-item v-if="TeamMembers.childUserList == null || TeamMembers.childUserList.length <= 0"
-        expand-icon-toggle hide-expand-icon>
-        <template v-slot:header>
-          <q-item-section>
-
-          </q-item-section>
-        </template>
-      </q-expansion-item>
-    </q-list>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { formatDate, imageSrc } from 'src/utils/index'
+import { imageSrc } from 'src/utils/index'
 import { teamIndexAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
+import { date } from 'quasar';
 
 export default defineComponent({
   name: 'TeamIndex',
   setup() {
-    const $router = useRouter();
     const $userStore = UserStore();
 
     let state = reactive({
@@ -75,14 +52,12 @@ export default defineComponent({
       TeamMembers: [] as any,
     });
 
-
-
     onMounted(() => {
-      Team({ id: $userStore.userInfo.id })
+      getTeam({ id: $userStore.userInfo.id })
     })
 
     // 获取用户团队详情
-    const Team = (params: any) => {
+    const getTeam = (params: any) => {
       teamIndexAPI(params).then((res: any) => {
         console.log(res);
         state.TeamMembers = res
@@ -91,33 +66,11 @@ export default defineComponent({
 
     return {
       imageSrc,
-      formatDate,
+      date,
       ...toRefs(state),
-      Team,
+      getTeam,
     }
   }
 });
 </script>
-<style lang="scss" scoped>
-.btn {
-  height: 24px;
-  border-radius: 12px 12px 12px 12px;
-  border: 1px solid #666666;
-  color: #666;
-  padding: 2px 10px;
-}
-
-:deep .team .q-item .q-item__section {
-  flex-direction: row;
-  align-items: center;
-}
-
-:deep .team .q-item {
-  border-bottom: 1px solid #DDDDDD;
-  padding: 20px 3px;
-}
-
-:deep .team .q-expansion-item .q-expansion-item__content {
-  background: #F9F9F9;
-}
-</style>
+<style lang="scss" scoped></style>

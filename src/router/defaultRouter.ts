@@ -334,7 +334,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/index.vue'),
         children: [],
-        meta: { requireAuth: true, keepAlive: false },
+        meta: { requireAuth: false, keepAlive: false },
       },
       {
         name: 'TeamEarnings',
@@ -345,7 +345,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/earnings.vue'),
         children: [],
-        meta: { requireAuth: true, keepAlive: false },
+        meta: { requireAuth: false, keepAlive: false },
       },
 
       {
