@@ -60,7 +60,7 @@ import { useI18n } from 'vue-i18n';
 
 
 export default {
-  name: 'defaultGrade',
+  name: 'UserLevel',
   setup(props: any, context: any) {
     const { t } = useI18n()
     const $userStore = UserStore()
