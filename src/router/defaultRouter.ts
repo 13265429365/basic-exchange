@@ -272,7 +272,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
       },
       // 手机版会员权益(共用)
       {
-        name: 'Level',
+        name: 'UserLevel',
         route: '/user/level',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
@@ -364,15 +364,14 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-      // 实名认证(共用)
       {
-        name: 'RealAuth',
-        route: '/user/realauth',
+        name: 'UserRealAuth',
+        route: '/user/auth',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'users/setting/realAuth.vue'
+          'users/auth.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/setting/realAuth.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/auth.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },

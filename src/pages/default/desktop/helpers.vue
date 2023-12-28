@@ -2,43 +2,24 @@
   <div class="row justify-center full-width">
     <div class="col">
       <!-- 背景 -->
-      <div class="bg row items-center justify-center">
-        <div class="text-white text-h4 text-weight-bolder">{{ $t('helpers') }}</div>
+      <div class="row items-center justify-center" :style="{background: 'url(/images/label-bg.png)', height: '200px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}">
+        <div class="text-white text-h4">{{ $t('helpers') }}</div>
       </div>
 
-      <div class="q-mt-xl relative-position" style="padding: 0 270px;margin-top: -50px;">
-        <!-- 帮助列表 -->
-        <!-- <div class="row q-col-gutter-md justify-center">
-          <div class="col-2" v-for="( social, socialIndex ) in socialList" :key="socialIndex">
-            <div class="rounded-borders column justify-center q-py-md bg-white cursor-pointer"
-              style="border: 1px solid #DDDDDD;height: 144px;border-radius: 15px;">
-              <q-img class="self-center" :src="imageSrc(social.icon)" width="56px" height="56px" />
-              <div class="self-center text-body1 q-pt-sm">{{ social.name }}</div>
-            </div>
-          </div>
-
-        </div> -->
-
-        <!-- 文章列表 -->
-        <q-list class="bg-white q-mt-lg q-mb-xl q-pa-lg shadow-2" style="border-radius: 8px;">
-          <div class="q-mb-lg text-h5 text-weight-medium">FAQ</div>
-          <div v-for="( helper, helperIndex ) in  articleList " :key="helperIndex">
-            <q-expansion-item :label="helper.title" default-opened expand-icon-class="text-grey-6">
-              <template v-slot:header>
-                <div class="full-width text-subtitle1 text-weight-medium">
-                  {{ helper.name }}
-                </div>
-              </template>
-              <q-card flat>
-                <q-card-section>
-                  <div class="text-grey-6">{{ helper.content }}</div>
-                </q-card-section>
-              </q-card>
-            </q-expansion-item>
-            <q-separator />
-          </div>
-        </q-list>
-
+      <div style="padding: 20px 10%">
+        <div>
+          <q-card flat bordered v-for="( helper, helperIndex ) in  articleList " :key="helperIndex" class="q-mb-md">
+            <q-card-section>
+              <div class="text-h6">{{helper.name}}</div>
+            </q-card-section>
+            <q-card-section>
+              <div v-html="helper.content"></div>
+            </q-card-section>
+            <q-card-actions align="right">
+              <div class="text-caption text-grey">{{date.formatDate(helper.createdAt * 1000, 'YYYY/MM/DD HH:mm:ss')}}</div>
+            </q-card-actions>
+          </q-card>
+        </div>
       </div>
     </div>
   </div>
@@ -48,9 +29,10 @@
 import { reactive, toRefs, onMounted } from 'vue'
 import { helpersInfoAPI } from 'src/apis'
 import { imageSrc } from 'src/utils'
+import {date} from 'quasar'
 
 export default {
-  name: 'helpCenter',
+  name: 'HelpersCenter',
   setup() {
     const state = reactive({
       // 帮助文章
@@ -64,12 +46,12 @@ export default {
       helpersInfoAPI().then((res: any) => {
         state.articleList = res.articleList
         state.socialList = res.socialList
-        console.log(res);
       })
     })
 
     return {
       imageSrc,
+      date,
       ...toRefs(state),
     }
   }
@@ -77,10 +59,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bg {
-  background: url("/images/bg.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 220px;
-}
 </style>

@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts">
-import uploader from 'src/components/uploader.vue';
+import uploader from 'components/uploader.vue';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
 import { realAuthCreateAPI, realAuthInfoAPI } from 'src/apis/user';
@@ -55,7 +55,7 @@ import { useI18n } from 'vue-i18n';
 
 
 export default defineComponent({
-  name: 'defaultIdentification',
+  name: 'UserRealAuth',
   components: { uploader },
   setup(props: any, context: any) {
     const { t } = useI18n();
