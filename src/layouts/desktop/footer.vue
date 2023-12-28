@@ -1,6 +1,6 @@
 <template>
-  <div style="padding: 36px" class="text-white column items-center">
-    <div class="row full-width" style="max-width: 1200px;">
+  <div style="padding: 30px" class="text-white column items-center">
+    <div class="row full-width" style="max-width: 1200px; padding: 60px 0">
       <div class="col-9">
         <div class="row justify-center">
           <div v-for="(footer, footerIndex) in footerList" :key="footerIndex" class="col-3">

@@ -86,6 +86,7 @@
                       <div class="row no-wrap q-mt-xs">
                         <!-- 会员等级 -->
                         <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs" no-caps
+                               @click="$router.push({name: 'UserLevel'})"
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
                           <q-img width="13px" height="12px" src="/images/icons/vip-icon.png"></q-img>
                           <div class="q-ml-xs" style="font-size: 10px;">Lv{{ userInfo.level }}</div>
@@ -100,12 +101,12 @@
                           <div class="q-ml-xs" style="font-size: 10px;">{{ $t('creditScore') + userInfo.score }}</div>
                         </q-btn>
                         <!-- 实名 -->
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-grey-4 text-red q-px-sm" no-caps v-if="userInfo.authStatus == 0">
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-grey-4 text-red q-px-sm" no-caps v-if="userInfo.authStatus == 0" @click="$router.push({name: 'UserRealAuth'})">
                           <div style="font-size: 10px">
                             {{$t('alreadyRealName')}}
                           </div>
                         </q-btn>
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-info text-white q-px-sm" no-caps v-else-if="userInfo.authStatus == 10">
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-info text-white q-px-sm" no-caps v-else-if="userInfo.authStatus == 10" @click="$router.push({name: 'UserRealAuth'})">
                           <div style="font-size: 10px">
                             {{$t('pendingRealName')}}
                           </div>
@@ -115,7 +116,7 @@
                             {{$t('realNameFailed')}}
                           </div>
                         </q-btn>
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-negative text-white q-px-sm" no-caps v-else>
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-negative text-white q-px-sm" no-caps v-else @click="$router.push({name: 'UserRealAuth'})">
                           <div style="font-size: 10px">
                             {{$t('notRealName')}}
                           </div>
@@ -184,6 +185,7 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { useRouter } from 'vue-router';
 import { reactive, toRefs, ref, watch, onMounted } from 'vue';
 import { imageSrc } from 'src/utils';
+import {userInfoAPI} from 'src/apis/user';
 import { InitStore } from 'src/stores/init';
 import { UserStore } from 'src/stores/user';
 
@@ -229,6 +231,13 @@ export default {
         case 'UserRegister':
           dialogOpenRegister(true)
           break
+      }
+
+      //  如果有登录状态, 更新用户信息
+      if (state.isLogin) {
+        userInfoAPI().then((res: any) => {
+          $userStore.updateUserInfo(res)
+        })
       }
     })
 

@@ -36,8 +36,6 @@ import QRCode from 'qrcode-svg-ts';
 export default {
   name: 'ShareIndex',
   setup() {
-
-
     const state = reactive({
       inviteUrl: '',
       inviteImage: '',

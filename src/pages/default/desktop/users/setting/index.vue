@@ -46,13 +46,18 @@
 
         <q-card-section class="q-pt-none">
           <div class="relative row justify-center" v-if="currentSetting.params == 'avatar'">
-            <q-avatar style="width: 80px;height: 80px;">
-              <q-img :src="imageSrc(currentSetting.value)" />
-              <uploader type="avatar"
-                @uploaded="(url) => { params[currentSetting.params] = url; currentSetting.value = url }"
-                :uploaderStyle="{ position: 'absolute', right: '0', bottom: '0', width: '27px', height: '27px', background: 'transparent' }"
-                :respValue="currentSetting.value"></uploader>
-            </q-avatar>
+            <uploader @uploaded="(url) => { params[currentSetting.params] = url; currentSetting.value = url }">
+              <template v-slot:default>
+                <q-uploader-add-trigger />
+                <q-avatar style="width: 80px;height: 80px;">
+                  <q-img :src="imageSrc(currentSetting.value)" />
+                  <q-badge floating class="bg-transparent" :style="{top: '70%'}">
+                    <q-img src='/images/icons/edit.png' width="28px" height="28px"></q-img>
+                  </q-badge>
+                </q-avatar>
+              </template>
+            </uploader>
+
           </div>
 
           <div v-else-if="currentSetting.params == 'sex'">
