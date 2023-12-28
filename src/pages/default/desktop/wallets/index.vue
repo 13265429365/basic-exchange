@@ -8,7 +8,7 @@
           <div class="row items-center">
             <div class="text-white text-h6 q-mr-xs">{{ $t('balance') }}</div>
             <q-icon @click="moneyShow = !moneyShow" class="cursor-pointer" color="white" size="20px"
-              :name="moneyShow ? 'o_visibility_off' : 'o_visibility'"></q-icon>
+              :name="moneyShow ? 'o_visibility' : 'o_visibility_off'"></q-icon>
           </div>
           <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
           </div>
@@ -17,10 +17,10 @@
 
       <!-- 充值、提现 -->
       <div class="row">
-        <q-btn @click="$router.push({ name: 'WalletsDeposit' })" class="text-primary bg-white no-shadow" rounded no-caps
-          :label="$t('deposit')"></q-btn>
-        <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" class="text-primary bg-white no-shadow q-ml-md" rounded
-          no-caps :label="$t('withdraw')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsDeposit' })" unelevated class="text-primary bg-white no-shadow"
+          rounded no-caps :label="$t('deposit')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" unelevated
+          class="text-primary bg-white no-shadow q-ml-md" rounded no-caps :label="$t('withdraw')"></q-btn>
       </div>
     </div>
 

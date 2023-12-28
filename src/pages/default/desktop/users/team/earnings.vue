@@ -61,7 +61,7 @@
             </div>
           </q-td>
           <q-td style="width: 20%;">
-            <div :class="['text-body1 full-width', { 'text-primary': props.row.name == 'Recharge' }]">
+            <div class="text-body1 full-width text-primary">
               {{ props.row.money }}
             </div>
           </q-td>
@@ -120,6 +120,8 @@ export default defineComponent({
             })
           }
         }
+        console.log(state.TeamBenefit);
+
 
         // 收益详情
         if (res.teamEarningsIndex.length <= 0) {

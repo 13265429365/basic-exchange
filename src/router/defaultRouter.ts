@@ -292,17 +292,17 @@ export const defaultRouter: TemplateRouteInterface[] = [
       //   children: [],
       //   meta: { requireAuth: true, keepAlive: false },
       // },
-      // {
-      //   name: 'Wallet',
-      //   route: '/wallets/index',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'wallets/index.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/index.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
+      {
+        name: 'Wallet',
+        route: '/wallets/index',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/index.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/index.vue'),
+        children: [],
+        meta: { requireAuth: false, keepAlive: false },
+      },
       // {
       //   name: 'Assets',
       //   route: '/wallets/assets/index',
