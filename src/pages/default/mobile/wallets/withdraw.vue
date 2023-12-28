@@ -48,6 +48,7 @@ import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils/index';
 import { walletsAccountIndexAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
+import { InitStore } from 'src/stores/init';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
@@ -57,6 +58,7 @@ export default {
     const { t } = useI18n()
     const $router = useRouter()
     const $userStore = UserStore()
+    const $initStore = InitStore()
 
     const state = reactive({
       alertPass: false,
@@ -100,7 +102,13 @@ export default {
       walletsWithdrawCreateAPI(params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
         console.log('提现成功', res);
-        $router.push({ name: 'AccountCard' })
+
+        // 提现后是否跳转客服页面
+        if ($initStore.config.settings.online.withdrawLink) {
+          $router.push({ name: 'AccountCard' })
+        } else {
+          $router.push({ name: 'AccountCard' })
+        }
       })
     }
 
