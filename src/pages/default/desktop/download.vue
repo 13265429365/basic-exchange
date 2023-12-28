@@ -10,7 +10,7 @@
           <q-img class="q-mr-xl" width="300px" src="/images/download-bg.svg"></q-img>
         </div>
         <div class="col-1"></div>
-        <div class="col-6">
+        <div class="col">
           <div class="text-h3 text-bold">{{ config.name }}</div>
           <div class="text-h6 text-grey q-mt-sm">{{ $t('downloadSmall')}}</div>
 
