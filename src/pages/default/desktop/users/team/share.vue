@@ -13,7 +13,7 @@
         <div class="col">
           <div style="width: 310px" class="text-center">
             <div class="text-h3 text-bold">{{config.name}}</div>
-            <div class="text-h6 text-grey q-mt-sm">{{ $t('downloadSmall')}}</div>
+            <div class="text-h6 text-grey q-mt-sm">{{ $t('inviteFriendsSmall')}}</div>
 
             <div class="column items-center q-mt-xl">
               <q-card bordered flat style="border-radius: 10px;width: 210px;">

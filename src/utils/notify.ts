@@ -1,15 +1,19 @@
 import { Notify } from 'quasar';
 import { Dialog } from 'quasar'
-export const ConfirmPrompt = (title: any, message: any, actions: any) => {
+
+export const ConfirmPrompt = (title: any, message: any, actions: any, options: object = {ok:{label: 'ok'}, cancel: {label: 'cancel'}}) => {
   Dialog.create({
     title: title,
     message: message,
     ok: {
-      push: true
+      flat: true,
+      color: 'primary',
+      label: options.ok.label,
     },
     cancel: {
-      push: true,
-      color: 'negative'
+      flat: true,
+      color: 'grey',
+      label: options.cancel.label
     },
   }).onOk(() => {
     actions()

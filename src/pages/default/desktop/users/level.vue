@@ -3,68 +3,70 @@
     :style="{ background: 'url(/images/label-bg.png)', height: '200px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }">
     <div class="text-white text-h4">{{ $t('memberVip') }}</div>
   </div>
-  <div class="q-py-xl" style="padding: 48px 100px;">
-    <div class="text-center text-weight-bold q-mt-lg" style="font-size: 32px;">Pick your plan</div>
-    <div class="text-center text-color-6 q-mt-sm q-mb-xl">
-      Choose your perfect plan and get started.
-    </div>
-    <q-scroll-area style="height: 500px; max-width: 100%">
-      <div class="row no-wrap q-pt-lg">
-        <q-card v-for="(item, i) in levelList" :key="i" style="width: 288px;"
-          :class="['border-a-20 q-mr-lg q-mb-xl', { 'border': i == select }]">
-          <div :class="['text-weight-medium', { 'gradeBackground': i != select, 'text-white': i != select }]"
-            style="height: 152px;">
-            <q-img class="absolute" :src="imageSrc(item.icon)" width="66px" height="64px"
-              style="top: 0; left: 50%; transform: translate(-50%, -36%);z-index: 999;"></q-img>
 
-            <div style="height: 64px;"></div>
-            <div class="text-center size20">{{ item.name }}</div>
-            <div class="text-center" style="font-size: 28px;">
-              <span class="size20">$</span>
-              <span>{{ item.money }}</span>
-            </div>
-          </div>
-          <q-card-section>
-            <div class="row justify-center q-mt-sm">
-              <q-btn @click="OrderLevel(item.name, i)" class="text-weight-regular"
-                :class="[item.name == actName ? 'text-white bg-primary' : 'text-primary bg-white border']"
-                style="width: 248px;min-height: 38px" unelevated rounded no-caps :label="$t('buy')" />
-            </div>
-            <div class="row no-wrap q-mt-lg q-px-sm">
-              <q-icon class="q-mt-sm q-mr-sm" name="lens" size="5px" style="color: #999999;"></q-icon>
-              <div>
-                Vip the mounth However mean your life
+  <div style="margin: 80px 0 120px 0">
+    <div class="text-center q-mb-xl">
+      <div class="text-h5" style="font-size: 32px;">{{$t('memberVipTitle')}}</div>
+      <div class="text-body1 text-grey q-mt-md">{{$t('memberVipSmall')}}</div>
+    </div>
+
+    <div class="column items-center">
+      <q-scroll-area style="height: 440px; width: 80%" :thumb-style="{height: 0}">
+        <div class="row no-wrap q-pt-lg q-gutter-sm">
+          <q-card v-for="(level, levelIndex) in levelList" :key="levelIndex" :style="{
+            width: '288px', height: '400px', borderRadius: '8px',
+            boxShadow: '0px 4px 10px 0px rgba(192,192,192,0.3)',
+            border: currentLevelIndex == levelIndex ? '2px solid #01AC66' : '',
+          }" class="cursor-pointer" @click="currentLevelIndex = levelIndex">
+            <div :style="{
+              height: '160px',
+              background: currentLevelIndex == levelIndex ? 'white' : 'linear-gradient(180deg, #10BE70 0%, #91DB82 100%)',
+              color: currentLevelIndex == levelIndex ? 'black' : 'white'
+            }" class="q-pb-md">
+              <q-img class="absolute" :src="imageSrc(level.icon)" width="54px" height="54px"
+                     style="top: 0; left: 50%; transform: translate(-50%, -36%);z-index: 999;"></q-img>
+              <div style="height: 64px;"></div>
+              <div class="text-center text-body1">{{ level.name }}</div>
+              <div class="text-center">
+                <span class="text-caption">{{$t('currency')}}</span>
+                <span class="text-h5 text-bold">{{ level.money }}</span>
               </div>
             </div>
-            <div class="row no-wrap q-mt-lg q-mb-xl q-px-sm">
-              <q-icon class="q-mt-sm q-mr-sm" name="lens" size="5px" style="color: #999999;"></q-icon>
-              <div>
-                Vip the mounth However mean your lifeHowever mean your life
+            <q-card-section>
+              <div class="q-mt-md">
+                <q-btn :disable="level.level <= userInfo.level" v-if="currentLevelIndex == levelIndex"
+                       @click="submitFunc(level)"
+                       outline rounded color="primary" class="full-width" :label="$t('buy')"></q-btn>
+                <q-btn :disable="level.level <= userInfo.level" v-else flat rounded class="full-width bg-primary text-white" :label="$t('buy')"
+                       @click="submitFunc(level)"></q-btn>
               </div>
-            </div>
-          </q-card-section>
-        </q-card>
-      </div>
-    </q-scroll-area>
+              <div v-html="level.desc" class="q-mt-lg"></div>
+            </q-card-section>
+          </q-card>
+        </div>
+      </q-scroll-area>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { onMounted, reactive, toRefs } from 'vue';
 import { levelIndexAPI, levelCreateAPI } from 'src/apis/user';
-import { imageSrc } from 'src/utils/index';
-import { UserStore, UserInfoKey } from 'src/stores/user';
-import { userInfoAPI } from 'src/apis/user';
+import { imageSrc } from 'src/utils';
+import { UserStore } from 'src/stores/user';
+import {ConfirmPrompt} from 'src/utils/notify';
+import { useI18n } from 'vue-i18n';
 
 export default {
-  name: 'defaultShare',
+  name: 'UserLevel',
   setup() {
+    const {t} = useI18n()
     const $userStore = UserStore()
-
     const state = reactive({
       slide: 0,
       actName: '',
-      select: 0,
+      userInfo: $userStore.userInfo,
+      currentLevelIndex: 0,
       levelList: [] as any,
     });
 
@@ -85,54 +87,34 @@ export default {
     }
 
     // 用户购买会员
-    const OrderLevel = (name: string, i: any) => {
-      state.actName = name
-      state.select = i
-      if (state.select < $userStore.userInfo.Level) {
-        return false
-      }
+    // const OrderLevel = (name: string, i: any) => {
+    //   state.actName = name
+    //   state.select = i
+    //   if (state.select < $userStore.userInfo.Level) {
+    //     return false
+    //   }
+    //
+    //   levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
+    //     UserInfo()
+    //     console.log(res);
+    //   })
+    // }
 
-      levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
-        UserInfo()
-        console.log(res);
-      })
+    const submitFunc = (level: any) => {
+      ConfirmPrompt(t('isExecute'), t('isBuy') + '【' + level.name + '】?', () => {
+        levelCreateAPI({id: level.id}).then(() => {
+          state.userInfo.level = level.level
+          $userStore.updateUserInfo(state.userInfo)
+        })
+      }, {ok: {label: t('submit')}, cancel: {label: t('cancel')}})
     }
-
-    const UserInfo = () => {
-      userInfoAPI().then((res: any) => {
-        console.log('用户信息', res);
-        $userStore.updateUserInfo(res)
-        localStorage.setItem(UserInfoKey, JSON.stringify(res))
-      })
-    }
-
 
     return {
       imageSrc,
       ...toRefs(state),
-      OrderLevel,
+      submitFunc,
     }
   }
 };
 </script>
-<style scoped>
-.border {
-  border: 3px solid #01AC66;
-}
-
-.q-card {
-  border-radius: 8px;
-  box-shadow: 0px 4px 30px 0px rgba(192, 192, 192, 0.3);
-}
-
-.size20 {
-  font-size: 20px;
-}
-
-
-.gradeBackground {
-  background: linear-gradient(180deg, #10BE70 0%, #91DB82 100%);
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-</style>
+<style scoped></style>
