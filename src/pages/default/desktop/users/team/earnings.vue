@@ -2,101 +2,114 @@
   <div style="padding: 48px 100px;">
     <!-- 头像 -->
     <div class="rounded-borders q-pa-lg text-white" style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
-      <q-scroll-area style="height: 60px; max-width: 100%" :thumb-style="{ display: 'none' }">
-        <div class="row no-wrap items-center">
-          <!-- 固定头像 -->
-          <div class="row no-wrap items-center q-mr-xl">
-            <q-avatar class="q-mr-md" size="60px">
-              <q-img :src="imageSrc(TeamBenefit.currentInfo.avatar ?? '')"></q-img>
-            </q-avatar>
-            <div>
-              <div class="text-h6 text-weight-medium">{{ TeamBenefit.currentInfo.username ?? '' }}</div>
-              <div class="text-weight-medium" style="font-size: 17px;">+{{ TeamBenefit.teamEarnings }}</div>
+      <div class="row items-center">
+        <div class="row items-center">
+          <q-avatar class="bg-white" size="60px">
+            <q-img no-spinner :src="imageSrc(currentTeamInfo.currentInfo.avatar)"></q-img>
+          </q-avatar>
+          <div class="q-ml-md text-white">
+            <div class="text-body1 text-weight-bold">
+              {{ currentTeamInfo.currentInfo.username }}
+              <span class="text-caption text-grey-1">[ID:{{ currentTeamInfo.currentInfo.id }}]</span>
+              <q-icon name="keyboard_double_arrow_down" class="q-ml-xs"></q-icon>
+              <span class="text-caption">{{currentTeamInfo.currentInfo.depth}}</span>
+            </div>
+            <div class="row no-wrap items-center q-mt-sm">
+              <div class="text-white text-subtitle2">
+                {{ $t('teamEarnings') }}: <span class="text-body1">+{{ currentTeamInfo.currentInfo.earnings }}</span>
+              </div>
             </div>
           </div>
-
-          <div class="row no-wrap">
-            <div class="row no-wrap items-center">
-              <div style="width: 1px;background: #fff;height: 42px;margin: 0 27px;"></div>
-              <div style="width: 110px;">
-                <div class="text-h5 text-center text-weight-medium">{{ TeamBenefit.buyAmount }}</div>
-                <div class="text-center">{{ $t('buyAmount') }}</div>
-              </div>
-            </div>
-            <div class="row no-wrap items-center">
-              <div style="width: 1px;background: #DDDDDD;height: 42px;margin: 0 27px;"></div>
-              <div style="width: 110px;">
-                <div class="text-h5 text-center text-weight-medium">{{ TeamBenefit.inviteNums }}</div>
-                <div class="text-center">{{ $t('inviteNums') }}</div>
-              </div>
-            </div>
-            <div class="row no-wrap items-center">
-              <div style="width: 1px;background: #DDDDDD;height: 42px;margin: 0 27px;"></div>
-              <div style="width: 110px;">
-                <div class="text-h5 text-center text-weight-medium">{{ TeamBenefit.teamEarnings }}</div>
-                <div class="text-center">{{ $t('teamEarnings') }}</div>
-              </div>
-            </div>
-            <div class="row no-wrap items-center">
-              <div style="width: 1px;background: #DDDDDD;height: 42px;margin: 0 27px;"></div>
-              <div style="width: 110px;">
-                <div class="text-h5 text-center text-weight-medium">{{ TeamBenefit.todayAmount }}</div>
-                <div class="text-center">{{ $t('todayAmount') }}</div>
-              </div>
-            </div>
-            <div class="row no-wrap items-center">
-              <div style="width: 1px;background: #DDDDDD;height: 42px;margin: 0 27px;"></div>
-              <div style="width: 110px;">
-                <div class="text-h5 text-center text-weight-medium">{{ TeamBenefit.todayEarnings }}</div>
-                <div class="text-center">{{ $t('todayEarnings') }}</div>
-              </div>
-            </div>
-            <div class="row no-wrap items-center">
-              <div style="width: 1px;background: #DDDDDD;height: 42px;margin: 0 27px;"></div>
-              <div style="width: 110px;">
-                <div class="text-h5 text-center text-weight-medium">{{ TeamBenefit.todayNums }}</div>
-                <div class="text-center">{{ $t('todayNums') }}</div>
-              </div>
-            </div>
-
-          </div>
-
         </div>
-      </q-scroll-area>
+
+        <div class="col q-ml-lg">
+          <q-scroll-area style="height: 50px; width: 100%" :thumb-style="{ display: 'none' }">
+            <div class="row no-wrap items-center">
+              <div style="width: 110px" class="row justify-end items-center">
+                <q-separator color="white" vertical inset />
+                <div class="col">
+                  <div class="text-h5 text-center text-weight-medium">{{ currentTeamInfo.todayNums }}</div>
+                  <div class="text-center text-caption">{{ $t('todayNums') }}</div>
+                </div>
+              </div>
+
+              <div style="width: 110px" class="row justify-end items-center">
+                <q-separator color="white" vertical inset />
+                <div class="col">
+                  <div class="text-h5 text-center text-weight-medium">{{ currentTeamInfo.todayAmount }}</div>
+                  <div class="text-center text-caption">{{ $t('todayAmount') }}</div>
+                </div>
+              </div>
+
+              <div style="width: 110px" class="row justify-end items-center">
+                <q-separator color="white" vertical inset />
+                <div class="col">
+                  <div class="text-h5 text-center text-weight-medium">{{ currentTeamInfo.todayEarnings }}</div>
+                  <div class="text-center text-caption">{{ $t('todayEarnings') }}</div>
+                </div>
+              </div>
+
+              <div style="width: 110px" class="row justify-end items-center">
+                <q-separator color="white" vertical inset />
+                <div class="col">
+                  <div class="text-h5 text-center text-weight-medium">{{ currentTeamInfo.inviteNums }}</div>
+                  <div class="text-center text-caption">{{ $t('inviteNums') }}</div>
+                </div>
+              </div>
+
+              <div style="width: 110px" class="row justify-end items-center">
+                <q-separator color="white" vertical inset />
+                <div class="col">
+                  <div class="text-h5 text-center text-weight-medium">{{ currentTeamInfo.buyAmount }}</div>
+                  <div class="text-center text-caption">{{ $t('buyAmount') }}</div>
+                </div>
+              </div>
+
+              <div style="width: 110px" class="row justify-end items-center">
+                <q-separator color="white" vertical inset />
+                <div class="col">
+                  <div class="text-h5 text-center text-weight-medium">{{ currentTeamInfo.teamEarnings }}</div>
+                  <div class="text-center text-caption">{{ $t('teamEarnings') }}</div>
+                </div>
+              </div>
+            </div>
+          </q-scroll-area>
+        </div>
+      </div>
     </div>
 
-    <div class="text-h5 q-mb-md q-my-lg">{{ $t('transactions') }}</div>
-    <!-- 表格 -->
-    <div class="q-mt-lg q-pa-lg rounded-borders">
-      <div v-for="(team, teamIndex) in TeamBenefit.children" :key="teamIndex">
-        <div class="row justify-between items-center q-mb-lg q-px-md">
-          <div class="col">
+    <div class="q-mt-xl">
+      <div v-for="(children, childrenIndex) in currentTeamInfo.children" :key="childrenIndex">
+        <div class="row justify-between items-center q-my-lg q-px-md">
+          <div class="col row items-center">
             <q-avatar size="40px">
-              <q-img :src="imageSrc(team.avatar ?? '')"></q-img>
+              <q-img no-spinner :src="imageSrc(children.avatar)"></q-img>
             </q-avatar>
+            <div class="q-ml-sm">
+              <div class="text-body2 text-bold">
+                {{ children.username }}
+                <span class="text-caption text-grey-7">(ID:{{children.id}})</span>
+              </div>
+              <div class="text-grey text-caption">{{ date.formatDate(children.createdAt * 1000, 'YYYY/MM/DD HH:mm:SS') }}</div>
+            </div>
           </div>
           <div class="col">
-            {{ team.username }}
+            <div class="text-center">{{children.name}}</div>
           </div>
-          <div class="col text-grey-7">
-            {{ date.formatDate(team.createdAt * 1000, 'YYYY/MM/DD HH:mm:SS') }}
-          </div>
-          <div class="col text-center">
-            + {{ team.name }}
-          </div>
-          <div class="col text-primary text-right text-h6 text-weight-bold">
-            + {{ team.money }}
+          <div class="col">
+            <div class="text-primary text-h6 text-right q-mr-lg">
+              +{{ children.money }}
+            </div>
           </div>
         </div>
         <q-separator />
       </div>
-      <div v-if="TeamBenefit.children == null || TeamBenefit.children.length <= 0">
-        <div class="text-center q-my-lg text-h6 text-grey-8">
+      <div v-if="currentTeamInfo.children == null || currentTeamInfo.children.length <= 0">
+        <div class="text-center q-my-lg text-body1 text-grey">
           {{ $t('noData') }}
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -114,26 +127,21 @@ export default defineComponent({
     const $userStore = UserStore();
     const $route = useRoute();
 
-    let state = reactive({
-      // 用户资料
-      userInfo: $userStore.userInfo as any,
-      // 团队收益
-      TeamBenefit: {
-        currentInfo: {}
+    const state = reactive({
+      currentUserId: $route.query.id ?? 0,
+      currentTeamInfo: {
+        currentInfo: {} as any
       } as any,
     });
 
     onMounted(() => {
-      state.userInfo = $userStore.userInfo
-      TeamDetails({ id: $route.query.id ? Number($route.query.id) : $userStore.userInfo.id })
-    })
-
-    // 获取用户团队详情
-    const TeamDetails = (params: any) => {
-      teamDetailsAPI(params).then((res: any) => {
-        state.TeamBenefit = res
+      if (state.currentUserId == 0) {
+        state.currentUserId = $userStore.userInfo.id
+      }
+      teamDetailsAPI({id: Number(state.currentUserId)}).then((res: any) => {
+        state.currentTeamInfo = res
       })
-    }
+    })
 
     return {
       imageSrc,
