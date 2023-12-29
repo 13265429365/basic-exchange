@@ -159,7 +159,7 @@
           </q-btn>
 
           <!-- 钱包 -->
-          <q-btn @click="$router.push({ name: 'Wallet' })" round dense flat color="grey-8" size="16px"
+          <q-btn @click="$router.push({ name: 'WalletsIndex' })" round dense flat color="grey-8" size="16px"
             icon="o_account_balance_wallet" class="q-mx-xs"></q-btn>
         </div>
 

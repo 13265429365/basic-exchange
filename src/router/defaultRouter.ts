@@ -301,7 +301,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/index.vue'),
         children: [],
-        meta: { requireAuth: false, keepAlive: false },
+        meta: { requireAuth: true, keepAlive: false },
       },
       {
         name: 'WalletsAssetsIndex',
