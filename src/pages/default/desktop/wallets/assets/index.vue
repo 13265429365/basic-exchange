@@ -6,21 +6,27 @@
         <!-- 资产总和 -->
         <div class="q-pa-lg rounded-borders q-mr-lg"
           style="height: 208px;width: 287px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
-          <div>
+          <div class="text-white">
             <div class="row items-center" style="height: 49px;">
-              <div class="text-white text-h6">{{ $t('totalAssets') }}</div>
+              <div class="text-body2 q-mr-xs">{{ $t('totalAssets') }}</div>
               <q-icon color="white" @click="moneyShow = !moneyShow"
                 :name="moneyShow ? 'o_visibility' : 'o_visibility_off'" class="q-ml-xs cursor-pointer"
-                size="18px"></q-icon>
+                size="16px"></q-icon>
             </div>
 
             <!-- 点击显示、隐藏金额 -->
             <div style="height: 64px;">
               <div v-if="moneyShow" class="text-white">
-                <div class="text-h6">${{ form.moneySum }}</div>
-                <div>≈￥{{ form.moneyRateSum }} </div>
+                <div class="text-body1">
+                  {{ assets.moneySum }}
+                </div>
+                <div class="row items-center text-body1">
+                  ≈
+                  <span class="q-ml-xs text-caption">{{ $t('currency') }}</span>
+                  {{ assets.moneyRateSum }}
+                </div>
               </div>
-              <div v-else class="text-white text-weight-bold " style="font-size: 22px;height: 54px;">**** </div>
+              <div v-else class="text-white text-weight-bold" style="height: 54px;">****** </div>
             </div>
 
             <div class="row justify-between q-mt-md">
@@ -33,7 +39,7 @@
         </div>
 
         <!-- 单个资产 -->
-        <div v-for="(Assets, AssetsIndex) in form.userAssetsList" :key="AssetsIndex"
+        <div v-for="(Assets, AssetsIndex) in assets.userAssetsList" :key="AssetsIndex"
           class="q-pa-lg rounded-borders q-mr-lg border"
           style="height: 208px;width: 287px;background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%);">
           <div>
@@ -64,104 +70,109 @@
 
 
     <!-- 账单、订单部分 -->
-    <div class="q-mt-lg rounded-borders q-py-md q-px-lg" style="border: 1px solid #DDDDDD;">
-      <!-- 表格头部 -->
-      <div class="row justify-between">
-        <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-          <q-tab @click="switchOrder" class="text-primary" no-caps name="Transactions" :label="$t('transactions')" />
-          <q-tab @click="switchBill" class="text-primary" no-caps name="Bill Detail" :label="$t('transactions')" />
-        </q-tabs>
-        <!-- 右侧 -->
-        <div v-if="tab == 'Bill Detail'" class="row q-pr-md">
-          <!-- 选择 -->
-          <q-btn class="bg-grey-1 row no-wrap" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
-            <div class="q-mr-xs">{{ typeList[typeIndex].name }}</div>
-            <q-icon name="expand_more"></q-icon>
-            <q-menu>
-              <q-list style="min-width: 100px">
-                <q-item @click="selectBill(index)" :active="typeIndex == index" clickable v-close-popup
-                  v-for="(type, index) in typeList" :key="index">
-                  <q-item-section>{{ type.name }}</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
+    <q-card flat bordered class="q-mt-lg">
+      <q-card-section>
+        <div class="row justify-between">
+          <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
+            <q-tab @click="switchOrder" class="text-primary" no-caps name="Transactions" :label="$t('transactions')" />
+            <q-tab @click="switchBill" class="text-primary" no-caps name="Bill Detail" :label="$t('transactions')" />
+          </q-tabs>
+          <!-- 右侧 -->
+          <div v-if="tab == 'Bill Detail'" class="row q-pr-md">
+            <!-- 选择 -->
+            <!-- <q-btn class="bg-grey-1 row no-wrap" unelevated no-caps rounded
+              style="border: 1px solid #DDDDDD;height: 32px;">
+              <div class="q-mr-xs">{{ typeList[typeIndex].name }}</div>
+              <q-icon name="expand_more"></q-icon>
+              <q-menu>
+                <q-list style="min-width: 100px">
+                  <q-item @click="selectBill(index)" :active="typeIndex == index" clickable v-close-popup
+                    v-for="(type, index) in typeList" :key="index">
+                    <q-item-section>{{ type.name }}</q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
+            </q-btn> -->
 
-          <!-- 日期选择 -->
-          <q-btn class="bg-grey-1 q-ml-md" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
-            <div class="row items-center">
-              <div class="q-mr-xs text-caption">{{ dates.from }}</div>
-              <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
-              <div class="q-mr-xs text-caption">{{ dates.to }}</div>
-              <q-icon class="q-ml-sm" size="15px" name="calendar_today"></q-icon>
-            </div>
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="dates" range>
-                <div class="row items-center justify-end q-gutter-sm">
-                  <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                  <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-btn>
-        </div>
-      </div>
-
-      <!-- 表格 horizontal -->
-      <div class="rounded-borders" v-if="billList.length > 0">
-        <div v-for="(bill, billIndex) in billList" :key="billIndex" class="q-px-md">
-          <q-expansion-item :hide-expand-icon="bill.status == 20">
-            <template v-slot:header>
-              <q-item-section>
-                <div class="col q-py-md">
-                  {{ date.formatDate((bill.updatedAt ?? bill.createdAt) * 1000, 'YYYY/MM/DD HH:mm:SS') }}
-                </div>
-              </q-item-section>
-              <q-item-section>
-                <div class="col text-center q-py-md">
-                  {{ bill.name }}
-                </div>
-              </q-item-section>
-              <q-item-section>
-                <div class="col text-right text-body1 q-py-md">
-                  +${{ bill.money }}
-                </div>
-              </q-item-section>
-              <q-item-section>
-                <div v-if="billList.status == 10" class="col text-right q-pr-md text-red q-py-md">
-                  {{ $t('pending') }}
-                </div>
-                <div v-if="billList.status == 20" class="col text-right q-pr-md text-primary q-py-md">
-                  {{ $t('complete') }}
-                </div>
-              </q-item-section>
-            </template>
-            <div v-if="bill.status == 10" class="text-red q-py-md q-px-md bg-grey-1">fail reasons，fail reasons fail
-              reasons
-            </div>
-          </q-expansion-item>
-          <q-separator />
-        </div>
-
-        <!-- 分页 -->
-        <div class="q-pa-md row items-center justify-center no-wrap q-mt-lg">
-          <div class="text-color-9 q-mr-md">
-            共{{ total }}条,
-            {{ params.pagination.rowsPerPage }}条/页
+            <!-- 日期选择 -->
+            <q-btn class="bg-grey-1 q-ml-md" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
+              <div class="row items-center">
+                <div class="q-mr-xs text-caption">{{ dates.from }}</div>
+                <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
+                <div class="q-mr-xs text-caption">{{ dates.to }}</div>
+                <q-icon class="q-ml-sm" size="15px" name="calendar_today"></q-icon>
+              </div>
+              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                <q-date v-model="dates" range>
+                  <div class="row items-center justify-end q-gutter-sm">
+                    <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
+                    <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-btn>
           </div>
-          <q-pagination v-model="params.pagination.page" :max="pageTotal" ellipsess :direction-links="true"
-            @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
-          </q-pagination>
         </div>
-      </div>
+      </q-card-section>
+      <q-card-section>
+        <!-- 表格 -->
+        <div v-if="billList.length > 0">
+          <div v-for="(bill, billIndex) in billList" :key="billIndex" class="q-px-md">
+            <q-expansion-item :hide-expand-icon="bill.status != -1" :header-style="{ borderRadius: '4px' }">
+              <template v-slot:header>
+                <q-item-section>
+                  <div class="col q-py-md">
+                    {{ date.formatDate((bill.updatedAt ?? bill.createdAt) * 1000, 'YYYY/MM/DD HH:mm:SS') }}
+                  </div>
+                </q-item-section>
+                <q-item-section>
+                  <div class="col text-center q-py-md">
+                    {{ bill.name }}
+                  </div>
+                </q-item-section>
+                <q-item-section>
+                  <div class="col text-right text-body1 q-py-md">
+                    {{ (bill.type == 2 ? '+' : '-') }}{{ $t('currency') }}{{ bill.money }}
+                  </div>
+                </q-item-section>
+                <q-item-section>
+                  <div v-if="bill.status == -1" class="col text-right q-pr-md text-red q-py-md">
+                    {{ $t('refuse') }}
+                  </div>
+                  <div v-if="bill.status == 10" class="col text-right q-pr-md text-primary q-py-md">
+                    {{ $t('pending') }}
+                  </div>
+                  <div v-if="bill.status == 20" class="col text-right q-pr-md q-py-md">
+                    {{ $t('complete') }}
+                  </div>
+                </q-item-section>
+              </template>
+              <div v-if="bill.status == -1" class="text-red q-py-md q-px-md bg-grey-1">
+                {{ bill.data }}
+              </div>
+            </q-expansion-item>
+            <q-separator />
+          </div>
 
-      <div v-if="billList == null || billList.length <= 0">
-        <div class="text-center q-my-lg text-h6 text-grey-8">
-          {{ $t('noData') }}
+          <!-- 分页 -->
+          <div class="q-pa-md row items-center justify-center no-wrap q-mt-lg">
+            <div class="text-color-9 q-mr-md">
+              共{{ total }}条,
+              {{ params.pagination.rowsPerPage }}条/页
+            </div>
+            <q-pagination v-model="params.pagination.page" :max="pageTotal" ellipsess :direction-links="true"
+              @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
+            </q-pagination>
+          </div>
         </div>
-      </div>
 
-    </div>
+        <div v-if="billList == null || billList.length <= 0">
+          <div class="text-center q-my-lg text-grey">
+            {{ $t('noData') }}
+          </div>
+        </div>
+      </q-card-section>
+    </q-card>
 
   </div>
 </template>
@@ -182,18 +193,18 @@ export default defineComponent({
     const $userStore = UserStore()
     let state = reactive({
       // 过滤类型
-      typeList: [
-        { name: '全部', value: '' },
-        { name: '充值类型', value: 1 },
-        { name: '提现类型', value: 11 },
-        { name: '购买', value: 21 },
-        { name: '收益', value: 51 },
-        { name: '奖励', value: 61 },
-      ],
-      typeIndex: 0,
+      // typeList: [
+      //   { name: '全部', value: '' },
+      //   { name: '充值类型', value: 1 },
+      //   { name: '提现类型', value: 11 },
+      //   { name: '购买', value: 21 },
+      //   { name: '收益', value: 51 },
+      //   { name: '奖励', value: 61 },
+      // ],
+      // typeIndex: 0,
 
       // 资产数据
-      form: {} as any,
+      assets: {} as any,
 
       //选择开始结束日期
       dates: {
@@ -241,7 +252,7 @@ export default defineComponent({
     const getAssets = () => {
       walletsUserAssetsIndexAPI({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
-        state.form = res
+        state.assets = res
       })
     }
 
@@ -268,13 +279,13 @@ export default defineComponent({
     }
 
     // 筛选账单
-    const selectBill = (index: any) => {
-      state.typeIndex = index
-      index != 0 ?
-        state.params.type = [state.typeList[state.typeIndex].value] :
-        state.params.type = []
-      getBill()
-    }
+    // const selectBill = (index: any) => {
+    //   state.typeIndex = index
+    //   index != 0 ?
+    //     state.params.type = [state.typeList[state.typeIndex].value] :
+    //     state.params.type = []
+    //   getBill()
+    // }
 
     // 获取用户账单列表
     const getBill = () => {
@@ -327,7 +338,7 @@ export default defineComponent({
       getOrder,
       switchOrder,
       switchBill,
-      selectBill,
+      // selectBill,
     }
   }
 });

@@ -13,7 +13,7 @@
             {{ currentTeamInfo.username }}
             <span class="text-caption text-grey-1">[ID:{{ currentTeamInfo.id }}]</span>
             <q-icon name="keyboard_double_arrow_down" class="q-ml-xs"></q-icon>
-            <span class="text-caption">{{currentTeamInfo.depth}}</span>
+            <span class="text-caption">{{ currentTeamInfo.depth }}</span>
           </div>
           <div class="row no-wrap items-center q-mt-sm">
             <div class="text-white text-subtitle2">
@@ -39,15 +39,15 @@
               <q-img no-spinner :src="imageSrc(children.avatar)"></q-img>
             </q-avatar>
             <div class="q-ml-sm">
-              <div class="text-caption text-grey">{{$t('teamMember')}}</div>
+              <div class="text-caption text-grey">{{ $t('teamMember') }}</div>
               <div class="text-body2 text-bold">
                 {{ children.username }}
-                <span class="text-caption text-grey-7">(ID:{{children.id}})</span>
+                <span class="text-caption text-grey-7">(ID:{{ children.id }})</span>
               </div>
             </div>
           </div>
           <div class="col">
-            <div class="text-caption text-grey">{{$t('createdTime')}}</div>
+            <div class="text-caption text-grey">{{ $t('createdTime') }}</div>
             <div>
               {{ date.formatDate(children.createdAt * 1000, 'YYYY/MM/DD HH:mm:SS') }}
             </div>
@@ -58,8 +58,8 @@
             </div>
           </div>
           <div>
-            <div @click="$router.push({nane: 'TeamIndex', query: {id: children.id}})"
-                 class="cursor-pointer text-grey text-body2">
+            <div @click="$router.push({ name: 'TeamIndex', query: { id: children.id } })"
+              class="cursor-pointer text-grey text-body2">
               <span>{{ $t('views') }}</span>
               <q-icon size="14px" class="text-grey" name="arrow_forward_ios"></q-icon>
             </div>
@@ -100,7 +100,7 @@ export default defineComponent({
         state.currentUserId = $userStore.userInfo.id
       }
 
-      teamIndexAPI({id: Number(state.currentUserId)}).then((res: any) => {
+      teamIndexAPI({ id: Number(state.currentUserId) }).then((res: any) => {
         state.currentTeamInfo = res
       })
     })

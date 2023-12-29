@@ -13,7 +13,7 @@
           </div>
           <div class="text-h6 text-white text-weight-bold">
             <div v-if="showMoney">
-              <span class="text-caption q-mr-xs">{{$t('currency')}}</span>{{Number(userInfo.money).toFixed(2)}}
+              <span class="text-caption q-mr-xs">{{ $t('currency') }}</span>{{ Number(userInfo.money).toFixed(2) }}
             </div>
             <div v-else>
               ******
@@ -25,11 +25,9 @@
       <!-- 充值、提现 -->
       <div class="row">
         <q-btn @click="$router.push({ name: 'WalletsDeposit' })" unelevated class="text-primary bg-white" rounded no-caps
-               style="width: 80px"
-          :label="$t('deposit')"></q-btn>
+          style="width: 80px" :label="$t('deposit')"></q-btn>
         <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" unelevated class="text-primary bg-white q-ml-md" rounded
-               style="width: 80px"
-          no-caps :label="$t('withdraw')"></q-btn>
+          style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
       </div>
     </div>
 
@@ -45,18 +43,19 @@
           <!-- 右侧 -->
           <div v-if="tab == 'Bill Detail'" class="row q-pr-md">
             <!-- 选择 -->
-            <q-btn class="bg-grey-1 row no-wrap" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
+            <!-- <q-btn class="bg-grey-1 row no-wrap" unelevated no-caps rounded
+              style="border: 1px solid #DDDDDD;height: 32px;">
               <div class="q-mr-xs">{{ typeList[typeIndex].name }}</div>
               <q-icon name="expand_more"></q-icon>
               <q-menu>
                 <q-list style="min-width: 100px">
                   <q-item @click="selectBill(index)" :active="typeIndex == index" clickable v-close-popup
-                          v-for="(type, index) in typeList" :key="index">
+                    v-for="(type, index) in typeList" :key="index">
                     <q-item-section>{{ type.name }}</q-item-section>
                   </q-item>
                 </q-list>
               </q-menu>
-            </q-btn>
+            </q-btn> -->
 
             <!-- 日期选择 -->
             <q-btn class="bg-grey-1 q-ml-md" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
@@ -80,9 +79,9 @@
       </q-card-section>
       <q-card-section>
         <!-- 表格 -->
-        <div class="rounded-borders" v-if="walletsList.length > 0">
+        <div v-if="walletsList.length > 0">
           <div v-for="(wallet, walletIndex) in walletsList" :key="walletIndex" class="q-px-md">
-            <q-expansion-item :hide-expand-icon="wallet.status == 20">
+            <q-expansion-item :hide-expand-icon="wallet.status != -1" :header-style="{ borderRadius: '4px' }">
               <template v-slot:header>
                 <q-item-section>
                   <div class="col q-py-md">
@@ -96,20 +95,23 @@
                 </q-item-section>
                 <q-item-section>
                   <div class="col text-right text-body1 q-py-md">
-                    +${{ wallet.money }}
+                    {{ (wallet.type == 1 ? '+' : '-') }}{{ $t('currency') }}{{ wallet.money }}
                   </div>
                 </q-item-section>
                 <q-item-section>
-                  <div v-if="wallet.status == 10" class="col text-right q-pr-md text-red q-py-md">
+                  <div v-if="wallet.status == -1" class="col text-right q-pr-md text-red q-py-md">
+                    {{ $t('refuse') }}
+                  </div>
+                  <div v-if="wallet.status == 10" class="col text-right q-pr-md text-primary q-py-md">
                     {{ $t('pending') }}
                   </div>
-                  <div v-if="wallet.status == 20" class="col text-right q-pr-md text-primary q-py-md">
+                  <div v-if="wallet.status == 20" class="col text-right q-pr-md q-py-md">
                     {{ $t('complete') }}
                   </div>
                 </q-item-section>
               </template>
-              <div v-if="wallet.status == 10" class="text-red q-py-md q-px-md bg-grey-1">fail reasons，fail reasons fail
-                reasons
+              <div v-if="wallet.status == -1" class="text-red q-py-md q-px-md bg-grey-1">
+                {{ wallet.data }}
               </div>
             </q-expansion-item>
             <q-separator />
@@ -122,7 +124,7 @@
               {{ params.pagination.rowsPerPage }}条/页
             </div>
             <q-pagination v-model="params.pagination.page" :max="pageTotal" ellipsess :direction-links="true"
-                          @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
+              @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
             </q-pagination>
           </div>
         </div>
@@ -149,19 +151,19 @@ export default defineComponent({
   setup() {
     const $userStore = UserStore()
     const state = reactive({
-      userInfo: $userStore.userInfo,
+      userInfo: {} as any,
       showMoney: true,
 
       // 过滤类型
-      typeList: [
-        { name: '全部', value: '' },
-        { name: '充值类型', value: 1 },
-        { name: '提现类型', value: 11 },
-        { name: '购买', value: 21 },
-        { name: '收益', value: 51 },
-        { name: '奖励', value: 61 },
-      ],
-      typeIndex: 0,
+      // typeList: [
+      //   { name: '全部', value: '' },
+      //   { name: '充值类型', value: 1 },
+      //   { name: '提现类型', value: 11 },
+      //   { name: '购买', value: 21 },
+      //   { name: '收益', value: 51 },
+      //   { name: '奖励', value: 61 },
+      // ],
+      // typeIndex: 0,
 
       //选择开始结束日期
       dates: {
@@ -194,6 +196,7 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      state.userInfo = $userStore.userInfo
       getOrder()
     })
 
@@ -220,13 +223,13 @@ export default defineComponent({
     }
 
     // 筛选账单
-    const selectBill = (index: any) => {
-      state.typeIndex = index
-      index != 0 ?
-        state.params.type = [state.typeList[state.typeIndex].value] :
-        state.params.type = []
-      getBill()
-    }
+    // const selectBill = (index: any) => {
+    //   state.typeIndex = index
+    //   index != 0 ?
+    //     state.params.type = [state.typeList[state.typeIndex].value] :
+    //     state.params.type = []
+    //   getBill()
+    // }
 
     // 获取钱包订单
     const getOrder = () => {
@@ -275,7 +278,7 @@ export default defineComponent({
       getBill,
       switchOrder,
       switchBill,
-      selectBill,
+      // selectBill,
     }
   }
 });
