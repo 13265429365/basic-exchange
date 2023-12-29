@@ -1,62 +1,78 @@
 <template>
   <div style="padding: 48px 100px;">
     <!-- 总金额 -->
-    <div class="row items-center q-pa-lg rounded-borders"
+    <div class="row justify-between items-center q-pa-lg rounded-borders"
       style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
-      <q-avatar size="60px">
-        <q-img :src="imageSrc(TeamMembers.avatar ?? '')"></q-img>
-      </q-avatar>
+      <div class="row items-center">
+        <q-avatar size="60px" class="bg-white">
+          <q-img no-spinner :src="imageSrc(currentTeamInfo.avatar)"></q-img>
+        </q-avatar>
 
-      <div class="q-ml-md text-white">
-        <div class="text-body1 text-weight-bold">
-          {{ TeamMembers.username }}
-          {{ '(ID:' + TeamMembers.id + ')' }}
+        <div class="q-ml-md text-white">
+          <div class="text-body1 text-weight-bold">
+            {{ currentTeamInfo.username }}
+            <span class="text-caption text-grey-1">[ID:{{ currentTeamInfo.id }}]</span>
+            <q-icon name="keyboard_double_arrow_down" class="q-ml-xs"></q-icon>
+            <span class="text-caption">{{currentTeamInfo.depth}}</span>
+          </div>
+          <div class="row no-wrap items-center q-mt-sm">
+            <div class="text-white text-subtitle2">
+              {{ $t('teamEarnings') }}: <span class="text-body1">+{{ currentTeamInfo.earnings }}</span>
+            </div>
+          </div>
         </div>
-        <div class="row no-wrap items-center q-mt-sm">
-          <div class="text-white text-weight-bold">
-            {{ $t('teamEarnings') }} ： + {{ TeamMembers.earnings }}
-          </div>
-          <div @click="$router.push({ name: 'TeamEarnings', query: { id: TeamMembers.id } })"
-            class="q-ml-lg cursor-pointer">
-            <span style="font-size: 12px;">{{ $t('desc') }}</span>
-            <q-icon size="12px" class="text-white q-ml-xs" name="arrow_forward_ios"></q-icon>
-          </div>
+      </div>
+      <div>
+        <div @click="$router.push({ name: 'TeamEarnings', query: { id: currentTeamInfo.id } })"
+          class="cursor-pointer text-white text-body2">
+          <span>{{ $t('desc') }}</span>
+          <q-icon size="14px" class="text-white" name="arrow_forward_ios"></q-icon>
         </div>
       </div>
     </div>
 
     <div class="q-mt-xl">
-      <div v-for="(team, teamIndex) in TeamMembers.children" :key="teamIndex">
+      <div v-for="(children, childrenIndex) in currentTeamInfo.children" :key="childrenIndex">
         <div class="row justify-between items-center q-my-lg q-px-md">
           <div class="col row items-center">
             <q-avatar size="40px">
-              <q-img :src="imageSrc(team.avatar ?? '')"></q-img>
+              <q-img no-spinner :src="imageSrc(children.avatar)"></q-img>
             </q-avatar>
-            <div class="text-body1 q-ml-sm">{{ team.username }}<br> {{ '(ID:' + team.id + ')' }}</div>
+            <div class="q-ml-sm">
+              <div class="text-caption text-grey">{{$t('teamMember')}}</div>
+              <div class="text-body2 text-bold">
+                {{ children.username }}
+                <span class="text-caption text-grey-7">(ID:{{children.id}})</span>
+              </div>
+            </div>
           </div>
-          <div class="col text-grey-7">
-            {{ date.formatDate(team.createdAt * 1000, 'YYYY/MM/DD HH:mm:SS') }}
+          <div class="col">
+            <div class="text-caption text-grey">{{$t('createdTime')}}</div>
+            <div>
+              {{ date.formatDate(children.createdAt * 1000, 'YYYY/MM/DD HH:mm:SS') }}
+            </div>
           </div>
-          <div class="col text-primary text-weight-bold text-h6">
-            + {{ team.earnings }}
+          <div class="col">
+            <div class="text-primary text-h6 text-right q-mr-lg">
+              +{{ children.earnings }}
+            </div>
           </div>
-          <div class="row q-gutter-sm">
-            <q-btn @click="getTeam({ id: team.id })" size="sm" flat dense rounded no-caps
-              class="bg-grey-1 text-grey-8 q-px-md" style="border: 1px solid;">
-              <div style="font-size: 12px;">{{ $t('desc') }}</div>
-            </q-btn>
+          <div>
+            <div @click="$router.push({nane: 'TeamIndex', query: {id: children.id}})"
+                 class="cursor-pointer text-grey text-body2">
+              <span>{{ $t('views') }}</span>
+              <q-icon size="14px" class="text-grey" name="arrow_forward_ios"></q-icon>
+            </div>
           </div>
         </div>
         <q-separator />
       </div>
-      <div v-if="TeamMembers.children == null || TeamMembers.children.length <= 0">
-        <div class="text-center q-my-lg text-h6 text-grey-8">
+      <div v-if="currentTeamInfo.children == null || currentTeamInfo.children.length <= 0">
+        <div class="text-center q-my-lg text-body1 text-grey">
           {{ $t('noData') }}
         </div>
       </div>
-
     </div>
-
   </div>
 </template>
 
@@ -66,33 +82,33 @@ import { imageSrc } from 'src/utils'
 import { teamIndexAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 import { date } from 'quasar';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'TeamIndex',
   setup() {
     const $userStore = UserStore();
+    const $router = useRouter()
 
-    let state = reactive({
-      // 团队成员
-      TeamMembers: [] as any,
+    const state = reactive({
+      currentUserId: $router.currentRoute.value.query.id ?? 0,
+      currentTeamInfo: {} as any,
     });
 
     onMounted(() => {
-      getTeam({ id: $userStore.userInfo.id })
-    })
+      if (state.currentUserId == 0) {
+        state.currentUserId = $userStore.userInfo.id
+      }
 
-    // 获取用户团队详情
-    const getTeam = (params: any) => {
-      teamIndexAPI(params).then((res: any) => {
-        state.TeamMembers = res
+      teamIndexAPI({id: Number(state.currentUserId)}).then((res: any) => {
+        state.currentTeamInfo = res
       })
-    }
+    })
 
     return {
       imageSrc,
       date,
       ...toRefs(state),
-      getTeam,
     }
   }
 });
