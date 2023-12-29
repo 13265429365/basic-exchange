@@ -51,7 +51,7 @@
                 <q-uploader-add-trigger />
                 <q-avatar style="width: 80px;height: 80px;">
                   <q-img :src="imageSrc(currentSetting.value)" />
-                  <q-badge floating class="bg-transparent" :style="{top: '70%'}">
+                  <q-badge floating class="bg-transparent" :style="{ top: '70%' }">
                     <q-img src='/images/icons/edit.png' width="28px" height="28px"></q-img>
                   </q-badge>
                 </q-avatar>
@@ -191,7 +191,7 @@ export default defineComponent({
 
       // 弹窗数据
       countryList: $initStore.countryList,
-      currentCountryIndex: 0,
+      currentCountryIndex: 0 as any,
       dialogShow: false,
       currentSetting: {} as any,
 

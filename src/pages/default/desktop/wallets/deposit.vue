@@ -7,9 +7,8 @@
         <div class="q-ml-md">{{ $t('deposit') }}</div>
       </div>
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-sm q-px-md"
-          style="border-radius: 2px;background: #F8F9FC;">
-          Account Type
+        <div class=" text-subtitle1 text-weight-medium q-py-sm q-px-md" style="border-radius: 2px;background: #F8F9FC;">
+          {{ $t('depositAccount') }}
         </div>
 
         <!-- 卡类型选择 -->
@@ -19,7 +18,7 @@
             :class="`q-pa-sm row q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == ActiveCardIndex ? 'select' : ''}`"
             @click="selectType(typeIndex)">
             <q-img class="self-center q-mr-sm" :src="imageSrc(typeI.icon)" width="32px" height="32px" />
-            <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.name }}</div>
+            <div style="font-size: 16px;" class=" text-weight-bold self-center">{{ typeI.name }}</div>
             <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/images/select.png" width="30PX"
               height="30px" style="bottom: 0;right: 0;"></q-img>
           </div>
@@ -29,41 +28,43 @@
         <div class="q-pa-md">
           <div style="border-bottom: 1px dashed #DDDDDD">
             <q-list>
-              <q-expansion-item expand-separator label="Recharge Information">
+              <q-expansion-item expand-separator :label="$t('depositAccountInfo')" class="text-body2">
                 <q-card>
                   <q-card-section class="q-pa-none">
                     <div class="q-mt-md row justify-between no-wrap">
                       <div class="row no-wrap items-center">
                         <q-badge rounded class="q-mr-sm" />
-                        <div class="ellipsis text-color-6">
-                          Mrh Raju
+                        <div class="ellipsis ">
+
                         </div>
                       </div>
-                      <div class="text-primary q-ml-md cursor-pointer" @click="copyToClipboardFunc('Mrh Raju')">
-                        copy
+                      <div class="text-primary q-ml-md cursor-pointer"
+                        @click="copyToClipboardFunc(cardType[ActiveCardIndex].name ?? '')">
+                        {{ $t('copy') }}
                       </div>
                     </div>
                     <div class="q-mt-md row justify-between no-wrap">
                       <div class="row no-wrap items-center">
                         <q-badge rounded class="q-mr-sm" />
-                        <div class="ellipsis text-color-6">
-                          5254 7634 8734 7690
+                        <div class="ellipsis ">
+
                         </div>
                       </div>
                       <div class="text-primary q-ml-md cursor-pointer"
-                        @click="copyToClipboardFunc('5254 7634 8734 7690')">
-                        copy
+                        @click="copyToClipboardFunc(cardType[ActiveCardIndex].mode ?? '')">
+                        {{ $t('copy') }}
                       </div>
                     </div>
                     <div class="q-mt-md q-mb-md row justify-between no-wrap">
                       <div class="row no-wrap items-center">
                         <q-badge rounded class="q-mr-sm" />
-                        <div class="ellipsis text-color-6">
-                          BBC BANK
+                        <div class="ellipsis ">
+
                         </div>
                       </div>
-                      <div class="text-primary q-ml-md cursor-pointer" @click="copyToClipboardFunc('BBC BANK')">
-                        copy
+                      <div class="text-primary q-ml-md cursor-pointer"
+                        @click="copyToClipboardFunc(cardType[ActiveCardIndex].type ?? '')">
+                        {{ $t('copy') }}
                       </div>
                     </div>
                   </q-card-section>
@@ -74,16 +75,16 @@
         </div>
 
         <!-- 充值金额、充值凭证 -->
-        <div class="q-mt-lg" style="width: 40%;">
-          <div class="row no-wrap items-center q-mb-lg">
-            <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('depositAmount') }}：</div>
-            <q-input type="number" class="col-8" dense outlined v-model="form.money" />
+        <div class="q-mt-lg q-gutter-lg" style="width: 40%;">
+          <div class="row no-wrap items-center">
+            <div class=" text-weight-medium q-mr-xs">{{ $t('depositAmount') }}：</div>
+            <q-input type="number" class="col-8" dense outlined v-model="params.money" />
           </div>
 
           <!-- 银行名称 -->
-          <div class="q-mb-md row no-wrap items-center"
+          <div class="row no-wrap items-center"
             v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
-            <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('bankName') }}：</div>
+            <div class=" text-weight-medium q-mr-xs">{{ $t('bankName') }}：</div>
             <div class="row col-8 justify-between q-px-md q-py-sm rounded-borders" style="border: 1px solid #DDDDDD;">
               <div class="self-center row">
                 <q-img :src="imageSrc(cardType[ActiveCardIndex].items[ActiveBankIndex].icon)" width="26px"
@@ -111,55 +112,33 @@
           </div>
 
           <div class="row no-wrap">
-            <div class="text-color-3 text-weight-medium q-mr-xs">
+            <div class=" text-weight-medium q-mr-xs">
               {{ $t('depositProof') }}：
             </div>
             <div class="q-mb-xl" style="width: 180px;">
-              <uploader :respValue="form.voucher" @uploaded="uploaded" :listStyle="{
-                height: '160px',
-              }">
-                <template v-slot:noneAdd>
-                  <div style="width: 100%;height: 100%;" class="column justify-center items-center fit">
-                    <q-icon name="add" size="29px" />
-                  </div>
+              <uploader @uploaded="(url) => { params.voucher = url }">
+                <template v-slot:default>
+                  <q-uploader-add-trigger />
+                  <q-card flat>
+                    <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
+                      <q-icon name="add" color="grey" size="40px" v-if="params.voucher == ''" />
+                      <q-img v-else :src="imageSrc(params.voucher)"></q-img>
+                    </div>
+                  </q-card>
                 </template>
               </uploader>
             </div>
           </div>
         </div>
-        <div class="q-mt-lg q-mb-md text-color-6">
+
+        <div class="q-mt-lg q-mb-md ">
           <div>充值提示：1、确认地址, 并且等待主网同步 2、谨防假冒在线客服充值</div>
         </div>
+
         <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps
           style="height: 40px;width: 207px;" @click="Deposit" />
       </div>
 
-      <!-- 添加按钮 -->
-      <!-- 成功-->
-      <q-dialog v-model="alertPass">
-        <q-card>
-          <q-card-section class="row items-center q-pb-none">
-            <q-space />
-            <q-btn icon="close" flat round dense v-close-popup />
-          </q-card-section>
-          <div class="bg-white q-pt-sm q-pa-xl  justify-between" style="width:475px">
-            <div class="row justify-center">
-              <q-img src="/images/pc/recharge/success.png" width="120px" height="120px" />
-
-            </div>
-            <div class="row justify-center">
-              <div class="text-color-3 text-h6 text-weight-medium q-mt-md">Submitted successfully</div>
-            </div>
-            <div class="text-color-9 text-body2 text-center q-mt-sm">
-              Please be patient and keep an eye on the progress at any time
-            </div>
-            <div class="row justify-center">
-              <q-btn unelevated rounded color="primary" label="OK" style="width: 260px;" class="q-mt-xl" no-caps
-                @click="alertPass = !alertPass" />
-            </div>
-          </div>
-        </q-card>
-      </q-dialog>
     </div>
   </div>
 </template>
@@ -184,11 +163,9 @@ export default {
     const $initStore = InitStore()
 
     const state = reactive({
-      alertPass: false,
-      password: '',
-      inviteUrl: '09z8we73847zusyd873ezs88d009z8we73847zusyd873ezs88d0',
-
-      form: {} as any,
+      params: {
+        voucher: '',
+      } as any,
 
       // 当前选中的银行key
       ActiveBankIndex: 0,
@@ -211,10 +188,10 @@ export default {
         state.cardType = res
         // 预设
         state.cardType.forEach((cardType: any, cardTypeIndex: any) => {
-          if (cardType.name == state.form.name) {
+          if (cardType.name == state.params.name) {
             state.ActiveCardIndex = cardTypeIndex
             cardType.items.forEach((items: any, itemsIndex: any) => {
-              if (items.id == state.form.paymentId) {
+              if (items.id == state.params.paymentId) {
                 state.ActiveBankIndex = itemsIndex
               }
             })
@@ -225,20 +202,17 @@ export default {
 
     // 充值
     const Deposit = () => {
-      const params = {
-        paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
-        money: Number(state.form.money),
-        voucher: state.form.voucher,
-      }
-      walletsDepositCreateAPI(params).then((res: any) => {
+      state.params.paymentId = state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id
+      state.params.money = Number(state.params.money)
+      walletsDepositCreateAPI(state.params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
         console.log('充值成功', res);
 
         // 提现后是否跳转客服页面
         if ($initStore.config.settings.online.depositLink) {
-          $router.push({ name: 'AccountCard' })
+          $router.push({ name: 'WalletsAccountIndex' })
         } else {
-          $router.push({ name: 'AccountCard' })
+          $router.push({ name: 'WalletsAccountIndex' })
         }
       })
     }
@@ -257,31 +231,18 @@ export default {
         })
     };
 
-    const uploaded = (url: any) => {
-      state.form.voucher = url
-      console.log(url);
-
-    }
-
     return {
       imageSrc,
       copyToClipboardFunc,
       ...toRefs(state),
       selectType,
       Deposit,
-      uploaded,
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-:deep .q-item {
-  padding: 8px 0;
-  font-size: 16px;
-  font-weight: bold;
-}
-
 .select {
   background-color: rgba(241, 250, 246, 1) !important;
   border: 1px solid $primary;
