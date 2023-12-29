@@ -74,18 +74,17 @@
         </div>
 
         <!-- 充值金额、充值凭证 -->
-        <div class="q-mt-lg">
+        <div class="q-mt-lg" style="width: 40%;">
           <div class="row no-wrap items-center q-mb-lg">
             <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('depositAmount') }}：</div>
-            <q-input type="number" dense outlined v-model="form.money" />
+            <q-input type="number" class="col-8" dense outlined v-model="form.money" />
           </div>
 
           <!-- 银行名称 -->
           <div class="q-mb-md row no-wrap items-center"
             v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
             <div class="text-color-3 text-weight-medium q-mr-xs">{{ $t('bankName') }}：</div>
-            <div class="row justify-between q-px-md q-py-sm"
-              style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
+            <div class="row col-8 justify-between q-px-md q-py-sm rounded-borders" style="border: 1px solid #DDDDDD;">
               <div class="self-center row">
                 <q-img :src="imageSrc(cardType[ActiveCardIndex].items[ActiveBankIndex].icon)" width="26px"
                   height="26px" />

@@ -1,126 +1,138 @@
 <template>
-  <div>
-    <!-- 钱包余额 -->
-    <div class="background row items-center justify-between rounded-borders q-pa-lg q-pr-xl">
+  <div style="padding: 48px 100px;">
+    <!-- 资产余额 -->
+    <div class="row items-center justify-between rounded-borders q-pa-lg q-pr-xl"
+      style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
       <div class="row">
-        <q-img class="q-mr-lg" :src="imageSrc($route.query.icon ? $route.query.icon : '')" width="66px"
-          height="66px"></q-img>
+        <q-img class="q-mr-lg" :src="imageSrc('/assets/icon/menu/deposit.png')" width="66px" height="66px"></q-img>
         <div class="q-pt-sm">
           <div class="row items-center">
-            <div class="text-white text-h6 q-mr-xs">{{ $t('balance') }}</div>
-            <q-img @click="moneyShow = !moneyShow" class="cursor-pointer"
-              :src="`/images/pc/wallet/${moneyShow ? 'show' : 'noShow'}.png`" width="14px" height="14px"></q-img>
+            <div class="text-white text-body1 q-mr-xs">{{ $t('balance') }}</div>
+            <q-icon @click="moneyShow = !moneyShow" class="cursor-pointer" color="white" size="20px"
+              :name="moneyShow ? 'o_visibility' : 'o_visibility_off'"></q-icon>
           </div>
-          <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
+          <div class="text-h6 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
           </div>
         </div>
       </div>
 
-      <!-- btn -->
+      <!-- 充值、提现 -->
       <div class="row">
-        <q-btn @click="$router.push({ name: 'Deposit' })" class="text-primary bg-white no-shadow" rounded no-caps
+        <q-btn @click="$router.push({ name: 'WalletsDeposit' })" unelevated class="text-primary bg-white" rounded no-caps
           :label="$t('deposit')"></q-btn>
-        <q-btn @click="$router.push({ name: 'Withdraw' })" class="text-primary bg-white no-shadow q-ml-md" rounded no-caps
-          :label="$t('withdraw')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" unelevated class="text-primary bg-white q-ml-md" rounded
+          no-caps :label="$t('withdraw')"></q-btn>
       </div>
     </div>
 
-    <!-- 表格 horizontal -->
-    <q-table class="q-mt-lg no-shadow" bordered :rows="rows" :columns="columns" row-key="id" hide-header>
-      <template v-slot:top>
-        <div class="row no-wrap justify-between full-width">
-          <!-- 左侧tabs -->
-          <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-            <q-tab @click="switchOrder" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-              name="Transactions" label="Transactions" />
-            <q-tab @click="switchBill" class="text-primary q-pa-none" style="justify-content: flex-start !important;"
-              name="Bill Detail" label="Bill Detail" />
-          </q-tabs>
 
-          <!-- 右侧 -->
-          <div v-if="tab == 'Bill Detail'" class="row no-wrap q-pr-md">
-            <!-- 选择 -->
-            <q-btn class="bg-grey-1 row no-wrap" no-caps rounded style="border: 1px solid #DDDDDD">
-              <div class="q-mr-xs">全部</div>
-              <q-icon name="expand_more"></q-icon>
-            </q-btn>
+    <!-- 账单、订单部分 -->
+    <div class="q-mt-lg rounded-borders q-py-md q-px-lg" style="border: 1px solid #DDDDDD;">
+      <!-- 表格头部 -->
+      <div class="row justify-between">
+        <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
+          <q-tab @click="switchOrder" class="text-primary" no-caps name="Transactions" :label="$t('transactions')" />
+          <q-tab @click="switchBill" class="text-primary" no-caps name="Bill Detail" :label="$t('transactions')" />
+        </q-tabs>
+        <!-- 右侧 -->
+        <div v-if="tab == 'Bill Detail'" class="row q-pr-md">
+          <!-- 选择 -->
+          <q-btn class="bg-grey-1 row no-wrap" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
+            <div class="q-mr-xs">{{ typeList[typeIndex].name }}</div>
+            <q-icon name="expand_more"></q-icon>
+            <q-menu>
+              <q-list style="min-width: 100px">
+                <q-item @click="selectBill(index)" :active="typeIndex == index" clickable v-close-popup
+                  v-for="(type, index) in typeList" :key="index">
+                  <q-item-section>{{ type.name }}</q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
 
-            <!-- 日期选择 -->
-            <q-btn class="bg-grey-1 row no-wrap q-ml-md" no-caps rounded style="border: 1px solid #DDDDDD;width: auto;">
-              <div class="row items-center">
-                <div class="q-mr-xs">{{ dates.from }}</div>
-                <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
-                <div class="q-mr-xs">{{ dates.to }}</div>
-                <q-icon class="text-color-9 q-ml-sm" size="15px" name="calendar_today"></q-icon>
-              </div>
-              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date v-model="dates" range>
-                  <div class="row items-center justify-end q-gutter-sm">
-                    <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                    <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-btn>
-          </div>
-
+          <!-- 日期选择 -->
+          <q-btn class="bg-grey-1 q-ml-md" unelevated no-caps rounded style="border: 1px solid #DDDDDD;height: 32px;">
+            <div class="row items-center">
+              <div class="q-mr-xs text-caption">{{ dates.from }}</div>
+              <q-icon class="q-mx-sm" style="color: #DDDDDD;" size="16px" name="trending_flat"></q-icon>
+              <div class="q-mr-xs text-caption">{{ dates.to }}</div>
+              <q-icon class="q-ml-sm" size="15px" name="calendar_today"></q-icon>
+            </div>
+            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+              <q-date v-model="dates" range>
+                <div class="row items-center justify-end q-gutter-sm">
+                  <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
+                  <q-btn @click="switchBill" :label="$t('confirm')" color="primary" flat v-close-popup />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-btn>
         </div>
-      </template>
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td>
-            {{ date.formatDate(Number(props.row.createdAt ? props.row.createdAt * 1000 : props.row.updatedAt * 1000),
-              'YYYY-MM-DD') }}
-          </q-td>
-          <q-td>
-            <div class="text-primary">
-              {{ props.row.name }}
-            </div>
-          </q-td>
-          <q-td>
-            +${{ props.row.money }}
-          </q-td>
-          <q-td class="row justify-between items-center">
-            <div>
-              ${{ props.row.balance ? props.row.balance : props.row.fee }}
-            </div>
-            <div>
-              <q-icon @click="props.expand = !props.expand" class="cursor-pointer"
-                :name="props.expand ? 'expand_less' : 'expand_more'" />
-            </div>
-          </q-td>
-        </q-tr>
-        <q-tr v-show="props.expand" :props="props">
-          <q-td colspan="100%">
-            <div class="text-left text-red">fail reasons，fail reasons fail reasons</div>
-          </q-td>
-        </q-tr>
-      </template>
+      </div>
 
-      <template v-slot:bottom>
-        <div class="q-pa-md row items-center no-wrap">
+      <!-- 表格 -->
+      <div class="rounded-borders" v-if="walletsList.length > 0">
+        <div v-for="(wallet, walletIndex) in walletsList" :key="walletIndex" class="q-px-md">
+          <q-expansion-item :hide-expand-icon="wallet.status == 20">
+            <template v-slot:header>
+              <q-item-section>
+                <div class="col q-py-md">
+                  {{ date.formatDate((wallet.updatedAt ?? wallet.createdAt) * 1000, 'YYYY/MM/DD HH:mm:SS') }}
+                </div>
+              </q-item-section>
+              <q-item-section>
+                <div class="col text-center q-py-md">
+                  {{ wallet.name }}
+                </div>
+              </q-item-section>
+              <q-item-section>
+                <div class="col text-right text-body1 q-py-md">
+                  +${{ wallet.money }}
+                </div>
+              </q-item-section>
+              <q-item-section>
+                <div v-if="wallet.status == 10" class="col text-right q-pr-md text-red q-py-md">
+                  {{ $t('pending') }}
+                </div>
+                <div v-if="wallet.status == 20" class="col text-right q-pr-md text-primary q-py-md">
+                  {{ $t('complete') }}
+                </div>
+              </q-item-section>
+            </template>
+            <div v-if="wallet.status == 10" class="text-red q-py-md q-px-md bg-grey-1">fail reasons，fail reasons fail
+              reasons
+            </div>
+          </q-expansion-item>
+          <q-separator />
+        </div>
+
+        <!-- 分页 -->
+        <div class="q-pa-md row items-center justify-center no-wrap q-mt-lg">
           <div class="text-color-9 q-mr-md">
             共{{ total }}条,
-            {{ pagination.rowsPerPage }}条/页
+            {{ params.pagination.rowsPerPage }}条/页
           </div>
-          <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
+          <q-pagination v-model="params.pagination.page" :max="pageTotal" ellipsess :direction-links="true"
             @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
           </q-pagination>
-          <div class="row nowrap">
-            <div class="to">跳至</div>
-            <q-input :disable="pageTotal <= 1" standout v-model="toPage" @keyup.enter="refreshTableData" suffix="页"
-              style="width: 50px;mi-height: 28px;"></q-input>
-          </div>
         </div>
-      </template>
-    </q-table>
+      </div>
+
+      <div v-if="walletsList == null || walletsList.length <= 0">
+        <div class="text-center q-my-lg text-h6 text-grey-8">
+          {{ $t('noData') }}
+        </div>
+      </div>
+
+    </div>
+
+
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
-import { useRoute } from 'vue-router';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { UserStore } from 'src/stores/user';
 import { walletsOrderIndexAPI, walletsBillIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
@@ -129,19 +141,27 @@ export default defineComponent({
   name: 'WalletsAssetsDetails',
   setup() {
     const $userStore = UserStore()
-    const $route = useRoute();
 
     let state = reactive({
+      // 过滤类型
+      typeList: [
+        { name: '全部', value: '' },
+        { name: '充值类型', value: 1 },
+        { name: '提现类型', value: 11 },
+        { name: '购买', value: 21 },
+        { name: '收益', value: 51 },
+        { name: '奖励', value: 61 },
+      ],
+      typeIndex: 0,
+
       //选择开始结束日期
       dates: {
-        from: '',
-        to: '',
+        from: date.formatDate(Date.now(), 'YYYY-MM-DD'),
+        to: date.formatDate(Date.now(), 'YYYY-MM-DD'),
       },
 
-      money: 0,
-
-      // 钱包订单数据
-      form: {} as any,
+      // 钱包余额
+      money: $userStore.userInfo.money,
 
       // 表格切换
       tab: 'Transactions',
@@ -153,123 +173,93 @@ export default defineComponent({
       pageTotal: 1, // 数据总页数
       toPage: 1, // 跳转至n页
       total: 1,//  共n条数据
-      pagination: {
-        rowsPerPage: 5, //  n条/一页
-        page: 1, //  当前页数
-        descending: true,
-        sortBy: 'created_at',
-      },
+
+      params: {
+        type: [] as any,
+        pagination: {
+          rowsPerPage: 5, //  n条/一页
+          page: 1, //  当前页数
+          descending: true,
+          sortBy: 'created_at',
+        },
+      } as any,
 
       // 账单
-      columns: [
-        { name: 'updatedAt' },
-        { name: 'name' },
-        { name: 'money' },
-        { name: 'fee' },
-      ] as any,
-      rows: [] as any,
+      walletsList: [] as any,
     });
 
     onMounted(() => {
-      state.money = $userStore.userInfo.money;
       getOrder()
     })
 
-    // 切换成获取钱包订单
-    const switchOrder = () => {
-      state.pagination = {
+    // 初始化
+    const initializationPage = () => {
+      state.params.pagination = {
         rowsPerPage: 5, //  n条/一页
         page: 1, //  当前页数
         descending: true,
         sortBy: 'created_at',
       }
-      getOrder()
     }
 
     // 切换成获取钱包订单
+    const switchOrder = () => {
+      initializationPage()
+      getOrder()
+    }
+
+    // 切换成获取账单
     const switchBill = () => {
-      state.pagination = {
-        rowsPerPage: 5, //  n条/一页
-        page: 1, //  当前页数
-        descending: true,
-        sortBy: 'created_at',
-      }
+      initializationPage()
+      getBill()
+    }
+
+    // 筛选账单
+    const selectBill = (index: any) => {
+      state.typeIndex = index
+      index != 0 ?
+        state.params.type = [state.typeList[state.typeIndex].value] :
+        state.params.type = []
       getBill()
     }
 
     // 获取钱包订单
     const getOrder = () => {
-      state.rows = []
       const params = {
-        assets_id: Number($route.query.id),
         types: [1, 11],
-        pagination: {
-          rowsPerPage: Number(state.pagination.rowsPerPage), //  n条/一页
-          page: Number(state.pagination.page), //  当前页数
-          descending: state.pagination.descending,
-          sortBy: state.pagination.sortBy,
-        },
+        pagination: state.params.pagination,
       }
       walletsOrderIndexAPI(params).then((res: any) => {
         console.log('钱包订单', res)
-        // state.form = res
         state.total = res.count
-        state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
-        res.items.forEach((element: any) => {
-          state.rows.push(element)
-        })
+        state.walletsList = res.items
+        state.pageTotal = Math.ceil(state.total / state.params.pagination.rowsPerPage)
       })
     }
 
     // 获取用户账单列表
     const getBill = () => {
       state.tab = 'Bill Detail'
-
-      const params = {
-        createdAt: {
-          from: date.formatDate(state.dates.from, 'x'),
-          to: date.formatDate(state.dates.to, 'x'),
-        },
-        types: [],
-        pagination: {
-          rowsPerPage: Number(state.pagination.rowsPerPage), //  n条/一页
-          page: Number(state.pagination.page), //  当前页数
-          descending: state.pagination.descending,
-          sortBy: state.pagination.sortBy,
-        },
+      state.params.createdAt = {
+        from: date.formatDate(state.dates.from, 'x'),
+        to: date.formatDate(state.dates.to, 'x'),
       }
-      walletsBillIndexAPI(params).then((res: any) => {
-        state.rows = []
+      walletsBillIndexAPI(state.params).then((res: any) => {
         console.log('账单列表', res)
+        state.walletsList = res.items
         state.total = res.count
-        state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
-        res.items.forEach((element: any) => {
-          state.rows.push(element)
-        });
+        state.pageTotal = Math.ceil(state.total / state.params.pagination.rowsPerPage)
       })
     }
 
     // 监听加减页
     const changePagination = (val: number) => {
       console.log(`changePagination: ${val}`)
-      state.pagination.page = val
+      state.params.pagination.page = Number(val)
 
       state.tab == 'Transactions' ?
         getOrder() :
         getBill()
-    }
-
-    // input输入页数回车
-    const refreshTableData = () => {
-      console.log(state.pagination.page);
-
-      if (state.toPage <= (state.total / state.rows.length)) {
-        state.pagination.page = Number(state.toPage)
-
-        state.tab == 'Transactions' ?
-          getOrder() :
-          getBill()
-      }
     }
 
     return {
@@ -277,89 +267,15 @@ export default defineComponent({
       date,
       ...toRefs(state),
       changePagination,
-      refreshTableData,
       getBill,
       switchOrder,
       switchBill,
+      selectBill,
     }
   }
 });
 </script>
 <style lang="scss" scoped>
-:deep .q-table {
-  padding-left: 39px;
-}
-
-:deep .q-table td {
-  font-size: 16px;
-}
-
-:deep .q-table__card .q-table__bottom {
-  justify-content: center;
-  border-top: 0;
-}
-
-.q-tab {
-  text-transform: capitalize;
-  flex: 0 1 auto !important;
-  margin-right: 40px;
-  padding: 0 10px;
-  border-radius: 8px;
-}
-
-:deep .q-tab .q-tab__label {
-  color: #666;
-  font-size: 20px;
-}
-
-:deep .q-tab--active .q-tab__label {
-  color: #333 !important;
-  font-weight: bold;
-}
-
-:deep .q-tab .q-tab__indicator {
-  width: 47px;
-  height: 4px;
-  border-radius: 3px;
-  left: 50%;
-  transform: translateX(-50%) !important;
-}
-
-.q-btn {
-  width: 100px;
-  height: 34px;
-}
-
-.q-btn::before {
-  box-shadow: none;
-}
-
-.background {
-  background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);
-}
-
-// pc版input样式
-:deep .q-field--standout .q-field__native {
-  color: rgba(0, 0, 0, 0.87) !important;
-}
-
-:deep .q-field--standout .q-field__suffix {
-  color: #DDDDDD;
-  line-height: 28px;
-  flex-wrap: nowrap;
-}
-
-:deep .q-field--standout .q-field__control {
-  padding: 0 6px;
-  background: #fff !important;
-  height: 28px !important;
-  min-height: 28px !important;
-  outline: none !important;
-  border: 1px solid #DDDDDD;
-  box-shadow: none !important;
-  border-radius: 0 4px 4px 0;
-}
-
 // 分页样式
 :deep .q-pagination .q-btn {
   width: 28px;
@@ -376,12 +292,5 @@ export default defineComponent({
   border: 1px solid #01AC66;
   box-shadow: none;
 
-}
-
-.to {
-  height: 28px;
-  padding: 6px 11px;
-  border-radius: 4px 0 0 4px;
-  border: 1px solid #DDDDDD;
 }
 </style>

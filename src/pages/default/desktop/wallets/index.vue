@@ -7,11 +7,11 @@
         <q-img class="q-mr-lg" :src="imageSrc('/assets/icon/menu/deposit.png')" width="66px" height="66px"></q-img>
         <div class="q-pt-sm">
           <div class="row items-center">
-            <div class="text-white text-h6 q-mr-xs">{{ $t('balance') }}</div>
+            <div class="text-white text-body1 q-mr-xs">{{ $t('balance') }}</div>
             <q-icon @click="moneyShow = !moneyShow" class="cursor-pointer" color="white" size="20px"
               :name="moneyShow ? 'o_visibility' : 'o_visibility_off'"></q-icon>
           </div>
-          <div class="text-h5 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
+          <div class="text-h6 text-white text-weight-bold">{{ moneyShow ? '$' + money : '****' }}
           </div>
         </div>
       </div>
@@ -26,13 +26,13 @@
     </div>
 
 
-
+    <!-- 账单、订单部分 -->
     <div class="q-mt-lg rounded-borders q-py-md q-px-lg" style="border: 1px solid #DDDDDD;">
       <!-- 表格头部 -->
       <div class="row justify-between">
         <q-tabs v-model="tab" narrow-indicator class="q-mb-lg">
-          <q-tab @click="switchOrder" class="text-primary" no-caps name="Transactions" label="Transactions" />
-          <q-tab @click="switchBill" class="text-primary" no-caps name="Bill Detail" label="Bill Detail" />
+          <q-tab @click="switchOrder" class="text-primary" no-caps name="Transactions" :label="$t('transactions')" />
+          <q-tab @click="switchBill" class="text-primary" no-caps name="Bill Detail" :label="$t('transactions')" />
         </q-tabs>
         <!-- 右侧 -->
         <div v-if="tab == 'Bill Detail'" class="row q-pr-md">
@@ -42,7 +42,8 @@
             <q-icon name="expand_more"></q-icon>
             <q-menu>
               <q-list style="min-width: 100px">
-                <q-item clickable v-close-popup v-for="(type, index) in typeList" :key="index">
+                <q-item @click="selectBill(index)" :active="typeIndex == index" clickable v-close-popup
+                  v-for="(type, index) in typeList" :key="index">
                   <q-item-section>{{ type.name }}</q-item-section>
                 </q-item>
               </q-list>
@@ -70,9 +71,9 @@
       </div>
 
       <!-- 表格 -->
-      <div class="q-mt-lg rounded-borders" v-if="walletsList.length > 0">
+      <div class="rounded-borders" v-if="walletsList.length > 0">
         <div v-for="(wallet, walletIndex) in walletsList" :key="walletIndex" class="q-px-md">
-          <q-expansion-item :hide-expand-icon="wallet.type == 1">
+          <q-expansion-item :hide-expand-icon="wallet.status == 20">
             <template v-slot:header>
               <q-item-section>
                 <div class="col q-py-md">
@@ -90,12 +91,16 @@
                 </div>
               </q-item-section>
               <q-item-section>
-                <div class="col text-right q-pr-md text-primary q-py-md">
+                <div v-if="wallet.status == 10" class="col text-right q-pr-md text-red q-py-md">
+                  {{ $t('pending') }}
+                </div>
+                <div v-if="wallet.status == 20" class="col text-right q-pr-md text-primary q-py-md">
                   {{ $t('complete') }}
                 </div>
               </q-item-section>
             </template>
-            <div v-if="wallet.type != 1" class="text-red q-py-md q-px-md bg-grey-1">fail reasons，fail reasons fail reasons
+            <div v-if="wallet.status == 10" class="text-red q-py-md q-px-md bg-grey-1">fail reasons，fail reasons fail
+              reasons
             </div>
           </q-expansion-item>
           <q-separator />
@@ -105,11 +110,17 @@
         <div class="q-pa-md row items-center justify-center no-wrap q-mt-lg">
           <div class="text-color-9 q-mr-md">
             共{{ total }}条,
-            {{ pagination.rowsPerPage }}条/页
+            {{ params.pagination.rowsPerPage }}条/页
           </div>
-          <q-pagination v-model="pagination.page" :max="pageTotal" ellipsess :direction-links="true"
+          <q-pagination v-model="params.pagination.page" :max="pageTotal" ellipsess :direction-links="true"
             @update:modelValue="changePagination($event)" active-color="#fff" class="pagination">
           </q-pagination>
+        </div>
+      </div>
+
+      <div v-if="walletsList == null || walletsList.length <= 0">
+        <div class="text-center q-my-lg text-h6 text-grey-8">
+          {{ $t('noData') }}
         </div>
       </div>
 
@@ -162,12 +173,16 @@ export default defineComponent({
       pageTotal: 1, // 数据总页数
       toPage: 1, // 跳转至n页
       total: 1,//  共n条数据
-      pagination: {
-        rowsPerPage: Number(5), //  n条/一页
-        page: Number(1), //  当前页数
-        descending: true,
-        sortBy: 'created_at',
-      },
+
+      params: {
+        type: [] as any,
+        pagination: {
+          rowsPerPage: 5, //  n条/一页
+          page: 1, //  当前页数
+          descending: true,
+          sortBy: 'created_at',
+        },
+      } as any,
 
       // 账单
       walletsList: [] as any,
@@ -177,9 +192,9 @@ export default defineComponent({
       getOrder()
     })
 
-    // 初始化page
+    // 初始化
     const initializationPage = () => {
-      state.pagination = {
+      state.params.pagination = {
         rowsPerPage: 5, //  n条/一页
         page: 1, //  当前页数
         descending: true,
@@ -200,48 +215,47 @@ export default defineComponent({
     }
 
     // 筛选账单
-    // const selectBill = (type: any, index: any) => {
-    //   state.typeIndex = index
-    //   getBill(type)
-    // }
+    const selectBill = (index: any) => {
+      state.typeIndex = index
+      index != 0 ?
+        state.params.type = [state.typeList[state.typeIndex].value] :
+        state.params.type = []
+      getBill()
+    }
 
     // 获取钱包订单
     const getOrder = () => {
       const params = {
         types: [1, 11],
-        pagination: state.pagination,
+        pagination: state.params.pagination,
       }
       walletsOrderIndexAPI(params).then((res: any) => {
         console.log('钱包订单', res)
         state.total = res.count
         state.walletsList = res.items
-        state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
+        state.pageTotal = Math.ceil(state.total / state.params.pagination.rowsPerPage)
       })
     }
 
     // 获取用户账单列表
     const getBill = () => {
       state.tab = 'Bill Detail'
-      const params = {
-        createdAt: {
-          from: date.formatDate(state.dates.from, 'x'),
-          to: date.formatDate(state.dates.to, 'x'),
-        },
-        types: [],
-        pagination: state.pagination,
+      state.params.createdAt = {
+        from: date.formatDate(state.dates.from, 'x'),
+        to: date.formatDate(state.dates.to, 'x'),
       }
-      walletsBillIndexAPI(params).then((res: any) => {
+      walletsBillIndexAPI(state.params).then((res: any) => {
         console.log('账单列表', res)
         state.walletsList = res.items
         state.total = res.count
-        state.pageTotal = Math.ceil(state.total / state.pagination.rowsPerPage)
+        state.pageTotal = Math.ceil(state.total / state.params.pagination.rowsPerPage)
       })
     }
 
     // 监听加减页
     const changePagination = (val: number) => {
       console.log(`changePagination: ${val}`)
-      state.pagination.page = Number(val)
+      state.params.pagination.page = Number(val)
 
       state.tab == 'Transactions' ?
         getOrder() :
@@ -256,7 +270,7 @@ export default defineComponent({
       getBill,
       switchOrder,
       switchBill,
-      // selectBill,
+      selectBill,
     }
   }
 });

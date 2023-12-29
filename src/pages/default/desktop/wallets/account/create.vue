@@ -2,16 +2,15 @@
   <div class="column bg-grey-2" style="padding: 48px 244px;background: #F8F9FC;">
     <div class="col column justify-between bg-white rounded-borders">
       <!-- 大标题 -->
-      <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
+      <div class="q-py-md q-px-lg row items-center no-wrap text-body1 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
         <q-img :src="imageSrc('')" width="40PX" height="28px"></q-img>
         <div class="q-ml-md"> {{ $route.query.type == 'add' ? $t('create') : $t('edit') }}</div>
       </div>
 
-      <!--  -->
       <div class="col full-width q-pa-lg">
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-px-md"
-          style="border-radius: 2px;background: #F8F9FC;">
+        <!-- 类型选择 -->
+        <div class="rounded-borders text-subtitle1 text-weight-medium q-py-xs q-px-md" style="background: #F8F9FC;">
           {{ $t('type') }}
         </div>
 
@@ -22,29 +21,26 @@
             :class="`q-pa-sm row q-mr-md q-mb-md justify-center cursor-pointer relative-position ${typeIndex == ActiveCardIndex ? 'select' : ''}`"
             @click="selectType(typeIndex)">
             <q-img class="self-center q-mr-sm" :src="imageSrc(typeI.icon)" width="32px" height="32px" />
-            <div style="font-size: 16px;" class="text-color-3 text-weight-bold self-center">{{ typeI.name }}</div>
+            <div style="font-size: 16px;" class=" text-weight-bold self-center">{{ typeI.name }}</div>
             <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/images/select.png" width="30PX"
               height="30px" style="bottom: 0;right: 0;"></q-img>
           </div>
         </div>
 
-        <!--  -->
-        <div class="text-color-3 text-subtitle1 text-weight-medium q-py-xs q-mt-lg q-px-md"
+        <div class="text-subtitle1 text-weight-medium q-py-xs q-mt-lg q-px-md"
           style="border-radius: 2px;background: #F8F9FC;">
           {{ $t('depositAccountInfo') }}
         </div>
 
-
-
-        <!-- 卡片类型1 -->
+        <!-- 卡片信息 -->
         <div class="q-mt-lg q-pa-md">
-          <q-form @submit="submit" class="q-gutter-md" style="width:40%;">
+          <div class="q-gutter-lg" style="width:40%;">
             <!-- 银行名称 -->
-            <div class="q-mb-lg"
+            <div
               v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
-              <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankName') }}：</div>
-              <div class="row justify-between q-px-md q-mb-md q-py-sm"
-                style="border-radius: 4px;width: 420px;border: 1px solid #DDDDDD;">
+              <div class=" text-weight-medium q-mb-xs">{{ $t('bankName') }}：</div>
+              <div class="row justify-between q-px-md q-mb-md q-py-sm rounded-borders"
+                style="border:1px solid rgba(0, 0, 0, 0.24)">
                 <div class="self-center row">
                   <q-img :src="imageSrc(cardType[ActiveCardIndex].items[ActiveBankIndex].icon)" width="26px"
                     height="26px" />
@@ -71,56 +67,29 @@
             </div>
 
             <!-- 本人姓名 -->
-            <div class="q-mb-lg">
+            <div>
               <div class="text-weight-medium q-mb-xs">{{ $t('idName') }}：</div>
-              <q-input dense outlined v-model="form.realName" :rules="[val => val && val.length > 0]" />
+              <q-input dense outlined v-model="params.realName" />
             </div>
 
             <!-- 银行卡号 -->
-            <div class="q-mb-lg">
+            <div>
               <div class="text-weight-medium q-mb-xs">{{ $t('bankNumber') }}：</div>
-              <q-input type="number" dense outlined v-model="form.number" :rules="[val => val && val.length > 0]" />
+              <q-input type="number" dense outlined v-model="params.number" />
             </div>
 
             <!-- 银行地址-->
-            <div class="q-mb-lg">
+            <div>
               <div class="text-weight-medium q-mb-xs">{{ $t('digitalAddress') }}：</div>
-              <q-input type="text" dense outlined v-model="form.code" />
+              <q-input type="text" dense outlined v-model="params.code" />
             </div>
 
             <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps
-              style="height: 40px;width: 144px;" type="submit" />
-          </q-form>
+              style="height: 40px;width: 144px;" @click="submit" />
+          </div>
         </div>
 
       </div>
-
-      <!-- 成功-->
-      <q-dialog v-model="alertPass">
-        <q-card style="width: 380px;">
-          <q-card-section style="padding: 20px;">
-            <div class="row no-wrap">
-              <div class="text-weight-bold text-color-3 size20">
-                Enter Security Key
-              </div>
-              <q-space />
-              <q-btn class="text-color-6" icon="close" flat round dense v-close-popup />
-            </div>
-            <div class="q-mt-lg">
-              <q-form>
-                <q-input standout class="q-mb-md" type="password" v-model="form.number" placeholder="Enter Security Key">
-                </q-input>
-                <div class="row justify-center q-mt-lg">
-                  <q-btn class="q-mr-md text-color-3" unelevated rounded no-caps @click="alertPass = false"
-                    style="background: #F3F5F5;height: 40px;width: 160px;" label="Cancel"></q-btn>
-                  <q-btn @click="alertPass = false" class="" unelevated rounded no-caps style="height: 40px;width: 160px;"
-                    color="primary" label="Save" />
-                </div>
-              </q-form>
-            </div>
-          </q-card-section>
-        </q-card>
-      </q-dialog>
     </div>
   </div>
 </template>
@@ -130,23 +99,21 @@ import { reactive, toRefs, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils/index';
 import { walletsPaymentIndexAPI, walletsAccountCreateAPI, walletsAccountUpdateAPI, walletsAccountInfoAPI } from 'src/apis/wallets';
+import { useI18n } from 'vue-i18n';
+import { NotifyPositive } from 'src/utils/notify';
 
 export default {
   name: 'addCard',
   setup() {
     const $route = useRoute()
     const $router = useRouter()
+    const { t } = useI18n(); // 获取t函数进行翻译
 
     const state = reactive({
       // 密码对话框
       alertPass: false,
 
-      form: {
-        number: '',
-        realName: '',
-        code: '',
-        id: '',
-      } as any,
+      params: {} as any,
 
       // 当前选中的银行key
       ActiveBankIndex: 0,
@@ -177,7 +144,7 @@ export default {
     const getCardInfo = () => {
       walletsAccountInfoAPI({ id: Number($route.query.id) }).then((res: any) => {
         console.log('卡片详情', res);
-        state.form = res
+        state.params = res
       })
     }
 
@@ -188,10 +155,10 @@ export default {
         state.cardType = res
         // 预设
         state.cardType.forEach((cardType: any, cardTypeIndex: any) => {
-          if (cardType.name == state.form.name) {
+          if (cardType.name == state.params.name) {
             state.ActiveCardIndex = cardTypeIndex
             cardType.items.forEach((items: any, itemsIndex: any) => {
-              if (items.id == state.form.paymentId) {
+              if (items.id == state.params.paymentId) {
                 state.ActiveBankIndex = itemsIndex
               }
             })
@@ -203,28 +170,19 @@ export default {
     const submit = () => {
       // 判断编辑还是添加卡片
       if ($route.query.type == 'add') {
-        let params = {
-          paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
-          realName: state.form.realName,
-          number: state.form.number,
-          code: state.form.code,
-        }
-        walletsAccountCreateAPI(params).then((res: any) => {
+        state.params.paymentId = state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id
+        walletsAccountCreateAPI(state.params).then((res: any) => {
           console.log(res);
-          $router.push({ name: 'AccountCard' })
+          NotifyPositive(t('submittedSuccess'))
+          $router.push({ name: 'WalletsAccountIndex' })
         })
       } else {
-        let params = {
-          id: state.form.id,
-          name: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].name,
-          paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
-          realName: state.form.realName,
-          number: state.form.number,
-          code: state.form.code,
-        }
-        walletsAccountUpdateAPI(params).then((res: any) => {
+        state.params.name = state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].name
+        state.params.paymentId = state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id
+        walletsAccountUpdateAPI(state.params).then((res: any) => {
           console.log(res);
-          $router.push({ name: 'AccountCard' })
+          NotifyPositive(t('submittedSuccess'))
+          $router.push({ name: 'WalletsAccountIndex' })
         })
       }
 

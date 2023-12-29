@@ -10,12 +10,15 @@
           <div class="row justify-between q-pl-sm">
             <div>
               <div class="row items-center">
-                <div class="text-white size16">
+                <div class="text-white">
                   {{ card.name }}
                 </div>
-                <div @click="$router.push({ name: `WalletAccountCreate`, query: { type: 'edit', id: card.id } })"
-                  class="row btn justify-center items-center q-ml-md">
-                  {{ $t('edit') }}</div>
+                <q-btn size="xs" unelevated rounded style="border: 1px solid #fff;"
+                  @click="$router.push({ name: `WalletAccountCreate`, query: { type: 'edit', id: card.id } })"
+                  class="q-ml-md text-white">
+                  <div style="font-size: 12px;">{{ $t('edit') }}</div>
+
+                </q-btn>
               </div>
               <div class="text-white" style="font-size: 12px;">{{ card.realName }}</div>
             </div>
@@ -34,10 +37,16 @@
       </div>
     </div>
 
-    <!-- 添加按钮 (本页定义css) -->
+    <!-- 添加按钮 -->
     <div @click="$router.push({ name: 'WalletAccountCreate', query: { type: 'add' } })"
-      class="column justify-center row add-btn cursor-pointer">
-      <div class="text-center text-color-9">
+      class="column justify-center row cursor-pointer" style="
+        border: 1px dashed rgba(221, 221, 221, 0.8);
+        height: 132px;
+        width: 132px;
+        background: rgba(221, 221, 221, 0.16);
+        border-radius: 6px;
+      ">
+      <div class="text-center">
         <q-icon size="28px" name="add" class="self-center" />
         <div>Add Card</div>
       </div>
@@ -50,21 +59,22 @@
     <q-card style="width: 380px;">
       <q-card-section style="padding: 20px;">
         <div class="row no-wrap">
-          <div class="text-weight-bold text-color-3 size20">
+          <div class="text-weight-bold">
             {{ $t('enterSecretKey') }}
           </div>
           <q-space />
-          <q-btn class="text-color-6" icon="close" flat round dense v-close-popup />
+          <q-btn icon="close" flat round dense v-close-popup />
         </div>
         <div class="q-mt-lg">
           <q-form>
-            <q-input standout class="q-mb-md" type="password" v-model="securityKey" :placeholder="$t('enterSecretKey')">
+            <q-input outlined dense class="q-mb-md" type="password" v-model="params.securityKey"
+              :placeholder="$t('enterSecretKey')">
             </q-input>
             <div class="row justify-center q-mt-lg">
-              <q-btn class="q-mr-md text-color-3" unelevated rounded no-caps @click="alertPass = false"
+              <q-btn class="q-mr-md" unelevated rounded no-caps @click="alertPass = false"
                 style="background: #F3F5F5;height: 40px;width: 160px;" :label="$t('cancel')"></q-btn>
-              <q-btn @click="delCard" class="" unelevated rounded no-caps style="height: 40px;width: 160px;"
-                color="primary" :label="$t('confirm')" />
+              <q-btn @click="delCard" unelevated rounded no-caps style="height: 40px;width: 160px;" color="primary"
+                :label="$t('confirm')" />
             </div>
           </q-form>
         </div>
@@ -79,25 +89,24 @@ import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
 import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
-import { InitStore } from 'src/stores/init';
 
 export default defineComponent({
   name: 'WalletsAccountIndex',
   setup() {
     const { t } = useI18n(); // 获取t函数进行翻译
-    const $initStore = InitStore()
-
 
     let state = reactive({
       // 用户卡片列表
       cardList: [] as any,
 
-      // 当前需要删除的卡片id
-      id: '',
-
       // 密码弹窗
       alertPass: false,
-      securityKey: '',
+
+      // 接口参数
+      params: {
+        id: '',
+        securityKey: '',
+      },
     });
 
     onMounted(() => {
@@ -114,37 +123,24 @@ export default defineComponent({
 
     // 删除卡片
     const delCard = () => {
-      // 如果有安全码，必须输入安全码
-      if (state.securityKey == '' && $initStore.config.settings.register.showSecurityPass) {
-        return false
-      }
-      let params = {
-        id: Number(state.id),
-        securityKey: state.securityKey
-      }
-      walletsAccountDeleteAPI(params).then((res: any) => {
-        console.log(res);
-        if (res.code == 0) {
-          getCard()
-          NotifyPositive(t('submittedSuccess'))
-        }
+      walletsAccountDeleteAPI(state.params).then((res: any) => {
+        getCard()
+        NotifyPositive(t('submittedSuccess'))
+        state.alertPass = false
       })
-    }
-
-    // 打开密码框
-    const updateDialog = () => {
-      state.alertPass = true
     }
 
     // 删除卡片提示
     const Confirm = (id: any) => {
-      state.id = id
+      state.params.id = id
       ConfirmPrompt(
         t('delete'),
         t('deleteLabel') + '?',
         // 如果没有安全码，直接执行删除
-        $initStore.config.settings.register.showSecurityPass ?
-          updateDialog : delCard
+        () => {
+          state.alertPass = true
+        },
+        { ok: { label: t('confirm') }, cancel: { label: t('cancel') } }
       )
     }
 
@@ -157,23 +153,4 @@ export default defineComponent({
   }
 });
 </script>
-<style lang="scss" scoped>
-.btn {
-  width: 46px;
-  height: 22px;
-  border-radius: 29px 29px 29px 29px;
-  opacity: 1;
-  border: 1px solid #FFFFFF;
-  cursor: pointer;
-  color: #FFFFFF;
-  font-size: 12px;
-}
-
-.add-btn {
-  border: 1px dashed rgba(221, 221, 221, 0.8);
-  height: 132px;
-  width: 132px;
-  background: rgba(221, 221, 221, 0.16);
-  border-radius: 6px;
-}
-</style>
+<style lang="scss" scoped></style>

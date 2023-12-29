@@ -117,39 +117,39 @@ export const defaultRouter: TemplateRouteInterface[] = [
     componentMobile: LayoutsMobilePath('header.vue'),
     componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
-      // {
-      //   name: 'WalletsDeposit',
-      //   route: '/wallets/deposit',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'wallets/deposit.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/deposit.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'WalletsWithdraw',
-      //   route: '/wallets/withdraw',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'wallets/withdraw.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/withdraw.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'WalletAccountCreate',
-      //   route: '/wallets/account/create',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'wallets/account/create.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/create.vue'),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
+      {
+        name: 'WalletsDeposit',
+        route: '/wallets/deposit',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/deposit.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/deposit.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'WalletsWithdraw',
+        route: '/wallets/withdraw',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/withdraw.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/withdraw.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'WalletAccountCreate',
+        route: '/wallets/account/create',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/account/create.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/create.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
       // {
       //   name: 'infoEdit',
       //   route: '/settings/info',
@@ -323,7 +323,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/assets/details.vue'),
         children: [],
-        meta: { requireAuth: true, keepAlive: false },
+        meta: { requireAuth: false, keepAlive: false },
       },
       {
         name: 'TeamIndex',
