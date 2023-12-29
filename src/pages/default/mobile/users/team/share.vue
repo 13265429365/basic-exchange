@@ -1,6 +1,6 @@
 <template>
-  <div class="column full-height" style="width: 100vw;">
-    <div class="col page_bg column full-width " style=" background: linear-gradient(to right,  #14BF71,#82D880);">
+  <div class="column window-height">
+    <div class="col column" style=" background: linear-gradient(to right,  #14BF71,#82D880);">
       <div class="rounded-borders bg-white column items-center q-py-md" style="width: 90%;margin: 36px auto;">
 
         <q-img :src="imageSrc('')" class="q-mt-lg" width="60px" height="60px" />
@@ -26,7 +26,6 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { copyToClipboard } from 'quasar';
-import { NotifyPositive } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
 import { inviteInfoAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';

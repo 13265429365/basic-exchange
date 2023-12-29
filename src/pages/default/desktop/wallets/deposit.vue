@@ -204,6 +204,7 @@ export default {
     const Deposit = () => {
       state.params.paymentId = state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id
       state.params.money = Number(state.params.money)
+
       walletsDepositCreateAPI(state.params).then((res: any) => {
         NotifyPositive(t('submittedSuccess'))
         console.log('充值成功', res);

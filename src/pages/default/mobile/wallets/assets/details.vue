@@ -21,7 +21,8 @@
 
       <div class="row justify-between q-mb-xs btn">
         <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
+          :key="quickMenuIndex" v-show="quickMenu.data.isMobile" style="width: 47%;"
+          class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ $t(quickMenu.name) }}</div>

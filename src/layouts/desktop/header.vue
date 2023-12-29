@@ -38,7 +38,8 @@
         no-caps>
         <q-list class="q-ma-sm">
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-            class="rounded-borders" :key="quickMenuIndex" clickable v-close-popup aria-hidden="true">
+            class="rounded-borders" v-show="quickMenu.data.isDesktop" :key="quickMenuIndex" clickable v-close-popup
+            aria-hidden="true">
             <q-item-section avatar style="min-width:auto">
               <q-img width="30px" height="30px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
@@ -75,7 +76,7 @@
                 <!-- 固定头部 -->
                 <q-item aria-hidden="true">
                   <div class="row items-center">
-                    <q-avatar size="40px" class="q-mt-sm cursor-pointer" @click="$router.push({name: 'SettingIndex'})">
+                    <q-avatar size="40px" class="q-mt-sm cursor-pointer" @click="$router.push({ name: 'SettingIndex' })">
                       <q-img :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
@@ -86,13 +87,14 @@
                       <div class="row no-wrap q-mt-xs">
                         <!-- 会员等级 -->
                         <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs" no-caps
-                               @click="$router.push({name: 'UserLevel'})"
+                          @click="$router.push({ name: 'UserLevel' })"
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
                           <q-img width="13px" height="12px" src="/images/icons/vip-icon.png"></q-img>
                           <div class="q-ml-xs" style="font-size: 10px;">Lv{{ userInfo.level }}</div>
                         </q-btn>
                         <!-- 信用分 -->
-                        <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs bg-grey-4 text-primary" v-if="userInfo.score > 60">
+                        <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs bg-grey-4 text-primary"
+                          v-if="userInfo.score > 60">
                           <q-img width="13px" height="13px" src="/images/icons/credit.png"></q-img>
                           <div class="q-ml-xs" style="font-size: 10px;">{{ $t('creditScore') + userInfo.score }}</div>
                         </q-btn>
@@ -101,24 +103,28 @@
                           <div class="q-ml-xs" style="font-size: 10px;">{{ $t('creditScore') + userInfo.score }}</div>
                         </q-btn>
                         <!-- 实名 -->
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-grey-4 text-red q-px-sm" no-caps v-if="userInfo.authStatus == 0" @click="$router.push({name: 'UserRealAuth'})">
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-grey-4 text-red q-px-sm" no-caps
+                          v-if="userInfo.authStatus == 0" @click="$router.push({ name: 'UserRealAuth' })">
                           <div style="font-size: 10px">
-                            {{$t('alreadyRealName')}}
+                            {{ $t('alreadyRealName') }}
                           </div>
                         </q-btn>
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-info text-white q-px-sm" no-caps v-else-if="userInfo.authStatus == 10" @click="$router.push({name: 'UserRealAuth'})">
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-info text-white q-px-sm" no-caps
+                          v-else-if="userInfo.authStatus == 10" @click="$router.push({ name: 'UserRealAuth' })">
                           <div style="font-size: 10px">
-                            {{$t('pendingRealName')}}
+                            {{ $t('pendingRealName') }}
                           </div>
                         </q-btn>
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps v-else-if="userInfo.authStatus == 20">
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-primary text-white q-px-sm" no-caps
+                          v-else-if="userInfo.authStatus == 20">
                           <div style="font-size: 10px">
-                            {{$t('realNameFailed')}}
+                            {{ $t('realNameFailed') }}
                           </div>
                         </q-btn>
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-negative text-white q-px-sm" no-caps v-else @click="$router.push({name: 'UserRealAuth'})">
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-negative text-white q-px-sm" no-caps v-else
+                          @click="$router.push({ name: 'UserRealAuth' })">
                           <div style="font-size: 10px">
-                            {{$t('notRealName')}}
+                            {{ $t('notRealName') }}
                           </div>
                         </q-btn>
                       </div>
@@ -185,7 +191,7 @@ import switchLanguage from 'src/components/switchLanguage.vue';
 import { useRouter } from 'vue-router';
 import { reactive, toRefs, ref, watch, onMounted } from 'vue';
 import { imageSrc } from 'src/utils';
-import {userInfoAPI} from 'src/apis/user';
+import { userInfoAPI } from 'src/apis/user';
 import { InitStore } from 'src/stores/init';
 import { UserStore } from 'src/stores/user';
 

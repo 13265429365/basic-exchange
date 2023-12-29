@@ -5,15 +5,15 @@
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <div class="row">
           <q-avatar size="50px">
-            <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')"></q-img>
+            <q-img :src="imageSrc(teamMembers.avatar)"></q-img>
           </q-avatar>
           <div class="q-ml-md text-subtitle1">
             <div class="text-white">
-              <span class="text-weight-medium">{{ userInfo.userName }}</span>
+              <span class="text-weight-medium">{{ teamMembers.username }}</span>
               <span style="background: rgba(255, 255, 255, 0.12);padding: 3px 10px;"
-                class="radius-x text-caption q-ml-sm">LV{{ userInfo.Level }}</span>
+                class="radius-x text-caption q-ml-sm">LV{{ teamMembers.depth }}</span>
             </div>
-            <div class="text-white text-weight-medium">{{ $t('teamBenefits') + ':' + '+' + TeamMembers.teamEarnings }}
+            <div class="text-white text-weight-medium">{{ $t('teamEarnings') + ': +' + teamMembers.earnings }}
             </div>
           </div>
         </div>
@@ -21,27 +21,27 @@
             name="chevron_right" size="16px" /></div>
       </div>
       <div class="bg-white col q-pa-md">
-        <div v-for="(TeamItem, listIndex) in TeamMembers.childUserList" :key="listIndex">
-          <div @click="Team({ id: TeamItem.id })" class="row justify-between bg-white q-py-md">
+        <div v-for="(teamItem, listIndex) in teamMembers.children" :key="listIndex">
+          <div @click="getTeam({ id: teamItem.id })" class="row justify-between bg-white q-py-md">
             <div class="row">
               <q-avatar size="32px">
-                <q-img :src="TeamItem.avatar ? imageSrc(TeamItem.avatar) : imageSrc('')"></q-img>
+                <q-img :src="teamItem.avatar ? imageSrc(teamItem.avatar) : imageSrc('')"></q-img>
               </q-avatar>
               <div class="q-ml-md">
-                <div class="text-color-3 text-subtitle2 text-weight-medium">{{ TeamItem.username }}</div>
+                <div class="text-color-3 text-subtitle2 text-weight-medium">{{ teamItem.username }}</div>
                 <div class="text-grey-6 text-caption text-weight-regular text-weight-regular">{{
-                  formatDate(TeamItem.createdAt) }}</div>
+                  formatDate(teamItem.createdAt) }}</div>
               </div>
             </div>
             <div class="row justify-end">
-              <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ TeamItem.teamEarnings }}</div>
+              <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ teamItem.teamEarnings }}</div>
               <q-icon class="self-center" name="chevron_right" size="22px" style="color: #999999;" />
             </div>
           </div>
           <q-separator style="height: 1px;background: #F4F5FD;" />
         </div>
-        <div v-if="TeamMembers.childUserList.length <= 0" class="q-py-md row justify-center">
-          暂无成员
+        <div v-if="teamMembers.children.length <= 0" class="q-py-md text-center text-grey-6">
+          {{ $t('noData') }}
         </div>
       </div>
     </div>
@@ -63,12 +63,9 @@ export default {
     const { t } = useI18n();
 
     const state = reactive({
-      // 用户资料
-      userInfo: {} as any,
-
       // 团队成员
-      TeamMembers: {
-        childUserList: [],
+      teamMembers: {
+        children: [],
       } as any,
     });
 
@@ -77,15 +74,14 @@ export default {
     })
 
     onMounted(() => {
-      state.userInfo = $userStore.userInfo
-      Team({ id: $userStore.userInfo.id })
+      getTeam({ id: $userStore.userInfo.id })
     })
 
     // 获取用户团队详情
-    const Team = (params: any) => {
+    const getTeam = (params: any) => {
       teamIndexAPI(params).then((res: any) => {
         console.log(res);
-        state.TeamMembers = res
+        state.teamMembers = res
       })
     }
 
@@ -93,7 +89,7 @@ export default {
       imageSrc,
       formatDate,
       ...toRefs(state),
-      Team,
+      getTeam,
     }
   }
 };

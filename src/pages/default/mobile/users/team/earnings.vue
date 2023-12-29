@@ -8,20 +8,45 @@
         </q-avatar>
         <div class="q-ml-md text-subtitle1">
           <div class="text-white text-weight-medium">{{ userInfo.userName }}</div>
-          <div class="text-white text-weight-medium">{{ $t('teamBenefits') }} : +{{ teamEarnings }}</div>
+          <div class="text-white text-weight-medium">{{ $t('teamEarnings') }} : +{{ teamEarnings }}</div>
         </div>
       </div>
 
-      <div class="rounded-borders bg-white q-px-md q-py-lg  q-mt-md">
+      <!-- <div class="rounded-borders bg-white q-px-md q-py-lg  q-mt-md">
         <div class="text-color-3 text-black text-weight-bold">Beneficial Data</div>
         <div class="row text-color-3 ">
-          <div class="col-4 q-pt-md" v-for="(item, index) in TeamBenefit" :key="index">
-            <div class="text-weight-bold text-h6 text-center">{{ item.number }}</div>
-            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">{{ $t(item.name)
-            }}</div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.buyAmount }}</div>
+            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">
+              {{ $t(teamBenefit.buyAmount) }}</div>
+          </div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.inviteNums }}</div>
+            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">
+              {{ $t(teamBenefit.inviteNums) }}</div>
+          </div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.teamEarnings }}</div>
+            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">
+              {{ $t(teamBenefit.teamEarnings) }}</div>
+          </div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.todayAmount }}</div>
+            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">
+              {{ $t(teamBenefit.todayAmount) }}</div>
+          </div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.todayEarnings }}</div>
+            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">
+              {{ $t(teamBenefit.todayEarnings) }}</div>
+          </div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.todayNums }}</div>
+            <div class="text-color-6  text-subtitle2   text-center text-weight-regular ellipsis">
+              {{ $t(teamBenefit.todayNums) }}</div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="q-py-md row">
         <div class="text-color-3 text-subtitle1 text-weight-bolder column col-3">
@@ -30,7 +55,7 @@
         </div>
       </div>
 
-      <div v-for="(row, rowsIndex) in rows" :key="rowsIndex"
+      <div v-for="(row, rowsIndex) in teamBenefit.children" :key="rowsIndex"
         class="row justify-between bg-white rounded-borders q-pa-md q-mb-md">
         <div>
           <div class="text-color-3 text-subtitle2 text-weight-medium">{{ row.userName }}</div>
@@ -71,16 +96,15 @@ export default defineComponent({
       teamEarnings: '' as any,
 
       // 团队收益详情
-      TeamBenefit: [] as any,
+      teamBenefit: {} as any,
 
-      // table数据
-      columns: [] as any,
+      // 
       rows: [] as any,
 
     });
 
     context.emit('update', {
-      title: t('teamBenefits'),
+      title: t('teamEarnings'),
     })
 
     onMounted(() => {
@@ -91,33 +115,8 @@ export default defineComponent({
     // 获取用户团队详情
     const TeamDetails = (params: any) => {
       teamDetailsAPI(params).then((res: any) => {
-        console.log(res);
         state.teamEarnings = res.teamEarnings
-        // 团队数据
-        for (const TeamBenefit in res) {
-          if (TeamBenefit != 'teamEarningsIndex') {
-            state.TeamBenefit.push({
-              name: TeamBenefit,
-              number: res[TeamBenefit],
-            })
-          }
-        }
-
-
-        // 收益详情
-        if (res.teamEarningsIndex.length <= 0) {
-          return false
-        }
-
-        for (const BenefitDetails in res.teamEarningsIndex[0]) {
-          state.columns.push({
-            name: BenefitDetails,
-          })
-        }
-
-        res.teamEarningsIndex.forEach((element: any) => {
-          state.rows.push(element)
-        });
+        state.teamBenefit = res
       })
     }
 

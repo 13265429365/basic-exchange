@@ -56,7 +56,7 @@ export default route(async function ({ store, ssrContext }) {
     const $cookies = Cookies.parseSSR(ssrContext);
     store.state.value['init'] = JSON.parse(JSON.stringify(InitStoreState));
     store.state.value.init.userToken = <string>$cookies.get(UserTokenKey) ?? '';
-    store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : '';
+    store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ? <string>$cookies.get(UserLangKey) : 'zh-CN';
 
     //获取初始化数据
     await initAPI({ domain: '', lang: store.state.value.init.userLang }).then((res: any) => {

@@ -31,14 +31,14 @@
 
       <!-- 密码 -->
       <q-input class="q-mb-md" v-model="params.password" standout
-        :input-style="{ fontSize: '16px', color: '#999999!important' }" :type="isPwd ? 'text' : 'password'"
+        :input-style="{ fontSize: '16px', color: '#999999!important' }" :type="showPwd ? 'text' : 'password'"
         :placeholder="$t('password')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/images/icons/password.png" />
         </template>
         <template v-slot:append>
-          <q-icon style="color: #999999" :name="isPwd ? 'visibility' : 'visibility_off'" class="cursor-pointer"
-            @click="isPwd = !isPwd" />
+          <q-icon style="color: #999999" :name="showPwd ? 'visibility' : 'visibility_off'" class="cursor-pointer"
+            @click="showPwd = !showPwd" />
         </template>
       </q-input>
 
@@ -79,6 +79,7 @@ import { captchaAPI } from 'src/apis';
 import { userLoginAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
+import { UserStore } from 'src/stores/user';
 
 export default defineComponent({
   name: 'userLogin',
@@ -88,6 +89,7 @@ export default defineComponent({
   setup() {
     const $router = useRouter();
     const $initStore = InitStore();
+    const $userStore = UserStore();
 
     const state = reactive({
       baseURL: process.env.baseURL,
@@ -99,7 +101,7 @@ export default defineComponent({
       config: $initStore.config,
 
       // 是否显示密码
-      isPwd: false,
+      showPwd: false,
 
       // 提交参数
       params: {
@@ -124,8 +126,9 @@ export default defineComponent({
     // 提交登录
     const submitFunc = () => {
       userLoginAPI(state.params)
-        .then(async (res: any) => {
-          await $initStore.updateUserToken(res.token);
+        .then((res: any) => {
+          $userStore.updateUserInfo(res.userInfo)
+          $initStore.updateUserToken(res.token);
           void $router.push({ name: 'HomeIndex' });
         })
         .catch(() => {

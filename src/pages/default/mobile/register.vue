@@ -162,6 +162,7 @@ import { captchaAPI } from 'src/apis';
 import { userRegisterAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
+import { UserStore } from 'src/stores/user';
 import { NotifyNegative } from 'src/utils/notify';
 import { useI18n } from 'vue-i18n';
 
@@ -174,6 +175,7 @@ export default defineComponent({
     const $router = useRouter();
     const $route = useRoute();
     const $initStore = InitStore();
+    const $userStore = UserStore();
     const { t } = useI18n();
 
     const state = reactive({
@@ -245,8 +247,9 @@ export default defineComponent({
 
       //拼接手机区号 
       state.params.telephone = state.countryList[state.currentCountryIndex].code + '|' + state.params.telephone
-      userRegisterAPI(state.params).then(async (res: any) => {
-        await $initStore.updateUserToken(res.token);
+      userRegisterAPI(state.params).then((res: any) => {
+        $userStore.updateUserInfo(res.userInfo)
+        $initStore.updateUserToken(res.token);
         void $router.push({ name: 'HomeIndex' });
       }).catch(() => {
         refreshCaptchaFunc();

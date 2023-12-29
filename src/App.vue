@@ -6,17 +6,17 @@
 import { defineComponent } from 'vue';
 import { useMeta, LocalStorage } from 'quasar';
 import { InitStore } from 'src/stores/init';
-import {imageSrc} from 'src/utils';
-import {useI18n} from 'vue-i18n';
-import {setLanguageFunc} from 'boot/i18n';
-import {UserStore, UserInfoKey} from 'stores/user';
+import { imageSrc } from 'src/utils';
+import { useI18n } from 'vue-i18n';
+import { setLanguageFunc } from 'boot/i18n';
+import { UserStore, UserInfoKey } from 'stores/user';
 
 export default defineComponent({
   name: 'App',
   created: () => {
     const $initStore = InitStore();
-    const $userStore = UserStore()
-    const $i18n = useI18n()
+    const $userStore = UserStore();
+    const $i18n = useI18n();
 
     // 初始化国际化语言
     setLanguageFunc($i18n, $initStore.translate, $initStore.userLang)

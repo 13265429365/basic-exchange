@@ -22,7 +22,8 @@
       <!-- 充值提现 -->
       <div class="row justify-between q-mb-md btn">
         <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
+          :key="quickMenuIndex" v-show="quickMenu.data.isMobile" style="width: 47%;"
+          class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ $t(quickMenu.name) }}</div>
@@ -30,7 +31,7 @@
         </q-btn>
       </div>
 
-      <!-- echarts -->
+      <!-- eCharts -->
       <div class="bg-white q-pa-md rounded-borders">
         <div class="text-weight-bold q-mb-lg">{{ $t('assetsBlock') }} </div>
         <div class="row justify-center q-mb-lg">
@@ -150,11 +151,11 @@ export default defineComponent({
       ],
       lineType: '近7日',
 
-      // 折线图echarts
+      // 折线图eCharts
       lineOption: {} as any,
       lineThirty: {} as any,
 
-      // 饼图echarts
+      // 饼图eCharts
       option: {} as any,
     });
 

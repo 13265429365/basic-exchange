@@ -1,10 +1,10 @@
 <template>
-  <div class="mypage">
+  <div>
     <div class="row justify-between q-pt-xl q-px-md q-pb-lg bg-white">
       <!-- 头像 -->
       <div class="row">
         <q-avatar class="q-mr-md avatar">
-          <q-img :src="userInfo.avatar ? imageSrc(userInfo.avatar) : imageSrc('')" width="50px" height="50px" />
+          <q-img :src="imageSrc(userInfo.avatar ?? config.logo)" width="50px" height="50px" />
         </q-avatar>
         <div class="col-8">
           <div class="text-weight-bolder">
@@ -34,12 +34,12 @@
       </div>
     </div>
 
-    <!--  -->
     <div class="bg-grey-1 q-px-md q-py-md full-width">
-      <!-- 店铺、交易管理 -->
+      <!-- 充值、提现 -->
       <div class="row justify-between q-mb-md btn">
         <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-          :key="quickMenuIndex" style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
+          :key="quickMenuIndex" v-show="quickMenu.data.isMobile" style="width: 47%;"
+          class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ $t(quickMenu.name) }}</div>
@@ -48,7 +48,7 @@
       </div>
 
 
-      <!-- 列表 -->
+      <!-- 用户列表 -->
       <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md rounded-borders no-border">
         <div v-for="(child, childKey) in item.children" :key="childKey" class="bg-white">
           <q-item @click="$router.push(child.route)" class="q-pa-md" clickable>
@@ -101,9 +101,8 @@
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { InitStore } from 'src/stores/init';
-import { UserStore, UserInfoKey } from 'src/stores/user';
+import { UserStore } from 'src/stores/user';
 import { imageSrc } from 'src/utils';
-import { userInfoAPI } from 'src/apis/user';
 
 export default defineComponent({
   name: 'userIndex',
@@ -112,57 +111,30 @@ export default defineComponent({
     const $initStore = InitStore()
     const $userStore = UserStore()
 
-    let state = reactive({
+    const state = reactive({
       userInfo: {} as any,
 
+      config: $initStore.config as any,
+
       // 用户菜单
-      userList: [] as any,
+      userList: $initStore.userMenu as any,
 
       // 快捷菜单
-      quickMenuList: [] as any,
+      quickMenuList: $initStore.quickMenu as any,
 
       // 退出彈窗
       dialog: false,
     })
 
-
-
-
-    onMounted(async () => {
-      //  是否登录
-      if ($initStore.userToken == '' || $initStore.userToken == null) {
-        $router.push({ name: 'UserLogin' })
-      }
-
-      // 右侧头像菜单
-      state.userList = $initStore.userMenu
-
-      // 左侧快捷菜单
-      state.quickMenuList = $initStore.quickMenu;
-
-      UserInfo()
+    onMounted(() => {
+      state.userInfo = $userStore.userInfo
     })
-
-    // 获取用户信息
-    const UserInfo = () => {
-      if ($initStore.userToken) {
-        userInfoAPI().then((res: any) => {
-          console.log('用户信息', res);
-          state.userInfo = res
-          $userStore.updateUserInfo(res)
-          localStorage.setItem(UserInfoKey, JSON.stringify(res))
-        })
-      }
-    }
 
     // 退出登录
     const Logout = async () => {
       await $initStore.removeUserToken()
-      localStorage.removeItem('userInfo')
       $router.push({ name: 'HomeIndex' })
     }
-
-
 
     return {
       imageSrc,

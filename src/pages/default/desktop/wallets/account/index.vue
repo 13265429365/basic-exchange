@@ -116,7 +116,6 @@ export default defineComponent({
     // 获取卡片列表
     const getCard = () => {
       walletsAccountIndexAPI().then((res: any) => {
-        console.log(res);
         state.cardList = res
       })
     }

@@ -117,15 +117,10 @@ export default {
     });
 
     onMounted(() => {
-      getCard()
-    })
-
-    // 获取卡片列表
-    const getCard = () => {
       walletsAccountIndexAPI().then((res: any) => {
         state.cardList = res
       })
-    }
+    })
 
     // 提现
     const Withdraw = () => {
