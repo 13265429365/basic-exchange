@@ -5,7 +5,7 @@
     </div>
     <div class="q-mt-lg q-px-lg">
       <q-form>
-        <q-input class="q-mb-md" v-model="form.email" :placeholder="$t('email')" standout type="text" />
+        <q-input class="q-mb-md" v-model="form.email" :placeholder="$t('email')" outlined dense type="text" />
         <q-btn @click="submit()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
           color="primary" :label="$t('submit')" />
       </q-form>

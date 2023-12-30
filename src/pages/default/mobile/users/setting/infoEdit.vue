@@ -123,12 +123,12 @@ export default defineComponent({
 
     // 执行接口
     const submit = () => {
-      state.params.sex = state.genderIndex + 1,
-        state.params.birthday = Number(date.formatDate(state.params.birthday, 'YYYY/MM/DD')),
-        updateInfoAPI(state.params).then((res: any) => {
-          console.log(res);
-          UserInfo()
-        })
+      state.params.sex = state.genderIndex + 1
+      state.params.birthday = Number(date.formatDate(state.params.birthday, 'X'))
+      updateInfoAPI(state.params).then((res: any) => {
+        console.log(res);
+        UserInfo()
+      })
     }
 
     // 执行接口

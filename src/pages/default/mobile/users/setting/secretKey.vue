@@ -6,7 +6,7 @@
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="q-mb-md" v-model="oldPassword" standout :type="isPwd ? 'password' : 'text'"
+          <q-input class="q-mb-md" v-model="oldPassword" outlined dense :type="isPwd ? 'password' : 'text'"
             :placeholder="$t('secretKey')">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/password.png" />
@@ -16,7 +16,7 @@
                 @click="isPwd = !isPwd" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="newPassword" standout :type="isPwd2 ? 'password' : 'text'"
+          <q-input class="q-mb-md" v-model="newPassword" outlined dense :type="isPwd2 ? 'password' : 'text'"
             :placeholder="$t('newSecretKey')">
             <template v-slot:prepend>
               <q-img class="iconLogo" src="/images/default/password.png" />

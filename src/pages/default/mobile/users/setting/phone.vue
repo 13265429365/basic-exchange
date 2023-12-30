@@ -8,34 +8,32 @@
         {{ $t('bindTelephoneSmall') }}
       </div>
       <div class="q-mt-lg q-px-lg">
-        <q-form>
-          <div class="row no-wrap justify-between">
-            <q-btn-dropdown class="col-4 text-weight-regular" unelevated flat no-caps dropdown-icon="expand_more"
-              style="height: 50px;background: #f5f6fa;border-radius: 10px;color: #8F959E;">
-              <template v-slot:label>
-                <div class="row no-wrap items-center">
-                  <q-img :src="imageSrc(options[areaCodeIndex].icon ? options[areaCodeIndex].icon : '')" width="24px"
-                    height="16px" />
-                  <div class="q-ml-sm">+{{ options[areaCodeIndex].code }}</div>
+        <div class="row no-wrap justify-between">
+          <q-btn-dropdown class="col-4 text-weight-regular rounded-borders" unelevated flat no-caps
+            dropdown-icon="expand_more" style="height: 40px;border: 1px solid rgba(0, 0, 0, 0.24);">
+            <template v-slot:label>
+              <div class="row no-wrap items-center">
+                <q-img :src="imageSrc(options[areaCodeIndex].icon ? options[areaCodeIndex].icon : '')" width="24px"
+                  height="16px" />
+                <div class="q-ml-sm">+{{ options[areaCodeIndex].code }}</div>
+              </div>
+            </template>
+            <!-- 下拉 -->
+            <q-list style="min-width: 268px" class="q-py-sm">
+              <q-item @click="areaCodeIndex = i" v-for="(item, i) in options" :key="i" clickable v-close-popup
+                class="row no-wrap items-center">
+                <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
+                <div>
+                  <div style="font-size: 16px;">{{ item.name }}</div>
                 </div>
-              </template>
-              <!-- 下拉 -->
-              <q-list style="min-width: 268px" class="q-py-sm">
-                <q-item @click="areaCodeIndex = i" v-for="(item, i) in options" :key="i" clickable v-close-popup
-                  class="row no-wrap items-center">
-                  <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
-                  <div>
-                    <div style="font-size: 16px;">{{ item.name }}</div>
-                  </div>
-                </q-item>
-              </q-list>
-            </q-btn-dropdown>
-            <q-input style="width: 64%;" :placeholder="$t('telephone')" class="q-mb-lg" standout
-              v-model="form.telephone" />
-          </div>
-          <q-btn @click="submit" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
-            color="primary" :label="$t('submit')" />
-        </q-form>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+          <q-input style="width: 64%;" :placeholder="$t('telephone')" class="q-mb-lg" outlined dense
+            v-model="params.telephone" />
+        </div>
+        <q-btn @click="submit" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;" color="primary"
+          :label="$t('submit')" />
       </div>
     </div>
   </div>
@@ -64,7 +62,7 @@ export default defineComponent({
       // 手机区号
       areaCodeIndex: 0,
 
-      form: {} as any,
+      params: {} as any,
 
     })
 
@@ -77,7 +75,8 @@ export default defineComponent({
     const UserInfo = () => {
       userInfoAPI().then((res: any) => {
         console.log('用户信息', res);
-        state.form = res
+        state.params = res
+        state.params.telephone = res.telephone.split('|')[1]
         $userStore.updateUserInfo(res)
         localStorage.setItem(UserInfoKey, JSON.stringify(res))
       })
@@ -86,7 +85,7 @@ export default defineComponent({
     // 执行接口
     const submit = () => {
       let params = {
-        telephone: state.form.telephone,
+        telephone: state.params.telephone,
       }
       updateInfoAPI(params).then((res: any) => {
         console.log(res);
