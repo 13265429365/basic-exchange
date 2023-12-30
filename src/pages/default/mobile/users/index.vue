@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="row justify-between q-pt-xl q-px-md q-pb-lg bg-white">
+    <div class="row justify-between no-wrap q-pt-xl q-px-md q-pb-lg bg-white">
       <!-- 头像 -->
       <div class="row">
         <q-avatar class="q-mr-md avatar">

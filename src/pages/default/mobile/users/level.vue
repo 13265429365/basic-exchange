@@ -1,7 +1,12 @@
 <template>
   <div class="column full-height" style="width: 100%;">
     <div class="col bg-white  q-pa-md" style="width: 100%;">
-      <div class="vipCard q-mt-md row  q-pa-md">
+      <div class="q-mt-md row  q-pa-md" style="background-image: url('/images/level-bg.png');
+        height: 80px;
+        width: 100%;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: relative;">
         <q-img src="/images/level.png" width="93px" height="66px" style="position: absolute;top: -13px;right: 0;" />
         <div class="col-10 column">
           <div style="color: #FEC183;" class="text-h6">VIP Card</div>
@@ -73,7 +78,7 @@ export default {
     });
 
     context.emit('update', {
-      title: t('memberBenefits'),
+      title: t('memberVip'),
     })
 
     onMounted(() => {
@@ -114,23 +119,11 @@ export default {
       imageSrc,
       ...toRefs(state),
       OrderLevel,
-      $userStore,
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.vipCard {
-  background-image: url('/images/level-bg.png');
-  height: 80px;
-  width: 100%;
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  position: relative;
-}
-
-li::marker {
-  color: #999999;
-}
+.vipCard {}
 </style>

@@ -75,6 +75,7 @@ import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 
 export default defineComponent({
   name: 'WalletsAccountIndex',
+  emits: ['update'],
   setup(props: any, context: any) {
     const { t } = useI18n(); // 获取t函数进行翻译
 

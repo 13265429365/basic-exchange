@@ -45,16 +45,20 @@
           </div>
           <div>
             <div class="text-body1 text-weight-bold text-center">
-              {{ wallet.type == 1 || wallet.type == 2 ? '+' + wallet.money : '-' + wallet.money }}</div>
-            <div v-if="wallet.status == 10" class="text-weight-medium text-red text-center text-caption">
+              {{ (wallet.type == 1 ? '+' : '-') }}{{ $t('currency') }}{{ wallet.money }}
+            </div>
+            <div v-if="wallet.status == -1" class="text-weight-medium text-red text-center text-caption">
+              {{ $t('refuse') }}
+            </div>
+            <div v-if="wallet.status == 10" class="text-weight-medium text-primary text-center text-caption">
               {{ $t('pending') }}
             </div>
-            <div v-if="wallet.status == 11" class="text-weight-medium text-primary text-center text-caption">
+            <div v-if="wallet.status == 20" class="text-weight-medium text-primary text-center text-caption">
               {{ $t('complete') }}
             </div>
           </div>
         </div>
-        <div v-if="wallet.status == 10" class="text-red text-caption">Failure Reason：This is the reason for the failure
+        <div v-if="wallet.status == -1" class="text-red text-caption">Failure Reason：This is the reason for the failure
         </div>
       </div>
 

@@ -53,6 +53,7 @@ import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'helpCenter',
+  emits: ['update'],
   setup(props: any, context: any) {
     const { t } = useI18n();
 
