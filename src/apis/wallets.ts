@@ -36,11 +36,15 @@ export const walletsUserAssetsIndexAPI = (params: any) => {
   return api.post('/wallets/user/assets/index', params);
 };
 
+// 钱包账单类型列表
+export const walletsBillOptionsAPI = (params: any) => {
+  return api.post('/wallets/bill/options', params)
+}
+
 // 用户获取账单列表
 export const walletsBillIndexAPI = (params: any) => {
   return api.post('/wallets/bill/index', params);
 };
-
 
 // 用户获取钱包订单列表
 export const walletsOrderIndexAPI = (params: any) => {
