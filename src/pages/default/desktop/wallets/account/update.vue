@@ -40,7 +40,7 @@
           <div class="column q-gutter-md">
             <div>
               <div class="q-mb-sm">{{paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork')}}</div>
-              <q-select outlined v-model="currentPaymentInfo"
+              <q-select outlined v-model="currentPaymentInfo" :disable="params.id > 0"
                         :options="paymentList[currentPaymentIndex].items"
                         option-value="id" option-label="name">
                 <template v-slot:selected>
@@ -96,18 +96,20 @@
     </div>
 
     <q-dialog v-model="showSecurityKey">
-      <q-card class="full-width">
+      <q-card style="width: 340px">
         <q-card-section>
-          {{$t('enterSecretKey')}}
+          <div class="text-center text-h6">{{$t('enterSecretKey')}}</div>
         </q-card-section>
 
         <q-card-section>
-          <q-input outlined v-model="params.securityKey" :label="$t('enterSecretKey')"></q-input>
+          <div class="q-mt-md">
+            <q-input outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn dense :label="$t('cancel')" v-close-popup color="grey"></q-btn>
-          <q-btn dense :label="$t('confirm')" @click="submitUpdateFunc" color="primary"></q-btn>
+          <q-btn flat :label="$t('cancel')" v-close-popup color="grey"></q-btn>
+          <q-btn flat :label="$t('confirm')" @click="submitUpdateFunc" color="primary"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -132,7 +134,7 @@ export default {
     const { t } = useI18n()
 
     const state = reactive({
-      walletSetting: $initStore.config.settings.wallet,
+      walletSetting: $initStore.config.settings.wallets,
       paymentList: [] as any,
       currentPaymentIndex: 0,
       currentPaymentInfo: {},
@@ -155,18 +157,33 @@ export default {
         if (state.paymentList.length > 0) {
           switchPaymentFunc(state.paymentList[0], 0)
         }
-      })
 
-      // 如果设置了Id, 那么请求卡片信息
-      if (state.params.id > 0) {
-        walletsAccountInfoAPI({ id: Number(state.params.id) }).then((res: any) => {
-          state.params = res
-        })
-      }
+        // 如果设置了Id, 那么请求卡片信息
+        if (state.params.id > 0) {
+          walletsAccountInfoAPI({ id: Number(state.params.id) }).then((res: any) => {
+            state.params = res
+
+            // 默认选中
+            for (let i = 0; i < state.paymentList.length; i++) {
+              for (let j = 0; j < state.paymentList[i].items.length; j++) {
+                if (state.paymentList[i].items[j].id == state.params.paymentId) {
+                  state.currentPaymentIndex = i
+                  state.currentPaymentInfo = state.paymentList[i].items[j]
+                }
+              }
+            }
+          })
+
+        }
+      })
     })
 
     // 切换支付类型
     const switchPaymentFunc = (paymentInfo: any, paymentIndex: number) => {
+      if (state.params.id > 0) {
+        return
+      }
+
       if (paymentInfo.items.length > 0) {
         state.currentPaymentInfo = paymentInfo.items[0]
       }
@@ -199,6 +216,7 @@ export default {
     const submitUpdateFunc = () => {
       walletsAccountUpdateAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
+        state.showSecurityKey = false
         $router.push({ name: 'WalletsAccountIndex' })
       })
     }

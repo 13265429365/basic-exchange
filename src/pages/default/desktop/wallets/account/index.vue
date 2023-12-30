@@ -1,89 +1,81 @@
 <template>
-  <q-toolbar class="bg-grey-2" style="padding: 33px 100px;">
-    <q-toolbar-title class="text-weight-bold">{{ $t('accountManage') }}</q-toolbar-title>
-  </q-toolbar>
-  <div class="row" style="padding: 48px 100px;">
-
-    <!-- 银行卡 -->
-    <div v-for="(card, cardIndex) in cardList" :key="cardIndex" class="q-mb-md q-mr-md rounded-borders"
-      style="height: 132px;width: 360px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);overflow: hidden;">
-      <div class="row" style="padding: 15px 20px;">
-        <q-img :src="imageSrc(card.icon)" width="40px" height="40px" />
-        <div class="col column justify-between">
-          <div class="row justify-between q-pl-sm">
-            <div>
-              <div class="row items-center">
-                <div class="text-white">
-                  {{ card.name }}
-                </div>
-                <q-btn size="xs" unelevated rounded style="border: 1px solid #fff;"
-                  @click="$router.push({ name: `WalletAccountCreate`, query: { type: 'edit', id: card.id } })"
-                  class="q-ml-md text-white">
-                  <div style="font-size: 12px;">{{ $t('edit') }}</div>
-
-                </q-btn>
-              </div>
-              <div class="text-white" style="font-size: 12px;">{{ card.realName }}</div>
-            </div>
-            <div class="row">
-              <q-icon @click="Confirm(card.id)" name="o_highlight_off" color="white" class="cursor-pointer"
-                size="24px"></q-icon>
-            </div>
-          </div>
-
-          <div class="q-pl-sm  q-mt-md">
-            <div style="font-size: 10px;color: rgba(255,255,255,0.7);">{{ card.paymentName }}</div>
-            <div class="text-white text-weight-medium ellipsis" style="font-size: 18px;width: 272px;">{{ card.number
-            }}</div>
-          </div>
-        </div>
-      </div>
+  <div style="padding: 48px 100px;">
+    <div>
+      <div class="text-h5 q-mb-md">{{$t('accountManage')}}</div>
     </div>
 
-    <!-- 添加按钮 -->
-    <div @click="$router.push({ name: 'WalletAccountCreate', query: { type: 'add' } })"
-      class="column justify-center row cursor-pointer" style="
+    <div>
+      <div class="row q-gutter-sm items-center">
+        <q-card flat v-for="(account, accountIndex) in accountList" :key="accountIndex" :style="bgList.get(account.paymentType)">
+          <q-card-section>
+            <div class="row justify-between">
+              <div class="row">
+                <div>
+                  <q-avatar>
+                    <q-img no-spinner :src="imageSrc(account.icon)" width="48px" height="48px"></q-img>
+                  </q-avatar>
+                </div>
+                <div class="q-ml-sm text-white">
+                  <div class="q-mt-xs">
+                    <div class="text-body1 text-bold">
+                      {{account.paymentName}}
+                      <q-btn rounded unelevated size="xs" style="border: 1px solid #fff; padding: 0 10px;margin-left: 2px" @click="$router.push({name: 'WalletAccountUpdate', query: {id: account.id}})">
+                        <div style="font-size: 12px">{{$t('edit')}}</div>
+                      </q-btn>
+                    </div>
+                    <div class="text-caption text-grey-2">{{account.name}}</div>
+                  </div>
+
+                  <div class="q-mt-sm">
+                    <div class="text-caption text-grey-2">{{account.paymentType == 1 ? $t('bankNumber') : $t('digitalAddress')}}</div>
+                    <div class="text-body1 text-bold">{{account.number}}</div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="text-right">
+                <q-icon color="white" class="cursor-pointer" size="18px" name="cancel" @click="deleteAccountFunc(account)"></q-icon>
+              </div>
+            </div>
+          </q-card-section>
+        </q-card>
+
+        <!-- 添加按钮 -->
+        <div @click="$router.push({ name: 'WalletAccountUpdate'})"
+             class="column justify-center row cursor-pointer" style="
         border: 1px dashed rgba(221, 221, 221, 0.8);
         height: 132px;
         width: 132px;
         background: rgba(221, 221, 221, 0.16);
         border-radius: 6px;
       ">
-      <div class="text-center">
-        <q-icon size="28px" name="add" class="self-center" />
-        <div>Add Card</div>
+          <div class="text-center">
+            <q-icon size="42px" name="add" class="self-center text-grey-4" />
+          </div>
+        </div>
       </div>
     </div>
 
-  </div>
 
-  <!-- 输入密码 -->
-  <q-dialog v-model="alertPass">
-    <q-card style="width: 380px;">
-      <q-card-section style="padding: 20px;">
-        <div class="row no-wrap">
-          <div class="text-weight-bold">
-            {{ $t('enterSecretKey') }}
+    <q-dialog v-model="showSecurityKey">
+      <q-card style="width: 340px">
+        <q-card-section>
+          <div class="text-center text-h6">{{$t('enterSecretKey')}}</div>
+        </q-card-section>
+
+        <q-card-section>
+          <div class="q-mt-md">
+            <q-input outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
           </div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </div>
-        <div class="q-mt-lg">
-          <q-form>
-            <q-input outlined dense class="q-mb-md" type="password" v-model="params.securityKey"
-              :placeholder="$t('enterSecretKey')">
-            </q-input>
-            <div class="row justify-center q-mt-lg">
-              <q-btn class="q-mr-md" unelevated rounded no-caps @click="alertPass = false"
-                style="background: #F3F5F5;height: 40px;width: 160px;" :label="$t('cancel')"></q-btn>
-              <q-btn @click="delCard" unelevated rounded no-caps style="height: 40px;width: 160px;" color="primary"
-                :label="$t('confirm')" />
-            </div>
-          </q-form>
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat :label="$t('cancel')" v-close-popup color="grey"></q-btn>
+          <q-btn flat :label="$t('confirm')" @click="submitDeleteFunc" color="primary"></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
 
 <script lang="ts">
@@ -91,66 +83,61 @@ import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
-import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
+import {InitStore} from 'stores/init';
 
 export default defineComponent({
   name: 'WalletsAccountIndex',
   setup() {
-    const { t } = useI18n(); // 获取t函数进行翻译
-
-    let state = reactive({
-      // 用户卡片列表
-      cardList: [] as any,
-
-      // 密码弹窗
-      alertPass: false,
-
-      // 接口参数
-      params: {
-        id: '',
-        securityKey: '',
-      },
+    const { t } = useI18n();
+    const $initStore = InitStore()
+    const state = reactive({
+      walletsSetting: $initStore.config.settings.wallets,
+      accountList: [] as any,
+      showSecurityKey: false,
+      currentAccountInfo: {} as any,
+      params: {id: 0, securityKey: ''},
+      bgList: new Map([
+        [1, {background: 'linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%)', width: '360px', height: '132px', borderRadius: '8px'}],
+        [11, {background: 'linear-gradient(90deg, #7474BF 0%, #348AC7 100%)', width: '360px', height: '132px', borderRadius: '8px'}]
+      ])
     });
 
     onMounted(() => {
-      getCard()
+      getWalletsAccount()
     })
 
-    // 获取卡片列表
-    const getCard = () => {
-      walletsAccountIndexAPI().then((res: any) => {
-        state.cardList = res
-      })
+    // 删除账户
+    const deleteAccountFunc = (account: any) => {
+      state.currentAccountInfo = account
+      if (state.walletsSetting.showSecurityPass) {
+        state.showSecurityKey = true
+      } else {
+        submitDeleteFunc()
+      }
     }
 
-    // 删除卡片
-    const delCard = () => {
-      walletsAccountDeleteAPI(state.params).then((res: any) => {
-        getCard()
+    // 删除提交
+    const submitDeleteFunc = () => {
+      state.params.id = Number(state.currentAccountInfo.id)
+      walletsAccountDeleteAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        state.alertPass = false
+        state.showSecurityKey = false
+        getWalletsAccount()
       })
     }
 
-    // 删除卡片提示
-    const Confirm = (id: any) => {
-      state.params.id = id
-      ConfirmPrompt(
-        t('delete'),
-        t('deleteLabel') + '?',
-        // 如果没有安全码，直接执行删除
-        () => {
-          state.alertPass = true
-        },
-        { ok: { label: t('confirm') }, cancel: { label: t('cancel') } }
-      )
+    const getWalletsAccount = () => {
+      walletsAccountIndexAPI().then((res: any) => {
+        state.accountList = res
+      })
     }
 
     return {
       imageSrc,
       ...toRefs(state),
-      delCard,
-      Confirm
+      deleteAccountFunc,
+      submitDeleteFunc,
     }
   }
 });
