@@ -1,6 +1,13 @@
 <template>
   <div class="column window-height" style="padding: 48px 244px;background: #F8F9FC;">
-    <div class="col column justify-between bg-white rounded-borders">
+    <q-banner v-if="cardList.length <= 0" rounded class="bg-red text-white">
+      {{ $t('accountBeEmpty') }}
+      <template v-slot:action>
+        <q-btn @click="$router.push({ name: 'WalletsAccountIndex' })" flat no-caps color="white"
+          :label="$t('accountManage')" />
+      </template>
+    </q-banner>
+    <div v-else class="col column justify-between bg-white rounded-borders">
 
       <!-- 标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap size20 text-weight-medium"
@@ -53,6 +60,7 @@
 
     </div>
 
+
     <!-- 输入密码 -->
     <q-dialog v-model="alertPass">
       <q-card style="width: 380px;">
@@ -101,6 +109,7 @@ export default {
     const $userStore = UserStore()
     const $initStore = InitStore()
 
+
     const state = reactive({
       alertPass: false,
 
@@ -111,6 +120,8 @@ export default {
 
       // 选中卡片类型
       ActiveCardIndex: 0,
+
+
 
       // 银行卡列表
       cardList: [] as any,

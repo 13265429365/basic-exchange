@@ -1,7 +1,16 @@
 <template>
   <div class="column full-height full-width">
-    <q-separator style="background: #F4F5FD;" />
-    <div class="col q-pa-md full-width column justify-between">
+    <div v-if="cardList.length <= 0" class="q-pa-md">
+      <q-banner rounded class="bg-red text-white q-mt-sm">
+        {{ $t('accountBeEmpty') }}
+        <template v-slot:action>
+          <q-btn @click="$router.push({ name: 'WalletsAccountIndex' })" flat no-caps color="white"
+            :label="$t('accountManage')" />
+        </template>
+      </q-banner>
+    </div>
+
+    <div v-else class="col q-pa-md full-width column justify-between">
       <div class="col full-width">
         <div class="text-body2 text-weight-medium q-pb-xs">{{ $t('withdrawAccount') }}</div>
         <!-- 卡类型选择 -->
