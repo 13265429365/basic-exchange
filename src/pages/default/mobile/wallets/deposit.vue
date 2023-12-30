@@ -50,11 +50,10 @@
       <!-- 充值信息 -->
       <div>
         <div class="text-body2 text-weight-medium q-pb-xs">{{ $t('depositAmount') }}</div>
-        <q-input prefix="￥" type="number" standout v-model="params.money" class="q-mb-md" />
+        <q-input type="number" outlined dense v-model="params.money" class="q-mb-md" />
 
         <div class=" text-body2 text-weight-medium q-pb-xs">{{ $t('bankName') }}</div>
-        <div class="row justify-between q-px-md q-py-sm rounded-borders q-mb-md"
-          style="background: #f5f6fa;height: 50px;">
+        <div class="row justify-between q-px-md q-py-sm rounded-borders q-mb-md" style="height: 45px;">
           <div class="self-center row">
             <q-img :src="imageSrc(cardType[ActiveCardIndex] ? cardType[ActiveCardIndex].items[ActiveBankIndex].icon : '')"
               width="26px" height="26px" />
@@ -86,7 +85,7 @@
             <q-uploader-add-trigger />
             <q-card flat>
               <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
-                <q-icon name="add" color="grey" size="40px" v-if="params.voucher == ''" />
+                <q-icon name="add" color="grey" size="30px" v-if="params.voucher == ''" />
                 <q-img v-else :src="imageSrc(params.voucher)"></q-img>
               </div>
             </q-card>

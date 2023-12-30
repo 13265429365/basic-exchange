@@ -6,13 +6,19 @@
         class="row justify-between rounded-borders q-mb-md">
         <div class="column justify-center text-white">
           <div class="row items-center">
-            <div class="">{{ $t('balance') }}</div>
-            <q-icon @click="moneyShow = !moneyShow" :name="!moneyShow ? 'o_visibility_off' : 'o_visibility'"
-              class="q-ml-sm cursor-pointer" size="18px"></q-icon>
+            <div class="text-white text-body2 q-mr-xs">{{ $t('balance') }}</div>
+            <q-icon @click="showMoney = !showMoney" class="cursor-pointer" color="white" size="16px"
+              :name="showMoney ? 'o_visibility' : 'o_visibility_off'"></q-icon>
           </div>
           <!-- 点击显示、隐藏金额 -->
-          <div v-if="moneyShow" class=" text-weight-medium text-h6">${{ money }} </div>
-          <div v-else class="text-weight-bold text-body1">****</div>
+          <div class="text-h6 text-white text-weight-bold">
+            <div v-if="showMoney">
+              <span class="text-caption q-mr-xs">{{ $t('currency') }}</span>{{ Number(userInfo.money).toFixed(2) }}
+            </div>
+            <div v-else>
+              ******
+            </div>
+          </div>
         </div>
         <q-img :src="imageSrc('/assets/icon/menu/withdraw.png')" class="self-center" width="68px" height="53.83px" />
       </div>
@@ -40,7 +46,7 @@
         <div class="row justify-between">
           <div class="">
             <div class="text-weight-bold">{{ wallet.name }}</div>
-            <div class="text-grey-6 text-weight-medium text-caption">{{ date.formatDate(Number(wallet.updatedAt *
+            <div class="text-grey-6 text-caption">{{ date.formatDate(Number(wallet.updatedAt *
               1000), 'YYYY-MM-DD HH:mm:ss') }}</div>
           </div>
           <div>
@@ -83,12 +89,12 @@ export default defineComponent({
     const { t } = useI18n()
 
     const state = reactive({
-      money: 0,
+      userInfo: {} as any,
 
       // 钱包订单数据
 
       // 点击显示、隐藏金额
-      moneyShow: true,
+      showMoney: true,
 
       // 快捷菜单
       quickMenuList: $initStore.quickMenu as any,
@@ -113,7 +119,7 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      state.money = $userStore.userInfo.money;
+      state.userInfo = $userStore.userInfo
       walletsOrderIndexAPI(state.params).then((res: any) => {
         state.WalletsList = res.items
       })

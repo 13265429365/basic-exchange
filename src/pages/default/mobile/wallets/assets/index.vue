@@ -12,8 +12,8 @@
           </div>
           <!-- 点击显示、隐藏金额 -->
           <div v-if="moneyShow" class="text-white row items-center">
-            <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">${{ form.moneySum }}</span>
-            <span>≈￥{{ form.moneyRateSum }} </span>
+            <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">${{ assets.moneySum }}</span>
+            <span>≈￥{{ assets.moneyRateSum }} </span>
           </div>
           <div v-else class="text-white text-weight-bold " style="font-size: 22px;">**** </div>
         </div>
@@ -85,7 +85,7 @@
 
       <!--  -->
       <div class="q-mt-md q-mb-sm text-weight-bold">资产账户</div>
-      <div @click="$router.push({ name: 'AssetsDetail' })" v-for="(item, i) in form.userAssetsList" :key="i"
+      <div @click="$router.push({ name: 'AssetsDetail' })" v-for="(item, i) in assets.userAssetsList" :key="i"
         class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">
         <div class="row items-center">
           <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(item.icon)" />
@@ -95,6 +95,10 @@
           <div class="text-weight-bold text-right" style="font-size: 16px;">{{ '$' + item.money }}</div>
           <div class="text-right text-grey-5" style="font-size: 12px;">{{ '≈￥' + item.moneyRate }}</div>
         </div>
+      </div>
+
+      <div v-if="assets.userAssetsList || assets.userAssetsList.length <= 0" class="text-grey text-center q-py-lg">
+        {{ $t('noData') }}
       </div>
 
     </div>
@@ -120,16 +124,15 @@ export default defineComponent({
 
     const state = reactive({
       // 资产数据
-      form: {
-        moneySum: '',
-        moneyRateSum: '',
+      assets: {
+        userAssetsList: [],
       } as any,
 
       // 点击显示、隐藏金额
       moneyShow: true,
 
       // 快捷菜单
-      quickMenuList: [] as any,
+      quickMenuList: $initStore.quickMenu as any,
 
       // 饼状图下的列表
       list: [] as any,
@@ -164,8 +167,6 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      state.quickMenuList = $initStore.quickMenu;
-
       // 生成饼图
       const chart = echarts.init(document.getElementById('myChart'))
       chart.setOption(state.option)
@@ -181,7 +182,7 @@ export default defineComponent({
     const getAssets = () => {
       walletsUserAssetsIndexAPI({ id: Number($userStore.userInfo.id) }).then((res: any) => {
         console.log('资产列表', res)
-        state.form = res
+        state.assets = res
       })
     }
 

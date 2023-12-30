@@ -1,17 +1,17 @@
 <template>
   <div>
     <q-uploader flat auto-upload :url="baseURL + '/upload'" :field-name="name" :style="uploaderStyle" :accept="accept"
-      style="width: 100%" :multiple="false" @uploaded="uploadedFunc" @start="uploaderStartFunc"
+      style="width: 100%;background: transparent;" :multiple="false" @uploaded="uploadedFunc" @start="uploaderStartFunc"
       @finish="uploaderFinishFunc" @rejected="uploaderRejectedFunc"
       :headers="[{ name: 'Authorization', value: 'Bearer ' + userToken }]">
       <template v-slot:header></template>
       <template v-slot:list="scope">
         <div @click="scope.pickFiles">
-            <div v-if="!$slots.default" class="text-center">
-              <q-uploader-add-trigger />
-              <img :src="imageSrc(respValue)" alt="">
-            </div>
-            <slot name="default"></slot>
+          <div v-if="!$slots.default" class="text-center">
+            <q-uploader-add-trigger />
+            <img :src="imageSrc(respValue)" alt="">
+          </div>
+          <slot name="default"></slot>
         </div>
       </template>
     </q-uploader>
@@ -32,10 +32,10 @@ export default {
     name: { type: String, default: 'file' },
 
     // 图片路径
-    respValue: { type: String, default: ''},
+    respValue: { type: String, default: '' },
 
     // uploader 自定义样式
-    uploaderStyle: { type: Object, default: null},
+    uploaderStyle: { type: Object, default: null },
 
     // 上传文件的类型
     accept: { type: String, default: '.jpg,.png,.gif,image/*' },
