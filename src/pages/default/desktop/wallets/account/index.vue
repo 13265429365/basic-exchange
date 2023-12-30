@@ -1,4 +1,7 @@
 <template>
+  <q-toolbar class="bg-grey-2" style="padding: 33px 100px;">
+    <q-toolbar-title class="text-weight-bold">{{ $t('accountManage') }}</q-toolbar-title>
+  </q-toolbar>
   <div class="row" style="padding: 48px 100px;">
 
     <!-- 银行卡 -->

@@ -4,23 +4,31 @@
       <div class="col-6">
         <div class="text-h5">{{ $t('realAuth') }}</div>
 
-        <div class="q-mt-xs text-negative" v-if="params.status == authStatus.refuse">{{params.data}}</div>
+        <div class="q-mt-xs text-negative" v-if="params.status == authStatus.refuse">{{ params.data }}</div>
         <div class="q-gutter-md q-mt-xl">
           <div>
             <div class="q-mb-xs">{{ $t('idName') }}</div>
-            <q-input outlined dense v-model="params.realName" :readonly="params.status == authStatus.pending || params.status == authStatus.complete"  :placeholder="$t('idName')" />
+            <q-input outlined dense v-model="params.realName"
+              :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
+              :placeholder="$t('idName')" />
           </div>
           <div>
             <div class="q-mb-xs">{{ $t('idNumber') }}</div>
-            <q-input outlined dense v-model="params.number" :readonly="params.status == authStatus.pending || params.status == authStatus.complete" :placeholder="$t('idNumber')" />
+            <q-input outlined dense v-model="params.number"
+              :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
+              :placeholder="$t('idNumber')" />
           </div>
           <div>
             <div class="q-mb-xs">{{ $t('telephone') }}</div>
-            <q-input outlined dense v-model="params.telephone" :readonly="params.status == authStatus.pending || params.status == authStatus.complete" :placeholder="$t('telephone')" />
+            <q-input outlined dense v-model="params.telephone"
+              :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
+              :placeholder="$t('telephone')" />
           </div>
           <div>
             <div class="q-mb-xs">{{ $t('address') }}</div>
-            <q-input outlined dense v-model="params.address" :readonly="params.status == authStatus.pending || params.status == authStatus.complete" :placeholder="$t('address')" />
+            <q-input outlined dense v-model="params.address"
+              :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
+              :placeholder="$t('address')" />
           </div>
 
 
@@ -29,9 +37,10 @@
 
             <div class="row q-mt-sm">
               <div class="col q-mr-xs">
-                <uploader :respValue="params.photo1" @uploaded="(url) => {params.photo1 = url}">
+                <uploader :respValue="params.photo1" @uploaded="(url) => { params.photo1 = url }">
                   <template v-slot:default>
-                    <q-uploader-add-trigger v-if="params.status == authStatus.start || params.status == authStatus.refuse" />
+                    <q-uploader-add-trigger
+                      v-if="params.status == authStatus.start || params.status == authStatus.refuse" />
                     <q-card flat>
                       <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
                         <q-icon name="add" color="grey" size="40px" v-if="params.photo1 == ''" />
@@ -45,9 +54,10 @@
 
               <!--  -->
               <div class="col q-ml-xs">
-                <uploader :respValue="params.photo2" @uploaded="(url) => {params.photo2 = url}">
+                <uploader :respValue="params.photo2" @uploaded="(url) => { params.photo2 = url }">
                   <template v-slot:default>
-                    <q-uploader-add-trigger v-if="params.status == authStatus.start || params.status == authStatus.refuse" />
+                    <q-uploader-add-trigger
+                      v-if="params.status == authStatus.start || params.status == authStatus.refuse" />
                     <q-card flat>
                       <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
                         <q-icon name="add" color="grey" size="40px" v-if="params.photo2 == ''" />
@@ -63,12 +73,10 @@
 
           <div class="q-mt-xl row justify-end">
             <q-btn rounded unelevated color="primary" no-caps :label="$t('submit')"
-                   v-if="params.status == authStatus.start"
-                   style="min-width: 100px" size="md" @click="submitFunc"></q-btn>
+              v-if="params.status == authStatus.start" style="min-width: 100px" size="md" @click="submitFunc"></q-btn>
 
             <q-btn rounded unelevated color="primary" no-caps :label="$t('reSubmit')"
-                   v-if="params.status == authStatus.refuse"
-                   style="min-width: 100px" size="md" @click="submitFunc"></q-btn>
+              v-if="params.status == authStatus.refuse" style="min-width: 100px" size="md" @click="submitFunc"></q-btn>
           </div>
         </div>
       </div>
@@ -85,7 +93,7 @@ import { NotifyPositive } from 'src/utils/notify';
 import { realAuthCreateAPI, realAuthInfoAPI } from 'src/apis/user';
 import { useI18n } from 'vue-i18n';
 import { imageSrc } from 'src/utils';
-import {UserStore} from 'stores/user';
+import { UserStore } from 'stores/user';
 
 export default defineComponent({
   methods: { imageSrc },
@@ -97,7 +105,7 @@ export default defineComponent({
     const $userStore = UserStore()
     const { t } = useI18n()
     const state = reactive({
-      authStatus: {pending: 10, complete: 20, refuse: -1, start: 0},
+      authStatus: { pending: 10, complete: 20, refuse: -1, start: 0 },
       params: {} as any,
     });
 

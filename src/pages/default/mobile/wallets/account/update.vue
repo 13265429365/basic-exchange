@@ -3,7 +3,7 @@
     <div class="col q-pa-md full-width column justify-between">
       <div class="col full-width row justify-center">
         <!-- 卡类型选择 -->
-        <q-scroll-area style="height: 80px; width: 100%;" :visible="false">
+        <q-scroll-area style="height: 80px; width: 100%;" :thumb-style="{ display: 'none' }" :visible="false">
           <div class="row no-wrap">
             <div v-for="(typeI, typeIndex) in cardType" :key="typeIndex"
               style="width: 200px;height: 50px;border-radius: 9px"
@@ -19,12 +19,13 @@
 
 
         <!-- 数字货币类型 -->
-        <q-form @submit="submit" class="full-width">
+        <div class="full-width">
           <!-- 银行名称 -->
           <div
             v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
             <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankName') }}：</div>
-            <div class="row justify-between q-px-md q-mb-md q-py-sm page_bg" style="border-radius: 8px;height: 50px;">
+            <div class="row justify-between q-px-md q-mb-md q-py-sm rounded-borders"
+              style="height: 45px;border: 1px solid rgba(0, 0, 0, 0.24)">
               <div class="self-center row">
                 <q-img :src="imageSrc(cardType[ActiveCardIndex].items[ActiveBankIndex].icon)" width="26px"
                   height="26px" />
@@ -51,26 +52,26 @@
           </div>
 
           <!-- 本人姓名 -->
-          <div>
+          <div class="q-mt-md">
             <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('idName') }}</div>
-            <q-input standout v-model="form.realName" :rules="[val => val && val.length > 0]" />
+            <q-input outlined dense v-model="params.realName" />
           </div>
 
           <!-- 银行卡号 -->
-          <div>
+          <div class="q-mt-md">
             <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankNumber') }}</div>
-            <q-input type="number" standout v-model="form.number" :rules="[val => val && val.length > 0]" />
+            <q-input type="number" outlined dense v-model="params.number" />
           </div>
 
           <!-- 银行地址-->
-          <div class="q-mb-xl">
+          <div class="q-mt-md q-mb-xl">
             <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('digitalAddress') }}</div>
-            <q-input type="text" standout v-model="form.code" />
+            <q-input type="text" outlined dense v-model="params.code" />
           </div>
 
           <q-btn unelevated rounded color="primary" :label="$t('submit')" class="full-width q-my-md" no-caps
-            style="height: 44px;" type="submit" @click="alertPass = true" />
-        </q-form>
+            style="height: 44px;" @click="submit" />
+        </div>
       </div>
 
       <!-- 添加按钮 -->
@@ -96,10 +97,7 @@ export default {
     const $router = useRouter()
 
     const state = reactive({
-      // 密码对话框
-      alertPass: false,
-
-      form: {
+      params: {
         number: '',
         realName: '',
         code: '',
@@ -139,7 +137,7 @@ export default {
     const getCardInfo = () => {
       walletsAccountInfoAPI({ id: Number($route.query.id) }).then((res: any) => {
         console.log('卡片详情', res);
-        state.form = res
+        state.params = res
       })
     }
 
@@ -150,10 +148,10 @@ export default {
         state.cardType = res
         // 预设
         state.cardType.forEach((cardType: any, cardTypeIndex: any) => {
-          if (cardType.name == state.form.name) {
+          if (cardType.name == state.params.name) {
             state.ActiveCardIndex = cardTypeIndex
             cardType.items.forEach((items: any, itemsIndex: any) => {
-              if (items.id == state.form.paymentId) {
+              if (items.id == state.params.paymentId) {
                 state.ActiveBankIndex = itemsIndex
               }
             })
@@ -167,9 +165,9 @@ export default {
       if ($route.query.type == 'add') {
         let params = {
           paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
-          realName: state.form.realName,
-          number: state.form.number,
-          code: state.form.code,
+          realName: state.params.realName,
+          number: state.params.number,
+          code: state.params.code,
         }
         walletsAccountCreateAPI(params).then((res: any) => {
           console.log(res);
@@ -177,12 +175,12 @@ export default {
         })
       } else {
         let params = {
-          id: state.form.id,
+          id: state.params.id,
           name: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].name,
           paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
-          realName: state.form.realName,
-          number: state.form.number,
-          code: state.form.code,
+          realName: state.params.realName,
+          number: state.params.number,
+          code: state.params.code,
         }
         walletsAccountUpdateAPI(params).then((res: any) => {
           console.log(res);
@@ -192,28 +190,10 @@ export default {
 
     }
 
-    const yesFun = (router: any) => {
-      state.alertPass = false;
-      // 密码正确
-      router.push({
-        name: 'showMessage',
-        state: {
-          params: JSON.stringify({
-            title: 'Created Successfully',
-            content: '',
-            yesBtn: 'OK',
-            logo: '/images/default/success.png',
-            backUrl: ''
-          })
-        }
-      })
-    };
-
 
     return {
       imageSrc,
       ...toRefs(state),
-      yesFun,
       submit,
       selectType,
     }
@@ -222,24 +202,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.cardTransparent {
-  background: url('/images/default/cardTransparent.png') no-repeat;
-  background-size: 100% 100%;
-  height: 125px;
-  width: 100%;
-  border-radius: 14px;
-}
-
 .select {
   background-color: rgba(241, 250, 246, 1) !important;
   border: 1px solid $primary;
-}
-
-:deep(.q-scrollarea__thumb) {
-  display: none !important;
-}
-
-:deep(.q-field .q-field__bottom) {
-  display: none !important;
 }
 </style>

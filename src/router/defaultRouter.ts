@@ -150,61 +150,61 @@ export const defaultRouter: TemplateRouteInterface[] = [
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
-      // {
-      //   name: 'infoEdit',
-      //   route: '/settings/info',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'users/setting/infoEdit.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'UpdatePassword',
-      //   route: '/settings/password',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'users/setting/password.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'UpdateCode',
-      //   route: '/settings/code',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'users/setting/secretKey.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'BindPhone',
-      //   route: '/settings/bind/phone',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'users/setting/phone.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
-      // {
-      //   name: 'EnterEmail',
-      //   route: '/settings/enter/email',
-      //   componentMobile: PagesTemplateMobilePath(
-      //     TemplateName,
-      //     'users/setting/email.vue'
-      //   ),
-      //   componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
-      //   children: [],
-      //   meta: { requireAuth: true, keepAlive: false },
-      // },
+      {
+        name: 'infoEdit',
+        route: '/settings/info',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/setting/infoEdit.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'UpdatePassword',
+        route: '/settings/password',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/setting/password.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'UpdateCode',
+        route: '/settings/code',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/setting/secretKey.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'BindPhone',
+        route: '/settings/bind/phone',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/setting/phone.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'EnterEmail',
+        route: '/settings/enter/email',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'users/setting/email.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
       {
         name: 'SettingLanguage',
         route: '/settings/language',

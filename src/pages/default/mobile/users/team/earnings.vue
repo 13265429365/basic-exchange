@@ -55,19 +55,21 @@
         </div>
       </div>
 
-      <div v-for="(row, rowsIndex) in teamBenefit.children" :key="rowsIndex"
+      <div v-for="(team, teamIndex) in teamBenefit.children" :key="teamIndex"
         class="row justify-between bg-white rounded-borders q-pa-md q-mb-md">
         <div>
-          <div class="text-subtitle2 text-weight-medium">{{ row.userName }}</div>
-          <div class="text-grey-8 text-caption text-weight-regular text-weight-regular">{{ date.formatDate(row.createdAt
+          <div class="text-subtitle2 text-weight-medium">{{ team.userName }}</div>
+          <div class="text-grey-8 text-caption text-weight-regular text-weight-regular">{{ date.formatDate(team.createdAt
             *
             1000, 'YYYY/MM/DD HH:mm:ss') }}</div>
         </div>
-        <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ row.money }}</div>
+        <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ team.money }}</div>
       </div>
-      <div v-if="rows.length <= 0" class="row justify-center rounded-borders q-pa-md q-mb-md">
 
+      <div v-if="teamBenefit.children || teamBenefit.children.length <= 0" class="text-grey text-center q-py-lg">
+        {{ $t('noData') }}
       </div>
+
 
     </div>
   </div>
@@ -95,10 +97,8 @@ export default defineComponent({
       // 团队收益详情
       teamBenefit: {
         currentInfo: {} as any,
+        children: [],
       } as any,
-
-      // 
-      rows: [] as any,
     });
 
     context.emit('update', {

@@ -1,6 +1,9 @@
 <template>
   <!-- 背景 -->
-  <div class="bg absolute full-width"></div>
+  <div class="bg absolute full-width" style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);
+  height: 190px;
+  border-bottom-left-radius: 15%;
+  border-bottom-right-radius: 15%;"></div>
 
   <div class="q-pa-md">
     <div class="row justify-between">
@@ -17,8 +20,9 @@
     </div>
 
     <div class="row q-col-gutter-md justify-center q-mt-xs">
-      <div class="col-4 z-top" v-for="( social, socialIndex ) in socialList" :key="socialIndex">
-        <div class="rounded-borders bg-white column items-center" style="padding: 20px 0;">
+
+      <div class="col-4 z-top" v-for="(social, socialIndex ) in socialList" :key="socialIndex">
+        <div class="rounded-borders bg-white column items-center shadow-1" style="padding: 20px 0;">
           <q-img :src="imageSrc(social.icon)" width="41px" height="41px" />
           <div class="text-body2 text-weight-medium q-mt-sm">{{ social.name }}</div>
         </div>
@@ -72,7 +76,7 @@ export default {
     onMounted(() => {
       helpersInfoAPI().then((res: any) => {
         state.articleList = res.articleList
-        state.socialList = res.socialList
+        state.socialList = res.socialList.splice(0, 3)
         console.log(res);
       })
     })
@@ -86,14 +90,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bg {
-
-  background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);
-  height: 190px;
-  border-bottom-left-radius: 15%;
-  border-bottom-right-radius: 15%;
-}
-
 ::v-deep(.q-expansion-item) {
   border-bottom: 1px solid #F4F5FD;
 }
