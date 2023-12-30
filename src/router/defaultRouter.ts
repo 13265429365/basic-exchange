@@ -140,13 +140,13 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'WalletAccountCreate',
-        route: '/wallets/account/create',
+        name: 'WalletAccountUpdate',
+        route: '/wallets/account/update',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'wallets/account/create.vue'
+          'wallets/account/update.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/create.vue'),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/update.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },

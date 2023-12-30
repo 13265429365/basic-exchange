@@ -84,12 +84,12 @@
 import { useI18n } from 'vue-i18n';
 import { reactive, toRefs, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { walletsPaymentIndexAPI, walletsAccountCreateAPI, walletsAccountUpdateAPI, walletsAccountInfoAPI } from 'src/apis/wallets';
 
 
 export default {
-  name: 'addCard',
+  name: 'WalletsAccountCreate',
   setup(props: any, context: any) {
     const { t } = useI18n(); // 获取t函数进行翻译
     const $route = useRoute()

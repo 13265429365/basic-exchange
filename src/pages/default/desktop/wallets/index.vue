@@ -81,7 +81,7 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tabTransactions" class="no-padding">
             <div v-for="(order, orderIndex) in dataList" :key="orderIndex" class="q-px-md">
-              <q-expansion-item :expand-icon-class="order.status != -1 ? 'text-transparent' : ''" :header-style="{ borderRadius: '4px',height: '68px', lineHeight: '54px' }">
+              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''" :header-style="{ borderRadius: '4px',height: '68px', lineHeight: '54px' }">
                 <template v-slot:header>
                   <q-item-section>
                     <div class="col">

@@ -90,7 +90,7 @@ export const InitStoreState = {
         withdrawLink: false,
       },
       wallet: {
-        //  是否开启安全密钥, 如果开启了。 提现需要输入安全密钥，修改卡片｜新建卡片｜删除卡片 需要输入安全密钥
+        //  是否开启安全密钥, 如果开启了。 提现需要输入安全密钥，修改卡片｜删除卡片 需要输入安全密钥
         showSecurityPass: true,
         //  卡片管理是否开启删除
         showDelete: true,
