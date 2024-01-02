@@ -16,12 +16,10 @@
 
         <!-- 卡类型选择 -->
         <div class="row q-mt-md q-gutter-md">
-          <div v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex"
-            :style="{
-              width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
-              border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
-            }"
-            class="q-pa-sm row justify-center cursor-pointer relative-position"
+          <div v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex" :style="{
+            width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+            border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
+          }" class="q-pa-sm row justify-center cursor-pointer relative-position"
             @click="switchPaymentFunc(payment, paymentIndex)">
             <q-img class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
             <div class="self-center">{{ payment.name }}</div>
@@ -39,10 +37,10 @@
         <div class="q-mt-lg q-pa-md" style="width: 60%" v-if="paymentList[currentPaymentIndex]">
           <div class="column q-gutter-md">
             <div>
-              <div class="q-mb-sm">{{paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork')}}</div>
+              <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork') }}
+              </div>
               <q-select outlined v-model="currentPaymentInfo" :disable="params.id > 0"
-                        :options="paymentList[currentPaymentIndex].items"
-                        option-value="id" option-label="name">
+                :options="paymentList[currentPaymentIndex].items" option-value="id" option-label="name">
                 <template v-slot:selected>
                   <div class="row items-center q-gutter-sm">
                     <div>
@@ -50,7 +48,7 @@
                         <q-img no-spinner :src="imageSrc(currentPaymentInfo.icon)"></q-img>
                       </q-avatar>
                     </div>
-                    <div>{{currentPaymentInfo.name}}</div>
+                    <div>{{ currentPaymentInfo.name }}</div>
                   </div>
                 </template>
 
@@ -63,7 +61,7 @@
                             <q-img no-spinner :src="imageSrc(scope.opt.icon)"></q-img>
                           </q-avatar>
                         </div>
-                        <div>{{scope.opt.name}}</div>
+                        <div>{{ scope.opt.name }}</div>
                       </div>
                     </q-item-section>
                   </q-item>
@@ -72,24 +70,26 @@
             </div>
 
             <div v-if="paymentList[currentPaymentIndex].type == 1">
-              <div class="q-mb-sm">{{$t('ownerName')}}</div>
+              <div class="q-mb-sm">{{ $t('ownerName') }}</div>
               <q-input outlined v-model="params.realName" :placeholder="$t('ownerName')"></q-input>
             </div>
 
             <div>
-              <div class="q-mb-sm">{{paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') : $t('digitalAddress')}}</div>
-              <q-input outlined v-model="params.number" :placeholder="paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') : $t('digitalAddress')"></q-input>
+              <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') :
+                $t('digitalAddress') }}</div>
+              <q-input outlined v-model="params.number"
+                :placeholder="paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') : $t('digitalAddress')"></q-input>
             </div>
 
             <div v-if="paymentList[currentPaymentIndex].type == 1">
-              <div class="q-mb-sm">{{$t('bankAddress')}}</div>
+              <div class="q-mb-sm">{{ $t('bankAddress') }}</div>
               <q-input outlined v-model="params.code" :placeholder="$t('bankAddress')"></q-input>
             </div>
           </div>
 
           <div class="q-mt-lg text-right">
-            <q-btn rounded unelevated color="primary" no-caps :label="$t('submit')"
-                   style="min-width: 100px" size="md" @click="submitFunc"></q-btn>
+            <q-btn rounded unelevated color="primary" no-caps :label="$t('submit')" style="min-width: 100px" size="md"
+              @click="submitFunc"></q-btn>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@
     <q-dialog v-model="showSecurityKey">
       <q-card style="width: 340px">
         <q-card-section>
-          <div class="text-center text-h6">{{$t('enterSecretKey')}}</div>
+          <div class="text-center text-h6">{{ $t('enterSecretKey') }}</div>
         </q-card-section>
 
         <q-card-section>
@@ -124,7 +124,7 @@ import { imageSrc } from 'src/utils';
 import { walletsPaymentIndexAPI, walletsAccountCreateAPI, walletsAccountUpdateAPI, walletsAccountInfoAPI } from 'src/apis/wallets';
 import { useI18n } from 'vue-i18n';
 import { NotifyPositive } from 'src/utils/notify';
-import {InitStore} from 'stores/init';
+import { InitStore } from 'stores/init';
 
 export default {
   name: 'WalletsAccountUpdate',
@@ -137,7 +137,7 @@ export default {
       walletSetting: $initStore.config.settings.wallets,
       paymentList: [] as any,
       currentPaymentIndex: 0,
-      currentPaymentInfo: {},
+      currentPaymentInfo: {} as any,
       showSecurityKey: false,
 
       // 提交参数

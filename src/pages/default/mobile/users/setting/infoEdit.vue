@@ -1,9 +1,6 @@
 <template>
   <div>
     <div>
-      <!-- <div class="row justify-center">
-        <div class="size24 text-weight-bold">Complete Your Profile</div>
-      </div> -->
       <div class="row justify-center q-py-lg">
         <div class="relative">
           <uploader @uploaded="(url) => { params.avatar = url }">
@@ -19,6 +16,7 @@
           </uploader>
         </div>
       </div>
+
       <div class="q-mt-lg q-px-lg">
         <div class="q-mb-md">
           <div class="text-weight-bold q-mb-sm">{{ $t('nickname') }}</div>
@@ -32,10 +30,10 @@
             style="height: 45px;color: rgba(0, 0, 0, 0.87);border: 1px solid rgba(0, 0, 0, 0.24);">
             <!-- 下拉 -->
             <q-list style="min-width: 268px" class="q-py-sm">
-              <q-item @click="genderIndex = i" v-for="(item, i) in GenderList" :key="i" clickable v-close-popup
-                class="row no-wrap items-center">
+              <q-item :active="genderIndex == Index" @click="genderIndex = Index" v-for="(gender, Index) in GenderList"
+                :key="Index" clickable v-close-popup class="row no-wrap items-center">
                 <div>
-                  <div style="font-size: 16px;">{{ $t(item.name) }}</div>
+                  <div style="font-size: 16px;">{{ $t(gender.name) }}</div>
                 </div>
               </q-item>
             </q-list>
@@ -115,7 +113,7 @@ export default defineComponent({
           state.genderIndex = res.sex - 1
         }
 
-        state.params.birthday = date.formatDate(state.params.birthday, 'YYYY/MM/DD')
+        state.params.birthday = date.formatDate(state.params.birthday * 1000, 'YYYY/MM/DD')
         $userStore.updateUserInfo(res)
         localStorage.setItem(UserInfoKey, JSON.stringify(res))
       })
@@ -123,9 +121,12 @@ export default defineComponent({
 
     // 执行接口
     const submit = () => {
-      state.params.sex = state.genderIndex + 1
-      state.params.birthday = Number(date.formatDate(state.params.birthday, 'X'))
-      updateInfoAPI(state.params).then((res: any) => {
+      const params = {
+        sex: state.genderIndex + 1,
+        nickname: state.params.nickname,
+        birthday: Number(date.formatDate(state.params.birthday, 'X')),
+      }
+      updateInfoAPI(params).then((res: any) => {
         console.log(res);
         UserInfo()
       })

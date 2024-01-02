@@ -304,6 +304,17 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
+        name: 'WalletsAccountDetails',
+        route: '/wallets/detail',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/details.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/index.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
         name: 'WalletsAssetsIndex',
         route: '/wallets/assets/index',
         componentMobile: PagesTemplateMobilePath(

@@ -22,7 +22,7 @@
 
     <q-form class="q-mt-lg q-px-lg">
       <!-- 账号 -->
-      <q-input class="q-mb-md" standout v-model="params.username"
+      <q-input class="q-mb-md" outlined v-model="params.username"
         :input-style="{ fontSize: '16px', color: '#999999!important' }" :placeholder="$t('username')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/images/icons/username.png" />
@@ -30,7 +30,7 @@
       </q-input>
 
       <!-- 密码 -->
-      <q-input class="q-mb-md" v-model="params.password" standout
+      <q-input class="q-mb-md" v-model="params.password" outlined
         :input-style="{ fontSize: '16px', color: '#999999!important' }" :type="showPwd ? 'text' : 'password'"
         :placeholder="$t('password')">
         <template v-slot:prepend>
@@ -44,7 +44,7 @@
 
       <!-- 验证码 -->
       <q-input v-if="config.settings.login.showVerify" :input-style="{ fontSize: '16px', color: '#999999!important' }"
-        class="q-mb-sm" standout v-model="params.captchaVal" :placeholder="$t('code')">
+        class="q-mb-sm" outlined v-model="params.captchaVal" :placeholder="$t('code')">
         <template v-slot:prepend>
           <q-img width="24px" height="24px" src="/images/icons/code.png" />
         </template>

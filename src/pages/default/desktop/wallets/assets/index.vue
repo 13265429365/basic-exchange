@@ -238,7 +238,16 @@ export default defineComponent({
       tab: 'tabTransactions',
       params: {
         types: [] as any,
+<<<<<<< HEAD
         pagination: initPagination,
+=======
+        pagination: {
+          rowsPerPage: Number(5), //  n条/一页
+          page: Number(1), //  当前页数
+          descending: true,
+          sortBy: 'created_at',
+        },
+>>>>>>> 8151af7d62da63a88029d96ceeae4807115d6327
       } as any,
 
       billFilterParams: {

@@ -13,14 +13,14 @@
             dropdown-icon="expand_more" style="height: 40px;border: 1px solid rgba(0, 0, 0, 0.24);">
             <template v-slot:label>
               <div class="row no-wrap items-center">
-                <q-img :src="imageSrc(options[areaCodeIndex].icon ? options[areaCodeIndex].icon : '')" width="24px"
+                <q-img :src="imageSrc(countryList[countryIndex].icon ? countryList[countryIndex].icon : '')" width="24px"
                   height="16px" />
-                <div class="q-ml-sm">+{{ options[areaCodeIndex].code }}</div>
+                <div class="q-ml-sm">+{{ countryList[countryIndex].code }}</div>
               </div>
             </template>
             <!-- 下拉 -->
             <q-list style="min-width: 268px" class="q-py-sm">
-              <q-item @click="areaCodeIndex = i" v-for="(item, i) in options" :key="i" clickable v-close-popup
+              <q-item @click="countryIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
                 class="row no-wrap items-center">
                 <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
                 <div>
@@ -40,6 +40,7 @@
 </template>
 
 <script lang="ts">
+import { LocalStorage } from 'quasar';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
@@ -56,39 +57,32 @@ export default defineComponent({
     const $userStore = UserStore();
 
     let state = reactive({
-      options: [
-        { icon: '' }
-      ] as any,
-      // 手机区号
-      areaCodeIndex: 0,
-
+      countryList: $initStore.countryList as any,
+      countryIndex: 0,
       params: {} as any,
-
     })
 
     onMounted(() => {
-      state.options = $initStore.countryList
       UserInfo()
     })
 
     // 获取用户信息
     const UserInfo = () => {
       userInfoAPI().then((res: any) => {
-        console.log('用户信息', res);
-        state.params = res
         state.params.telephone = res.telephone.split('|')[1]
         $userStore.updateUserInfo(res)
-        localStorage.setItem(UserInfoKey, JSON.stringify(res))
+        LocalStorage.set(UserInfoKey, JSON.stringify(res))
       })
     }
 
     // 执行接口
     const submit = () => {
+      console.log(state.countryList[state.countryIndex].code + state.params.telephone);
+
       let params = {
-        telephone: state.params.telephone,
+        telephone: state.countryList[state.countryIndex].code + '|' + state.params.telephone,
       }
       updateInfoAPI(params).then((res: any) => {
-        console.log(res);
         UserInfo()
         // $router.push({ name: 'UserIndex' })
       })

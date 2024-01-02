@@ -4,7 +4,7 @@
     <div class="row items-center justify-between rounded-borders q-pa-lg q-pr-xl"
       style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
       <div class="row">
-        <q-img class="q-mr-lg" :src="imageSrc('/assets/icon/menu/deposit.png')" width="66px" height="66px"></q-img>
+        <q-img class="q-mr-lg" src="/images/wallet.png" width="66px" height="66px"></q-img>
         <div class="q-pt-sm">
           <div class="row items-center">
             <div class="text-white text-body2 q-mr-xs">{{ $t('balance') }}</div>
@@ -47,7 +47,10 @@
               <div class="row q-pa-sm" style="max-width: 420px">
                 <div v-for="(billType, billTypeIndex) in billFilterParams.typeList" :key="billTypeIndex" class="col-4">
                   <div class="q-ma-xs">
-                    <q-btn outline rounded :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'" @click="selectBillTypeFunc(billType.value)"  class="full-width ellipsis " :label="billType.label"></q-btn>
+                    <q-btn outline rounded
+                      :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'"
+                      @click="selectBillTypeFunc(billType.value)" class="full-width ellipsis "
+                      :label="billType.label"></q-btn>
                   </div>
                 </div>
               </div>
@@ -81,7 +84,8 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tabTransactions" class="no-padding">
             <div v-for="(order, orderIndex) in dataList" :key="orderIndex" class="q-px-md">
-              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''" :header-style="{ borderRadius: '4px',height: '68px', lineHeight: '54px' }">
+              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''"
+                :header-style="{ borderRadius: '4px', height: '68px', lineHeight: '54px' }">
                 <template v-slot:header>
                   <q-item-section>
                     <div class="col">
@@ -122,7 +126,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -156,7 +160,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -225,7 +229,7 @@ export default defineComponent({
       getWalletsOrderList()
 
       // 获取钱包账单Options
-      walletsBillOptionsAPI({type: WalletBillAccountType}).then((res: any) => {
+      walletsBillOptionsAPI({ type: WalletBillAccountType }).then((res: any) => {
         state.billFilterParams.typeList = res
       })
     })
@@ -259,7 +263,7 @@ export default defineComponent({
         state.pagination.total = res.count
         state.dataList = res.items
         state.pagination.countPage = Math.ceil(state.pagination.total / state.params.pagination.rowsPerPage)
-        })
+      })
     }
 
     // 监听加减页
