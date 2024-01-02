@@ -34,7 +34,7 @@ export default defineComponent({
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
     const $initStore = InitStore();
-    const router = useRouter();
+    const $router = useRouter();
     let state = reactive({
       languageList: $initStore.languageList as any,
       locale,
@@ -42,7 +42,7 @@ export default defineComponent({
 
     const switchLang = async (language: any) => {
       await $initStore.updateUserLang(language.alias)
-      // router.back()
+      // $router.back()
       setTimeout(() => {
         location.reload()
       }, 200)

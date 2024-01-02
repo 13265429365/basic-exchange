@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="row justify-center q-mt-lg">
-        <div class="text-h6 text-weight-bold">{{ $t('password') }}</div>
+        <div class="text-h6 text-weight-bold">{{ $t('updatePassword') }}</div>
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>

@@ -20,7 +20,7 @@
             </div>
           </div>
         </div>
-        <q-img :src="imageSrc('/assets/icon/menu/withdraw.png')" class="self-center" width="68px" height="53.83px" />
+        <q-img src="/images/wallet.png" class="self-center" width="68px" height="53.83px" />
       </div>
 
       <div class="row justify-between q-mb-xs btn">
@@ -47,7 +47,7 @@
           <div class="">
             <div class="text-weight-bold">{{ wallet.name }}</div>
             <div class="text-grey-6 text-caption">{{ date.formatDate(Number(wallet.updatedAt *
-              1000), 'YYYY-MM-DD HH:mm:ss') }}</div>
+              1000), 'YYYY/MM/DD HH:mm:ss') }}</div>
           </div>
           <div>
             <div class="text-body1 text-weight-bold text-center">
@@ -80,12 +80,14 @@ import { InitStore } from 'src/stores/init';
 import { walletsOrderIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'WalletsIndex',
   setup(props: any, context: any) {
     const $initStore = InitStore()
     const $userStore = UserStore()
+    const $router = useRouter()
     const { t } = useI18n()
 
     const state = reactive({
@@ -116,6 +118,12 @@ export default defineComponent({
 
     context.emit('update', {
       title: t('myWallet'),
+      rightBtn: {
+        icon: 'o_event_note',
+        callback() {
+          $router.push({ name: 'WalletsAccountDetails' })
+        },
+      },
     })
 
     onMounted(() => {

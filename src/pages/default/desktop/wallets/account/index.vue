@@ -1,12 +1,13 @@
 <template>
   <div style="padding: 48px 100px;">
     <div>
-      <div class="text-h5 q-mb-md">{{$t('accountManage')}}</div>
+      <div class="text-h5 q-mb-md">{{ $t('accountManage') }}</div>
     </div>
 
     <div>
       <div class="row q-gutter-sm items-center">
-        <q-card flat v-for="(account, accountIndex) in accountList" :key="accountIndex" :style="bgList.get(account.paymentType)">
+        <q-card flat v-for="(account, accountIndex) in accountList" :key="accountIndex"
+          :style="bgList.get(account.paymentType)">
           <q-card-section>
             <div class="row justify-between">
               <div class="row">
@@ -18,31 +19,34 @@
                 <div class="q-ml-sm text-white">
                   <div class="q-mt-xs">
                     <div class="text-body1 text-bold">
-                      {{account.paymentName}}
-                      <q-btn rounded unelevated size="xs" style="border: 1px solid #fff; padding: 0 10px;margin-left: 2px" @click="$router.push({name: 'WalletAccountUpdate', query: {id: account.id}})">
-                        <div style="font-size: 12px">{{$t('edit')}}</div>
+                      {{ account.paymentName }}
+                      <q-btn rounded unelevated size="xs" style="border: 1px solid #fff; padding: 0 10px;margin-left: 2px"
+                        @click="$router.push({ name: 'WalletAccountUpdate', query: { id: account.id } })">
+                        <div style="font-size: 12px">{{ $t('edit') }}</div>
                       </q-btn>
                     </div>
-                    <div class="text-caption text-grey-2">{{account.name}}</div>
+                    <div class="text-caption text-grey-2">{{ account.name }}</div>
                   </div>
 
                   <div class="q-mt-sm">
-                    <div class="text-caption text-grey-2">{{account.paymentType == 1 ? $t('bankNumber') : $t('digitalAddress')}}</div>
-                    <div class="text-body1 text-bold">{{account.number}}</div>
+                    <div class="text-caption text-grey-2">{{ account.paymentType == 1 ? $t('bankNumber') :
+                      $t('digitalAddress') }}</div>
+                    <div class="text-body1 text-bold">{{ account.number }}</div>
                   </div>
                 </div>
 
               </div>
               <div class="text-right">
-                <q-icon color="white" class="cursor-pointer" size="18px" name="cancel" @click="deleteAccountFunc(account)"></q-icon>
+                <q-icon color="white" class="cursor-pointer" size="18px" name="cancel"
+                  @click="deleteAccountFunc(account)"></q-icon>
               </div>
             </div>
           </q-card-section>
         </q-card>
 
         <!-- 添加按钮 -->
-        <div @click="$router.push({ name: 'WalletAccountUpdate'})"
-             class="column justify-center row cursor-pointer" style="
+        <div @click="$router.push({ name: 'WalletAccountUpdate' })" class="column justify-center row cursor-pointer"
+          style="
         border: 1px dashed rgba(221, 221, 221, 0.8);
         height: 132px;
         width: 132px;
@@ -60,7 +64,7 @@
     <q-dialog v-model="showSecurityKey">
       <q-card style="width: 340px">
         <q-card-section>
-          <div class="text-center text-h6">{{$t('enterSecretKey')}}</div>
+          <div class="text-center text-h6">{{ $t('enterSecretKey') }}</div>
         </q-card-section>
 
         <q-card-section>
@@ -84,7 +88,7 @@ import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
 import { NotifyPositive } from 'src/utils/notify';
-import {InitStore} from 'stores/init';
+import { InitStore } from 'stores/init';
 
 export default defineComponent({
   name: 'WalletsAccountIndex',
@@ -96,10 +100,10 @@ export default defineComponent({
       accountList: [] as any,
       showSecurityKey: false,
       currentAccountInfo: {} as any,
-      params: {id: 0, securityKey: ''},
+      params: { id: 0, securityKey: '' },
       bgList: new Map([
-        [1, {background: 'linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%)', width: '360px', height: '132px', borderRadius: '8px'}],
-        [11, {background: 'linear-gradient(90deg, #7474BF 0%, #348AC7 100%)', width: '360px', height: '132px', borderRadius: '8px'}]
+        [1, { background: 'linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%)', width: '360px', height: '132px', borderRadius: '8px' }],
+        [11, { background: 'linear-gradient(90deg, #7474BF 0%, #348AC7 100%)', width: '360px', height: '132px', borderRadius: '8px' }]
       ])
     });
 

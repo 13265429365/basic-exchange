@@ -3,7 +3,7 @@
     <div class="col q-pa-md full-width column justify-between">
       <div class="col full-width">
         <q-card flat v-for="(account, accountIndex) in accountList" :key="accountIndex"
-          :style="bgList.get(account.paymentType)">
+          :style="bgList.get(account.paymentType)" class="q-mb-sm">
           <q-card-section>
             <div class="row justify-between">
               <div class="row">

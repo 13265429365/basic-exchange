@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="row justify-center q-mt-lg">
-        <div class="text-h6 text-weight-bold">{{ $t('secretKey') }}</div>
+        <div class="text-h6 text-weight-bold">{{ $t('updateSecretKey') }}</div>
       </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>

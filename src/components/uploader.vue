@@ -92,8 +92,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-//:deep(.q-uploader .q-uploader__list) {
-//  padding: 0 !important;
-//  min-height: 0 !important;
-//}
+// :deep(.q-uploader .q-uploader__list) {
+//   padding: 0 !important;
+//   min-height: 0 !important;
+// }
 </style>
