@@ -44,43 +44,46 @@
           </div>
         </div>
 
-        <div class="q-mt-lg">
+        <div class="q-mt-lg" v-show="echartsTypeIndex == 0">
           <!-- 饼状图 -->
           <div class="row justify-center q-mb-sm">
-            <div :id="echartsPieId" style="height: 160px; width: 160px"></div>
+            <div :id="echartsPieId" style="height: 200px; width: 200px"></div>
           </div>
 
           <!-- 资产账户列表 -->
-          <div v-show="echartsTypeIndex == 0" v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList"
-            :key="assetsIndex"
-            @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })">
-            <div class="row justify-between items-center justify-start">
-              <div class="row items-center">
-                <q-separator vertical class="q-mr-xs q-mt-xs" style="width: 2px;
+          <div>
+
+            <div v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex"
+              @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })">
+              <div class="row justify-between items-center justify-start">
+                <div class="row items-center">
+                  <q-separator vertical class="q-mr-xs q-mt-xs" style="width: 2px;
                     height: 12px;
                     border-radius: 2px;" :style="{ background: assets.itemStyle.color }" />
-                <div class="q-mr-md text-grey-7">{{ assets.name }}</div>
-                <div>- {{ Math.round(assets.money / percentage * 100) }}%</div>
+                  <div class="q-mr-md text-grey-7">{{ assets.name }}</div>
+                  <div>- {{ Math.round(assets.money / percentage * 100) }}%</div>
+                </div>
+                <div class="text-weight-bold">{{ $t('currency') }}{{ assets.money.toFixed(2) }}</div>
               </div>
-              <div class="text-weight-bold">{{ $t('currency') }}{{ assets.money.toFixed(2) }}</div>
+              <q-separator v-if="assetsIndex < userAssetsInfo.userAssetsList.length - 1" class="q-my-xs"
+                style="background: #F4F5FD" />
             </div>
-            <q-separator v-if="assetsIndex < userAssetsInfo.userAssetsList.length - 1" class="q-my-xs"
-              style="background: #F4F5FD" />
           </div>
         </div>
 
-        <!-- <div v-show="echartsTypeIndex == 1">
-          <div class="row justify-center q-mb-sm">
+        <div v-show="echartsTypeIndex == 1">
+          <div class="row justify-center q-mb-sm full-width">
             <div :id="echartsLineId" style="height: 260px; width: 100%"></div>
           </div>
-        </div> -->
+        </div>
 
       </div>
 
       <!--  -->
       <div class="q-mt-md q-mb-sm text-weight-bold">{{ $t('assetsBlock') }}</div>
-      <div @click="$router.push({ name: 'AssetsDetail' })" v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList"
-        :key="assetsIndex" class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">
+      <div @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })"
+        v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex"
+        class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">
         <div class="row items-center">
           <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(assets.icon)" />
           <div class="text-weight-bold">{{ assets.name }}</div>
@@ -154,8 +157,10 @@ export default defineComponent({
     onMounted(() => {
       // 获取用户资产列表
       walletsUserAssetsIndexAPI().then((res: any) => {
+        console.log(res);
+
         state.userAssetsInfo = res
-        state.echarts.series = res.echarts
+        state.echarts.series = state.userAssetsInfo.echarts
         state.userAssetsInfo.userAssetsList.forEach((item: any, i: any) => {
           item.value = item.money
           item.itemStyle = {
@@ -171,64 +176,50 @@ export default defineComponent({
     })
 
     const chartSetOptions = (index: any) => {
+      state.myChart.dispose()
       state.echartsTypeIndex = index
       if (index == 0) {
-        state.pieOption = {
-          title: {
-            text: '总资产',
-            subtext: state.percentage,
-            left: 'center', // 标题居中
-            top: '35%',
-            textStyle: { // 标题样式
-              color: '#4E5969', // 标题颜色
-              fontSize: '12px',
-              textDecoration: 'underline' // 标题装饰
-            },
-            subtextStyle: { // 子标题样式
-              color: '#1D2129', // 子标题颜色
-              fontStyle: 'bold', // 子标题字体样式
-              fontSize: '12px',
-            },
-            padding: [10, 10], // 标题与内容间距
-            itemGap: 8 // 同一级标签间距
-          },
-          series: {
-            type: 'pie',
-            radius: ['55%', '90%'],
-            label: {
-              show: false,
-            },
-            data: state.userAssetsInfo.userAssetsList
-          },
-        }
         chartSetPieOptions()
       } else {
-        const legendList = [];
+        setTimeout(() => {
+          chartSetLineOptions()
+        }, 100)
 
-        for (let i = 0; i < state.echarts.series.length; i++) {
-          legendList.push(state.echarts.series[i].name);
-        }
-        state.lineOption = {
-          tooltip: { trigger: 'axis' },
-          legend: { data: legendList, bottom: '0' },
-          grid: { left: '0', right: '0', bottom: '36px', containLabel: true },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: state.echarts.category,
-          },
-          yAxis: { type: 'value' },
-          series: state.echarts.series as any,
-        }
-        chartSetLineOptions()
       }
     }
 
     // 初始化饼状图形
     const chartSetPieOptions = () => {
-      console.log(111);
+      state.myChart = echarts.init(document.getElementById(echartsPieId));
       // 饼状图
-      state.myChart.setOption(state.pieOption);
+      state.myChart.setOption(state.pieOption = {
+        title: {
+          text: '总资产',
+          subtext: state.percentage,
+          left: 'center', // 标题居中
+          top: '35%',
+          textStyle: { // 标题样式
+            color: '#4E5969', // 标题颜色
+            fontSize: '12px',
+            textDecoration: 'underline' // 标题装饰
+          },
+          subtextStyle: { // 子标题样式
+            color: '#1D2129', // 子标题颜色
+            fontStyle: 'bold', // 子标题字体样式
+            fontSize: '12px',
+          },
+          padding: [10, 10], // 标题与内容间距
+          itemGap: 8 // 同一级标签间距
+        },
+        series: {
+          type: 'pie',
+          radius: ['55%', '90%'],
+          label: {
+            show: false,
+          },
+          data: state.userAssetsInfo.userAssetsList
+        },
+      });
       window.addEventListener('resize', () => {
         setTimeout(state.myChart.resize, 300);
       });
@@ -236,10 +227,25 @@ export default defineComponent({
 
     // 初始化折线图形
     const chartSetLineOptions = () => {
-      console.log(222);
+      state.myChart = echarts.init(document.getElementById(echartsLineId));
+      const legendList = [];
 
+      for (let i = 0; i < state.echarts.series.length; i++) {
+        legendList.push(state.echarts.series[i].name);
+      }
       // 折线图
-      state.myChart.setOption(state.lineOption);
+      state.myChart.setOption({
+        tooltip: { trigger: 'axis' },
+        legend: { data: legendList, bottom: '0' },
+        grid: { left: '0', right: '0', bottom: '36px', containLabel: true },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data: state.echarts.category,
+        },
+        yAxis: { type: 'value' },
+        series: state.echarts.series.series as any,
+      });
       window.addEventListener('resize', () => {
         setTimeout(state.myChart.resize, 300);
       });

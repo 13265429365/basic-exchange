@@ -99,13 +99,16 @@ import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { walletsBillIndexAPI, walletsBillOptionsAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 export default defineComponent({
-    name: 'WalletsDetail',
+    name: 'WalletsAccountDetails',
     emits: ['update'],
     setup(props: any, context: any) {
         const { t } = useI18n()
+        const $route = useRoute()
         const WalletBillAccountType = -1
+        const WalletBillAssetsType = -2
         const initPagination = {
             rowsPerPage: 20, //  每页显示条数
             page: 1, //  当前页数
@@ -114,7 +117,7 @@ export default defineComponent({
         }
         const state = reactive({
             params: {
-                types: [WalletBillAccountType],
+                types: [$route.query.type ? WalletBillAssetsType : WalletBillAccountType],
                 pagination: initPagination,
             } as any,
 
@@ -145,9 +148,12 @@ export default defineComponent({
         })
 
         onMounted(() => {
+            console.log($route.query.type);
+
             getWalletsBillList()
             // 获取钱包账单Options
-            walletsBillOptionsAPI({ type: WalletBillAccountType }).then((res: any) => {
+            // 如果route.query存在assets获取-2类型账单
+            walletsBillOptionsAPI({ type: $route.query.type ? WalletBillAssetsType : WalletBillAccountType }).then((res: any) => {
                 state.billFilterParams.typeList = res
                 console.log(res);
             })
@@ -156,7 +162,7 @@ export default defineComponent({
         // 获取用户账单列表
         const getWalletsBillList = () => {
             if (state.params.types.length == 0) {
-                state.params.types = [WalletBillAccountType]
+                state.params.types = [$route.query.type ? WalletBillAssetsType : WalletBillAccountType]
             }
             walletsBillIndexAPI(state.params).then((res: any) => {
                 state.billDetailList = res.items

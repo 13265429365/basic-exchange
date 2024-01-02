@@ -12,25 +12,28 @@
           </div>
           <!-- 点击显示、隐藏金额 -->
           <div class="text-h6 text-white text-weight-bold">
-            <div v-if="showMoney">
+            <div v-if="showMoney" class="row no-wrap items-center">
               <div>{{ $t('currency') }}{{ Number(userAssetsInfo.money).toFixed(2) }}</div>
-              <div class="text-caption q-ml-xs">≈{{ $t('currency') }}{{ Number(userAssetsInfo.moneyRate).toFixed(2) }}</div>
+              <div class="text-caption q-ml-xs">≈{{ $t('currency') }}{{ Number(userAssetsInfo.moneyRate).toFixed(2) }}
+              </div>
             </div>
             <div v-else>
               ******
             </div>
           </div>
         </div>
-        <q-img :src="imageSrc(userAssetsInfo.icon)" class="self-center" width="68px" height="53.83px" />
+        <q-img :src="imageSrc(userAssetsInfo.icon)" class="self-center" width="50px" height="50px" />
       </div>
 
       <div class="row justify-between q-mb-xs btn">
-        <div class="row justify-between q-mb-xs btn">
-          <q-btn @click="$router.push({ name: 'WalletsDeposit' })" unelevated class="text-primary bg-white" rounded
-            no-caps style="width: 80px" :label="$t('deposit')"></q-btn>
-          <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" unelevated class="text-primary bg-white q-ml-md"
-            rounded style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
-        </div>
+        <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
+          :key="quickMenuIndex" v-show="quickMenu.data.isMobile" style="width: 47%;"
+          class="bg-white q-py-sm rounded-borders" no-caps unelevated>
+          <div class="row justify-start items-center">
+            <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
+            <div>{{ $t(quickMenu.name) }}</div>
+          </div>
+        </q-btn>
       </div>
 
       <div class="q-py-md row">
@@ -117,11 +120,11 @@ export default defineComponent({
     });
 
     context.emit('update', {
-      title: t('myWallet'),
+      title: t('myAssets'),
       rightBtn: {
         icon: 'o_event_note',
         callback() {
-          $router.push({ name: 'WalletsAccountDetails' })
+          $router.push({ name: 'WalletsAccountDetails', query: { type: 'assets' } })
         },
       },
     })
