@@ -10,7 +10,6 @@ export const walletsAccountCreateAPI = (params: any) => {
   return api.post('/wallets/account/create', params);
 };
 
-
 // 用户编辑卡片
 export const walletsAccountUpdateAPI = (params: any) => {
   return api.post('/wallets/account/update', params);
@@ -32,9 +31,14 @@ export const walletsAccountDeleteAPI = (params: any) => {
 };
 
 // 用户获取资产列表
-export const walletsUserAssetsIndexAPI = (params: any) => {
-  return api.post('/wallets/user/assets/index', params);
+export const walletsUserAssetsIndexAPI = () => {
+  return api.post('/wallets/user/assets/index');
 };
+
+// 获取用户资产信息
+export const walletsUserAssetsInfoAPI = (params: any) => {
+  return api.post('/wallets/user/assets/info', params)
+}
 
 // 钱包账单类型列表
 export const walletsBillOptionsAPI = (params: any) => {

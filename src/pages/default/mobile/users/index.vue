@@ -133,7 +133,7 @@ export default defineComponent({
     // 退出登录
     const Logout = async () => {
       await $initStore.removeUserToken()
-      $router.push({ name: 'HomeIndex' })
+      void $router.push({ name: 'HomeIndex' })
     }
 
     return {

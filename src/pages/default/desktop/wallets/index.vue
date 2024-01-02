@@ -11,7 +11,7 @@
             <q-icon @click="showMoney = !showMoney" class="cursor-pointer" color="white" size="16px"
               :name="showMoney ? 'o_visibility' : 'o_visibility_off'"></q-icon>
           </div>
-          <div class="text-h6 text-white text-weight-bold">
+          <div class="text-h6 text-white text-weight-bold q-mt-xs">
             <div v-if="showMoney">
               <span class="text-caption q-mr-xs">{{ $t('currency') }}</span>{{ Number(userInfo.money).toFixed(2) }}
             </div>
