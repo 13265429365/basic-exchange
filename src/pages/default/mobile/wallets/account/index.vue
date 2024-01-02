@@ -2,68 +2,75 @@
   <div class="column full-height full-width">
     <div class="col q-pa-md full-width column justify-between">
       <div class="col full-width">
-        <div class="q-mb-md" v-for="(card, cardIndex) in cardList" :key="cardIndex"
-          style="height: 125px;background: linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%);border-radius: 14px;overflow: hidden;">
-          <div class="row" style="padding: 15px 20px;">
-            <q-img :src="imageSrc(card.icon)" width="34px" height="34px" />
-            <div class="col column justify-between text-white">
-              <div class="row justify-between q-pl-sm">
+        <q-card flat v-for="(account, accountIndex) in accountList" :key="accountIndex"
+          :style="bgList.get(account.paymentType)">
+          <q-card-section>
+            <div class="row justify-between">
+              <div class="row">
                 <div>
-                  <div class="text-weight-bold">{{ card.name }}</div>
-                  <div class="text-caption">{{ card.realName }}</div>
+                  <q-avatar>
+                    <q-img no-spinner :src="imageSrc(account.icon)" width="48px" height="48px"></q-img>
+                  </q-avatar>
                 </div>
-                <div>
-                  <q-btn outline rounded size="sm" color="white" :label="$t('edit')" no-caps
-                    @click="$router.push({ name: `WalletAccountCreate`, query: { type: 'edit', id: card.id } })" />
-                  <q-btn outline rounded size="sm" color="white" class="q-ml-sm" :label="$t('delete')" no-caps
-                    @click="Confirm(card.id)" />
-                </div>
-              </div>
+                <div class="q-ml-sm text-white">
+                  <div class="q-mt-xs">
+                    <div class="text-body1 text-bold">
+                      {{ account.paymentName }}
+                      <q-btn rounded unelevated size="xs" style="border: 1px solid #fff; padding: 0 10px;margin-left: 2px"
+                        @click="$router.push({ name: 'WalletAccountUpdate', query: { id: account.id } })">
+                        <div style="font-size: 12px">{{ $t('edit') }}</div>
+                      </q-btn>
+                    </div>
+                    <div class="text-caption text-grey-2">{{ account.name }}</div>
+                  </div>
 
-              <div class="full-width q-mt-md">
-                <div class="text-caption">{{ card.paymentName }}</div>
-                <div class="text-weight-bold ellipsis full-width text-body1">
-                  {{ card.number }}
+                  <div class="q-mt-sm">
+                    <div class="text-caption text-grey-2">{{ account.paymentType == 1 ? $t('bankNumber') :
+                      $t('digitalAddress') }}</div>
+                    <div class="text-body1 text-bold">{{ account.number }}</div>
+                  </div>
                 </div>
+
+              </div>
+              <div class="text-right">
+                <q-icon color="white" class="cursor-pointer" size="18px" name="cancel"
+                  @click="deleteAccountFunc(account)"></q-icon>
               </div>
             </div>
+          </q-card-section>
+        </q-card>
+
+        <!-- 添加按钮 -->
+        <div style="border: 1px dashed #01AC66;height: 40px;background-color: rgba(1, 172, 102, 0.05);"
+          class="rounded-borders column justify-center row q-mt-md"
+          @click="$router.push({ name: 'WalletAccountUpdate', query: { type: 'add' } })">
+          <div class="text-center text-primary text-weight-bold self-center row"> <q-icon size="20px" name="add"
+              class="self-center" />Add Card
           </div>
         </div>
       </div>
-
-      <!-- 添加按钮 -->
-      <div style="border: 1px dashed #01AC66;height: 40px;background-color: rgba(1, 172, 102, 0.05);"
-        class="rounded-borders column justify-center row"
-        @click="$router.push({ name: 'WalletAccountCreate', query: { type: 'add' } })">
-        <div class="text-center text-primary text-weight-bold self-center row"> <q-icon size="20px" name="add"
-            class="self-center" />Add Card
-        </div>
-      </div>
     </div>
-  </div>
 
-  <!-- 输入密码 -->
-  <q-dialog v-model="alertPass">
-    <q-card style="width: 380px;">
-      <q-card-section style="padding: 20px;">
-        <div class="text-center text-weight-bold">
-          {{ $t('enterSecretKey') }}
-        </div>
-        <div class="q-mt-lg">
-          <q-form>
-            <q-input outlined dense class="q-mb-md" type="password" v-model="params.securityKey"
-              :placeholder="$t('enterSecretKey')">
-            </q-input>
-            <div class="row justify-center q-mt-lg">
-              <q-btn class="q-mr-md col-4" unelevated rounded no-caps @click="alertPass = false"
-                style="background: #F3F5F5" :label="$t('cancel')"></q-btn>
-              <q-btn class="col-4" @click="delCard" unelevated rounded no-caps color="primary" :label="$t('confirm')" />
-            </div>
-          </q-form>
-        </div>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+    <!-- 输入密码 -->
+    <q-dialog v-model="showSecurityKey">
+      <q-card style="width: 340px">
+        <q-card-section>
+          <div class="text-center text-body1">{{ $t('enterSecretKey') }}</div>
+        </q-card-section>
+
+        <q-card-section>
+          <div class="q-mt-md">
+            <q-input dense outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat :label="$t('cancel')" v-close-popup color="grey"></q-btn>
+          <q-btn flat :label="$t('confirm')" @click="submitDeleteFunc" color="primary"></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
 </template>
 
 <script lang="ts">
@@ -71,26 +78,26 @@ import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
-import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
+import { NotifyPositive } from 'src/utils/notify';
+import { InitStore } from 'stores/init';
 
 export default defineComponent({
   name: 'WalletsAccountIndex',
   emits: ['update'],
   setup(props: any, context: any) {
     const { t } = useI18n(); // 获取t函数进行翻译
+    const $initStore = InitStore()
 
     const state = reactive({
-      // 用户卡片列表
-      cardList: [] as any,
-
-      // 密码弹窗
-      alertPass: false,
-
-      // 接口参数
-      params: {
-        id: '',
-        securityKey: '',
-      },
+      walletsSetting: $initStore.config.settings.wallets,
+      accountList: [] as any,
+      showSecurityKey: false,
+      currentAccountInfo: {} as any,
+      params: { id: 0, securityKey: '' },
+      bgList: new Map([
+        [1, { background: 'linear-gradient(90deg, #4CB8C4 0%, #3CD3AD 100%)', width: '100%', height: '132px', borderRadius: '8px' }],
+        [11, { background: 'linear-gradient(90deg, #7474BF 0%, #348AC7 100%)', width: '100%', height: '132px', borderRadius: '8px' }]
+      ])
     });
 
     context.emit('update', {
@@ -98,43 +105,40 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      getCard()
+      getWalletsAccount()
     })
 
-    // 获取卡片列表
-    const getCard = () => {
-      walletsAccountIndexAPI().then((res: any) => {
-        state.cardList = res
-      })
+    // 删除账户
+    const deleteAccountFunc = (account: any) => {
+      state.currentAccountInfo = account
+      if (state.walletsSetting.showSecurityPass) {
+        state.showSecurityKey = true
+      } else {
+        submitDeleteFunc()
+      }
     }
 
-    // 删除卡片
-    const delCard = () => {
-      walletsAccountDeleteAPI(state.params).then((res: any) => {
-        getCard()
+    // 删除提交
+    const submitDeleteFunc = () => {
+      state.params.id = Number(state.currentAccountInfo.id)
+      walletsAccountDeleteAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        state.alertPass = false
+        state.showSecurityKey = false
+        getWalletsAccount()
       })
     }
 
-    // 删除卡片提示
-    const Confirm = (id: any) => {
-      state.params.id = id
-      ConfirmPrompt(
-        t('delete'),
-        t('deleteLabel') + '?',
-        // 如果没有安全码，直接执行删除
-        () => {
-          state.alertPass = true
-        },
-        { ok: { label: t('confirm') }, cancel: { label: t('cancel') } }
-      )
+    const getWalletsAccount = () => {
+      walletsAccountIndexAPI().then((res: any) => {
+        state.accountList = res
+      })
     }
+
     return {
       imageSrc,
       ...toRefs(state),
-      delCard,
-      Confirm
+      deleteAccountFunc,
+      submitDeleteFunc,
     }
   }
 });

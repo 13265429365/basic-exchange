@@ -251,7 +251,7 @@ export default {
 
 .q-badge {
   width: 6px;
-  height: 6px;
+  height: 3px;
   padding: 0;
   min-height: 6px;
   background: #DDDDDD;

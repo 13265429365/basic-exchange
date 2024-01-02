@@ -5,113 +5,137 @@
         <!-- 卡类型选择 -->
         <q-scroll-area style="height: 80px; width: 100%;" :thumb-style="{ display: 'none' }" :visible="false">
           <div class="row no-wrap">
-            <div v-for="(typeI, typeIndex) in cardType" :key="typeIndex"
-              style="width: 200px;height: 50px;border-radius: 9px"
-              :class="`page_bg q-pa-sm row q-mr-md justify-center cursor-pointer relative-position ${typeIndex == ActiveCardIndex ? 'select' : ''}`"
-              @click="selectType(typeIndex)">
-              <q-img class="self-center q-mr-sm" :src="imageSrc(typeI.icon)" width="32px" height="32px" />
-              <div class="text-color-3 text-weight-bold self-center">{{ typeI.name }}</div>
-              <q-img v-if="typeIndex == ActiveCardIndex" class="absolute" src="/images/select.png" width="30PX"
+            <div v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex" :style="{
+              width: '200px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+              border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
+            }" class="q-pa-sm row justify-center cursor-pointer relative-position"
+              @click="switchPaymentFunc(payment, paymentIndex)">
+              <q-img class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
+              <div class="self-center">{{ payment.name }}</div>
+              <q-img v-if="paymentIndex == currentPaymentIndex" class="absolute" src="/images/select.png" width="30PX"
                 height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </div>
         </q-scroll-area>
 
 
-        <!-- 数字货币类型 -->
-        <div class="full-width">
-          <!-- 银行名称 -->
-          <div
-            v-if="cardType[ActiveCardIndex] && cardType[ActiveCardIndex].items && cardType[ActiveCardIndex].items.length > 0">
-            <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankName') }}：</div>
-            <div class="row justify-between q-px-md q-mb-md q-py-sm rounded-borders"
-              style="height: 45px;border: 1px solid rgba(0, 0, 0, 0.24)">
-              <div class="self-center row">
-                <q-img :src="imageSrc(cardType[ActiveCardIndex].items[ActiveBankIndex].icon)" width="26px"
-                  height="26px" />
-                <div class="self-center q-ml-sm">{{ cardType[ActiveCardIndex].items[ActiveBankIndex].name }}</div>
+        <!-- 卡片信息 -->
+        <div class="q-mt-lg q-pa-md full-width" v-if="paymentList[currentPaymentIndex]">
+          <div class="column q-gutter-md">
+            <div>
+              <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork')
+              }}
               </div>
-              <q-icon class="self-center" name="expand_more" size="24px"></q-icon>
-              <!-- 下拉 -->
-              <q-menu auto-close transition-show="jump-down" transition-hide="jump-up">
-                <q-list style="min-width: 268px" class="q-py-sm">
-                  <q-item @click="ActiveBankIndex = bankTypeIndex"
-                    v-for="(bankType, bankTypeIndex) in cardType[ActiveCardIndex].items" :key="bankTypeIndex" clickable
-                    class="row no-wrap items-center">
-                    <q-img class="q-mr-sm" :src="imageSrc(bankType.icon)" width="38px" height="38px" />
+              <q-select dense outlined v-model="currentPaymentInfo" :disable="params.id > 0"
+                :options="paymentList[currentPaymentIndex].items" option-value="id" option-label="name">
+                <template v-slot:selected>
+                  <div class="row items-center q-gutter-sm">
                     <div>
-                      <div style="font-size: 16px;">{{ bankType.name }}</div>
+                      <q-avatar size="md">
+                        <q-img no-spinner :src="imageSrc(currentPaymentInfo.icon)"></q-img>
+                      </q-avatar>
                     </div>
-                    <q-space />
-                    <q-icon v-if="ActiveBankIndex == bankTypeIndex" name="o_check_circle" color="primary"
-                      size="20px"></q-icon>
+                    <div>{{ currentPaymentInfo.name }}</div>
+                  </div>
+                </template>
+
+                <template v-slot:option="scope">
+                  <q-item clickable v-close-popup @click="currentPaymentInfo = scope.opt">
+                    <q-item-section>
+                      <div class="row items-center q-gutter-sm cursor-pointer">
+                        <div>
+                          <q-avatar size="md">
+                            <q-img no-spinner :src="imageSrc(scope.opt.icon)"></q-img>
+                          </q-avatar>
+                        </div>
+                        <div>{{ scope.opt.name }}</div>
+                      </div>
+                    </q-item-section>
                   </q-item>
-                </q-list>
-              </q-menu>
+                </template>
+              </q-select>
+            </div>
+
+            <div v-if="paymentList[currentPaymentIndex].type == 1">
+              <div class="q-mb-sm">{{ $t('ownerName') }}</div>
+              <q-input dense outlined v-model="params.realName" :placeholder="$t('ownerName')"></q-input>
+            </div>
+
+            <div>
+              <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') :
+                $t('digitalAddress') }}</div>
+              <q-input dense outlined v-model="params.number"
+                :placeholder="paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') : $t('digitalAddress')"></q-input>
+            </div>
+
+            <div v-if="paymentList[currentPaymentIndex].type == 1">
+              <div class="q-mb-sm">{{ $t('bankAddress') }}</div>
+              <q-input dense outlined v-model="params.code" :placeholder="$t('bankAddress')"></q-input>
             </div>
           </div>
 
-          <!-- 本人姓名 -->
-          <div class="q-mt-md">
-            <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('idName') }}</div>
-            <q-input outlined dense v-model="params.realName" />
+          <div class="q-mt-lg text-right">
+            <q-btn rounded unelevated color="primary" no-caps :label="$t('submit')" class="full-width"
+              @click="submitFunc"></q-btn>
           </div>
-
-          <!-- 银行卡号 -->
-          <div class="q-mt-md">
-            <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('bankNumber') }}</div>
-            <q-input type="number" outlined dense v-model="params.number" />
-          </div>
-
-          <!-- 银行地址-->
-          <div class="q-mt-md q-mb-xl">
-            <div class="text-color-3 text-weight-medium q-mb-xs">{{ $t('digitalAddress') }}</div>
-            <q-input type="text" outlined dense v-model="params.code" />
-          </div>
-
-          <q-btn unelevated rounded color="primary" :label="$t('submit')" class="full-width q-my-md" no-caps
-            style="height: 44px;" @click="submit" />
         </div>
       </div>
-
-      <!-- 添加按钮 -->
-
     </div>
 
+    <q-dialog v-model="showSecurityKey">
+      <q-card style="width: 340px">
+        <q-card-section>
+          <div class="text-center text-h6">{{ $t('enterSecretKey') }}</div>
+        </q-card-section>
+
+        <q-card-section>
+          <div class="q-mt-md">
+            <q-input outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat :label="$t('cancel')" v-close-popup color="grey"></q-btn>
+          <q-btn flat :label="$t('confirm')" @click="submitUpdateFunc" color="primary"></q-btn>
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script lang="ts">
 import { useI18n } from 'vue-i18n';
 import { reactive, toRefs, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { imageSrc } from 'src/utils';
 import { walletsPaymentIndexAPI, walletsAccountCreateAPI, walletsAccountUpdateAPI, walletsAccountInfoAPI } from 'src/apis/wallets';
+import { NotifyPositive } from 'src/utils/notify';
+import { InitStore } from 'stores/init';
 
 
 export default {
-  name: 'WalletsAccountCreate',
+  name: 'WalletsAccountUpdate',
   setup(props: any, context: any) {
-    const { t } = useI18n(); // 获取t函数进行翻译
-    const $route = useRoute()
     const $router = useRouter()
+    const $initStore = InitStore()
+    const { t } = useI18n()
 
     const state = reactive({
+      walletSetting: $initStore.config.settings.wallets,
+      paymentList: [] as any,
+      currentPaymentIndex: 0,
+      currentPaymentInfo: {} as any,
+      showSecurityKey: false,
+
+      // 提交参数
       params: {
-        number: '',
+        id: $router.currentRoute.value.query.id ?? 0,
         realName: '',
+        number: '',
         code: '',
-        id: '',
-      } as any,
-
-      // 当前选中的银行key
-      ActiveBankIndex: 0,
-
-      // 选中卡片类型
-      ActiveCardIndex: 0,
-
-      // 卡片类型
-      cardType: [] as any,
+        paymentId: 0,
+        securityKey: '',
+      } as any
     });
 
     context.emit('update', {
@@ -120,82 +144,82 @@ export default {
 
     // 如果编辑卡片就要获取卡片详情
     onMounted(async () => {
-      if ($route.query.type == 'edit') {
-        await getCardInfo()
-      }
-      getPayment()
+      walletsPaymentIndexAPI({ modes: [] }).then((res: any) => {
+        state.paymentList = res
+        if (state.paymentList.length > 0) {
+          switchPaymentFunc(state.paymentList[0], 0)
+        }
+
+        // 如果设置了Id, 那么请求卡片信息
+        if (state.params.id > 0) {
+          walletsAccountInfoAPI({ id: Number(state.params.id) }).then((res: any) => {
+            state.params = res
+
+            // 默认选中
+            for (let i = 0; i < state.paymentList.length; i++) {
+              for (let j = 0; j < state.paymentList[i].items.length; j++) {
+                if (state.paymentList[i].items[j].id == state.params.paymentId) {
+                  state.currentPaymentIndex = i
+                  state.currentPaymentInfo = state.paymentList[i].items[j]
+                }
+              }
+            }
+          })
+
+        }
+      })
     })
 
 
-    // 切换卡片类型
-    const selectType = (typeIndex: any) => {
-      state.ActiveCardIndex = typeIndex
-      state.ActiveBankIndex = 0
-    }
-
-    // 获取卡片详情
-    const getCardInfo = () => {
-      walletsAccountInfoAPI({ id: Number($route.query.id) }).then((res: any) => {
-        console.log('卡片详情', res);
-        state.params = res
-      })
-    }
-
-    // 获取支付列表
-    const getPayment = () => {
-      walletsPaymentIndexAPI({ modes: [] }).then((res: any) => {
-        console.log('支付列表', res);
-        state.cardType = res
-        // 预设
-        state.cardType.forEach((cardType: any, cardTypeIndex: any) => {
-          if (cardType.name == state.params.name) {
-            state.ActiveCardIndex = cardTypeIndex
-            cardType.items.forEach((items: any, itemsIndex: any) => {
-              if (items.id == state.params.paymentId) {
-                state.ActiveBankIndex = itemsIndex
-              }
-            })
-          }
-        });
-      })
-    }
-
-    const submit = () => {
-      // 判断编辑还是添加卡片
-      if ($route.query.type == 'add') {
-        let params = {
-          paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
-          realName: state.params.realName,
-          number: state.params.number,
-          code: state.params.code,
-        }
-        walletsAccountCreateAPI(params).then((res: any) => {
-          console.log(res);
-          $router.push({ name: 'AccountCard' })
-        })
-      } else {
-        let params = {
-          id: state.params.id,
-          name: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].name,
-          paymentId: state.cardType[state.ActiveCardIndex].items[state.ActiveBankIndex].id,
-          realName: state.params.realName,
-          number: state.params.number,
-          code: state.params.code,
-        }
-        walletsAccountUpdateAPI(params).then((res: any) => {
-          console.log(res);
-          $router.push({ name: 'AccountCard' })
-        })
+    // 切换支付类型
+    const switchPaymentFunc = (paymentInfo: any, paymentIndex: number) => {
+      if (state.params.id > 0) {
+        return
       }
 
+      if (paymentInfo.items.length > 0) {
+        state.currentPaymentInfo = paymentInfo.items[0]
+      }
+      state.currentPaymentIndex = paymentIndex
     }
 
+
+    // 提交信息
+    const submitFunc = () => {
+      state.params.paymentId = state.currentPaymentInfo.id
+
+      // 新增提现账户
+      if (state.params.id == 0) {
+        walletsAccountCreateAPI(state.params).then(() => {
+          NotifyPositive(t('submittedSuccess'))
+          $router.push({ name: 'WalletsAccountIndex' })
+        })
+        return
+      }
+
+      // 编辑提现账户
+      if (state.walletSetting.showSecurityPass) {
+        state.showSecurityKey = true
+      } else {
+        submitUpdateFunc()
+      }
+    }
+
+    // 提交更新提现账户
+    const submitUpdateFunc = () => {
+      walletsAccountUpdateAPI(state.params).then(() => {
+        NotifyPositive(t('submittedSuccess'))
+        state.showSecurityKey = false
+        $router.push({ name: 'WalletsAccountIndex' })
+      })
+    }
 
     return {
       imageSrc,
       ...toRefs(state),
-      submit,
-      selectType,
+      switchPaymentFunc,
+      submitUpdateFunc,
+      submitFunc,
     }
   }
 };

@@ -224,7 +224,7 @@ export default defineComponent({
       total: 1,//  共n条数据
 
       params: {
-        type: [] as any,
+        types: [] as any,
         pagination: {
           rowsPerPage: Number(5), //  n条/一页
           page: Number(1), //  当前页数
