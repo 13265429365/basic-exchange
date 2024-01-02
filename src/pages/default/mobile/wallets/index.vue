@@ -42,30 +42,32 @@
       </div>
 
       <!-- 明细列表 -->
-      <div v-for="(wallet, i) in WalletsList" :key="i" class="rounded-borders bg-white q-pa-md  q-mb-md">
+      <div v-if="orderList.length <= 0" class="text-center text-grey q-mt-md">{{ $t('noData') }}</div>
+
+      <div v-for="(order, orderIndex) in orderList" :key="orderIndex" class="rounded-borders bg-white q-pa-md  q-mb-md">
         <div class="row justify-between">
-          <div class="">
-            <div class="text-weight-bold">{{ wallet.name }}</div>
-            <div class="text-grey-6 text-caption">{{ date.formatDate(Number(wallet.updatedAt *
+          <div>
+            <div class="text-weight-bold q-mb-xs">{{ order.name }}</div>
+            <div class="text-grey-6 text-caption">{{ date.formatDate(Number(order.updatedAt *
               1000), 'YYYY/MM/DD HH:mm:ss') }}</div>
           </div>
           <div>
             <div
-              :class="['text-body1 text-weight-bold text-right', { 'text-primary': wallet.status == 10, 'text-red': wallet.status == -1 }]">
-              {{ (wallet.type == 1 ? '+' : '-') }}{{ wallet.money }}
+              :class="['text-body1 text-weight-bold text-right q-mb-xs', { 'text-primary': order.status == 10, 'text-red': order.status == -1 }]">
+              {{ (order.type == 1 ? '+' : '-') }}{{ order.money }}
             </div>
-            <div v-if="wallet.status == -1" class="text-weight-medium text-red text-right text-caption">
+            <div v-if="order.status == -1" class="text-weight-medium text-red text-right text-caption">
               {{ $t('refuse') }}
             </div>
-            <div v-if="wallet.status == 10" class="text-weight-medium text-primary text-right text-caption">
+            <div v-if="order.status == 10" class="text-weight-medium text-primary text-right text-caption">
               {{ $t('pending') }}
             </div>
-            <div v-if="wallet.status == 20" class="text-weight-medium text-primary text-right text-caption">
+            <div v-if="order.status == 20" class="text-weight-medium text-right text-caption">
               {{ $t('complete') }}
             </div>
           </div>
         </div>
-        <div v-if="wallet.status == -1" class="text-red text-caption">Failure Reason：This is the reason for the failure
+        <div v-if="order.status == -1" class="text-red text-caption">{{ order.data }}
         </div>
       </div>
 
@@ -90,31 +92,28 @@ export default defineComponent({
     const $userStore = UserStore()
     const $router = useRouter()
     const { t } = useI18n()
+    const WalletOrderTypeDeposit = 1
+    const WalletOrderTypeWithdraw = 11
+    const initPagination = {
+      rowsPerPage: 20, //  每页显示条数
+      page: 1, //  当前页数
+      descending: true,
+      sortBy: 'created_at',
+    }
 
     const state = reactive({
       userInfo: {} as any,
-
-      // 钱包订单数据
-
       // 点击显示、隐藏金额
       showMoney: true,
-
       // 快捷菜单
       quickMenuList: $initStore.quickMenu as any,
-
-      // 分页
       params: {
-        types: [1, 11],
-        pagination: {
-          rowsPerPage: 999, //  n条/一页
-          page: 1, //  当前页数
-          descending: true,
-          sortBy: 'created_at',
-        },
+        types: [] as any,
+        pagination: initPagination,
       },
 
       // 账单
-      WalletsList: [] as any,
+      orderList: [] as any,
     });
 
     context.emit('update', {
@@ -129,11 +128,11 @@ export default defineComponent({
 
     onMounted(() => {
       state.userInfo = $userStore.userInfo
+      state.params.types = [WalletOrderTypeDeposit, WalletOrderTypeWithdraw]
       walletsOrderIndexAPI(state.params).then((res: any) => {
-        state.WalletsList = res.items
+        state.orderList = res.items
       })
     })
-
 
     return {
       imageSrc,

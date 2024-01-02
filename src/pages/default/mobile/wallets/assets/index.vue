@@ -7,13 +7,14 @@
         <div class="column justify-center">
           <div class="row items-center">
             <div class="text-white">{{ $t('totalAssets') }}</div>
-            <q-icon @click="moneyShow = !moneyShow" :name="!moneyShow ? 'o_visibility' : 'o_visibility_off'"
+            <q-icon @click="showMoney = !showMoney" :name="!showMoney ? 'o_visibility' : 'o_visibility_off'"
               class="q-ml-sm cursor-pointer text-white" size="18px"></q-icon>
           </div>
           <!-- 点击显示、隐藏金额 -->
-          <div v-if="moneyShow" class="text-white row items-center">
-            <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">${{ assets.moneySum }}</span>
-            <span>≈￥{{ assets.moneyRateSum }} </span>
+          <div v-if="showMoney" class="text-white row items-center">
+            <span class="q-mr-sm text-weight-bold" style="font-size: 22px;">{{ $t('currency') }}{{
+              userAssetsInfo.moneyRateSum.toFixed(2) }}</span>
+            <span>≈{{ $t('currency') }}{{ userAssetsInfo.moneyRateSum.toFixed(2) }} </span>
           </div>
           <div v-else class="text-white text-weight-bold " style="font-size: 22px;">**** </div>
         </div>
@@ -32,72 +33,67 @@
       </div>
 
       <!-- eCharts -->
-      <div class="bg-white q-pa-md rounded-borders">
-        <div class="text-weight-bold q-mb-lg">{{ $t('assetsBlock') }} </div>
-        <div class="row justify-center q-mb-lg">
-          <div @click="init(item.name)" v-for="(item, i) in typeList" :key="i"
-            :class="['q-mx-xs q-px-md q-py-xs', { 'text-white': item.name == type, 'bg-primary': item.name == type, 'text-grey-8': item.name != type, 'page_bg': item.name != type, }]"
+      <div class="bg-white q-pa-md rounded-borders" v-show="userAssetsInfo.userAssetsList.length > 0">
+        <div class="text-weight-bold q-mb-lg">{{ $t('assetsBlock') }}
+        </div>
+        <div class="row justify-center">
+          <div @click="chartSetOptions(i)" v-for="(item, i) in echartsTypeList" :key="i"
+            :class="['q-mx-xs q-px-md q-py-xs', { 'text-white': i == echartsTypeIndex, 'bg-primary': i == echartsTypeIndex, 'text-grey-8': i != echartsTypeIndex, 'bg-grey-3': i != echartsTypeIndex, }]"
             style="border-radius: 18px;">
             {{ item.name }}
           </div>
         </div>
-        <div v-show="type == '饼图'">
 
+        <div class="q-mt-lg">
           <!-- 饼状图 -->
           <div class="row justify-center q-mb-sm">
-            <div id="myChart" style="width: 140px;height: 140px;"></div>
+            <div :id="echartsPieId" style="height: 160px; width: 160px"></div>
           </div>
 
           <!-- 资产账户列表 -->
-          <div v-for="(item, i) in list" :key="i">
+          <div v-show="echartsTypeIndex == 0" v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList"
+            :key="assetsIndex"
+            @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })">
             <div class="row justify-between items-center justify-start">
               <div class="row items-center">
-                <div class="border" :style="item.back"></div>
-                <div class="q-mr-md text-grey-7">{{ item.name }}</div>
-                <div>{{ item.percentage }}</div>
+                <q-separator vertical class="q-mr-xs q-mt-xs" style="width: 2px;
+                    height: 12px;
+                    border-radius: 2px;" :style="{ background: assets.itemStyle.color }" />
+                <div class="q-mr-md text-grey-7">{{ assets.name }}</div>
+                <div>- {{ Math.round(assets.money / percentage * 100) }}%</div>
               </div>
-              <div class="text-weight-bold">{{ item.money }}</div>
+              <div class="text-weight-bold">{{ $t('currency') }}{{ assets.money.toFixed(2) }}</div>
             </div>
-            <q-separator v-if="i < list.length - 1" class="q-my-xs" style="background: #F4F5FD" />
+            <q-separator v-if="assetsIndex < userAssetsInfo.userAssetsList.length - 1" class="q-my-xs"
+              style="background: #F4F5FD" />
           </div>
-
         </div>
 
-        <!-- 折线图 -->
-        <div v-show="type == '折线图'">
-          <div class="row justify-end q-mb-md">
-            <div class="bg-grey-1 q-pa-xs row" style="border-radius: 4px;">
-              <div @click="switchDate(item.name)" v-for="(item, i) in lineDate" :key="i"
-                :class="['q-mx-xs q-px-sm q-py-xs', { 'bg-white': item.name == lineType, 'text-grey-8': item.name != lineType, 'bg-grey-1': item.name != lineType, }]"
-                style="border-radius: 2px;">
-                {{ item.name }}
-              </div>
-            </div>
-          </div>
-
-          <!-- 折线图 -->
+        <!-- <div v-show="echartsTypeIndex == 1">
           <div class="row justify-center q-mb-sm">
-            <div id="lineChart" style="height: 230px;width: 288px;"></div>
+            <div :id="echartsLineId" style="height: 260px; width: 100%"></div>
           </div>
-        </div>
+        </div> -->
 
       </div>
 
       <!--  -->
-      <div class="q-mt-md q-mb-sm text-weight-bold">资产账户</div>
-      <div @click="$router.push({ name: 'AssetsDetail' })" v-for="(item, i) in assets.userAssetsList" :key="i"
-        class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">
+      <div class="q-mt-md q-mb-sm text-weight-bold">{{ $t('assetsBlock') }}</div>
+      <div @click="$router.push({ name: 'AssetsDetail' })" v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList"
+        :key="assetsIndex" class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">
         <div class="row items-center">
-          <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(item.icon)" />
-          <div class="text-weight-bold">{{ item.name }}</div>
+          <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(assets.icon)" />
+          <div class="text-weight-bold">{{ assets.name }}</div>
         </div>
         <div>
-          <div class="text-weight-bold text-right" style="font-size: 16px;">{{ '$' + item.money }}</div>
-          <div class="text-right text-grey-5" style="font-size: 12px;">{{ '≈￥' + item.moneyRate }}</div>
+          <div class="text-weight-bold text-right" style="font-size: 16px;">{{ $t('currency') }}{{ assets.money.toFixed(2)
+          }}</div>
+          <div class="text-right text-grey-5" style="font-size: 12px;">≈{{ $t('currency') }}{{ assets.moneyRate.toFixed(2)
+          }}</div>
         </div>
       </div>
 
-      <div v-if="assets.userAssetsList || assets.userAssetsList.length <= 0" class="text-grey text-center q-py-lg">
+      <div v-if="userAssetsInfo.userAssetsList.length <= 0" class="text-grey text-center q-py-lg">
         {{ $t('noData') }}
       </div>
 
@@ -107,7 +103,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
-import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
 import * as echarts from 'echarts'
 import { walletsUserAssetsIndexAPI } from 'src/apis/wallets';
@@ -120,46 +115,36 @@ export default defineComponent({
   setup(props: any, context: any) {
     const { t } = useI18n()
     const $initStore = InitStore()
-    const $userStore = UserStore()
+    const echartsLineId = 'line'
+    const echartsPieId = 'pie'
+    const colorList = [
+      '#3F82FE', '#14C9C9', '#F7BA1E',
+      '#3F82FE', '#14C9C9', '#F7BA1E',
+      '#3F82FE', '#14C9C9', '#F7BA1E',
+      '#3F82FE', '#14C9C9', '#F7BA1E'
+    ]
 
     const state = reactive({
-      // 资产数据
-      assets: {
-        userAssetsList: [],
-      } as any,
-
-      // 点击显示、隐藏金额
-      moneyShow: true,
-
-      // 快捷菜单
+      // 饼状图百分比
+      percentage: 0 as any,
+      echarts: {} as any,
+      userAssetsInfo: { moneySum: 0, moneyRateSum: 0, userAssetsList: [] as any } as any,
+      showMoney: true,
       quickMenuList: $initStore.quickMenu as any,
 
-      // 饼状图下的列表
-      list: [] as any,
-
-      //资产账户
-      rows: [] as any,
-
       // 饼、折线图button
-      typeList: [
-        { name: '饼图' },
-        { name: '折线图' },
+      echartsTypeList: [
+        { name: '饼图', value: echartsPieId },
+        { name: '折线图', value: echartsLineId },
       ],
-      type: '饼图',
-
-      // 饼、折线图button
-      lineDate: [
-        { name: '近7日' },
-        { name: '近30日' },
-      ],
-      lineType: '近7日',
-
-      // 折线图eCharts
-      lineOption: {} as any,
-      lineThirty: {} as any,
+      echartsTypeIndex: 0,
 
       // 饼图eCharts
-      option: {} as any,
+      pieOption: {} as any,
+      // 折线图eCharts
+      lineOption: {} as any,
+
+      myChart: '' as any,
     });
 
     context.emit('update', {
@@ -167,253 +152,108 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      // 生成饼图
-      const chart = echarts.init(document.getElementById('myChart'))
-      chart.setOption(state.option)
+      // 获取用户资产列表
+      walletsUserAssetsIndexAPI().then((res: any) => {
+        state.userAssetsInfo = res
+        state.echarts.series = res.echarts
+        state.userAssetsInfo.userAssetsList.forEach((item: any, i: any) => {
+          item.value = item.money
+          item.itemStyle = {
+            color: colorList[i]
+          }
+          state.percentage += Number(item.money)
+        });
 
-      const lineChart = echarts.init(document.getElementById('lineChart'))
-      lineChart.setOption(state.lineOption)
-
-      // 执行api
-      getAssets()
+        // 初始化图形
+        state.myChart = echarts.init(document.getElementById(echartsPieId));
+        chartSetOptions(0)
+      })
     })
 
-    // 获取用户资产列表
-    const getAssets = () => {
-      walletsUserAssetsIndexAPI({ id: Number($userStore.userInfo.id) }).then((res: any) => {
-        console.log('资产列表', res)
-        state.assets = res
-      })
-    }
-
-
-    // 切换饼、折线图
-    const init = (name: string) => {
-      state.type = name
-    }
-
-    // 切换7、30天折线图
-    const switchDate = (name: string) => {
-      const lineChart = echarts.init(document.getElementById('lineChart'))
-      if (name == '近7日') {
-        lineChart.setOption(state.lineOption)
+    const chartSetOptions = (index: any) => {
+      state.echartsTypeIndex = index
+      if (index == 0) {
+        state.pieOption = {
+          title: {
+            text: '总资产',
+            subtext: state.percentage,
+            left: 'center', // 标题居中
+            top: '35%',
+            textStyle: { // 标题样式
+              color: '#4E5969', // 标题颜色
+              fontSize: '12px',
+              textDecoration: 'underline' // 标题装饰
+            },
+            subtextStyle: { // 子标题样式
+              color: '#1D2129', // 子标题颜色
+              fontStyle: 'bold', // 子标题字体样式
+              fontSize: '12px',
+            },
+            padding: [10, 10], // 标题与内容间距
+            itemGap: 8 // 同一级标签间距
+          },
+          series: {
+            type: 'pie',
+            radius: ['55%', '90%'],
+            label: {
+              show: false,
+            },
+            data: state.userAssetsInfo.userAssetsList
+          },
+        }
+        chartSetPieOptions()
       } else {
-        lineChart.setOption(state.lineThirty)
+        const legendList = [];
+
+        for (let i = 0; i < state.echarts.series.length; i++) {
+          legendList.push(state.echarts.series[i].name);
+        }
+        state.lineOption = {
+          tooltip: { trigger: 'axis' },
+          legend: { data: legendList, bottom: '0' },
+          grid: { left: '0', right: '0', bottom: '36px', containLabel: true },
+          xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: state.echarts.category,
+          },
+          yAxis: { type: 'value' },
+          series: state.echarts.series as any,
+        }
+        chartSetLineOptions()
       }
-      state.lineType = name
     }
 
-
-    state.list = [{
-      name: '积分',
-      percentage: '-40%',
-      money: '169.05',
-      back: 'background: #165DFF;'
-    },
-    {
-      name: 'BTC',
-      percentage: '-30%',
-      money: '126.78',
-      back: 'background: #14C9C9;'
-    },
-    {
-      name: '钻石',
-      percentage: '-40%',
-      money: '126.78',
-      back: 'background: #F7BA1E;'
-    },]
-    state.lineOption = {
-      grid: {
-        show: false,
-        // left: '0',
-        top: '3%',
-        right: '2%',
-        // bottom: '0',
-        // containLabel: true,
-        // borderWidth: '1',
-      },
-      legend: {
-        data: ['钻石', 'BTC'],
-        // top: '0',
-        bottom: '5%',
-        itemStyle: {
-          color: 'rgba(0,0,0,0)', // 设置图例背景色为灰色
-          borderColor: 'rgba(0,0,0,0)', // 设置图例边框色为黑色
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: ['9/10', '9/11', '9/12', '9/13', '9/14', '9/15', '9/16',],
-      },
-      yAxis: {
-        type: 'value',
-        interval: 20, // 设置y轴间隔为50
-        axisLabel: {
-          interval: 80 // 设置标签间隔为500
-        },
-        axisTick: {
-          show: false // 设置为false即可取消y轴刻度线
-        },
-        splitLine: {
-          lineStyle: {
-            type: 'dashed' // 设置为'dashed'即可将x轴改为虚线
-          }
-        }
-      },
-      series: [
-        {
-          name: '钻石',
-          data: [0, 40, 80, 90, 40, 0, 90],
-          type: 'line',
-          smooth: true,
-          symbol: 'none',
-          lineStyle: {
-            color: '#3F82FE' // 设置线条颜色为红色
-          },
-        },
-        {
-          name: 'BTC',
-          data: [30, 40, 20, 83, 42, 60, 100],
-          type: 'line',
-          smooth: true,
-          symbol: 'none',
-          lineStyle: {
-            color: '#01AC66' // 设置线条颜色为红色
-          },
-        },
-      ]
-    };
-    state.lineThirty = {
-      grid: {
-        show: false,
-        // left: '0',
-        top: '3%',
-        right: '2%',
-        // bottom: '0',
-        // containLabel: true,
-        // borderWidth: '1',
-      },
-      legend: {
-        data: ['钻石', 'BTC'],
-        // top: '0',
-        bottom: '5%',
-        itemStyle: {
-          color: 'rgba(0,0,0,0)', // 设置图例背景色为灰色
-          borderColor: 'rgba(0,0,0,0)', // 设置图例边框色为黑色
-        },
-      },
-      xAxis: {
-        type: 'category',
-        data: ['9/1', '9/2', '9/3', '9/4', '9/5', '9/6', '9/7', '9/8', '9/9', '9/10', '9/11', '9/12', '9/13', '9/14', '9/15', '9/16', '9/17', '9/18', '9/19', '9/20', '9/21', '9/22', '9/23', '9/24', '9/25', '9/26', '9/27', '9/28', '9/29', '9/30',],
-      },
-      yAxis: {
-        type: 'value',
-        interval: 20, // 设置y轴间隔为50
-        axisLabel: {
-          interval: 80 // 设置标签间隔为500
-        },
-        axisTick: {
-          show: false // 设置为false即可取消y轴刻度线
-        },
-        splitLine: {
-          lineStyle: {
-            type: 'dashed' // 设置为'dashed'即可将x轴改为虚线
-          }
-        }
-      },
-      series: [
-        {
-          name: '钻石',
-          data: [0, 40, 80, 90, 40, 0, 90, 0, 40, 80, 90, 40, 0, 90, 0, 40, 80, 90, 40, 0, 90, 0, 40, 80, 90, 40, 0, 90, 0, 90],
-          type: 'line',
-          smooth: true,
-          symbol: 'none',
-          lineStyle: {
-            color: '#3F82FE' // 设置线条颜色为红色
-          },
-        },
-        {
-          name: 'BTC',
-          data: [30, 40, 20, 83, 42, 60, 100, 30, 40, 20, 83, 42, 60, 100, 30, 40, 20, 83, 42, 60, 100, 30, 40, 20, 83, 42, 60, 100, 60, 100],
-          type: 'line',
-          smooth: true,
-          symbol: 'none',
-          lineStyle: {
-            color: '#01AC66' // 设置线条颜色为红色
-          },
-        },
-      ]
+    // 初始化饼状图形
+    const chartSetPieOptions = () => {
+      console.log(111);
+      // 饼状图
+      state.myChart.setOption(state.pieOption);
+      window.addEventListener('resize', () => {
+        setTimeout(state.myChart.resize, 300);
+      });
     };
 
-    // 饼图echarts
-    state.option = {
-      title: {
-        text: '总资产',
-        subtext: '422.61',
-        left: 'center', // 标题居中
-        top: '32%',
-        textStyle: { // 标题样式
-          color: '#4E5969', // 标题颜色
-          fontSize: '12px',
-          textDecoration: 'underline' // 标题装饰
-        },
-        subtextStyle: { // 子标题样式
-          color: '#1D2129', // 子标题颜色
-          fontStyle: 'bold', // 子标题字体样式
-          fontSize: '12px',
-        },
-        padding: [10, 10], // 标题与内容间距
-        itemGap: 8 // 同一级标签间距
-      },
-      series: [
-        {
-          type: 'pie',
-          radius: ['55%', '90%'],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-          },
-          emphasis: {
-            label: { show: false },
-          },
-          data: [
-            { value: 1048, name: '积分', itemStyle: { color: '#3F82FE' } },
-            { value: 735, name: 'BTC', itemStyle: { color: '#14C9C9' } },
-            { value: 580, name: '钻石', itemStyle: { color: '#F7BA1E' } },
-          ]
-        }
-      ]
+    // 初始化折线图形
+    const chartSetLineOptions = () => {
+      console.log(222);
+
+      // 折线图
+      state.myChart.setOption(state.lineOption);
+      window.addEventListener('resize', () => {
+        setTimeout(state.myChart.resize, 300);
+      });
     }
-
 
     return {
       imageSrc,
       ...toRefs(state),
-      init,
-      switchDate,
+      chartSetOptions,
+      colorList,
+      echartsLineId,
+      echartsPieId,
     }
   },
 });
 </script>
-<style scoped>
-.border {
-  width: 2px;
-  height: 12px;
-  border-radius: 2px;
-  margin-right: 4px;
-}
-
-/* :deep .btn>.q-btn .q-btn__content {
-  justify-content: start !important;
-} */
-
-:deep .q-btn:before {
-  box-shadow: 0 0 0 !important;
-}
-
-.manage {
-  width: 42px;
-  height: 42px;
-  margin-right: 10px;
-}
-</style>
+<style scoped></style>
