@@ -50,16 +50,17 @@
               1000), 'YYYY/MM/DD HH:mm:ss') }}</div>
           </div>
           <div>
-            <div class="text-body1 text-weight-bold text-center">
-              {{ (wallet.type == 1 ? '+' : '-') }}{{ $t('currency') }}{{ wallet.money }}
+            <div
+              :class="['text-body1 text-weight-bold text-right', { 'text-primary': wallet.status == 10, 'text-red': wallet.status == -1 }]">
+              {{ (wallet.type == 1 ? '+' : '-') }}{{ wallet.money }}
             </div>
-            <div v-if="wallet.status == -1" class="text-weight-medium text-red text-center text-caption">
+            <div v-if="wallet.status == -1" class="text-weight-medium text-red text-right text-caption">
               {{ $t('refuse') }}
             </div>
-            <div v-if="wallet.status == 10" class="text-weight-medium text-primary text-center text-caption">
+            <div v-if="wallet.status == 10" class="text-weight-medium text-primary text-right text-caption">
               {{ $t('pending') }}
             </div>
-            <div v-if="wallet.status == 20" class="text-weight-medium text-primary text-center text-caption">
+            <div v-if="wallet.status == 20" class="text-weight-medium text-primary text-right text-caption">
               {{ $t('complete') }}
             </div>
           </div>

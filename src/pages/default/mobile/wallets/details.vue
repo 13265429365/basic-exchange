@@ -13,11 +13,11 @@
                             1000), 'YYYY/MM/DD HH:mm:ss') }}</div>
                     </div>
                     <div>
-                        <div class="text-body1 text-weight-bold text-center">
+                        <div class="text-body1 text-weight-bold text-right">
                             {{ (bill.type == 1 ? '+' : '-') }}{{ $t('currency') }}{{ bill.money }}
                         </div>
-                        <div class="text-weight-medium text-red text-center text-caption">
-                            {{ $t('balance') }}{{ bill.fee }}
+                        <div class="text-weight-medium text-grey-7 text-right text-caption">
+                            {{ $t('balance') }}:{{ bill.fee }}
                         </div>
                     </div>
                 </div>
