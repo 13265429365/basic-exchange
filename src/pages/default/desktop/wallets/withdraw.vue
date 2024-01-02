@@ -1,13 +1,14 @@
 <template>
   <div class="column window-height" style="padding: 48px 244px;background: #F8F9FC;">
     <q-banner v-if="accountList.length <= 0" rounded class="bg-red text-white">
-      {{ $t('accountBeEmpty') }}
+      {{ $t('notBindWithdrawAccount') }}
       <template v-slot:action>
         <q-btn @click="$router.push({ name: 'WalletsAccountIndex' })" flat no-caps color="white"
-          :label="$t('accountManage')" />
+          :label="$t('goto')+$t('accountManage')" />
       </template>
     </q-banner>
-    <div v-else class="col column justify-between bg-white rounded-borders">
+
+    <div class="col column justify-between bg-white rounded-borders q-mt-md">
       <!-- 标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap text-body1 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
@@ -25,9 +26,9 @@
           <div v-for="(account, accountIndex) in accountList" :key="accountIndex" :style="{
             width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
             border: accountIndex == ActiveAccountIndex ? '1px solid #01AC66' : '',
-          }" class="q-pa-sm row justify-center cursor-pointer relative-position" @click="switchAccount(accountIndex)">
-            <q-img class="self-center q-mr-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
-            <div style="font-size: 16px;" class=" text-weight-bold self-center">{{ account.name }}</div>
+          }" class="row cursor-pointer items-center relative-position">
+            <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
+            <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName }}({{account.number.slice(-4)}})</div>
             <q-img v-if="accountIndex == ActiveAccountIndex" class="absolute" src="/images/select.png" width="30PX"
               height="30px" style="bottom: 0;right: 0;"></q-img>
           </div>
@@ -35,24 +36,29 @@
 
         <!-- 提现 -->
         <div class="column q-gutter-md q-mt-lg" style="width: 60%;">
-          <div class="row items-center">
-            <div>{{ $t('withdrawAmount') }}</div>
-            <q-input class="q-ml-sm" type="number" dense outlined v-model="params.money" />
-            <div @click="params.money = total" class="text-primary q-ml-sm cursor-pointer">{{ $t('withdrawAllAmount') }}
+          <div>
+            <div class="q-mb-xs text-grey">
+              {{ $t('availableAmount') }}
+            </div>
+            <div class="text-bold text-body1" style="color: #F45E0C;">
+              {{ $t('currency') }}{{ Number(userInfo.money).toFixed(2) }}
             </div>
           </div>
 
-          <div class="row items-center">
-            <div class="">
-              {{ $t('balance') }}
-            </div>
-            <div class="q-ml-sm text-weight-medium text-body1" style="color: #F45E0C;">{{ $t('currency') }}{{ total }}
+          <div>
+            <div class="q-mb-xs text-grey">{{ $t('withdrawAmount') }}</div>
+            <div>
+              <q-input class="q-mr-sm" type="number" outlined v-model.number="params.money" :placeholder="$t('withdrawAmount')">
+                <template v-slot:append>
+                  <q-btn flat dense :label="$t('all')" color="primary" @click="params.money = userInfo.money"></q-btn>
+                </template>
+              </q-input>
             </div>
           </div>
 
-          <div class="q-mt-lg text-right">
+          <div class="q-mt-lg">
             <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps
-              style="min-width: 100px;" @click="withdraw" />
+              style="min-width: 100px;" @click="submitFunc" />
           </div>
         </div>
       </div>
@@ -74,7 +80,7 @@
 
         <q-card-actions align="right">
           <q-btn flat :label="$t('cancel')" v-close-popup color="grey"></q-btn>
-          <q-btn flat :label="$t('confirm')" @click="subWithdraw" color="primary"></q-btn>
+          <q-btn flat :label="$t('confirm')" @click="submitWithdrawFunc" color="primary"></q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -84,7 +90,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
@@ -99,13 +105,14 @@ export default {
     const $userStore = UserStore()
     const $initStore = InitStore()
 
-
     const state = reactive({
-      walletsSetting: $initStore.config.settings.wallets,
+      config: $initStore.config,
       showSecurityKey: false,
-      // 账户余额
-      total: '',
-      params: {} as any,
+      userInfo: {} as any,
+      params: {
+        money: '',
+        securityKey: '',
+      } as any,
 
       // 选中卡片类型
       ActiveAccountIndex: 0,
@@ -115,52 +122,43 @@ export default {
     });
 
     onMounted(() => {
-      state.total = $userStore.userInfo.money
+      state.userInfo = $userStore.userInfo
       walletsAccountIndexAPI().then((res: any) => {
         state.accountList = res
       })
     })
 
-    const withdraw = () => {
-      if (state.walletsSetting.showSecurityPass) {
+    const submitFunc = () => {
+      if (state.config.settings.online.depositLink) {
+        window.location.href = state.config.onlineLink
+        return
+      }
+
+      if (state.config.settings.wallets.showSecurityPass) {
         state.showSecurityKey = true
       } else {
-        subWithdraw()
+        submitWithdrawFunc()
       }
     }
 
     // 提现
-    const subWithdraw = () => {
+    const submitWithdrawFunc = () => {
       state.params.accountId = state.accountList[state.ActiveAccountIndex].id
       state.params.money = Number(state.params.money)
 
       // 关闭密码弹窗
       state.showSecurityKey = false
-      walletsWithdrawCreateAPI(state.params).then((res: any) => {
+      walletsWithdrawCreateAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        // 提现后是否跳转客服页面
-        if ($initStore.config.settings.online.withdrawLink) {
-          $router.push({ name: 'WalletsAccountIndex' })
-        } else {
-          $router.push({ name: 'WalletsAccountIndex' })
-        }
-
-        state.params.securityKey = ''
+        $router.push({ name: 'WalletsIndex' })
       })
-    }
-
-    // 切换卡片
-    const switchAccount = (accountIndex: any) => {
-      state.ActiveAccountIndex = accountIndex
-
     }
 
     return {
       imageSrc,
       ...toRefs(state),
-      switchAccount,
-      withdraw,
-      subWithdraw,
+      submitFunc,
+      submitWithdrawFunc,
     }
   }
 };

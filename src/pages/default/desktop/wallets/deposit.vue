@@ -13,16 +13,18 @@
 
         <!-- 卡类型选择 -->
         <div class="row q-mt-md q-gutter-md">
-          <div v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex" :style="{
+          <template v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex">
+            <div v-for="(children, childrenIndex) in payment.items" :key="childrenIndex" :style="{
             width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
-            border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
+            border: children.id == currentPaymentInfo.id ? '1px solid #01AC66' : '',
           }" class="q-pa-sm row justify-center cursor-pointer relative-position"
-            @click="switchPaymentFunc(payment, paymentIndex)">
-            <q-img class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
-            <div class="self-center">{{ payment.name }}</div>
-            <q-img v-if="paymentIndex == currentPaymentIndex" class="absolute" src="/images/select.png" width="30PX"
-              height="30px" style="bottom: 0;right: 0;"></q-img>
-          </div>
+                 @click="switchPaymentFunc(children)">
+              <q-img class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
+              <div class="self-center">{{ children.name }}</div>
+              <q-img v-if="children.id == currentPaymentInfo.id" class="absolute" src="/images/select.png" width="30PX"
+                     height="30px" style="bottom: 0;right: 0;"></q-img>
+            </div>
+          </template>
         </div>
 
         <div class="rounded-borders text-subtitle1 text-weight-medium q-py-xs q-mt-lg q-px-md"
@@ -30,47 +32,65 @@
           {{ $t('depositAccountInfo') }}
         </div>
 
+        <div>
+          <div v-if="currentPaymentInfo.type == paymentTypeDigital">
+            <div class="column items-center q-mt-xl">
+              <q-card bordered flat style="border-radius: 10px;width: 172px;">
+                <q-card-section>
+                  <img :src="currentQrcode" alt="">
+                </q-card-section>
+              </q-card>
+              <div class="q-mt-md" style="width: 310px">
+                <q-input outlined dense v-model="currentPaymentInfo.dataJson.number" readonly>
+                  <template v-slot:append>
+                    <q-icon name="content_copy" class="cursor-pointer" size="xs" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-icon>
+                  </template>
+                </q-input>
+              </div>
+            </div>
+          </div>
+
+          <div v-else-if="currentPaymentInfo.type == paymentTypeDebitCard" class="q-ma-md">
+            <div class="row justify-between items-center">
+              <div class="text-grey">
+                {{currentPaymentInfo.dataJson.name}}
+              </div>
+              <div>
+                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.name)"></q-btn>
+              </div>
+            </div>
+            <div class="row justify-between items-center">
+              <div class="text-grey">
+                {{currentPaymentInfo.dataJson.realName}}
+              </div>
+              <div>
+                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.realName)"></q-btn>
+              </div>
+            </div>
+            <div class="row justify-between items-center">
+              <div class="text-grey">
+                {{currentPaymentInfo.dataJson.number}}
+              </div>
+              <div>
+                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-btn>
+              </div>
+            </div>
+            <div class="row justify-between items-center">
+              <div class="text-grey">
+                {{currentPaymentInfo.dataJson.code}}
+              </div>
+              <div>
+                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.code)"></q-btn>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- 充值金额、充值凭证 -->
         <div class="column q-gutter-md q-mt-lg" style="width: 60%;">
           <div>
             <div class="q-mb-sm">{{ $t('depositAmount') }}</div>
-            <q-input type="number" outlined v-model="params.money" />
-          </div>
-
-          <!-- 银行名称 -->
-          <div v-if="paymentList[currentPaymentIndex]">
-            <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork')
-            }}
-            </div>
-            <q-select outlined v-model="currentPaymentInfo" :disable="params.id > 0"
-              :options="paymentList[currentPaymentIndex].items" option-value="id" option-label="name">
-              <template v-slot:selected>
-                <div class="row items-center q-gutter-sm">
-                  <div>
-                    <q-avatar size="md">
-                      <q-img no-spinner :src="imageSrc(currentPaymentInfo.icon)"></q-img>
-                    </q-avatar>
-                  </div>
-                  <div>{{ currentPaymentInfo.name }}</div>
-                </div>
-              </template>
-
-              <template v-slot:option="scope">
-                <q-item clickable v-close-popup @click="currentPaymentInfo = scope.opt">
-                  <q-item-section>
-                    <div class="row items-center q-gutter-sm cursor-pointer">
-                      <div>
-                        <q-avatar size="md">
-                          <q-img no-spinner :src="imageSrc(scope.opt.icon)"></q-img>
-                        </q-avatar>
-                      </div>
-                      <div>{{ scope.opt.name }}</div>
-                    </div>
-                  </q-item-section>
-                </q-item>
-              </template>
-            </q-select>
-
+            <q-input type="number" outlined v-model="params.money" :placeholder="$t('depositAmount')"  />
           </div>
 
           <div class="q-mb-xl">
@@ -92,21 +112,16 @@
             </div>
           </div>
 
-          <div class="q-mt-lg q-mb-md text-grey">
-            <div>充值提示：</div>
-            <div>1、确认地址, 并且等待主网同步</div>
-            <div>2、谨防假冒在线客服充值</div>
+          <div>
+            <div v-html="config.depositTips"></div>
           </div>
 
-          <div class="q-mt-lg text-right">
-            <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps @click="deposit"
+          <div class="q-mt-lg">
+            <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps @click="submitFunc"
               style="min-width: 100px" size="md" />
           </div>
         </div>
-
-
       </div>
-
     </div>
   </div>
 </template>
@@ -114,12 +129,14 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import uploader from 'src/components/uploader.vue';
 import { walletsPaymentIndexAPI, walletsDepositCreateAPI } from 'src/apis/wallets';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { InitStore } from 'src/stores/init';
+import QRCode from 'qrcode-svg-ts';
+import { copyToClipboard } from 'quasar';
 
 export default {
   name: 'rechargeIndex',
@@ -128,61 +145,78 @@ export default {
     const { t } = useI18n()
     const $router = useRouter()
     const $initStore = InitStore()
+    const paymentTypeDigital = 11
+    const paymentTypeDebitCard = 1
 
     const state = reactive({
+      mode: $router.currentRoute.value.query.mode ? Number($router.currentRoute.value.query.mode) : 0,
       params: {
         voucher: '',
       } as any,
-      // 支付类型
+      currentQrcode: '',
       paymentList: [] as any,
-      currentPaymentIndex: 0,
+      config: $initStore.config,
       currentPaymentInfo: {} as any,
     });
 
     onMounted(async () => {
-      walletsPaymentIndexAPI({ modes: [] }).then((res: any) => {
+      walletsPaymentIndexAPI({ modes: [state.mode] }).then((res: any) => {
         state.paymentList = res
-        if (state.paymentList.length > 0) {
-          switchPaymentFunc(state.paymentList[0], 0)
+        if (state.paymentList.length > 0 && state.paymentList[0].items.length > 0) {
+          switchPaymentFunc(state.paymentList[0].items[0])
         }
       })
     })
 
     // 充值
-    const deposit = () => {
+    const submitFunc = () => {
+      if (state.config.settings.online.depositLink) {
+        window.location.href = state.config.onlineLink
+        return
+      }
+
       state.params.paymentId = state.currentPaymentInfo.id
       state.params.money = Number(state.params.money)
-
-      walletsDepositCreateAPI(state.params).then((res: any) => {
+      walletsDepositCreateAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        console.log('充值成功', res);
-
-        // 提现后是否跳转客服页面
-        if ($initStore.config.settings.online.depositLink) {
-          $router.push({ name: 'WalletsAccountIndex' })
-        } else {
-          $router.push({ name: 'WalletsAccountIndex' })
-        }
+        $router.push({ name: 'WalletsIndex' })
       })
     }
 
     // 切换支付类型
-    const switchPaymentFunc = (paymentInfo: any, paymentIndex: number) => {
-      if (state.params.id > 0) {
-        return
-      }
+    const switchPaymentFunc = (paymentInfo: any) => {
+      state.currentPaymentInfo = paymentInfo
 
-      if (paymentInfo.items.length > 0) {
-        state.currentPaymentInfo = paymentInfo.items[0]
+      //  如果是数字货币, 那么生成二维码
+      if (state.currentPaymentInfo.type == paymentTypeDigital) {
+        const qrCode = new QRCode({
+          content: state.currentPaymentInfo.dataJson.number,
+          width: 138,
+          height: 138,
+          color: '#000000',
+          background: '#ffffff',
+          ecl: 'M',
+        });
+        state.currentQrcode = qrCode.toDataURL()
       }
-      state.currentPaymentIndex = paymentIndex
     }
+
+    // 复制方法
+    const copyToClipboardFunc = (str: string) => {
+      copyToClipboard(str)
+        .then(() => {
+          NotifyPositive(t('copySuccess'))
+        })
+    };
 
     return {
       imageSrc,
+      paymentTypeDebitCard,
+      paymentTypeDigital,
       ...toRefs(state),
       switchPaymentFunc,
-      deposit,
+      submitFunc,
+      copyToClipboardFunc,
     }
   }
 };

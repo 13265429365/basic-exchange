@@ -4,7 +4,7 @@
     <div class="row items-center justify-between rounded-borders q-pa-lg q-pr-xl"
       style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
       <div class="row">
-        <q-img class="q-mr-lg" src="/images/wallet.png" width="66px" height="66px"></q-img>
+        <q-img no-spinner class="q-mr-lg" src="/images/wallet.png" width="66px" height="66px"></q-img>
         <div class="q-pt-sm">
           <div class="row items-center">
             <div class="text-white text-body2 q-mr-xs">{{ $t('balance') }}</div>
@@ -24,7 +24,7 @@
 
       <!-- 充值、提现 -->
       <div class="row">
-        <q-btn @click="$router.push({ name: 'WalletsDeposit' })" unelevated class="text-primary bg-white" rounded no-caps
+        <q-btn @click="$router.push({ name: 'WalletsDeposit', query: {mode: 1} })" unelevated class="text-primary bg-white" rounded no-caps
           style="width: 80px" :label="$t('deposit')"></q-btn>
         <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" unelevated class="text-primary bg-white q-ml-md" rounded
           style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
@@ -180,6 +180,7 @@
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { UserStore } from 'src/stores/user';
+import { userInfoAPI } from 'src/apis/user'
 import { walletsOrderIndexAPI, walletsBillOptionsAPI, walletsBillIndexAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
 
@@ -231,6 +232,12 @@ export default defineComponent({
       // 获取钱包账单Options
       walletsBillOptionsAPI({ type: WalletBillAccountType }).then((res: any) => {
         state.billFilterParams.typeList = res
+      })
+
+      // 更新用户信息
+      userInfoAPI().then((res) => {
+        state.userInfo = res
+        $userStore.updateUserInfo(res)
       })
     })
 

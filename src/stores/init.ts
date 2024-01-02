@@ -43,6 +43,18 @@ export const InitStoreState = {
     //  默认模版
     template: 'default',
 
+    // 客服图标
+    onlineIcon: '',
+
+    // 客服链接
+    onlineLink: '',
+
+    // 充值注意事项
+    depositTips: '',
+
+    // 提现注意事项
+    withdrawTips: '',
+
     //  配置设置
     settings: {
       //  注册配置
@@ -89,7 +101,7 @@ export const InitStoreState = {
         //  提现是否跳转到客服
         withdrawLink: false,
       },
-      wallet: {
+      wallets: {
         //  是否开启安全密钥, 如果开启了。 提现需要输入安全密钥，修改卡片｜删除卡片 需要输入安全密钥
         showSecurityPass: true,
         //  卡片管理是否开启删除
@@ -114,7 +126,6 @@ export const InitStore = defineStore('init', {
     updateUserToken(token: string) {
       this.userToken = token;
       Cookies.set(UserTokenKey, token, { expires: '30d 3h 5m' });
-
     },
 
     //  更新用户语言
@@ -126,7 +137,7 @@ export const InitStore = defineStore('init', {
     //  删除用户Token
     removeUserToken() {
       this.userToken = ''
-      Cookies.remove(UserTokenKey);
+      Cookies.set(UserTokenKey, '')
     },
   },
 });

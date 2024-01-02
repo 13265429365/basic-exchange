@@ -63,7 +63,7 @@
         <!-- 登录状态 -->
         <div v-if="isLogin" class="row items-center no-wrap">
           <!-- 右侧Deposit -->
-          <q-btn @click="$router.push({ name: 'WalletsDeposit' })" rounded flat dense no-wrap
+          <q-btn @click="$router.push({ name: 'WalletsDeposit', query: {mode: 1} })" rounded flat dense no-wrap
             class="bg-primary text-white q-px-md q-mx-sm" no-caps :label="$t('deposit')"></q-btn>
 
           <!-- 头像 -->
