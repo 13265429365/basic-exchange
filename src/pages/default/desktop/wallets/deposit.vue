@@ -189,7 +189,7 @@ export default {
         if (state.mode == 1) {
           $router.push({ name: 'WalletsIndex' })
         } else {
-          $router.push({name: 'WalletsAccountIndex'})
+          $router.push({ name: 'WalletsAssetsIndex' })
         }
       })
     }

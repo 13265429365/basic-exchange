@@ -3,12 +3,19 @@
     <div class="col page_bg q-pa-md ">
       <div class="rounded-borders q-px-md q-py-lg row"
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
-        <q-avatar size="50px">
-          <q-img :src="imageSrc(teamBenefit.currentInfo.avatar)"></q-img>
+        <q-avatar size="50px" class="bg-white">
+          <q-img :src="imageSrc(currentTeamInfo.currentInfo.avatar)"></q-img>
         </q-avatar>
         <div class="q-ml-md text-subtitle1">
-          <div class="text-white text-weight-medium">{{ teamBenefit.currentInfo.username }}</div>
-          <div class="text-white text-weight-medium">{{ $t('teamEarnings') }} : +{{ teamBenefit.teamEarnings }}</div>
+          <div class="text-white text-weight-medium">
+            {{ currentTeamInfo.currentInfo.username }}
+            <span class="text-caption text-grey-1">[ID:{{ currentTeamInfo.currentInfo.id }}]</span>
+            <q-icon name="keyboard_double_arrow_down" class="q-ml-xs"></q-icon>
+            <span class="text-caption">{{ currentTeamInfo.currentInfo.depth }}</span>
+          </div>
+          <div class="text-white text-weight-medium">
+            {{ $t('teamEarnings') }}: <span class="text-body1">+{{ currentTeamInfo.currentInfo.earnings }}</span>
+          </div>
         </div>
       </div>
 
@@ -16,34 +23,34 @@
         <div class="text-black text-weight-bold">Beneficial Data</div>
         <div class="row ">
           <div class="col-4 q-pt-md">
-            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.buyAmount }}</div>
+            <div class="text-weight-bold text-h6 text-center">{{ currentTeamInfo.todayNums }}</div>
             <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
-              {{ $t('buyAmount') }}</div>
+              {{ $t('todayNums') }}</div>
           </div>
           <div class="col-4 q-pt-md">
-            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.inviteNums }}</div>
-            <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
-              {{ $t('inviteNums') }}</div>
-          </div>
-          <div class="col-4 q-pt-md">
-            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.teamEarnings }}</div>
-            <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
-              {{ $t('teamEarnings') }}</div>
-          </div>
-          <div class="col-4 q-pt-md">
-            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.todayAmount }}</div>
+            <div class="text-weight-bold text-h6 text-center">{{ currentTeamInfo.todayAmount }}</div>
             <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
               {{ $t('todayAmount') }}</div>
           </div>
           <div class="col-4 q-pt-md">
-            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.todayEarnings }}</div>
+            <div class="text-weight-bold text-h6 text-center">{{ currentTeamInfo.todayEarnings }}</div>
             <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
               {{ $t('todayEarnings') }}</div>
           </div>
           <div class="col-4 q-pt-md">
-            <div class="text-weight-bold text-h6 text-center">{{ teamBenefit.todayNums }}</div>
+            <div class="text-weight-bold text-h6 text-center">{{ currentTeamInfo.inviteNums }}</div>
             <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
-              {{ $t('todayNums') }}</div>
+              {{ $t('inviteNums') }}</div>
+          </div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ currentTeamInfo.buyAmount }}</div>
+            <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
+              {{ $t('buyAmount') }}</div>
+          </div>
+          <div class="col-4 q-pt-md">
+            <div class="text-weight-bold text-h6 text-center">{{ currentTeamInfo.teamEarnings }}</div>
+            <div class="text-grey-8  text-subtitle2  text-center text-weight-regular ellipsis">
+              {{ $t('teamEarnings') }}</div>
           </div>
         </div>
       </div>
@@ -55,18 +62,22 @@
         </div>
       </div>
 
-      <div v-for="(team, teamIndex) in teamBenefit.children" :key="teamIndex"
+      <div v-for="(children, childrenIndex) in currentTeamInfo.children" :key="childrenIndex"
         class="row justify-between bg-white rounded-borders q-pa-md q-mb-md">
         <div>
-          <div class="text-subtitle2 text-weight-medium">{{ team.userName }}</div>
-          <div class="text-grey-8 text-caption text-weight-regular text-weight-regular">{{ date.formatDate(team.createdAt
-            *
-            1000, 'YYYY/MM/DD HH:mm:ss') }}</div>
+          <div class="text-subtitle2 text-weight-medium">
+            {{ children.username }}
+            <span class="text-caption text-grey-7">(ID:{{ children.id }})</span>
+          </div>
+          <div class="text-grey-8 text-caption text-weight-regular text-weight-regular">{{
+            date.formatDate(children.createdAt
+              *
+              1000, 'YYYY/MM/DD HH:mm:ss') }}</div>
         </div>
-        <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ team.money }}</div>
+        <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ children.money }}</div>
       </div>
 
-      <div v-if="teamBenefit.children || teamBenefit.children.length <= 0" class="text-grey text-center q-py-lg">
+      <div v-if="currentTeamInfo.children || currentTeamInfo.children.length <= 0" class="text-grey text-center q-py-lg">
         {{ $t('noData') }}
       </div>
 
@@ -81,6 +92,7 @@ import { imageSrc } from 'src/utils';
 import { teamDetailsAPI } from 'src/apis/user';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 import { date } from 'quasar';
 
 
@@ -88,16 +100,14 @@ export default defineComponent({
   name: 'TeamEarnings',
   setup(props: any, context: any) {
     const $userStore = UserStore();
+    const $route = useRoute();
     const { t } = useI18n();
 
     const state = reactive({
-      // 用户资料
-      userInfo: {} as any,
-
-      // 团队收益详情
-      teamBenefit: {
+      currentUserId: $route.query.id ?? 0,
+      currentTeamInfo: {
         currentInfo: {} as any,
-        children: [] as any,
+        children: [],
       } as any,
     });
 
@@ -106,16 +116,13 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      state.userInfo = $userStore.userInfo
-      teamDetails({ id: $userStore.userInfo.id })
-    })
-
-    // 获取用户团队详情
-    const teamDetails = (params: any) => {
-      teamDetailsAPI(params).then((res: any) => {
-        state.teamBenefit = res
+      if (state.currentUserId == 0) {
+        state.currentUserId = $userStore.userInfo.id
+      }
+      teamDetailsAPI({ id: Number(state.currentUserId) }).then((res: any) => {
+        state.currentTeamInfo = res
       })
-    }
+    })
 
     return {
       imageSrc,

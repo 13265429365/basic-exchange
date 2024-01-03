@@ -176,9 +176,9 @@ export default defineComponent({
     const state = reactive({
       // 性别列表
       sexList: [
-        { name: 'unknown', value: 0 },
-        { name: 'male', value: 1 },
-        { name: 'female', value: 2 },
+        { name: t('unknown'), value: 0 },
+        { name: t('male'), value: 1 },
+        { name: t('female'), value: 2 },
       ],
       currentTelephone: [],
 
