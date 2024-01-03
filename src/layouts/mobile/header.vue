@@ -8,7 +8,8 @@
           {{ data.title }}
         </q-toolbar-title>
 
-        <q-btn dense flat round :icon="data.rightBtn.icon" color="grey-8" @click="data.rightBtn.callback" />
+        <q-btn dense flat round :icon="data.rightBtn.icon" color="grey-8" :size="!data.rightBtn.size ? 'md' : 'xs'"
+          @click="data.rightBtn.callback" />
         <!-- <q-icon dense flat round :name="data.rightBtn.icon" @click="data.rightBtn.callback" /> -->
       </q-toolbar>
     </q-header>
@@ -42,7 +43,7 @@ export default {
           callback: () => {
             return;
           },
-        },
+        } as any,
       },
     });
 

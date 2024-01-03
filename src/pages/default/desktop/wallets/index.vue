@@ -83,7 +83,7 @@
       <q-card-section>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tabTransactions" class="no-padding">
-            <div v-for="(order, orderIndex) in dataList" :key="orderIndex" class="q-px-md">
+            <div v-for="(order, orderIndex) in orderList" :key="orderIndex" class="q-px-md">
               <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''"
                 :header-style="{ borderRadius: '4px', height: '68px', lineHeight: '54px' }">
                 <template v-slot:header>
@@ -124,7 +124,7 @@
             </div>
 
             <!-- 分页 -->
-            <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
+            <div class="row justify-center q-mt-md" v-if="orderList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
                 @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
@@ -133,7 +133,7 @@
 
           <q-tab-panel name="tabBillDetails">
             <q-list>
-              <div v-for="(bill, billIndex) in dataList" :key="billIndex">
+              <div v-for="(bill, billIndex) in orderList" :key="billIndex">
                 <q-item class="rounded-borders" clickable style="height: 68px; line-height: 54px">
                   <q-item-section>
                     <div class="col">
@@ -158,7 +158,7 @@
               </div>
             </q-list>
             <!-- 分页 -->
-            <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
+            <div class="row justify-center q-mt-md" v-if="orderList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
                 @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
@@ -166,7 +166,7 @@
           </q-tab-panel>
         </q-tab-panels>
 
-        <div v-if="dataList.length <= 0">
+        <div v-if="orderList.length <= 0">
           <div class="text-center q-my-lg text-grey">
             {{ $t('noData') }}
           </div>
@@ -207,7 +207,7 @@ export default defineComponent({
       } as any,
 
       // 数据列表
-      dataList: [] as any,
+      orderList: [] as any,
 
       //筛选过滤
       billFilterParams: {
@@ -256,7 +256,7 @@ export default defineComponent({
       state.params.types = [WalletOrderTypeDeposit, WalletOrderTypeWithdraw]
       walletsOrderIndexAPI(state.params).then((res: any) => {
         state.pagination.total = res.count
-        state.dataList = res.items
+        state.orderList = res.items
         state.pagination.countPage = Math.ceil(state.pagination.total / state.params.pagination.rowsPerPage)
       })
     }
@@ -268,7 +268,7 @@ export default defineComponent({
       }
       walletsBillIndexAPI(state.params).then((res: any) => {
         state.pagination.total = res.count
-        state.dataList = res.items
+        state.orderList = res.items
         state.pagination.countPage = Math.ceil(state.pagination.total / state.params.pagination.rowsPerPage)
       })
     }
