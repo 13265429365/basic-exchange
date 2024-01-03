@@ -47,7 +47,7 @@
       </div>
 
       <q-btn unelevated rounded color="primary" :label="$t('submit')" class="full-width q-my-xl" no-caps
-        @click="submit" />
+        @click="submitFunc" />
     </div>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default defineComponent({
       })
     })
 
-    const submit = () => {
+    const submitFunc = () => {
       realAuthCreateAPI(state.params).then(() => {
         state.params.status = state.authStatus.pending
         NotifyPositive(t('submittedSuccess'))
@@ -98,7 +98,7 @@ export default defineComponent({
     return {
       imageSrc,
       ...toRefs(state),
-      submit,
+      submitFunc,
     }
   }
 });

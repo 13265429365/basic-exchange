@@ -33,7 +33,7 @@ import { NotifyPositive } from 'src/utils/notify';
 import QRCode from 'qrcode-svg-ts';
 
 export default {
-  name: 'ShareIndex',
+  name: 'TeamShareIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
 
@@ -66,8 +66,7 @@ export default {
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
         .then(() => {
-          NotifyPositive(t('copy'));
-
+          NotifyPositive(t('copySuccess'));
         })
     };
     return {

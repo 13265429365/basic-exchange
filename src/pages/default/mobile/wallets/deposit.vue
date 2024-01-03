@@ -133,7 +133,7 @@ import QRCode from 'qrcode-svg-ts';
 import { copyToClipboard } from 'quasar';
 
 export default {
-  name: 'depositIndex',
+  name: 'WalletsDepositIndex',
   components: { uploader },
   setup(props: any, context: any) {
     const { t } = useI18n()

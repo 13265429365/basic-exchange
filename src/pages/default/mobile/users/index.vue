@@ -88,7 +88,7 @@
           <div class="row justify-between no-wrap">
             <q-btn @click="dialog = false" class="q-mr-md text-primary bg-white col-5" unelevated rounded no-caps
               style="border:1px solid #01AC66" :label="$t('cancel')" />
-            <q-btn @click="Logout" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
+            <q-btn @click="logout" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
           </div>
         </q-card-section>
       </q-card>
@@ -130,7 +130,7 @@ export default defineComponent({
     })
 
     // 退出登录
-    const Logout = async () => {
+    const logout = async () => {
       await $initStore.removeUserToken()
       void $router.push({ name: 'HomeIndex' })
     }
@@ -138,7 +138,7 @@ export default defineComponent({
     return {
       imageSrc,
       ...toRefs(state),
-      Logout,
+      logout,
     }
   }
 })

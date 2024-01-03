@@ -22,21 +22,21 @@
       </div>
 
       <div class="row q-col-gutter-sm q-mt-md">
-        <div class="col-4" v-for="(item, i) in levelList" :key="i">
+        <div class="col-4" v-for="(level, levelIndex) in levelList" :key="levelIndex">
           <div :style="{
-            border: `2px solid ${i == select ? '#01AC66' : '#F5F6FA'}`,
-            backgroundColor: i == select ? 'rgba(1, 172, 102, 0.05)' : '#fff',
+            border: `2px solid ${levelIndex == currentLevelIndex ? '#01AC66' : '#F5F6FA'}`,
+            backgroundColor: levelIndex == currentLevelIndex ? 'rgba(1, 172, 102, 0.05)' : '#fff',
             height: '140px'
-          }" class="my-content rounded-borders column justify-center items-center" @click="select = i">
-            <div class="text-weight-bold" style="font-size: 16px;">{{ item.name }}</div>
+          }" class="my-content rounded-borders column justify-center items-center"
+            @click="currentLevelIndex = levelIndex">
+            <div class="text-weight-bold" style="font-size: 16px;">{{ level.name }}</div>
             <div class="self-cneter q-mt-sm text-primary text-h5 text-weight-bold"><span class="text-h6 "> $</span>{{
-              item.money
+              level.money
             }}
             </div>
           </div>
         </div>
       </div>
-
 
       <div class="q-ml-md q-mt-md">
         <ul class="text-color-3 text-weight-regular" style="padding: 0;">
@@ -45,10 +45,8 @@
         </ul>
       </div>
 
-
-      <q-btn @click="OrderLevel" unelevated rounded color="primary" :label="$t('buy')" class="full-width q-my-xl" no-caps
-        style="height: 44px;" />
-
+      <q-btn @click="submitFunc(levelList[currentLevelIndex])" unelevated rounded color="primary" :label="$t('buy')"
+        class="full-width q-my-xl" no-caps style="height: 44px;" />
     </div>
 
   </div>
@@ -58,10 +56,9 @@
 import { onMounted, reactive, toRefs } from 'vue';
 import { levelIndexAPI, levelCreateAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { UserStore, UserInfoKey } from 'src/stores/user';
-import { userInfoAPI } from 'src/apis/user';
-import { useRouter } from 'vue-router';
+import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
+import { ConfirmPrompt } from 'src/utils/notify';
 
 
 export default {
@@ -69,11 +66,10 @@ export default {
   setup(props: any, context: any) {
     const { t } = useI18n()
     const $userStore = UserStore()
-    const $router = useRouter()
 
     const state = reactive({
-      select: 0,
-
+      currentLevelIndex: 0,
+      userInfo: {} as any,
       levelList: [] as any,
     });
 
@@ -82,45 +78,29 @@ export default {
     })
 
     onMounted(() => {
-      state.select = $userStore.userInfo.Level
-      getLevelList()
-    })
-
-    // 获取会员等级列表
-    const getLevelList = () => {
+      state.userInfo = $userStore.userInfo
       levelIndexAPI().then((res: any) => {
         state.levelList = res
       })
-    }
+    })
 
     // 用户购买会员
-    const OrderLevel = () => {
-
-      if (state.select < $userStore.userInfo.Level) {
-        return false
-      }
-      levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
-        UserInfo()
-      })
-    }
-
-    const UserInfo = () => {
-      userInfoAPI().then((res: any) => {
-        $userStore.updateUserInfo(res)
-        localStorage.setItem(UserInfoKey, JSON.stringify(res))
-        $router.push({ name: 'UserIndex' })
-      })
+    const submitFunc = (level: any) => {
+      ConfirmPrompt(t('isExecute'), t('isBuy') + '【' + level.name + '】?', () => {
+        levelCreateAPI({ id: level.id }).then(() => {
+          state.userInfo.level = level.level
+          $userStore.updateUserInfo(state.userInfo)
+        })
+      }, { ok: { label: t('submit') }, cancel: { label: t('cancel') } })
     }
 
     return {
       imageSrc,
       ...toRefs(state),
-      OrderLevel,
+      submitFunc,
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.vipCard {}
-</style>
+<style lang="scss" scoped></style>

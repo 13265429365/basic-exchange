@@ -18,12 +18,12 @@
           <div class="row no-wrap">
             <div v-for="(account, accountIndex) in accountList" :key="accountIndex" :style="{
               width: '200px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
-              border: accountIndex == ActiveAccountIndex ? '1px solid #01AC66' : '',
+              border: accountIndex == activeAccountIndex ? '1px solid #01AC66' : '',
             }" class="row cursor-pointer items-center relative-position q-mr-md no-wrap">
               <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
               <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName
               }}({{ account.number.slice(-4) }})</div>
-              <q-img v-if="accountIndex == ActiveAccountIndex" class="absolute" src="/images/select.png" width="30PX"
+              <q-img v-if="accountIndex == activeAccountIndex" class="absolute" src="/images/select.png" width="30PX"
                 height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </div>
@@ -81,7 +81,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 export default {
-  name: 'withdrawalIndex',
+  name: 'WalletsWithdrawIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
     const $router = useRouter()
@@ -98,7 +98,7 @@ export default {
       } as any,
 
       // 选中卡片类型
-      ActiveAccountIndex: 0,
+      activeAccountIndex: 0,
 
       // 银行卡列表
       accountList: [] as any,
@@ -130,7 +130,7 @@ export default {
 
     // 提现
     const submitWithdrawFunc = () => {
-      state.params.accountId = state.accountList[state.ActiveAccountIndex].id
+      state.params.accountId = state.accountList[state.activeAccountIndex].id
       state.params.money = Number(state.params.money)
 
       // 关闭密码弹窗

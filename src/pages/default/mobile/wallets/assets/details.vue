@@ -86,7 +86,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
-import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
 import { walletsOrderIndexAPI, walletsUserAssetsInfoAPI } from 'src/apis/wallets';
 import { date } from 'quasar'
@@ -97,7 +96,6 @@ export default defineComponent({
   name: 'WalletsAssetsDetails',
   setup(props: any, context: any) {
     const $initStore = InitStore()
-    const $userStore = UserStore()
     const $router = useRouter()
     const { t } = useI18n()
     const WalletOrderTypeDeposit = 101

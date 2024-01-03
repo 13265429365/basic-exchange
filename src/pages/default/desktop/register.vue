@@ -232,7 +232,9 @@ export default defineComponent({
       }
 
       //拼接手机区号 
-      state.params.telephone = state.countryList[state.currentCountryIndex].code + '|' + state.params.telephone
+      if (state.config.settings.register.showTelephone) {
+        state.params.telephone = state.countryList[state.currentCountryIndex].code + '|' + state.params.telephone
+      }
       //  用户注册
       userRegisterAPI(state.params).then(async (res: any) => {
         $userStore.updateUserInfo(res.userInfo)

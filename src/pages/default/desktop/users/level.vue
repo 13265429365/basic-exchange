@@ -62,40 +62,19 @@ export default {
   setup() {
     const { t } = useI18n()
     const $userStore = UserStore()
+
     const state = reactive({
-      slide: 0,
-      actName: '',
-      userInfo: $userStore.userInfo,
+      userInfo: {} as any,
       currentLevelIndex: 0,
       levelList: [] as any,
     });
 
     onMounted(() => {
-      getLevelList()
-    })
-
-    // 获取会员等级列表
-    const getLevelList = () => {
+      state.userInfo = $userStore.userInfo
       levelIndexAPI().then((res: any) => {
         state.levelList = res
-        if (state.levelList.length > 0) {
-          state.actName = state.levelList[0].name
-        }
       })
-    }
-
-    // 用户购买会员
-    // const OrderLevel = (name: string, i: any) => {
-    //   state.actName = name
-    //   state.select = i
-    //   if (state.select < $userStore.userInfo.Level) {
-    //     return false
-    //   }
-    //
-    //   levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
-    //     UserInfo()
-    //   })
-    // }
+    })
 
     const submitFunc = (level: any) => {
       ConfirmPrompt(t('isExecute'), t('isBuy') + '【' + level.name + '】?', () => {

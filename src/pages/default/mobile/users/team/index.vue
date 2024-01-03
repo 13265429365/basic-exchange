@@ -11,7 +11,8 @@
             <div class="text-white">
               <span class="text-weight-medium">{{ teamMembers.username }}</span>
               <span style="background: rgba(255, 255, 255, 0.12);padding: 3px 10px;"
-                class="radius-x text-caption q-ml-sm">LV{{ teamMembers.depth }}</span>
+                class="rounded-borders text-caption q-ml-sm">LV{{
+                  teamMembers.depth }}</span>
             </div>
             <div class="text-white text-weight-medium">{{ $t('teamEarnings') + ': +' + teamMembers.earnings }}
             </div>
