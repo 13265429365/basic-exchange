@@ -217,8 +217,6 @@ export default defineComponent({
 
     // 打开弹窗
     const openUpdateDialog = (setting: any) => {
-      console.log(setting);
-
       state.dialogShow = true
       state.currentSetting = setting
       state.params = {}
@@ -253,11 +251,6 @@ export default defineComponent({
         return
       }
 
-      // 更新其他参数
-      // if (state.currentSetting.params == 'birthdayStr') {
-      //   state.currentSetting.value = Number(date.formatDate(state.params['birthday'], 'X'))
-      //   state.params['birthday'] = state.currentSetting.value
-      // }
       // 更新手机号码
       if (state.currentSetting.params == 'telephone') {
         state.params['telephone'] = state.countryList[state.currentCountryIndex].code + '|' + state.params['telephone']

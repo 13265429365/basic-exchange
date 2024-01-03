@@ -147,8 +147,8 @@ export default defineComponent({
 
       // 饼、折线图button
       echartsTypeList: [
-        { name: '饼图', value: echartsPieId },
-        { name: '折线图', value: echartsLineId },
+        { name: t('pieChart'), value: echartsPieId },
+        { name: t('lineChart'), value: echartsLineId },
       ],
       echartsTypeIndex: 0,
 
