@@ -14,46 +14,37 @@
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { UserStore } from 'src/stores/user';
-import { userInfoAPI, updateInfoAPI } from 'src/apis/user';
+import { updateInfoAPI } from 'src/apis/user';
 import { useI18n } from 'vue-i18n';
 
 // 列表
 export default defineComponent({
-  name: 'SettingsEmailIndex',
-  emits: ['update'],
+  name: 'SettingsBindEmail',
   setup(props: any, context: any) {
     const { t } = useI18n();
-    context.emit('update', {
-      title: t('bindEmail'),
-    })
+    context.emit('update', {title: t('bindEmail')})
 
     const $router = useRouter();
     const $userStore = UserStore();
-
     const state = reactive({
-      params: {} as any,
+      userInfo: {} as any,
+      params: {
+        email: '',
+      } as any,
     })
 
     onMounted(() => {
-      UserInfo()
+      state.userInfo = $userStore.userInfo
+      state.params.email = state.userInfo.email
     })
 
-    // 获取用户信息
-    const UserInfo = () => {
-      userInfoAPI().then((res: any) => {
-        state.params = res
-        $userStore.updateUserInfo(res)
-      })
-    }
 
     // 执行接口
     const submitFunc = () => {
-      const params = {
-        email: state.params.email,
-      }
-      updateInfoAPI(params).then((res: any) => {
-        UserInfo()
-        $router.back()
+      updateInfoAPI(state.params).then(() => {
+        state.userInfo.email = state.params.email
+        $userStore.updateUserInfo(state.userInfo)
+        void $router.back()
       })
     }
 

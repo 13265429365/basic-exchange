@@ -95,7 +95,6 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { date } from 'quasar';
 
-
 export default defineComponent({
   name: 'TeamEarnings',
   setup(props: any, context: any) {
@@ -106,7 +105,6 @@ export default defineComponent({
 
     const $userStore = UserStore();
     const $route = useRoute();
-
 
     const state = reactive({
       currentUserId: $route.query.id ?? 0,

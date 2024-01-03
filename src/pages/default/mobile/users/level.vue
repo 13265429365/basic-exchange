@@ -60,7 +60,6 @@ import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
 import { ConfirmPrompt } from 'src/utils/notify';
 
-
 export default {
   name: 'UserLevel',
   setup(props: any, context: any) {
@@ -70,7 +69,6 @@ export default {
     })
 
     const $userStore = UserStore()
-
     const state = reactive({
       currentLevelIndex: 0,
       userInfo: {} as any,

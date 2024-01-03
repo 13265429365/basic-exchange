@@ -4,7 +4,7 @@
       <!-- 头像 -->
       <div class="row">
         <q-avatar class="q-mr-md avatar">
-          <q-img :src="imageSrc(userInfo.avatar ?? config.logo)" width="50px" height="50px" />
+          <q-img no-spinner :src="imageSrc(userInfo.avatar ?? config.logo)" width="50px" height="50px" />
         </q-avatar>
         <div class="col-8">
           <div class="text-weight-bolder">
@@ -41,19 +41,18 @@
           :key="quickMenuIndex" v-show="quickMenu.data.isMobile" style="width: 47%;"
           class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
-            <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
+            <q-img no-spinner class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
             <div>{{ $t(quickMenu.name) }}</div>
           </div>
         </q-btn>
       </div>
-
 
       <!-- 用户列表 -->
       <q-list v-for="(item, i) in userList" :key="i" bordered class="q-mb-md rounded-borders no-border">
         <div v-for="(child, childKey) in item.children" :key="childKey" class="bg-white">
           <q-item @click="$router.push(child.route)" class="q-pa-md" clickable>
             <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
-              <q-img :src="`${imageSrc(child.icon)}`" width="24px" height="24px" />
+              <q-img no-spinner :src="`${imageSrc(child.icon)}`" width="24px" height="24px" />
             </q-item-section>
 
             <q-item-section>
@@ -78,7 +77,7 @@
           <div class="row justify-center q-mb-lg">
             <q-separator class="rounded-borders col-3" style="height: 4px" color="grey-4" />
           </div>
-          <div class="row justify-center">
+          <div class="row justify-center q-my-md">
             <div class="text-weight-bold text-h6">{{ $t('logout') }}</div>
           </div>
           <q-separator class="q-mt-md  q-mb-lg" color="grey-4" />
@@ -88,7 +87,7 @@
           <div class="row justify-between no-wrap">
             <q-btn @click="dialog = false" class="q-mr-md text-primary bg-white col-5" unelevated rounded no-caps
               style="border:1px solid #01AC66" :label="$t('cancel')" />
-            <q-btn @click="logout" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
+            <q-btn @click="logoutFunc" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
           </div>
         </q-card-section>
       </q-card>
@@ -104,7 +103,7 @@ import { UserStore } from 'src/stores/user';
 import { imageSrc } from 'src/utils';
 
 export default defineComponent({
-  name: 'userIndex',
+  name: 'UserIndex',
   setup() {
     const $router = useRouter();
     const $initStore = InitStore()
@@ -130,7 +129,7 @@ export default defineComponent({
     })
 
     // 退出登录
-    const logout = async () => {
+    const logoutFunc = async () => {
       await $initStore.removeUserToken()
       void $router.push({ name: 'HomeIndex' })
     }
@@ -138,19 +137,10 @@ export default defineComponent({
     return {
       imageSrc,
       ...toRefs(state),
-      logout,
+      logoutFunc,
     }
   }
 })
 </script>
 
-<style scoped>
-/* 退出dialog */
-.q-dialog__inner>div {
-  border-radius: 20px 20px 0 0;
-}
-
-.q-dialog__inner>div>div {
-  padding: 10px 20px 50px 20px;
-}
-</style>
+<style scoped></style>

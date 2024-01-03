@@ -155,7 +155,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/settings/info',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'users/setting/infoEdit.vue'
+          'users/setting/info.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
         children: [],

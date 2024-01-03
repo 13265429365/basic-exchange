@@ -72,21 +72,17 @@ import { date } from 'quasar';
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
-
 export default defineComponent({
-  name: 'SettingsInfoIndex',
+  name: 'SettingsUpdateInfo',
   components: {
     uploader,
   },
   setup(props: any, context: any) {
     const { t } = useI18n();
-    context.emit('update', {
-      title: t('settings'),
-    })
+    context.emit('update', {title: t('settings')})
 
     const $userStore = UserStore();
     const $router = useRouter();
-
     const state = reactive({
       params: {} as any,
       genderIndex: 0,

@@ -224,9 +224,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.select {
-  background-color: rgba(241, 250, 246, 1) !important;
-  border: 1px solid $primary;
-}
-</style>
+<style lang="scss" scoped></style>
