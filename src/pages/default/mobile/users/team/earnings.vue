@@ -97,7 +97,7 @@ export default defineComponent({
       // 团队收益详情
       teamBenefit: {
         currentInfo: {} as any,
-        children: [],
+        children: [] as any,
       } as any,
     });
 

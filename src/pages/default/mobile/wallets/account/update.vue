@@ -6,9 +6,9 @@
         <q-scroll-area style="height: 80px; width: 100%;" :thumb-style="{ display: 'none' }" :visible="false">
           <div class="row no-wrap">
             <div v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex" :style="{
-              width: '200px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+              width: '180px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
               border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
-            }" class="q-pa-sm row justify-center cursor-pointer relative-position"
+            }" class="q-pa-sm row justify-center cursor-pointer relative-position q-mr-md"
               @click="switchPaymentFunc(payment, paymentIndex)">
               <q-img class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
               <div class="self-center">{{ payment.name }}</div>
@@ -20,7 +20,7 @@
 
 
         <!-- 卡片信息 -->
-        <div class="q-mt-lg q-pa-md full-width" v-if="paymentList[currentPaymentIndex]">
+        <div class="q-mt-lg full-width" v-if="paymentList[currentPaymentIndex]">
           <div class="column q-gutter-md">
             <div>
               <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork')

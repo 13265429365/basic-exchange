@@ -148,14 +148,11 @@ export default defineComponent({
         })
 
         onMounted(() => {
-            console.log($route.query.type);
-
             getWalletsBillList()
             // 获取钱包账单Options
-            // 如果route.query存在assets获取-2类型账单
+            // 如果route.query存在assets获取-2资产类型账单，否则获取钱包类型账单
             walletsBillOptionsAPI({ type: $route.query.type ? WalletBillAssetsType : WalletBillAccountType }).then((res: any) => {
                 state.billFilterParams.typeList = res
-                console.log(res);
             })
         })
 
@@ -166,7 +163,6 @@ export default defineComponent({
             }
             walletsBillIndexAPI(state.params).then((res: any) => {
                 state.billDetailList = res.items
-                console.log(res);
             })
         }
 

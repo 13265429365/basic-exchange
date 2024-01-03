@@ -24,7 +24,6 @@ export default {
       articleInfoAPI({ id: Number($route.query.id) }).then((res: any) => {
         state.content = res.content
         state.name = res.name
-        console.log(res);
       })
     })
     return {

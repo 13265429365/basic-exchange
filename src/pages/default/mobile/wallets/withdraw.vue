@@ -2,28 +2,28 @@
   <div class="column full-height full-width">
     <div v-if="accountList.length <= 0" class="q-pa-md">
       <q-banner rounded class="bg-red text-white q-mt-sm">
-        {{ $t('accountBeEmpty') }}
+        {{ $t('notBindWithdrawAccount') }}
         <template v-slot:action>
           <q-btn @click="$router.push({ name: 'WalletsAccountIndex' })" flat no-caps color="white"
-            :label="$t('accountManage')" />
+            :label="$t('goto') + $t('accountManage')" />
         </template>
       </q-banner>
     </div>
 
-    <div v-else class="q-pa-md full-width column q-gutter-xl">
+    <div class="q-pa-md full-width column q-gutter-xl">
       <div class="col full-width">
         <div class="text-body2 text-weight-medium q-pb-xs">{{ $t('withdrawAccount') }}</div>
         <!-- 卡类型选择 -->
         <q-scroll-area style="height: 80px; width: 100%;" :thumb-style="{ display: 'none' }" :visible="false">
           <div class="row no-wrap">
             <div v-for="(account, accountIndex) in accountList" :key="accountIndex" :style="{
-              width: '200px', height: '50px', borderRadius: '8px', background: '#F5F6FA',
-              border: accountIndex == ActiveAccountIndex ? '1px solid #01AC66' : '',
-            }" class="q-pa-sm row justify-center cursor-pointer relative-position q-mr-sm"
-              @click="switchAccount(accountIndex)">
-              <q-img class="self-center q-mr-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
-              <div class="self-center">{{ account.name }}</div>
-              <q-img v-if="accountIndex == ActiveAccountIndex" class="absolute" src="/images/select.png" width="30px"
+              width: '200px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+              border: accountIndex == activeAccountIndex ? '1px solid #01AC66' : '',
+            }" class="row cursor-pointer items-center relative-position q-mr-md no-wrap">
+              <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
+              <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName
+              }}({{ account.number.slice(-4) }})</div>
+              <q-img v-if="accountIndex == activeAccountIndex" class="absolute" src="/images/select.png" width="30PX"
                 height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </div>
@@ -31,43 +31,40 @@
 
         <div>
           <div class="text-body2 text-weight-medium q-pb-xs">{{ $t('withdrawAmount') }}</div>
-          <q-input dense type="number" outlined v-model="params.money" class="q-mb-sm">
+          <q-input dense type="number" outlined v-model="params.money" class="q-mb-sm"
+            :placeholder="$t('withdrawAmount')">
             <template v-slot:append>
-              <div @click="params.money = Total" style="font-size: 14px" class="text-primary">{{ $t('withdrawAllAmount')
+              <div @click="params.money = userInfo.money" style="font-size: 14px" class="text-primary">{{ $t('all')
               }}
               </div>
             </template>
           </q-input>
-          <div class="text-grey-7">{{ $t('balance') }}：￥{{ Total }}</div>
+          <div class="text-grey-7">{{ $t('balance') }}：￥{{ userInfo.money }}</div>
         </div>
       </div>
 
       <!-- 提现按钮 -->
       <q-btn unelevated rounded color="primary" :label="$t('withdraw')" class="full-width q-my-md" no-caps
-        @click="withdraw" />
+        @click="submitFunc" />
     </div>
 
     <!-- 安全密码 -->
     <q-dialog v-model="showSecurityKey">
-      <q-card style="width: 380px;">
-        <q-card-section style="padding: 20px;">
-          <div class="text-center text-weight-bold">
-            {{ $t('enterSecretKey') }}
-          </div>
-          <div class="q-mt-lg">
-            <q-form>
-              <q-input outlined dense class="q-mb-md" type="password" v-model="params.securityKey"
-                :placeholder="$t('enterSecretKey')">
-              </q-input>
-              <div class="row justify-center q-mt-lg">
-                <q-btn class="q-mr-md col-4" unelevated rounded no-caps @click="showSecurityKey = false"
-                  style="background: #F3F5F5" :label="$t('cancel')"></q-btn>
-                <q-btn class="col-4" @click="subWithdraw" unelevated rounded no-caps color="primary"
-                  :label="$t('confirm')" />
-              </div>
-            </q-form>
+      <q-card style="width: 340px">
+        <q-card-section>
+          <div class="text-center text-body1">{{ $t('enterSecretKey') }}</div>
+        </q-card-section>
+
+        <q-card-section>
+          <div class="q-mt-md">
+            <q-input dense outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
           </div>
         </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat :label="$t('cancel')" v-close-popup color="grey"></q-btn>
+          <q-btn flat :label="$t('confirm')" @click="submitWithdrawFunc" color="primary"></q-btn>
+        </q-card-actions>
       </q-card>
     </q-dialog>
   </div>
@@ -84,7 +81,7 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 export default {
-  name: 'withdrawalIndex',
+  name: 'WalletsWithdrawIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
     const $router = useRouter()
@@ -92,17 +89,18 @@ export default {
     const $initStore = InitStore()
 
     const state = reactive({
-      walletsSetting: $initStore.config.settings.wallets,
+      config: $initStore.config,
       showSecurityKey: false,
-
-      // 账户余额
-      Total: $userStore.userInfo.money,
-      params: {} as any,
+      userInfo: {} as any,
+      params: {
+        money: '',
+        securityKey: '',
+      } as any,
 
       // 选中卡片类型
-      ActiveAccountIndex: 0,
+      activeAccountIndex: 0,
 
-      // 卡片类型
+      // 银行卡列表
       accountList: [] as any,
     });
 
@@ -111,50 +109,43 @@ export default {
     })
 
     onMounted(() => {
+      state.userInfo = $userStore.userInfo
       walletsAccountIndexAPI().then((res: any) => {
         state.accountList = res
       })
     })
 
-    const withdraw = () => {
-      if (state.walletsSetting.showSecurityPass) {
+    const submitFunc = () => {
+      if (state.config.settings.online.depositLink) {
+        window.location.href = state.config.onlineLink
+        return
+      }
+
+      if (state.config.settings.wallets.showSecurityPass) {
         state.showSecurityKey = true
       } else {
-        subWithdraw()
+        submitWithdrawFunc()
       }
     }
 
     // 提现
-    const subWithdraw = () => {
-      state.params.accountId = state.accountList[state.ActiveAccountIndex].id
+    const submitWithdrawFunc = () => {
+      state.params.accountId = state.accountList[state.activeAccountIndex].id
       state.params.money = Number(state.params.money)
 
       // 关闭密码弹窗
       state.showSecurityKey = false
-      walletsWithdrawCreateAPI(state.params).then((res: any) => {
+      walletsWithdrawCreateAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        // 提现后是否跳转客服页面
-        if ($initStore.config.settings.online.withdrawLink) {
-          $router.push({ name: 'WalletsAccountIndex' })
-        } else {
-          $router.push({ name: 'WalletsAccountIndex' })
-        }
-
-        state.params.securityKey = ''
+        $router.push({ name: 'WalletsIndex' })
       })
-    }
-
-    // 切换卡片类型
-    const switchAccount = (accountIndex: any) => {
-      state.ActiveAccountIndex = accountIndex
     }
 
     return {
       imageSrc,
       ...toRefs(state),
-      switchAccount,
-      withdraw,
-      subWithdraw,
+      submitFunc,
+      submitWithdrawFunc,
     }
   }
 };

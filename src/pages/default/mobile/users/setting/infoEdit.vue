@@ -55,7 +55,7 @@
           </q-input>
         </div>
 
-        <q-btn @click="submit" class="full-width q-mb-xl row justify-center" unelevated rounded no-caps
+        <q-btn @click="submitFunc" class="full-width q-mb-xl row justify-center" unelevated rounded no-caps
           style="height: 44px;" color="primary" :label="$t('submit')" />
       </div>
     </div>
@@ -70,28 +70,26 @@ import { UserStore, UserInfoKey } from 'src/stores/user';
 import uploader from 'src/components/uploader.vue';
 import { date } from 'quasar';
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 
 export default defineComponent({
-  name: 'infoEdit',
+  name: 'SettingsInfoIndex',
   components: {
     uploader,
   },
   setup(props: any, context: any) {
     const { t } = useI18n();
     const $userStore = UserStore();
+    const $router = useRouter();
 
-    let state = reactive({
+    const state = reactive({
       params: {} as any,
-
-      toggle: false,
-
       genderIndex: 0,
       GenderList: [
         { name: 'male' },
         { name: 'female' },
       ],
-
       //date选择器状态
       birthdayPopup: false,
     })
@@ -107,12 +105,10 @@ export default defineComponent({
     // 获取用户信息
     const UserInfo = () => {
       userInfoAPI().then((res: any) => {
-        console.log('用户信息', res);
         state.params = res
         if (res.sex != 0) {
           state.genderIndex = res.sex - 1
         }
-
         state.params.birthday = date.formatDate(state.params.birthday * 1000, 'YYYY/MM/DD')
         $userStore.updateUserInfo(res)
         localStorage.setItem(UserInfoKey, JSON.stringify(res))
@@ -120,31 +116,23 @@ export default defineComponent({
     }
 
     // 执行接口
-    const submit = () => {
+    const submitFunc = () => {
       const params = {
         sex: state.genderIndex + 1,
         nickname: state.params.nickname,
         birthday: Number(date.formatDate(state.params.birthday, 'X')),
       }
       updateInfoAPI(params).then((res: any) => {
-        console.log(res);
         UserInfo()
+        $router.back()
       })
-    }
-
-    // 执行接口
-    const upload = (url: string) => {
-
-      state.params.avatar = url
-      console.log(state.params.avatar);
     }
 
     return {
       imageSrc,
       date,
       ...toRefs(state),
-      submit,
-      upload,
+      submitFunc,
     }
   }
 })

@@ -53,7 +53,6 @@
         <div v-for="(child, childKey) in item.children" :key="childKey" class="bg-white">
           <q-item @click="$router.push(child.route)" class="q-pa-md" clickable>
             <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
-              <!-- <q-img :src="`/images/mobile/info/${child.avatar}`" width="24px" height="24px" /> -->
               <q-img :src="`${imageSrc(child.icon)}`" width="24px" height="24px" />
             </q-item-section>
 
@@ -89,7 +88,7 @@
           <div class="row justify-between no-wrap">
             <q-btn @click="dialog = false" class="q-mr-md text-primary bg-white col-5" unelevated rounded no-caps
               style="border:1px solid #01AC66" :label="$t('cancel')" />
-            <q-btn @click="Logout" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
+            <q-btn @click="logout" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
           </div>
         </q-card-section>
       </q-card>
@@ -131,7 +130,7 @@ export default defineComponent({
     })
 
     // 退出登录
-    const Logout = async () => {
+    const logout = async () => {
       await $initStore.removeUserToken()
       void $router.push({ name: 'HomeIndex' })
     }
@@ -139,7 +138,7 @@ export default defineComponent({
     return {
       imageSrc,
       ...toRefs(state),
-      Logout,
+      logout,
     }
   }
 })

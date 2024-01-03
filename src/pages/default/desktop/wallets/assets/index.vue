@@ -7,22 +7,23 @@
             <div class="row items-center">
               <div class="text-body1 text-bold text-white q-mr-xs">{{ $t('totalAssets') }}</div>
               <q-icon color="white" @click="showMoney = !showMoney"
-                      :name="showMoney ? 'o_visibility' : 'o_visibility_off'" class="cursor-pointer"
-                      size="16px"></q-icon>
+                :name="showMoney ? 'o_visibility' : 'o_visibility_off'" class="cursor-pointer" size="16px"></q-icon>
             </div>
           </q-card-section>
           <q-card-section style="padding: 8px 16px">
             <div class="text-white">
-              <div class="text-h6">{{$t('currency')}}{{userAssetsInfo.moneyRateSum.toFixed(2)}}</div>
-              <div class="text-caption">≈{{$t('currency')}}{{userAssetsInfo.moneyRateSum.toFixed(2)}}</div>
+              <div class="text-h6">{{ $t('currency') }}{{ userAssetsInfo.moneyRateSum.toFixed(2) }}</div>
+              <div class="text-caption">≈{{ $t('currency') }}{{ userAssetsInfo.moneyRateSum.toFixed(2) }}</div>
             </div>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn flat rounded class="bg-white text-primary" size="sm" style="padding: 6px 18px" @click="$router.push({ name: 'WalletsDeposit', query: {mode: 2}})">
-              <div>{{$t('deposit')}}</div>
+            <q-btn @click="$router.push({ name: 'WalletsDeposit', query: { mode: 2 } })" flat rounded
+              class="bg-white text-primary" size="sm" style="padding: 6px 18px">
+              <div>{{ $t('deposit') }}</div>
             </q-btn>
-            <q-btn flat rounded class="bg-white text-primary" size="sm" style="padding: 6px 18px" @click="$router.push({ name: 'WalletsWithdraw', query: {mode: 12} })">
-              <div>{{$t('withdraw')}}</div>
+            <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" flat rounded
+              class="bg-white text-primary" size="sm" style="padding: 6px 18px">
+              <div>{{ $t('withdraw') }}</div>
             </q-btn>
           </q-card-actions>
         </q-card>
@@ -30,26 +31,28 @@
       <div class="col q-ml-sm">
         <q-scroll-area style="height: 162px;width: 100%;" :thumb-style="{ display: 'none' }">
           <div class="row no-wrap q-gutter-sm">
-            <q-card bordered flat style="width: 278px; background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%)"
-            v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex">
+            <q-card bordered flat
+              style="width: 278px; background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%)"
+              v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex">
               <q-card-section style="padding: 16px 16px 0">
                 <div class="row justify-between items-center">
-                  <div class="text-h6">{{assets.name}}</div>
+                  <div class="text-h6">{{ assets.name }}</div>
                   <div>
-                    <q-icon :name="'img:' +imageSrc(assets.icon)" size="42px"></q-icon>
+                    <q-icon :name="'img:' + imageSrc(assets.icon)" size="42px"></q-icon>
                   </div>
                 </div>
               </q-card-section>
               <q-card-section style="padding: 4px 16px 0">
                 <div class="text-black">
-                  <div class="text-h6">{{$t('currency')}}{{assets.money.toFixed(2)}}</div>
-                  <div class="text-caption text-grey">≈{{$t('currency')}}{{assets.moneyRate.toFixed(2)}}</div>
+                  <div class="text-h6">{{ $t('currency') }}{{ assets.money.toFixed(2) }}</div>
+                  <div class="text-caption text-grey">≈{{ $t('currency') }}{{ assets.moneyRate.toFixed(2) }}</div>
                 </div>
               </q-card-section>
 
               <q-card-actions align="right">
-                <q-btn flat rounded class="bg-green-1 text-primary" size="sm" style="padding: 6px 18px" @click="$router.push({name: 'WalletsAssetsDetails', query: {id: assets.walletAssetsId}})">
-                  <div>{{$t('views')}}</div>
+                <q-btn flat rounded class="bg-green-1 text-primary" size="sm" style="padding: 6px 18px"
+                  @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })">
+                  <div>{{ $t('views') }}</div>
                 </q-btn>
               </q-card-actions>
             </q-card>
@@ -81,7 +84,10 @@
               <div class="row q-pa-sm" style="max-width: 420px">
                 <div v-for="(billType, billTypeIndex) in billFilterParams.typeList" :key="billTypeIndex" class="col-4">
                   <div class="q-ma-xs">
-                    <q-btn outline rounded :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'" @click="selectBillTypeFunc(billType.value)"  class="full-width ellipsis " :label="billType.label"></q-btn>
+                    <q-btn outline rounded
+                      :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'"
+                      @click="selectBillTypeFunc(billType.value)" class="full-width ellipsis "
+                      :label="billType.label"></q-btn>
                   </div>
                 </div>
               </div>

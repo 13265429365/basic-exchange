@@ -159,7 +159,7 @@ export default defineComponent({
     const $userStore = UserStore()
     const { t } = useI18n();
 
-    let state = reactive({
+    const state = reactive({
       baseURL: process.env.baseURL,
 
       // 初始配置信息
@@ -232,7 +232,9 @@ export default defineComponent({
       }
 
       //拼接手机区号 
-      state.params.telephone = state.countryList[state.currentCountryIndex].code + '|' + state.params.telephone
+      if (state.config.settings.register.showTelephone) {
+        state.params.telephone = state.countryList[state.currentCountryIndex].code + '|' + state.params.telephone
+      }
       //  用户注册
       userRegisterAPI(state.params).then(async (res: any) => {
         $userStore.updateUserInfo(res.userInfo)

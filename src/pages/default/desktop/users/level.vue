@@ -11,7 +11,7 @@
     </div>
 
     <div class="column items-center">
-      <q-scroll-area style="height: 440px; width: 80%" :thumb-style="{ height: 0 }">
+      <q-scroll-area style="height: 440px; width: 80%" :thumb-style="{ height: '0' }">
         <div class="row no-wrap q-pt-lg q-gutter-sm">
           <q-card v-for="(level, levelIndex) in levelList" :key="levelIndex" :style="{
             width: '288px', height: '400px', borderRadius: '8px',
@@ -62,42 +62,19 @@ export default {
   setup() {
     const { t } = useI18n()
     const $userStore = UserStore()
+
     const state = reactive({
-      slide: 0,
-      actName: '',
-      userInfo: $userStore.userInfo,
+      userInfo: {} as any,
       currentLevelIndex: 0,
       levelList: [] as any,
     });
 
     onMounted(() => {
-      getLevelList()
-    })
-
-    // 获取会员等级列表
-    const getLevelList = () => {
+      state.userInfo = $userStore.userInfo
       levelIndexAPI().then((res: any) => {
         state.levelList = res
-        if (state.levelList.length > 0) {
-          state.actName = state.levelList[0].name
-        }
-        console.log('会员等级列表', res);
       })
-    }
-
-    // 用户购买会员
-    // const OrderLevel = (name: string, i: any) => {
-    //   state.actName = name
-    //   state.select = i
-    //   if (state.select < $userStore.userInfo.Level) {
-    //     return false
-    //   }
-    //
-    //   levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
-    //     UserInfo()
-    //     console.log(res);
-    //   })
-    // }
+    })
 
     const submitFunc = (level: any) => {
       ConfirmPrompt(t('isExecute'), t('isBuy') + '【' + level.name + '】?', () => {

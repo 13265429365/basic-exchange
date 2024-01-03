@@ -23,26 +23,23 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
 import { InitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils/index';
 import { useI18n } from 'vue-i18n'
 
 // 列表
 export default defineComponent({
-  name: 'languageView',
+  name: 'SettingsLanguageIndex',
   setup() {
     const { locale } = useI18n({ useScope: 'global' })
     const $initStore = InitStore();
-    const $router = useRouter();
-    let state = reactive({
+    const state = reactive({
       languageList: $initStore.languageList as any,
       locale,
     })
 
     const switchLang = async (language: any) => {
       await $initStore.updateUserLang(language.alias)
-      // $router.back()
       setTimeout(() => {
         location.reload()
       }, 200)
