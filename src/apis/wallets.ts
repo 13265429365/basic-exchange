@@ -16,8 +16,8 @@ export const walletsAccountUpdateAPI = (params: any) => {
 };
 
 // 用户获取卡片
-export const walletsAccountIndexAPI = () => {
-  return api.post('/wallets/account/index');
+export const walletsAccountIndexAPI = (params: any) => {
+  return api.post('/wallets/account/index', params);
 };
 
 // 用户获取卡片详情

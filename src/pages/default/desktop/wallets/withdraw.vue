@@ -106,6 +106,7 @@ export default {
     const $initStore = InitStore()
 
     const state = reactive({
+      mode: $router.currentRoute.value.query.mode ?? 0,
       config: $initStore.config,
       showSecurityKey: false,
       userInfo: {} as any,
@@ -123,7 +124,7 @@ export default {
 
     onMounted(() => {
       state.userInfo = $userStore.userInfo
-      walletsAccountIndexAPI().then((res: any) => {
+      walletsAccountIndexAPI({modes: [Number(state.mode)]}).then((res: any) => {
         state.accountList = res
       })
     })
@@ -150,7 +151,13 @@ export default {
       state.showSecurityKey = false
       walletsWithdrawCreateAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        $router.push({ name: 'WalletsIndex' })
+
+        // 如果是余额充值跳转到钱包列表, 资产充值跳转到资产列表
+        if (state.mode == 2) {
+          $router.push({ name: 'WalletsIndex' })
+        } else {
+          $router.push({name: 'WalletsAccountIndex'})
+        }
       })
     }
 
