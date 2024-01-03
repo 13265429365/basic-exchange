@@ -32,8 +32,8 @@
           <q-input style="width: 64%;" :placeholder="$t('telephone')" class="q-mb-lg" outlined dense
             v-model="params.telephone" />
         </div>
-        <q-btn @click="submit" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;" color="primary"
-          :label="$t('submit')" />
+        <q-btn @click="submitFunc" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
+          color="primary" :label="$t('submit')" />
       </div>
     </div>
   </div>
@@ -50,13 +50,13 @@ import { userInfoAPI, updateInfoAPI } from 'src/apis/user';
 
 // 列表
 export default defineComponent({
-  name: 'phoneAuthentication',
+  name: 'SettingsPhoneIndex',
   setup() {
     const $router = useRouter();
     const $initStore = InitStore();
     const $userStore = UserStore();
 
-    let state = reactive({
+    const state = reactive({
       countryList: $initStore.countryList as any,
       countryIndex: 0,
       params: {} as any,
@@ -76,48 +76,22 @@ export default defineComponent({
     }
 
     // 执行接口
-    const submit = () => {
-      console.log(state.countryList[state.countryIndex].code + state.params.telephone);
-
-      let params = {
+    const submitFunc = () => {
+      const params = {
         telephone: state.countryList[state.countryIndex].code + '|' + state.params.telephone,
       }
       updateInfoAPI(params).then((res: any) => {
-        UserInfo()
-        // $router.push({ name: 'UserIndex' })
+        $router.back()
       })
     }
 
     return {
       imageSrc,
       ...toRefs(state),
-      submit,
+      submitFunc,
     }
   }
 })
 </script>
 
-<style scoped>
-:deep .q-select .q-field__control:hover:before {
-  opacity: 0;
-}
-
-:deep .q-select .q-field__prepend {
-  padding-right: 0;
-  color: #8F959E;
-}
-
-:deep .q-select .q-field__append {
-  padding-left: 4px;
-  font-size: 15px;
-  color: #8F959E;
-}
-
-:deep .q-select .q-field__native {
-  display: none;
-}
-
-:deep .q-select .q-field__append .q-icon {
-  display: none;
-}
-</style>
+<style scoped></style>

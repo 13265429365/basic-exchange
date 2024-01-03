@@ -77,7 +77,6 @@ export default {
       helpersInfoAPI().then((res: any) => {
         state.articleList = res.articleList
         state.socialList = res.socialList.splice(0, 3)
-        console.log(res);
       })
     })
 

@@ -26,12 +26,18 @@
       </div>
 
       <div class="row justify-between q-mb-xs btn">
-        <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-          :key="quickMenuIndex" v-show="quickMenu.data.isMobile" style="width: 47%;"
+        <q-btn @click="$router.push({ name: 'WalletsDeposit', query: { mode: 2 } })" style="width: 47%;"
           class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
-            <q-img class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
-            <div>{{ $t(quickMenu.name) }}</div>
+            <q-img class="q-mr-sm" :src="imageSrc('/assets/icon/menu/deposit.png')" width="42px" height="42px" />
+            <div>{{ $t('deposit') }}</div>
+          </div>
+        </q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" style="width: 47%;"
+          class="bg-white q-py-sm rounded-borders" no-caps unelevated>
+          <div class="row justify-start items-center">
+            <q-img class="q-mr-sm" :src="imageSrc('/assets/icon/menu/withdraw.png')" width="42px" height="42px" />
+            <div>{{ $t('withdraw') }}</div>
           </div>
         </q-btn>
       </div>

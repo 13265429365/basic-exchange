@@ -159,7 +159,7 @@ export default defineComponent({
     const $userStore = UserStore()
     const { t } = useI18n();
 
-    let state = reactive({
+    const state = reactive({
       baseURL: process.env.baseURL,
 
       // 初始配置信息

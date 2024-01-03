@@ -7,22 +7,21 @@
             <div class="row items-center">
               <div class="text-body1 text-bold text-white q-mr-xs">{{ $t('totalAssets') }}</div>
               <q-icon color="white" @click="showMoney = !showMoney"
-                      :name="showMoney ? 'o_visibility' : 'o_visibility_off'" class="cursor-pointer"
-                      size="16px"></q-icon>
+                :name="showMoney ? 'o_visibility' : 'o_visibility_off'" class="cursor-pointer" size="16px"></q-icon>
             </div>
           </q-card-section>
           <q-card-section style="padding: 8px 16px">
             <div class="text-white">
-              <div class="text-h6">{{$t('currency')}}{{userAssetsInfo.moneyRateSum.toFixed(2)}}</div>
-              <div class="text-caption">≈{{$t('currency')}}{{userAssetsInfo.moneyRateSum.toFixed(2)}}</div>
+              <div class="text-h6">{{ $t('currency') }}{{ userAssetsInfo.moneyRateSum.toFixed(2) }}</div>
+              <div class="text-caption">≈{{ $t('currency') }}{{ userAssetsInfo.moneyRateSum.toFixed(2) }}</div>
             </div>
           </q-card-section>
           <q-card-actions align="right">
             <q-btn flat rounded class="bg-white text-primary" size="sm" style="padding: 6px 18px">
-              <div>{{$t('deposit')}}</div>
+              <div>{{ $t('deposit') }}</div>
             </q-btn>
             <q-btn flat rounded class="bg-white text-primary" size="sm" style="padding: 6px 18px">
-              <div>{{$t('withdraw')}}</div>
+              <div>{{ $t('withdraw') }}</div>
             </q-btn>
           </q-card-actions>
         </q-card>
@@ -30,26 +29,28 @@
       <div class="col q-ml-sm">
         <q-scroll-area style="height: 162px;width: 100%;" :thumb-style="{ display: 'none' }">
           <div class="row no-wrap q-gutter-sm">
-            <q-card bordered flat style="width: 278px; background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%)"
-            v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex">
+            <q-card bordered flat
+              style="width: 278px; background: linear-gradient(180deg, rgba(3,179,107,0.14) 0%, rgba(255,255,255,0) 100%)"
+              v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex">
               <q-card-section style="padding: 16px 16px 0">
                 <div class="row justify-between items-center">
-                  <div class="text-h6">{{assets.name}}</div>
+                  <div class="text-h6">{{ assets.name }}</div>
                   <div>
-                    <q-icon :name="'img:' +imageSrc(assets.icon)" size="42px"></q-icon>
+                    <q-icon :name="'img:' + imageSrc(assets.icon)" size="42px"></q-icon>
                   </div>
                 </div>
               </q-card-section>
               <q-card-section style="padding: 4px 16px 0">
                 <div class="text-black">
-                  <div class="text-h6">{{$t('currency')}}{{assets.money.toFixed(2)}}</div>
-                  <div class="text-caption text-grey">≈{{$t('currency')}}{{assets.moneyRate.toFixed(2)}}</div>
+                  <div class="text-h6">{{ $t('currency') }}{{ assets.money.toFixed(2) }}</div>
+                  <div class="text-caption text-grey">≈{{ $t('currency') }}{{ assets.moneyRate.toFixed(2) }}</div>
                 </div>
               </q-card-section>
 
               <q-card-actions align="right">
-                <q-btn flat rounded class="bg-green-1 text-primary" size="sm" style="padding: 6px 18px" @click="$router.push({name: 'WalletsAssetsDetails', query: {id: assets.walletAssetsId}})">
-                  <div>{{$t('views')}}</div>
+                <q-btn flat rounded class="bg-green-1 text-primary" size="sm" style="padding: 6px 18px"
+                  @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })">
+                  <div>{{ $t('views') }}</div>
                 </q-btn>
               </q-card-actions>
             </q-card>
@@ -58,12 +59,9 @@
       </div>
     </div>
 
-<!--    折线图-->
+    <!--    折线图-->
     <div class="q-mt-xl">
-      <div
-        :id="echartsDomId"
-        style="height: 400px; width: 100%"
-      ></div>
+      <div :id="echartsDomId" style="height: 400px; width: 100%"></div>
     </div>
 
     <!-- 账单、订单部分 -->
@@ -81,7 +79,10 @@
               <div class="row q-pa-sm" style="max-width: 420px">
                 <div v-for="(billType, billTypeIndex) in billFilterParams.typeList" :key="billTypeIndex" class="col-4">
                   <div class="q-ma-xs">
-                    <q-btn outline rounded :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'" @click="selectBillTypeFunc(billType.value)"  class="full-width ellipsis " :label="billType.label"></q-btn>
+                    <q-btn outline rounded
+                      :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'"
+                      @click="selectBillTypeFunc(billType.value)" class="full-width ellipsis "
+                      :label="billType.label"></q-btn>
                   </div>
                 </div>
               </div>
@@ -115,7 +116,8 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tabTransactions" class="no-padding">
             <div v-for="(order, orderIndex) in dataList" :key="orderIndex" class="q-px-md">
-              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''" :header-style="{ borderRadius: '4px',height: '68px', lineHeight: '54px' }">
+              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''"
+                :header-style="{ borderRadius: '4px', height: '68px', lineHeight: '54px' }">
                 <template v-slot:header>
                   <q-item-section>
                     <div class="col">
@@ -156,7 +158,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -190,7 +192,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -232,7 +234,7 @@ export default defineComponent({
     const echartsDomId = 'echartsId'
     const state = reactive({
       echarts: {} as any,
-      userAssetsInfo: {moneySum: 0, moneyRateSum: 0, userAssetsList: [] as any} as any,
+      userAssetsInfo: { moneySum: 0, moneyRateSum: 0, userAssetsList: [] as any } as any,
       userInfo: {} as any,
       showMoney: true,
       tab: 'tabTransactions',
@@ -264,7 +266,7 @@ export default defineComponent({
       getWalletsOrderList()
 
       // 获取钱包账单Options
-      walletsBillOptionsAPI({type: WalletBillAccountType}).then((res: any) => {
+      walletsBillOptionsAPI({ type: WalletBillAccountType }).then((res: any) => {
         state.billFilterParams.typeList = res
       })
 
@@ -343,7 +345,7 @@ export default defineComponent({
       }
       option = {
         tooltip: { trigger: 'axis' },
-        legend: { data: legendList, bottom: '0'},
+        legend: { data: legendList, bottom: '0' },
         grid: { left: '0', right: '0', bottom: '36px', containLabel: true },
         xAxis: {
           type: 'category',

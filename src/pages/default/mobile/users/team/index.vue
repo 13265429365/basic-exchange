@@ -80,7 +80,6 @@ export default {
     // 获取用户团队详情
     const getTeam = (params: any) => {
       teamIndexAPI(params).then((res: any) => {
-        console.log(res);
         state.teamMembers = res
       })
     }

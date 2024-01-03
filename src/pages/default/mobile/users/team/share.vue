@@ -29,6 +29,7 @@ import { copyToClipboard } from 'quasar';
 import { useI18n } from 'vue-i18n';
 import { inviteInfoAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
+import { NotifyPositive } from 'src/utils/notify';
 import QRCode from 'qrcode-svg-ts';
 
 export default {
@@ -58,7 +59,6 @@ export default {
           ecl: 'M',
         });
         state.inviteImage = qrCode.toDataURL()
-        console.log(res);
       })
     })
 
@@ -66,7 +66,7 @@ export default {
     const copyToClipboardFunc = (str: string) => {
       copyToClipboard(str)
         .then(() => {
-          console.log('复制');
+          NotifyPositive(t('copy'));
 
         })
     };

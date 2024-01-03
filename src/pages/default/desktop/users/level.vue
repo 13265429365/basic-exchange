@@ -11,7 +11,7 @@
     </div>
 
     <div class="column items-center">
-      <q-scroll-area style="height: 440px; width: 80%" :thumb-style="{ height: 0 }">
+      <q-scroll-area style="height: 440px; width: 80%" :thumb-style="{ height: '0' }">
         <div class="row no-wrap q-pt-lg q-gutter-sm">
           <q-card v-for="(level, levelIndex) in levelList" :key="levelIndex" :style="{
             width: '288px', height: '400px', borderRadius: '8px',
@@ -81,7 +81,6 @@ export default {
         if (state.levelList.length > 0) {
           state.actName = state.levelList[0].name
         }
-        console.log('会员等级列表', res);
       })
     }
 
@@ -95,7 +94,6 @@ export default {
     //
     //   levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
     //     UserInfo()
-    //     console.log(res);
     //   })
     // }
 

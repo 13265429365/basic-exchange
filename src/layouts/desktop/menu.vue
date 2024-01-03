@@ -49,7 +49,7 @@ export default defineComponent({
   setup() {
     const $initStore = InitStore()
 
-    let state = reactive({
+    const state = reactive({
       // 项目logo
       config: InitStoreState.config,
 

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <q-list bordered class="q-mb-md border-a-8" style="border:0 !important;overflow: hidden;border-radius: 8px;">
+    <q-list bordered class="q-mb-md" style="border:0 !important;overflow: hidden;border-radius: 8px;">
       <div v-for="(item, i) in settingList" :key="i" class="bg-white">
-        <q-item @click="to(item.route, item.toggle)" v-ripple class="q-pa-md" clickable>
+        <q-item @click="$router.push(item.toggle ?? item.route)" v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
             <q-img width="20px" height="20px" :src="item.icon"></q-img>
           </q-item-section>
@@ -27,16 +27,14 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
-import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'SettingIndex',
   setup(props: any, context: any) {
     const { t } = useI18n();
-    const $router = useRouter();
 
-    let store = reactive({
+    const store = reactive({
       settingList: [
         {
           name: 'personalSetting',
@@ -83,13 +81,6 @@ export default defineComponent({
 
     return {
       ...toRefs(store),
-      // 动态参数跳转
-      to(url: string, toggle: boolean) {
-        if (toggle) {
-          return false
-        }
-        $router.push(url)
-      },
     }
   }
 })

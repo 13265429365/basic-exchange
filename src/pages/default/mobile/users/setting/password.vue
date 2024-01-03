@@ -26,7 +26,7 @@
                 @click="isPwd2 = !isPwd2" />
             </template>
           </q-input>
-          <q-btn @click="submit()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
+          <q-btn @click="submitFunc()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
             color="primary" :label="$t('confirm')" />
         </q-form>
       </div>
@@ -36,19 +36,16 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
-import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { updatePasswordAPI } from 'src/apis/user';
 
-// import { useRouter } from 'vue-router';
 // 列表
 export default defineComponent({
-  name: 'updatePassword',
+  name: 'SettingsPasswordIndex',
   setup(props: any, context: any) {
     const $router = useRouter();
-    const { t } = useI18n();
 
-    let state = reactive({
+    const state = reactive({
       isPwd: false,
       isPwd2: false,
 
@@ -57,21 +54,20 @@ export default defineComponent({
     })
 
     // 执行接口
-    const submit = () => {
-      let params = {
+    const submitFunc = () => {
+      const params = {
         type: 1,
         oldPassword: state.oldPassword,
         newPassword: state.newPassword,
       }
       updatePasswordAPI(params).then((res: any) => {
-        console.log(res);
-        $router.push({ name: 'UserIndex' })
+        $router.back()
       })
     }
 
     return {
       ...toRefs(state),
-      submit,
+      submitFunc,
     }
   }
 })

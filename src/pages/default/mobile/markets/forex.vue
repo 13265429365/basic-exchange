@@ -8,7 +8,7 @@
 import { reactive, toRefs, defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'MarketsForex',
+    name: 'MarketsFore',
     setup() {
         const state = reactive({});
 

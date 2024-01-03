@@ -53,7 +53,6 @@
         <div v-for="(child, childKey) in item.children" :key="childKey" class="bg-white">
           <q-item @click="$router.push(child.route)" class="q-pa-md" clickable>
             <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
-              <!-- <q-img :src="`/images/mobile/info/${child.avatar}`" width="24px" height="24px" /> -->
               <q-img :src="`${imageSrc(child.icon)}`" width="24px" height="24px" />
             </q-item-section>
 

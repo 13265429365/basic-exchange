@@ -90,7 +90,6 @@ export default {
     const getLevelList = () => {
       levelIndexAPI().then((res: any) => {
         state.levelList = res
-        console.log('会员等级列表', res);
       })
     }
 
@@ -102,13 +101,11 @@ export default {
       }
       levelCreateAPI({ id: state.levelList[state.select].id }).then((res: any) => {
         UserInfo()
-        console.log(res);
       })
     }
 
     const UserInfo = () => {
       userInfoAPI().then((res: any) => {
-        console.log('用户信息', res);
         $userStore.updateUserInfo(res)
         localStorage.setItem(UserInfoKey, JSON.stringify(res))
         $router.push({ name: 'UserIndex' })

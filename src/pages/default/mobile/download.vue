@@ -44,7 +44,6 @@ export default {
       // 获取下载地址
       downloadInfoAPI().then((res: any) => {
         state.downloadUrl = res
-        console.log(res);
       })
     })
 

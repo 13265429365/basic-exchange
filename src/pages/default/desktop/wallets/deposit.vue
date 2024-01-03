@@ -15,14 +15,14 @@
         <div class="row q-mt-md q-gutter-md">
           <template v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex">
             <div v-for="(children, childrenIndex) in payment.items" :key="childrenIndex" :style="{
-            width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
-            border: children.id == currentPaymentInfo.id ? '1px solid #01AC66' : '',
-          }" class="q-pa-sm row justify-center cursor-pointer relative-position"
-                 @click="switchPaymentFunc(children)">
+              width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+              border: children.id == currentPaymentInfo.id ? '1px solid #01AC66' : '',
+            }" class="q-pa-sm row justify-center cursor-pointer relative-position"
+              @click="switchPaymentFunc(children)">
               <q-img class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
               <div class="self-center">{{ children.name }}</div>
               <q-img v-if="children.id == currentPaymentInfo.id" class="absolute" src="/images/select.png" width="30PX"
-                     height="30px" style="bottom: 0;right: 0;"></q-img>
+                height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </template>
         </div>
@@ -43,7 +43,8 @@
               <div class="q-mt-md" style="width: 310px">
                 <q-input outlined dense v-model="currentPaymentInfo.dataJson.number" readonly>
                   <template v-slot:append>
-                    <q-icon name="content_copy" class="cursor-pointer" size="xs" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-icon>
+                    <q-icon name="content_copy" class="cursor-pointer" size="xs"
+                      @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-icon>
                   </template>
                 </q-input>
               </div>
@@ -53,34 +54,38 @@
           <div v-else-if="currentPaymentInfo.type == paymentTypeDebitCard" class="q-ma-md">
             <div class="row justify-between items-center">
               <div class="text-grey">
-                {{currentPaymentInfo.dataJson.name}}
+                {{ currentPaymentInfo.dataJson.name }}
               </div>
               <div>
-                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.name)"></q-btn>
+                <q-btn flat :label="$t('copy')" color="primary"
+                  @click="copyToClipboardFunc(currentPaymentInfo.dataJson.name)"></q-btn>
               </div>
             </div>
             <div class="row justify-between items-center">
               <div class="text-grey">
-                {{currentPaymentInfo.dataJson.realName}}
+                {{ currentPaymentInfo.dataJson.realName }}
               </div>
               <div>
-                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.realName)"></q-btn>
+                <q-btn flat :label="$t('copy')" color="primary"
+                  @click="copyToClipboardFunc(currentPaymentInfo.dataJson.realName)"></q-btn>
               </div>
             </div>
             <div class="row justify-between items-center">
               <div class="text-grey">
-                {{currentPaymentInfo.dataJson.number}}
+                {{ currentPaymentInfo.dataJson.number }}
               </div>
               <div>
-                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-btn>
+                <q-btn flat :label="$t('copy')" color="primary"
+                  @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-btn>
               </div>
             </div>
             <div class="row justify-between items-center">
               <div class="text-grey">
-                {{currentPaymentInfo.dataJson.code}}
+                {{ currentPaymentInfo.dataJson.code }}
               </div>
               <div>
-                <q-btn flat :label="$t('copy')" color="primary" @click="copyToClipboardFunc(currentPaymentInfo.dataJson.code)"></q-btn>
+                <q-btn flat :label="$t('copy')" color="primary"
+                  @click="copyToClipboardFunc(currentPaymentInfo.dataJson.code)"></q-btn>
               </div>
             </div>
           </div>
@@ -90,14 +95,14 @@
         <div class="column q-gutter-md q-mt-lg" style="width: 60%;">
           <div>
             <div class="q-mb-sm">{{ $t('depositAmount') }}</div>
-            <q-input type="number" outlined v-model="params.money" :placeholder="$t('depositAmount')"  />
+            <q-input type="number" outlined v-model="params.money" :placeholder="$t('depositAmount')" />
           </div>
 
           <div class="q-mb-xl">
             <div class="q-mb-xs">
               {{ $t('depositProof') }}
             </div>
-            <div style="width: 150px;">
+            <div style="width: 170px;">
               <uploader @uploaded="(url) => { params.voucher = url }">
                 <template v-slot:default>
                   <q-uploader-add-trigger />
@@ -112,7 +117,7 @@
             </div>
           </div>
 
-          <div>
+          <div class="text-grey">
             <div v-html="config.depositTips"></div>
           </div>
 
@@ -139,7 +144,7 @@ import QRCode from 'qrcode-svg-ts';
 import { copyToClipboard } from 'quasar';
 
 export default {
-  name: 'rechargeIndex',
+  name: 'depositIndex',
   components: { uploader },
   setup() {
     const { t } = useI18n()

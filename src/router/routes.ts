@@ -24,7 +24,7 @@ export const dynamicRouterFunc = (
         name: item.name,
         component:
           componentPathList[
-            isMobile ? item.componentMobile : item.componentDesktop
+          isMobile ? item.componentMobile : item.componentDesktop
           ],
         meta: item.meta,
       });
@@ -39,7 +39,6 @@ export const dynamicRouterFunc = (
       }
     });
   }
-  // console.log(parent);
 };
 
 const routes: RouteRecordRaw[] = [
