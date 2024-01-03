@@ -17,10 +17,12 @@
             </div>
           </q-card-section>
           <q-card-actions align="right">
-            <q-btn flat rounded class="bg-white text-primary" size="sm" style="padding: 6px 18px">
+            <q-btn @click="$router.push({ name: 'WalletsDeposit', query: { mode: 2 } })" flat rounded
+              class="bg-white text-primary" size="sm" style="padding: 6px 18px">
               <div>{{ $t('deposit') }}</div>
             </q-btn>
-            <q-btn flat rounded class="bg-white text-primary" size="sm" style="padding: 6px 18px">
+            <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" flat rounded
+              class="bg-white text-primary" size="sm" style="padding: 6px 18px">
               <div>{{ $t('withdraw') }}</div>
             </q-btn>
           </q-card-actions>

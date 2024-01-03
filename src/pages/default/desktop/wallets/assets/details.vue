@@ -2,19 +2,19 @@
   <div style="padding: 48px 100px;">
     <!-- 钱包余额 -->
     <div class="row items-center justify-between rounded-borders q-pa-lg q-pr-xl"
-         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
+      style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
       <div class="row">
         <q-img no-spinner class="q-mr-lg" :src="imageSrc(userAssetsInfo.icon)" width="66px" height="66px"></q-img>
         <div class="q-pt-sm">
           <div class="row items-center">
             <div class="text-white text-body1 text-bold q-mr-xs">{{ userAssetsInfo.name }}</div>
             <q-icon @click="showMoney = !showMoney" class="cursor-pointer" color="white" size="16px"
-                    :name="showMoney ? 'o_visibility' : 'o_visibility_off'"></q-icon>
+              :name="showMoney ? 'o_visibility' : 'o_visibility_off'"></q-icon>
           </div>
           <div class="text-body2 text-white q-mt-sm">
             <div v-if="showMoney" class="row items-center">
               <div>{{ $t('currency') }}{{ Number(userAssetsInfo.money).toFixed(2) }}</div>
-              <div class="text-caption q-ml-xs">≈{{$t('currency')}}{{Number(userAssetsInfo.moneyRate).toFixed(2)}}</div>
+              <div class="text-caption q-ml-xs">≈{{ $t('currency') }}{{ Number(userAssetsInfo.moneyRate).toFixed(2) }}</div>
             </div>
             <div v-else>
               ******
@@ -25,10 +25,10 @@
 
       <!-- 充值、提现 -->
       <div class="row">
-        <q-btn @click="$router.push({ name: 'WalletsDeposit' })" unelevated class="text-primary bg-white" rounded no-caps
-               style="width: 80px" :label="$t('deposit')"></q-btn>
-        <q-btn @click="$router.push({ name: 'WalletsWithdraw' })" unelevated class="text-primary bg-white q-ml-md" rounded
-               style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsDeposit', query: { mode: 2 } })" unelevated
+          class="text-primary bg-white" rounded no-caps style="width: 80px" :label="$t('deposit')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" unelevated
+          class="text-primary bg-white q-ml-md" rounded style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
       </div>
     </div>
 
@@ -48,7 +48,10 @@
               <div class="row q-pa-sm" style="max-width: 420px">
                 <div v-for="(billType, billTypeIndex) in billFilterParams.typeList" :key="billTypeIndex" class="col-4">
                   <div class="q-ma-xs">
-                    <q-btn outline rounded :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'" @click="selectBillTypeFunc(billType.value)"  class="full-width ellipsis " :label="billType.label"></q-btn>
+                    <q-btn outline rounded
+                      :class="params.types.indexOf(billType.value) > -1 ? 'bg-primary text-white' : 'text-grey'"
+                      @click="selectBillTypeFunc(billType.value)" class="full-width ellipsis "
+                      :label="billType.label"></q-btn>
                   </div>
                 </div>
               </div>
@@ -82,7 +85,8 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tabTransactions" class="no-padding">
             <div v-for="(order, orderIndex) in dataList" :key="orderIndex" class="q-px-md">
-              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''" :header-style="{ borderRadius: '4px',height: '68px', lineHeight: '54px' }">
+              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''"
+                :header-style="{ borderRadius: '4px', height: '68px', lineHeight: '54px' }">
                 <template v-slot:header>
                   <q-item-section>
                     <div class="col">
@@ -123,7 +127,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -157,7 +161,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -233,12 +237,12 @@ export default defineComponent({
       getWalletsOrderList()
 
       // 获取钱包账单Options
-      walletsBillOptionsAPI({type: WalletBillAccountType}).then((res: any) => {
+      walletsBillOptionsAPI({ type: WalletBillAccountType }).then((res: any) => {
         state.billFilterParams.typeList = res
       })
 
       // 请求用户资产信息
-      walletsUserAssetsInfoAPI({assetsId: state.params.assetsId}).then((res: any) => {
+      walletsUserAssetsInfoAPI({ assetsId: state.params.assetsId }).then((res: any) => {
         state.userAssetsInfo = res
       })
     })
