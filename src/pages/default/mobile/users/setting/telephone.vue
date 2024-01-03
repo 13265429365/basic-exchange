@@ -40,18 +40,23 @@
 </template>
 
 <script lang="ts">
-import { LocalStorage } from 'quasar';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import { useRouter } from 'vue-router';
-import { UserStore, UserInfoKey } from 'src/stores/user';
+import { UserStore } from 'src/stores/user';
 import { userInfoAPI, updateInfoAPI } from 'src/apis/user';
+import { useI18n } from 'vue-i18n';
 
 // 列表
 export default defineComponent({
   name: 'SettingsPhoneIndex',
-  setup() {
+  setup(props: any, context: any) {
+    const { t } = useI18n();
+    context.emit('update', {
+      title: t('telephone'),
+    })
+
     const $router = useRouter();
     const $initStore = InitStore();
     const $userStore = UserStore();
@@ -71,7 +76,6 @@ export default defineComponent({
       userInfoAPI().then((res: any) => {
         state.params.telephone = res.telephone.split('|')[1]
         $userStore.updateUserInfo(res)
-        LocalStorage.set(UserInfoKey, JSON.stringify(res))
       })
     }
 
@@ -80,7 +84,7 @@ export default defineComponent({
       const params = {
         telephone: state.countryList[state.countryIndex].code + '|' + state.params.telephone,
       }
-      updateInfoAPI(params).then((res: any) => {
+      updateInfoAPI(params).then(() => {
         $router.back()
       })
     }

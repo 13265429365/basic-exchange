@@ -6,8 +6,14 @@
           <q-img class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
         </div>
         <div class="text-h6 text-weight-bold q-mt-md">{{ config.name }}</div>
-        <q-btn unelevated rounded color="primary" :label="$t('download')" class="q-mt-lg"
-          style="width: 269px;height: 44px" no-caps />
+        <div class="q-mt-xl full-width">
+          <div class="row no-wrap justify-center">
+            <img style="width: 120px;" class="cursor-pointer q-mx-sm" src="/images/ios.svg" alt=""
+              @click="downloadFunc(downloadInfo.ios)">
+            <img style="width: 120px;" class="cursor-pointer q-mx-sm" src="/images/android.svg" alt=""
+              @click="downloadFunc(downloadInfo.android)">
+          </div>
+        </div>
       </div>
 
     </div>
@@ -27,30 +33,36 @@ export default {
   name: 'DownloadIndex',
   setup(props: any, context: any) {
     const { t } = useI18n();
-    const $initStore = InitStore();
-
-    const state = reactive({
-      config: $initStore.config,
-
-      // 获取下载地址
-      downloadUrl: {} as any,
-    });
-
     context.emit('update', {
       title: t('download'),
     })
 
+    const $initStore = InitStore();
+
+    const state = reactive({
+      config: $initStore.config,
+      downloadInfo: {} as any,
+    });
+
     onMounted(() => {
-      // 获取下载地址
       downloadInfoAPI().then((res: any) => {
-        state.downloadUrl = res
+        state.downloadInfo = res
       })
     })
+
+    // 下载方法
+    const downloadFunc = (url: string) => {
+      if (url == '') {
+        return
+      }
+      window.location.href = imageSrc(url)
+    }
 
     return {
       imageSrc,
       date,
       ...toRefs(state),
+      downloadFunc,
     }
   }
 };

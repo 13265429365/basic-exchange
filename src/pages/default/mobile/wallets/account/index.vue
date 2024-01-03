@@ -86,6 +86,10 @@ export default defineComponent({
   emits: ['update'],
   setup(props: any, context: any) {
     const { t } = useI18n(); // 获取t函数进行翻译
+    context.emit('update', {
+      title: t('accountManage')
+    })
+
     const $initStore = InitStore()
 
     const state = reactive({
@@ -99,10 +103,6 @@ export default defineComponent({
         [11, { background: 'linear-gradient(90deg, #7474BF 0%, #348AC7 100%)', width: '100%', height: '132px', borderRadius: '8px' }]
       ])
     });
-
-    context.emit('update', {
-      title: t('accountManage')
-    })
 
     onMounted(() => {
       getWalletsAccount()
@@ -129,7 +129,7 @@ export default defineComponent({
     }
 
     const getWalletsAccount = () => {
-      walletsAccountIndexAPI().then((res: any) => {
+      walletsAccountIndexAPI({ modes: [11, 12] }).then((res: any) => {
         state.accountList = res
       })
     }

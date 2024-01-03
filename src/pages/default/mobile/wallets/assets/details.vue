@@ -95,9 +95,19 @@ import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'WalletsAssetsDetails',
   setup(props: any, context: any) {
+    const { t } = useI18n()
+    context.emit('update', {
+      title: t('myAssets'),
+      rightBtn: {
+        icon: 'o_event_note',
+        callback() {
+          $router.push({ name: 'WalletsAccountDetails', query: { type: 'assets' } })
+        },
+      },
+    })
+
     const $initStore = InitStore()
     const $router = useRouter()
-    const { t } = useI18n()
     const WalletOrderTypeDeposit = 101
     const WalletOrderTypeWithdraw = 111
     const initPagination = {
@@ -122,16 +132,6 @@ export default defineComponent({
       // 账单
       orderList: [] as any,
     });
-
-    context.emit('update', {
-      title: t('myAssets'),
-      rightBtn: {
-        icon: 'o_event_note',
-        callback() {
-          $router.push({ name: 'WalletsAccountDetails', query: { type: 'assets' } })
-        },
-      },
-    })
 
     onMounted(() => {
       // 获取钱包订单

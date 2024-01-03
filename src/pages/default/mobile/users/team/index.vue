@@ -68,9 +68,13 @@ import { useRouter } from 'vue-router';
 export default {
   name: 'TeamIndex',
   setup(props: any, context: any) {
+    const { t } = useI18n();
+    context.emit('update', {
+      title: t('myTeam'),
+    })
+
     const $userStore = UserStore();
     const $router = useRouter();
-    const { t } = useI18n();
 
     const state = reactive({
       currentUserId: $router.currentRoute.value.query.id ?? 0,
@@ -79,15 +83,10 @@ export default {
       } as any,
     });
 
-    context.emit('update', {
-      title: t('myTeam'),
-    })
-
     onMounted(() => {
       if (state.currentUserId == 0) {
         state.currentUserId = $userStore.userInfo.id
       }
-
       teamIndexAPI({ id: Number(state.currentUserId) }).then((res: any) => {
         state.currentTeamInfo = res
       })

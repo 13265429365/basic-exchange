@@ -19,7 +19,7 @@
             </q-avatar>
           </div>
           <div v-else-if="setting.type == 'datePicker'">
-            {{ date.formatDate(setting.value * 1000, 'YYYY/MM/DD') }}
+            {{ typeof (setting.value) == 'string' ? setting.value : date.formatDate(setting.value * 1000, 'YYYY/MM/DD') }}
           </div>
           <div v-else class="text-body2">
             <div v-if="setting.params == 'sex'">
@@ -65,7 +65,7 @@
               option-label="name" map-options emit-value dropdown-icon="expand_more" />
           </div>
 
-          <div v-else-if="currentSetting.params == 'birthday'">
+          <div v-else-if="currentSetting.params == 'birthdayStr'">
             <q-input outlined dense v-model="params[currentSetting.params]" :label="$t(currentSetting.name)" mask="date">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
@@ -210,18 +210,20 @@ export default defineComponent({
         { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: '' },
         { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: userInfo.telephone },
         { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: userInfo.sex },
-        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: userInfo.birthday },
+        { name: 'birthday', params: 'birthdayStr', type: 'datePicker', desc: 'birthdaySmall', value: userInfo.birthday },
         { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: userInfo.desc },
       ]
     })
 
     // 打开弹窗
     const openUpdateDialog = (setting: any) => {
+      console.log(setting);
+
       state.dialogShow = true
       state.currentSetting = setting
       state.params = {}
       state.params[state.currentSetting.params] = state.currentSetting.value
-      if (state.currentSetting.params == 'birthday') {
+      if (state.currentSetting.params == 'birthdayStr') {
         state.params[state.currentSetting.params] = ''
       }
       // 如果是手机, 那么默认选中
@@ -252,10 +254,10 @@ export default defineComponent({
       }
 
       // 更新其他参数
-      if (state.currentSetting.params == 'birthday') {
-        state.currentSetting.value = Number(date.formatDate(state.params['birthday'], 'X'))
-        state.params['birthday'] = state.currentSetting.value
-      }
+      // if (state.currentSetting.params == 'birthdayStr') {
+      //   state.currentSetting.value = Number(date.formatDate(state.params['birthday'], 'X'))
+      //   state.params['birthday'] = state.currentSetting.value
+      // }
       // 更新手机号码
       if (state.currentSetting.params == 'telephone') {
         state.params['telephone'] = state.countryList[state.currentCountryIndex].code + '|' + state.params['telephone']
@@ -263,9 +265,7 @@ export default defineComponent({
       updateInfoAPI(state.params).then(() => {
         updateUserInfo()
         state.dialogShow = false
-        if (state.currentSetting.params != 'birthday') {
-          state.currentSetting.value = state.params[state.currentSetting.params]
-        }
+        state.currentSetting.value = state.params[state.currentSetting.params]
 
         NotifyPositive(t('submittedSuccess'))
       })

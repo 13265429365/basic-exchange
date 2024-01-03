@@ -33,6 +33,9 @@ export default defineComponent({
   name: 'SettingIndex',
   setup(props: any, context: any) {
     const { t } = useI18n();
+    context.emit('update', {
+      title: t('settings'),
+    })
 
     const store = reactive({
       settingList: [
@@ -65,18 +68,8 @@ export default defineComponent({
           icon: '/images/icons/message.png',
           toggle: true
         },
-        // {
-        //   name: 'About',
-        //   icon: 'settings/about.png',
-        //   route: 'about',
-        //   version: 'V1.1.1',
-        // }
       ] as any,
       toggle: false
-    })
-
-    context.emit('update', {
-      title: t('settings'),
     })
 
     return {

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class="row justify-center q-mt-lg">
-      <div class="text-h6 text-weight-bold">{{ $t('bindEmail') }}</div>
-    </div>
     <div class="q-mt-lg q-px-lg">
       <q-form>
         <q-input class="q-mb-md" v-model="params.email" :placeholder="$t('email')" outlined dense type="text" />
@@ -16,13 +13,20 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { UserStore, UserInfoKey } from 'src/stores/user';
+import { UserStore } from 'src/stores/user';
 import { userInfoAPI, updateInfoAPI } from 'src/apis/user';
+import { useI18n } from 'vue-i18n';
 
 // 列表
 export default defineComponent({
   name: 'SettingsEmailIndex',
+  emits: ['update'],
   setup(props: any, context: any) {
+    const { t } = useI18n();
+    context.emit('update', {
+      title: t('bindEmail'),
+    })
+
     const $router = useRouter();
     const $userStore = UserStore();
 
@@ -39,7 +43,6 @@ export default defineComponent({
       userInfoAPI().then((res: any) => {
         state.params = res
         $userStore.updateUserInfo(res)
-        localStorage.setItem(UserInfoKey, JSON.stringify(res))
       })
     }
 

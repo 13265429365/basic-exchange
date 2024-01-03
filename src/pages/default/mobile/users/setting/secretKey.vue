@@ -1,9 +1,6 @@
 <template>
   <div>
     <div>
-      <div class="row justify-center q-mt-lg">
-        <div class="text-h6 text-weight-bold">{{ $t('updateSecretKey') }}</div>
-      </div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
           <q-input class="q-mb-md" v-model="oldPassword" outlined dense :type="isPwd ? 'password' : 'text'"
@@ -38,11 +35,17 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router'
 import { updatePasswordAPI } from 'src/apis/user';
+import { useI18n } from 'vue-i18n';
 
 // 列表
 export default defineComponent({
   name: 'EditSecretKey',
   setup(props: any, context: any) {
+    const { t } = useI18n();
+    context.emit('update', {
+      title: t('updateSecretKey'),
+    })
+
     const $router = useRouter();
 
     const state = reactive({
@@ -60,7 +63,7 @@ export default defineComponent({
         oldPassword: state.oldPassword,
         newPassword: state.newPassword,
       }
-      updatePasswordAPI(params).then((res: any) => {
+      updatePasswordAPI(params).then(() => {
         $router.back()
       })
     }

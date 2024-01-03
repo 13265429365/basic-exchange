@@ -112,13 +112,16 @@ import { walletsPaymentIndexAPI, walletsAccountCreateAPI, walletsAccountUpdateAP
 import { NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'stores/init';
 
-
 export default {
   name: 'WalletsAccountUpdate',
   setup(props: any, context: any) {
+    const { t } = useI18n()
+    context.emit('update', {
+      title: t('accountManage')
+    })
+
     const $router = useRouter()
     const $initStore = InitStore()
-    const { t } = useI18n()
 
     const state = reactive({
       walletSetting: $initStore.config.settings.wallets,
@@ -137,10 +140,6 @@ export default {
         securityKey: '',
       } as any
     });
-
-    context.emit('update', {
-      title: t('accountManage')
-    })
 
     // 如果编辑卡片就要获取卡片详情
     onMounted(async () => {

@@ -24,13 +24,18 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { InitStore } from 'src/stores/init';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { useI18n } from 'vue-i18n'
 
 // 列表
 export default defineComponent({
   name: 'SettingsLanguageIndex',
-  setup() {
+  setup(props: any, context: any) {
+    const { t } = useI18n();
+    context.emit('update', {
+      title: t('language'),
+    })
+
     const { locale } = useI18n({ useScope: 'global' })
     const $initStore = InitStore();
     const state = reactive({

@@ -66,16 +66,16 @@ export default defineComponent({
   components: { uploader },
   setup(props: any, context: any) {
     const { t } = useI18n();
+    context.emit('update', {
+      title: t('realAuth'),
+    })
+
     const $userStore = UserStore()
 
     const state = reactive({
       authStatus: { pending: 10, complete: 20, refuse: -1, start: 0 },
       params: {} as any,
     });
-
-    context.emit('update', {
-      title: t('realAuth'),
-    })
 
     onMounted(() => {
       realAuthInfoAPI().then((res: any) => {

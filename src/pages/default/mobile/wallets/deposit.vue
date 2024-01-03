@@ -137,6 +137,10 @@ export default {
   components: { uploader },
   setup(props: any, context: any) {
     const { t } = useI18n()
+    context.emit('update', {
+      title: t('deposit')
+    })
+
     const $router = useRouter()
     const $initStore = InitStore()
     const paymentTypeDigital = 11
@@ -152,10 +156,6 @@ export default {
       config: $initStore.config,
       currentPaymentInfo: {} as any,
     });
-
-    context.emit('update', {
-      title: t('deposit')
-    })
 
     onMounted(() => {
       walletsPaymentIndexAPI({ modes: [state.mode] }).then((res: any) => {

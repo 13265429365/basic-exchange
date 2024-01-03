@@ -2,7 +2,7 @@
   <div>
     <div>
       <div class="row justify-center q-py-lg">
-        <div class="relative">
+        <div class="relative-position">
           <uploader @uploaded="(url) => { params.avatar = url }">
             <template v-slot:default>
               <q-uploader-add-trigger />
@@ -64,9 +64,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, onMounted } from 'vue';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { userInfoAPI, updateInfoAPI } from 'src/apis/user';
-import { UserStore, UserInfoKey } from 'src/stores/user';
+import { UserStore } from 'src/stores/user';
 import uploader from 'src/components/uploader.vue';
 import { date } from 'quasar';
 import { useI18n } from 'vue-i18n'
@@ -80,6 +80,10 @@ export default defineComponent({
   },
   setup(props: any, context: any) {
     const { t } = useI18n();
+    context.emit('update', {
+      title: t('settings'),
+    })
+
     const $userStore = UserStore();
     const $router = useRouter();
 
@@ -87,15 +91,12 @@ export default defineComponent({
       params: {} as any,
       genderIndex: 0,
       GenderList: [
+        { name: 'unknown' },
         { name: 'male' },
         { name: 'female' },
       ],
       //date选择器状态
       birthdayPopup: false,
-    })
-
-    context.emit('update', {
-      title: t('settings'),
     })
 
     onMounted(() => {
@@ -106,23 +107,21 @@ export default defineComponent({
     const UserInfo = () => {
       userInfoAPI().then((res: any) => {
         state.params = res
-        if (res.sex != 0) {
-          state.genderIndex = res.sex - 1
-        }
+        state.genderIndex = res.sex
         state.params.birthday = date.formatDate(state.params.birthday * 1000, 'YYYY/MM/DD')
         $userStore.updateUserInfo(res)
-        localStorage.setItem(UserInfoKey, JSON.stringify(res))
       })
     }
 
     // 执行接口
     const submitFunc = () => {
       const params = {
-        sex: state.genderIndex + 1,
+        avatar: state.params.avatar,
+        sex: state.genderIndex,
         nickname: state.params.nickname,
-        birthday: Number(date.formatDate(state.params.birthday, 'X')),
+        birthdayStr: date.formatDate(state.params.birthday, 'YYYY/MM/DD'),
       }
-      updateInfoAPI(params).then((res: any) => {
+      updateInfoAPI(params).then(() => {
         UserInfo()
         $router.back()
       })
@@ -139,15 +138,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.relative {
-  position: relative;
-}
-
-
-:deep(.q-btn-dropdown) {
-
-  .q-btn__content {
-    justify-content: space-between;
-  }
+:deep(.q-btn-dropdown .q-btn__content) {
+  justify-content: space-between;
 }
 </style>

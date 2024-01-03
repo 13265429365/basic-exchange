@@ -188,7 +188,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
         route: '/settings/bind/phone',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
-          'users/setting/phone.vue'
+          'users/setting/telephone.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
         children: [],

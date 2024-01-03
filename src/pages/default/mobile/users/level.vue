@@ -65,6 +65,10 @@ export default {
   name: 'UserLevel',
   setup(props: any, context: any) {
     const { t } = useI18n()
+    context.emit('update', {
+      title: t('memberVip'),
+    })
+
     const $userStore = UserStore()
 
     const state = reactive({
@@ -72,10 +76,6 @@ export default {
       userInfo: {} as any,
       levelList: [] as any,
     });
-
-    context.emit('update', {
-      title: t('memberVip'),
-    })
 
     onMounted(() => {
       state.userInfo = $userStore.userInfo

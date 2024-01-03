@@ -99,9 +99,14 @@ import { date } from 'quasar';
 export default defineComponent({
   name: 'TeamEarnings',
   setup(props: any, context: any) {
+    const { t } = useI18n();
+    context.emit('update', {
+      title: t('teamEarnings'),
+    })
+
     const $userStore = UserStore();
     const $route = useRoute();
-    const { t } = useI18n();
+
 
     const state = reactive({
       currentUserId: $route.query.id ?? 0,
@@ -111,9 +116,6 @@ export default defineComponent({
       } as any,
     });
 
-    context.emit('update', {
-      title: t('teamEarnings'),
-    })
 
     onMounted(() => {
       if (state.currentUserId == 0) {

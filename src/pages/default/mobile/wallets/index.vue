@@ -88,10 +88,20 @@ import { useRouter } from 'vue-router';
 export default defineComponent({
   name: 'WalletsIndex',
   setup(props: any, context: any) {
+    const { t } = useI18n()
+    context.emit('update', {
+      title: t('myWallet'),
+      rightBtn: {
+        icon: 'o_event_note',
+        callback() {
+          $router.push({ name: 'WalletsAccountDetails' })
+        },
+      },
+    })
+
     const $initStore = InitStore()
     const $userStore = UserStore()
     const $router = useRouter()
-    const { t } = useI18n()
     const WalletOrderTypeDeposit = 1
     const WalletOrderTypeWithdraw = 11
     const initPagination = {
@@ -115,16 +125,6 @@ export default defineComponent({
       // 账单
       orderList: [] as any,
     });
-
-    context.emit('update', {
-      title: t('myWallet'),
-      rightBtn: {
-        icon: 'o_event_note',
-        callback() {
-          $router.push({ name: 'WalletsAccountDetails' })
-        },
-      },
-    })
 
     onMounted(() => {
       state.userInfo = $userStore.userInfo

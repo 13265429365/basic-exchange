@@ -123,6 +123,10 @@ export default defineComponent({
   name: 'WalletsAssetsIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
+    context.emit('update', {
+      title: t('myAssets'),
+    })
+
     const $initStore = InitStore()
     const echartsLineId = 'line'
     const echartsPieId = 'pie'
@@ -155,10 +159,6 @@ export default defineComponent({
 
       myChart: '' as any,
     });
-
-    context.emit('update', {
-      title: t('myAssets'),
-    })
 
     onMounted(() => {
       // 获取用户资产列表
@@ -198,7 +198,7 @@ export default defineComponent({
       // 饼状图
       state.myChart.setOption(state.pieOption = {
         title: {
-          text: '总资产',
+          text: t('totalAssets'),
           subtext: state.percentage,
           left: 'center', // 标题居中
           top: '35%',

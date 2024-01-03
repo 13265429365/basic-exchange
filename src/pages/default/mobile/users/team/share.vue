@@ -36,15 +36,14 @@ export default {
   name: 'TeamShareIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
+    context.emit('update', {
+      title: t('inviteFriends'),
+    })
 
     const state = reactive({
       inviteUrl: '',
       inviteImage: '',
     });
-
-    context.emit('update', {
-      title: t('inviteFriends'),
-    })
 
     onMounted(() => {
       inviteInfoAPI().then((res: any) => {

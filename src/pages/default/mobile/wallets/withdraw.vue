@@ -73,7 +73,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
-import { imageSrc } from 'src/utils/index';
+import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
@@ -84,6 +84,10 @@ export default {
   name: 'WalletsWithdrawIndex',
   setup(props: any, context: any) {
     const { t } = useI18n()
+    context.emit('update', {
+      title: t('withdraw'),
+    })
+
     const $router = useRouter()
     const $userStore = UserStore()
     const $initStore = InitStore()
@@ -104,10 +108,6 @@ export default {
       // 银行卡列表
       accountList: [] as any,
     });
-
-    context.emit('update', {
-      title: t('withdraw'),
-    })
 
     onMounted(() => {
       state.userInfo = $userStore.userInfo

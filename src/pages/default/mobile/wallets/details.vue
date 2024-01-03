@@ -106,6 +106,17 @@ export default defineComponent({
     emits: ['update'],
     setup(props: any, context: any) {
         const { t } = useI18n()
+        context.emit('update', {
+            title: t('myWallet'),
+            rightBtn: {
+                icon: t('filter'),
+                size: true,
+                callback() {
+                    state.billSelectDialog = true
+                },
+            },
+        })
+
         const $route = useRoute()
         const WalletBillAccountType = -1
         const WalletBillAssetsType = -2
@@ -135,17 +146,6 @@ export default defineComponent({
             // 筛选账单弹窗
             billSelectDialog: false,
         });
-
-        context.emit('update', {
-            title: t('myWallet'),
-            rightBtn: {
-                icon: '筛选',
-                size: true,
-                callback() {
-                    state.billSelectDialog = true
-                },
-            },
-        })
 
         onMounted(() => {
             getWalletsBillList()
