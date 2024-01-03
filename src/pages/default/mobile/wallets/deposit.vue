@@ -177,7 +177,13 @@ export default {
       state.params.money = Number(state.params.money)
       walletsDepositCreateAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        $router.push({ name: 'WalletsIndex' })
+
+        // 如果是余额充值跳转到钱包列表, 资产充值跳转到资产列表
+        if (state.mode == 1) {
+          $router.push({ name: 'WalletsIndex' })
+        } else {
+          $router.push({ name: 'WalletsAssetsIndex' })
+        }
       })
     }
 

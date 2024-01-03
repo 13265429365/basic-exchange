@@ -4,7 +4,7 @@
       {{ $t('notBindWithdrawAccount') }}
       <template v-slot:action>
         <q-btn @click="$router.push({ name: 'WalletsAccountIndex' })" flat no-caps color="white"
-          :label="$t('goto')+$t('accountManage')" />
+          :label="$t('goto') + $t('accountManage')" />
       </template>
     </q-banner>
 
@@ -28,7 +28,8 @@
             border: accountIndex == ActiveAccountIndex ? '1px solid #01AC66' : '',
           }" class="row cursor-pointer items-center relative-position">
             <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
-            <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName }}({{account.number.slice(-4)}})</div>
+            <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName
+            }}({{ account.number.slice(-4) }})</div>
             <q-img v-if="accountIndex == ActiveAccountIndex" class="absolute" src="/images/select.png" width="30PX"
               height="30px" style="bottom: 0;right: 0;"></q-img>
           </div>
@@ -48,7 +49,8 @@
           <div>
             <div class="q-mb-xs text-grey">{{ $t('withdrawAmount') }}</div>
             <div>
-              <q-input class="q-mr-sm" type="number" outlined v-model.number="params.money" :placeholder="$t('withdrawAmount')">
+              <q-input class="q-mr-sm" type="number" outlined v-model.number="params.money"
+                :placeholder="$t('withdrawAmount')">
                 <template v-slot:append>
                   <q-btn flat dense :label="$t('all')" color="primary" @click="params.money = userInfo.money"></q-btn>
                 </template>
@@ -106,7 +108,7 @@ export default {
     const $initStore = InitStore()
 
     const state = reactive({
-      mode: $router.currentRoute.value.query.mode ?? 0,
+      mode: $router.currentRoute.value.query.mode ? Number($router.currentRoute.value.query.mode) : 0,
       config: $initStore.config,
       showSecurityKey: false,
       userInfo: {} as any,
@@ -124,7 +126,7 @@ export default {
 
     onMounted(() => {
       state.userInfo = $userStore.userInfo
-      walletsAccountIndexAPI({modes: [Number(state.mode)]}).then((res: any) => {
+      walletsAccountIndexAPI({ modes: [Number(state.mode)] }).then((res: any) => {
         state.accountList = res
       })
     })
@@ -153,10 +155,10 @@ export default {
         NotifyPositive(t('submittedSuccess'))
 
         // 如果是余额充值跳转到钱包列表, 资产充值跳转到资产列表
-        if (state.mode == 2) {
+        if (state.mode == 11) {
           $router.push({ name: 'WalletsIndex' })
         } else {
-          $router.push({name: 'WalletsAccountIndex'})
+          $router.push({ name: 'WalletsAssetsIndex' })
         }
       })
     }

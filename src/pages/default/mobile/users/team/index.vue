@@ -4,44 +4,51 @@
       <div class="rounded-borders q-px-md q-py-lg row justify-between q-ma-md "
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <div class="row">
-          <q-avatar size="50px">
-            <q-img :src="imageSrc(teamMembers.avatar)"></q-img>
+          <q-avatar size="50px" class="bg-white">
+            <q-img :src="imageSrc(currentTeamInfo.avatar)"></q-img>
           </q-avatar>
           <div class="q-ml-md text-subtitle1">
             <div class="text-white">
-              <span class="text-weight-medium">{{ teamMembers.username }}</span>
-              <span style="background: rgba(255, 255, 255, 0.12);padding: 3px 10px;"
-                class="rounded-borders text-caption q-ml-sm">LV{{
-                  teamMembers.depth }}</span>
+              <div>
+                <span class="text-weight-medium">{{ currentTeamInfo.username }}</span>
+                <span class="text-caption text-grey-1">[ID:{{ currentTeamInfo.id }}]</span>
+                <q-icon name="keyboard_double_arrow_down" class="q-ml-xs"></q-icon>
+                <span class="text-caption">{{ currentTeamInfo.depth }}</span>
+              </div>
             </div>
-            <div class="text-white text-weight-medium">{{ $t('teamEarnings') + ': +' + teamMembers.earnings }}
+            <div class="text-white text-weight-medium">
+              {{ $t('teamEarnings') }}: <span class="text-body1">+{{ currentTeamInfo.earnings }}</span>
             </div>
           </div>
         </div>
-        <div @click="$router.push('/team/earnings/index')" class="text-white">{{ $t('desc') }} <q-icon
-            name="chevron_right" size="16px" /></div>
+        <div @click="$router.push({ name: 'TeamEarnings', query: { id: currentTeamInfo.id } })" class="text-white">{{
+          $t('desc') }} <q-icon name="chevron_right" size="16px" /></div>
       </div>
-      <div class="bg-white col q-pa-md">
-        <div v-for="(teamItem, listIndex) in teamMembers.children" :key="listIndex">
-          <div @click="getTeam({ id: teamItem.id })" class="row justify-between bg-white q-py-md">
+      <div class="bg-white q-pa-md" style="min-height: 80vh;">
+        <div v-for="(children, childrenIndex) in currentTeamInfo.children" :key="childrenIndex">
+          <div @click="$router.push({ name: 'TeamIndex', query: { id: children.id } })"
+            class="row justify-between bg-white q-py-md">
             <div class="row">
               <q-avatar size="32px">
-                <q-img :src="teamItem.avatar ? imageSrc(teamItem.avatar) : imageSrc('')"></q-img>
+                <q-img :src="children.avatar ? imageSrc(children.avatar) : imageSrc('')"></q-img>
               </q-avatar>
               <div class="q-ml-md">
-                <div class="text-color-3 text-subtitle2 text-weight-medium">{{ teamItem.username }}</div>
+                <div class="text-color-3 text-subtitle2 text-weight-medium">
+                  {{ children.username }}
+                  (ID:{{ children.id }})
+                </div>
                 <div class="text-grey-6 text-caption text-weight-regular text-weight-regular">{{
-                  formatDate(teamItem.createdAt) }}</div>
+                  formatDate(children.createdAt) }}</div>
               </div>
             </div>
             <div class="row justify-end">
-              <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ teamItem.teamEarnings }}</div>
+              <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ children.earnings }}</div>
               <q-icon class="self-center" name="chevron_right" size="22px" style="color: #999999;" />
             </div>
           </div>
           <q-separator style="height: 1px;background: #F4F5FD;" />
         </div>
-        <div v-if="teamMembers.children.length <= 0" class="q-py-md text-center text-grey-6">
+        <div v-if="currentTeamInfo.children.length <= 0" class="q-py-md text-center text-grey-6">
           {{ $t('noData') }}
         </div>
       </div>
@@ -55,17 +62,19 @@ import { useI18n } from 'vue-i18n';
 import { UserStore } from 'src/stores/user';
 import { imageSrc, formatDate } from 'src/utils';
 import { teamIndexAPI } from 'src/apis/user';
+import { useRouter } from 'vue-router';
 
 
 export default {
   name: 'TeamIndex',
   setup(props: any, context: any) {
     const $userStore = UserStore();
+    const $router = useRouter();
     const { t } = useI18n();
 
     const state = reactive({
-      // 团队成员
-      teamMembers: {
+      currentUserId: $router.currentRoute.value.query.id ?? 0,
+      currentTeamInfo: {
         children: [],
       } as any,
     });
@@ -75,21 +84,19 @@ export default {
     })
 
     onMounted(() => {
-      getTeam({ id: $userStore.userInfo.id })
-    })
+      if (state.currentUserId == 0) {
+        state.currentUserId = $userStore.userInfo.id
+      }
 
-    // 获取用户团队详情
-    const getTeam = (params: any) => {
-      teamIndexAPI(params).then((res: any) => {
-        state.teamMembers = res
+      teamIndexAPI({ id: Number(state.currentUserId) }).then((res: any) => {
+        state.currentTeamInfo = res
       })
-    }
+    })
 
     return {
       imageSrc,
       formatDate,
       ...toRefs(state),
-      getTeam,
     }
   }
 };

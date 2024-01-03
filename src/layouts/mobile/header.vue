@@ -14,7 +14,7 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <router-view @update="updateHeaderDataFunc" />
+      <router-view :key="$route.fullPath" @update="updateHeaderDataFunc" />
     </q-page-container>
   </q-layout>
 </template>
