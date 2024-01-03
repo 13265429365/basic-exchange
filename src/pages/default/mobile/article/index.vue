@@ -5,15 +5,13 @@
 </template>
 
 <script lang="ts">
-import { onMounted, reactive, toRefs } from 'vue'
-import { imageSrc } from 'src/utils/index'
+import { reactive, toRefs } from 'vue'
+import { imageSrc } from 'src/utils'
 
 export default {
   name: 'ArticleIndex',
   setup() {
     const state = reactive({})
-
-    onMounted(() => { })
 
     return {
       imageSrc,
