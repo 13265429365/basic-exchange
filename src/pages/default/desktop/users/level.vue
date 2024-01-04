@@ -23,7 +23,7 @@
               background: currentLevelIndex == levelIndex ? 'white' : 'linear-gradient(180deg, #10BE70 0%, #91DB82 100%)',
               color: currentLevelIndex == levelIndex ? 'black' : 'white'
             }" class="q-pb-md">
-              <q-img class="absolute" :src="imageSrc(level.icon)" width="54px" height="54px"
+              <q-img no-spinner class="absolute" :src="imageSrc(level.icon)" width="54px" height="54px"
                 style="top: 0; left: 50%; transform: translate(-50%, -36%);z-index: 999;"></q-img>
               <div style="height: 64px;"></div>
               <div class="text-center text-body1">{{ level.name }}</div>

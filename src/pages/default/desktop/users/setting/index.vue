@@ -50,9 +50,9 @@
               <template v-slot:default>
                 <q-uploader-add-trigger />
                 <q-avatar style="width: 80px;height: 80px;">
-                  <q-img :src="imageSrc(currentSetting.value)" />
+                  <q-img no-spinner :src="imageSrc(currentSetting.value)" />
                   <q-badge floating class="bg-transparent" :style="{ top: '70%' }">
-                    <q-img src='/images/icons/edit.png' width="28px" height="28px"></q-img>
+                    <q-img no-spinner src='/images/icons/edit.png' width="28px" height="28px"></q-img>
                   </q-badge>
                 </q-avatar>
               </template>
@@ -110,7 +110,7 @@
               <q-btn-dropdown dense class="col-4" color="grey" outline dropdown-icon="expand_more">
                 <template v-slot:label>
                   <div class="row no-wrap items-center">
-                    <q-img :src="imageSrc(countryList[currentCountryIndex].icon)" width="18px" height="14px" />
+                    <q-img no-spinner :src="imageSrc(countryList[currentCountryIndex].icon)" width="18px" height="14px" />
                     <div class="q-ml-sm">+{{ countryList[currentCountryIndex].code }}</div>
                   </div>
                 </template>
@@ -156,7 +156,7 @@
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { userInfoAPI, updateInfoAPI, updatePasswordAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
-import { NotifyPositive } from 'src/utils/notify';
+import { NotifyNegative, NotifyPositive } from 'src/utils/notify';
 import { UserStore } from 'stores/user';
 import { date } from 'quasar';
 import uploader from 'src/components/uploader.vue';
@@ -242,6 +242,10 @@ export default defineComponent({
     const submitFunc = () => {
       // 修改登录密码
       if (state.currentSetting.params == 'password' || state.currentSetting.params == 'secretKey') {
+        if (state.params.newPassword != state.params.cmfPassword) {
+          NotifyNegative(t('twoPasswordsAreDifferent'))
+          return false
+        }
         state.params.type = state.currentSetting.params == 'password' ? 1 : 2
         updatePasswordAPI(state.params).then(() => {
           updateUserInfo()

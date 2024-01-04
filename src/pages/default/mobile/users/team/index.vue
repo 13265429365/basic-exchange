@@ -5,7 +5,7 @@
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <div class="row">
           <q-avatar size="50px" class="bg-white">
-            <q-img :src="imageSrc(currentTeamInfo.avatar)"></q-img>
+            <q-img no-spinner :src="imageSrc(currentTeamInfo.avatar)"></q-img>
           </q-avatar>
           <div class="q-ml-md text-subtitle1">
             <div class="text-white">
@@ -30,7 +30,7 @@
             class="row justify-between bg-white q-py-md">
             <div class="row">
               <q-avatar size="32px">
-                <q-img :src="children.avatar ? imageSrc(children.avatar) : imageSrc('')"></q-img>
+                <q-img no-spinner :src="children.avatar ? imageSrc(children.avatar) : imageSrc('')"></q-img>
               </q-avatar>
               <div class="q-ml-md">
                 <div class="text-color-3 text-subtitle2 text-weight-medium">

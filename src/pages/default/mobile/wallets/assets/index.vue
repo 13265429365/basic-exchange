@@ -25,14 +25,16 @@
         <q-btn @click="$router.push({ name: 'WalletsDeposit', query: { mode: 2 } })" style="width: 47%;"
           class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
-            <q-img class="q-mr-sm" :src="imageSrc('/assets/icon/menu/deposit.png')" width="42px" height="42px" />
+            <q-img no-spinner class="q-mr-sm" :src="imageSrc('/assets/icon/menu/deposit.png')" width="42px"
+              height="42px" />
             <div>{{ $t('deposit') }}</div>
           </div>
         </q-btn>
         <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" style="width: 47%;"
           class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
-            <q-img class="q-mr-sm" :src="imageSrc('/assets/icon/menu/withdraw.png')" width="42px" height="42px" />
+            <q-img no-spinner class="q-mr-sm" :src="imageSrc('/assets/icon/menu/withdraw.png')" width="42px"
+              height="42px" />
             <div>{{ $t('withdraw') }}</div>
           </div>
         </q-btn>
@@ -91,7 +93,7 @@
         v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex"
         class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">
         <div class="row items-center">
-          <q-img class="q-mr-sm" width="26px" height="26px" :src="imageSrc(assets.icon)" />
+          <q-img no-spinner class="q-mr-sm" width="26px" height="26px" :src="imageSrc(assets.icon)" />
           <div class="text-weight-bold">{{ assets.name }}</div>
         </div>
         <div>

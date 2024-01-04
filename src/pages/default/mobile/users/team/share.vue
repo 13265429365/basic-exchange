@@ -3,7 +3,7 @@
     <div class="col column" style=" background: linear-gradient(to right,  #14BF71,#82D880);">
       <div class="rounded-borders bg-white column items-center q-py-md" style="width: 90%;margin: 36px auto;">
 
-        <q-img :src="imageSrc('')" class="q-mt-lg" width="60px" height="60px" />
+        <q-img no-spinner :src="imageSrc('')" class="q-mt-lg" width="60px" height="60px" />
 
         <div class="text-color-3 text-h6 q-mt-md">{{ $t('inviteFriends') }}</div>
 

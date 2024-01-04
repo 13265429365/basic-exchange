@@ -6,7 +6,7 @@
         <!-- 父级 -->
         <template v-slot:header>
           <q-item-section avatar style="min-width: auto">
-            <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
+            <q-img no-spinner :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
           </q-item-section>
           <q-item-section avatar>
             <div style="user-select: none;min-width: 120px;">{{ $t(menu.name) }}</div>
@@ -17,7 +17,7 @@
         <q-item class="rounded-borders" :to="children.route" v-for="(children, childrenIndex) in menu.children"
           :key="childrenIndex" :header-inset-level="1" :active="$route.path == children.route" clickable>
           <q-item-section avatar>
-            <q-img width="24px" height="24px" src=""></q-img>
+            <q-img no-spinner width="24px" height="24px" src=""></q-img>
           </q-item-section>
           <q-item-section>
             <div style="user-select: none">{{ $t(children.name) }}</div>
@@ -29,7 +29,7 @@
       <!-- 不含子级的列表 -->
       <q-item v-else class="rounded-borders" :active="$route.path == menu.route" :to="menu.route">
         <q-item-section avatar style="min-width: auto">
-          <q-img :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
+          <q-img no-spinner :src="imageSrc(menu.icon)" width="24px" height="24px"></q-img>
         </q-item-section>
         <q-item-section>
           <div style="user-select: none">{{ $t(menu.name) }}</div>

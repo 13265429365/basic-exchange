@@ -12,7 +12,7 @@
               {{ currentTeamInfo.currentInfo.username }}
               <span class="text-caption text-grey-1">[ID:{{ currentTeamInfo.currentInfo.id }}]</span>
               <q-icon name="keyboard_double_arrow_down" class="q-ml-xs"></q-icon>
-              <span class="text-caption">{{currentTeamInfo.currentInfo.depth}}</span>
+              <span class="text-caption">{{ currentTeamInfo.currentInfo.depth }}</span>
             </div>
             <div class="row no-wrap items-center q-mt-sm">
               <div class="text-white text-subtitle2">
@@ -88,13 +88,14 @@
             <div class="q-ml-sm">
               <div class="text-body2 text-bold">
                 {{ children.username }}
-                <span class="text-caption text-grey-7">(ID:{{children.id}})</span>
+                <span class="text-caption text-grey-7">(ID:{{ children.id }})</span>
               </div>
-              <div class="text-grey text-caption">{{ date.formatDate(children.createdAt * 1000, 'YYYY/MM/DD HH:mm:SS') }}</div>
+              <div class="text-grey text-caption">{{ date.formatDate(children.createdAt * 1000, 'YYYY/MM/DD HH:mm:SS') }}
+              </div>
             </div>
           </div>
           <div class="col">
-            <div class="text-center">{{children.name}}</div>
+            <div class="text-center">{{ children.name }}</div>
           </div>
           <div class="col">
             <div class="text-primary text-h6 text-right q-mr-lg">
@@ -138,7 +139,7 @@ export default defineComponent({
       if (state.currentUserId == 0) {
         state.currentUserId = $userStore.userInfo.id
       }
-      teamDetailsAPI({id: Number(state.currentUserId)}).then((res: any) => {
+      teamDetailsAPI({ id: Number(state.currentUserId) }).then((res: any) => {
         state.currentTeamInfo = res
       })
     })

@@ -12,18 +12,17 @@
 
         <q-form class="q-mt-xl q-gutter-sm">
           <!-- 账号 -->
-          <q-input :input-style="{ fontSize: '16px' }" outlined
-            v-model="params.username" :label="$t('username')">
+          <q-input :input-style="{ fontSize: '16px' }" outlined v-model="params.username" :label="$t('username')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/username.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/username.png" />
             </template>
           </q-input>
 
           <!-- 密码 -->
-          <q-input :input-style="{ fontSize: '16px', }" outlined
-            v-model="params.password" :type="isPwd ? 'text' : 'password'" :label="$t('password')">
+          <q-input :input-style="{ fontSize: '16px', }" outlined v-model="params.password"
+            :type="isPwd ? 'text' : 'password'" :label="$t('password')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/password.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/password.png" />
             </template>
             <template v-slot:append>
               <q-icon style="color: #999999" :name="isPwd ? 'visibility' : 'visibility_off'" class="cursor-pointer"
@@ -35,7 +34,7 @@
           <q-input :input-style="{ fontSize: '16px' }" v-if="config.settings.login.showVerify" outlined
             v-model="params.captchaVal" :label="$t('code')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/code.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/code.png" />
             </template>
             <template v-slot:append>
               <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/150-50'"
@@ -47,8 +46,8 @@
           <div class="row justify-end q-mb-lg">
             <div class="text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
           </div>
-          <q-btn @click="submitFunc()" class="full-width" unelevated rounded no-caps style="height: 44px"
-            color="primary" :label="$t('login')" />
+          <q-btn @click="submitFunc()" class="full-width" unelevated rounded no-caps style="height: 44px" color="primary"
+            :label="$t('login')" />
           <div @click="toRegister()" v-if="config.settings.login.showRegister"
             class="text-center text-primary q-mb-sm cursor-pointer">
             {{ $t('toRegister') }}
@@ -66,7 +65,7 @@ import { captchaAPI } from 'src/apis';
 import { userLoginAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
-import {UserStore} from 'stores/user';
+import { UserStore } from 'stores/user';
 
 export default defineComponent({
   name: 'userLogin',

@@ -10,10 +10,10 @@
               border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
             }" class="q-pa-sm row justify-center cursor-pointer relative-position q-mr-md"
               @click="switchPaymentFunc(payment, paymentIndex)">
-              <q-img class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
+              <q-img no-spinner class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
               <div class="self-center">{{ payment.name }}</div>
-              <q-img v-if="paymentIndex == currentPaymentIndex" class="absolute" src="/images/select.png" width="30PX"
-                height="30px" style="bottom: 0;right: 0;"></q-img>
+              <q-img no-spinner v-if="paymentIndex == currentPaymentIndex" class="absolute" src="/images/select.png"
+                width="30PX" height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </div>
         </q-scroll-area>

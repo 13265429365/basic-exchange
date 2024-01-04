@@ -4,7 +4,7 @@
       <div class="rounded-borders q-px-md q-py-lg row"
         style="background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);">
         <q-avatar size="50px" class="bg-white">
-          <q-img :src="imageSrc(currentTeamInfo.currentInfo.avatar)"></q-img>
+          <q-img no-spinner :src="imageSrc(currentTeamInfo.currentInfo.avatar)"></q-img>
         </q-avatar>
         <div class="q-ml-md text-subtitle1">
           <div class="text-white text-weight-medium">

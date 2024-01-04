@@ -2,7 +2,7 @@
   <div>
     <div class="q-mt-lg q-px-lg">
       <q-form>
-        <q-input class="q-mb-md" v-model="params.email" :placeholder="$t('email')" outlined dense type="text" />
+        <q-input class="q-mb-md" v-model="params.email" :label="$t('email')" outlined dense type="text" />
         <q-btn @click="submitFunc()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
           color="primary" :label="$t('submit')" />
       </q-form>
@@ -22,7 +22,7 @@ export default defineComponent({
   name: 'SettingsBindEmail',
   setup(props: any, context: any) {
     const { t } = useI18n();
-    context.emit('update', {title: t('bindEmail')})
+    context.emit('update', { title: t('bindEmail') })
 
     const $router = useRouter();
     const $userStore = UserStore();

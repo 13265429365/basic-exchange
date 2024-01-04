@@ -8,7 +8,7 @@
     <div style="padding: 80px 0 260px">
       <div class="row justify-center items-center">
         <div class="col text-right">
-          <q-img class="q-mr-xl" width="300px" src="/images/download-bg.svg"></q-img>
+          <q-img no-spinner class="q-mr-xl" width="300px" src="/images/download-bg.svg"></q-img>
         </div>
         <div class="col-1"></div>
         <div class="col">

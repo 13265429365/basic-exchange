@@ -14,14 +14,14 @@
           <q-input v-if="config.settings.register.showEmail" :input-style="{ fontSize: '16px' }" outlined
             :label="$t('email')" v-model="params.email">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/email2.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/email2.png" />
             </template>
           </q-input>
 
           <!-- 账号 -->
           <q-input outlined v-model="params.username" :input-style="{ fontSize: '16px' }" :label="$t('username')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/username.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/username.png" />
             </template>
           </q-input>
 
@@ -29,7 +29,7 @@
           <q-input v-model="params.password" outlined :input-style="{ fontSize: '16px' }"
             :type="showTextPassword.password ? 'text' : 'password'" :label="$t('password')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/password.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/password.png" />
             </template>
             <template v-slot:append>
               <q-icon class="text-grey-7 cursor-pointer"
@@ -43,7 +43,7 @@
             v-model="params.cmfPassword" :type="showTextPassword.cmfPassword ? 'text' : 'password'"
             :label="$t('cmfPassword')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/password.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/password.png" />
             </template>
             <template v-slot:append>
               <q-icon class="text-grey-7 cursor-pointer"
@@ -56,7 +56,7 @@
           <q-input v-if="config.settings.register.showVerify" outlined :input-style="{ fontSize: '16px' }"
             v-model="params.captchaVal" :label="$t('code')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/code.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/code.png" />
             </template>
             <template v-slot:append>
               <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/150-50'"
@@ -69,7 +69,7 @@
             v-model="params.securityKey" :type="showTextPassword.securityKey ? 'text' : 'password'"
             :label="$t('enterSecretKey')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/key2.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/key2.png" />
             </template>
             <template v-slot:append>
               <q-icon class="text-grey-7 cursor-pointer"
@@ -83,7 +83,7 @@
             v-model="params.cmfSecurityKey" :type="showTextPassword.cmfSecurityKey ? 'text' : 'password'"
             :label="$t('enterSecretKey')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/key.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/key.png" />
             </template>
             <template v-slot:append>
               <q-icon class="text-grey-7 cursor-pointer"
@@ -96,7 +96,7 @@
           <q-input v-if="config.settings.register.isInvite" outlined :input-style="{ fontSize: '16px' }"
             v-model="params.code" :label="$t('inviteCode')">
             <template v-slot:prepend>
-              <q-img width="24px" height="24px" src="/images/icons/profile.png" />
+              <q-img no-spinner width="24px" height="24px" src="/images/icons/profile.png" />
             </template>
           </q-input>
 
@@ -105,7 +105,7 @@
             <q-btn-dropdown class="col-4" color="grey" outline no-caps dropdown-icon="expand_more" style="height: 56px;">
               <template v-slot:label>
                 <div class="row no-wrap items-center">
-                  <q-img :src="imageSrc(countryList[currentCountryIndex].icon)" width="24px" height="16px" />
+                  <q-img no-spinner :src="imageSrc(countryList[currentCountryIndex].icon)" width="24px" height="16px" />
                   <div class="q-ml-sm">+{{ countryList[currentCountryIndex].code }}</div>
                 </div>
               </template>

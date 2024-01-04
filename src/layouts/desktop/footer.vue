@@ -11,7 +11,8 @@
                   <div v-if="children.icon != ''" class="q-mr-xs">
                     <q-icon :name="children.icon" color="grey-4" size="20px"></q-icon>
                   </div>
-                  <div class="ellipsis text-grey-4 text-body2 col cursor-pointer" @click="routerTo(children.link)">{{children.name }}</div>
+                  <div class="ellipsis text-grey-4 text-body2 col cursor-pointer" @click="routerTo(children.link)">
+                    {{ children.name }}</div>
                 </div>
               </div>
             </div>
@@ -25,7 +26,7 @@
         <div class="row items-center q-gutter-sm q-mt-xs">
           <div v-for="(social, socialIndex) in socialInfo.children" :key="socialIndex">
             <q-avatar color="white" rounded size="32px" @click="routerTo(social.link)">
-              <q-img :src="imageSrc(social.icon)" width="32px" height="32px" class="cursor-pointer"></q-img>
+              <q-img no-spinner :src="imageSrc(social.icon)" width="32px" height="32px" class="cursor-pointer"></q-img>
             </q-avatar>
           </div>
         </div>
@@ -59,7 +60,7 @@ export default {
     const state = reactive({
       config: $initStore.config,
       footerList: [] as any,
-      socialInfo: {name: '', children: []} as any,
+      socialInfo: { name: '', children: [] } as any,
     })
 
     onMounted(() => {

@@ -3,24 +3,34 @@
     <div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="q-mb-md" v-model="oldPassword" outlined dense :type="isPwd ? 'password' : 'text'"
-            :placeholder="$t('secretKey')">
+          <q-input class="q-mb-md" v-model="oldPassword" outlined dense :type="showPwd.oldPwd ? 'password' : 'text'"
+            :label="$t('secretKey')">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/password.png" />
+              <q-img no-spinner class="iconLogo" src="/images/default/password.png" />
             </template>
             <template v-slot:append>
-              <q-icon style="color: #999999;" :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                @click="isPwd = !isPwd" />
+              <q-icon style="color: #999999;" :name="showPwd.oldPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer" @click="showPwd.oldPwd = !showPwd.oldPwd" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="newPassword" outlined dense :type="isPwd2 ? 'password' : 'text'"
-            :placeholder="$t('newSecretKey')">
+          <q-input class="q-mb-md" v-model="newPassword" outlined dense :type="showPwd.newPwd ? 'password' : 'text'"
+            :label="$t('newSecretKey')">
             <template v-slot:prepend>
-              <q-img class="iconLogo" src="/images/default/password.png" />
+              <q-img no-spinner class="iconLogo" src="/images/default/password.png" />
             </template>
             <template v-slot:append>
-              <q-icon style="color: #999999;" :name="isPwd2 ? 'visibility_off' : 'visibility'" class="cursor-pointer"
-                @click="isPwd2 = !isPwd2" />
+              <q-icon style="color: #999999;" :name="showPwd.newPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer" @click="showPwd.newPwd = !showPwd.newPwd" />
+            </template>
+          </q-input>
+          <q-input class="q-mb-md" v-model="cmfPassword" outlined dense :type="showPwd.cmfPwd ? 'password' : 'text'"
+            :label="$t('cmfSecretKey')">
+            <template v-slot:prepend>
+              <q-img no-spinner class="iconLogo" src="/images/default/password.png" />
+            </template>
+            <template v-slot:append>
+              <q-icon style="color: #999999;" :name="showPwd.cmfPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer" @click="showPwd.cmfPwd = !showPwd.cmfPwd" />
             </template>
           </q-input>
           <q-btn @click="submitFunc" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
@@ -36,6 +46,7 @@ import { defineComponent, reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router'
 import { updatePasswordAPI } from 'src/apis/user';
 import { useI18n } from 'vue-i18n';
+import { NotifyNegative } from 'src/utils/notify';
 
 // 列表
 export default defineComponent({
@@ -49,15 +60,23 @@ export default defineComponent({
     const $router = useRouter();
 
     const state = reactive({
-      isPwd: false,
-      isPwd2: false,
+      showPwd: {
+        oldPwd: false,
+        newPwd: false,
+        cmfPwd: false
+      },
 
       oldPassword: '',
       newPassword: '',
+      cmfPassword: '',
     })
 
     // 执行接口
     const submitFunc = () => {
+      if (state.newPassword != state.cmfPassword) {
+        NotifyNegative(t('twoSecretKeyAreDifferent'))
+        return false
+      }
       const params = {
         type: 2,
         oldPassword: state.oldPassword,

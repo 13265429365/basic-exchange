@@ -11,10 +11,10 @@
               border: children.id == currentPaymentInfo.id ? '1px solid #01AC66' : '',
             }" class="q-pa-sm row justify-center cursor-pointer relative-position q-mr-md"
               @click="switchPaymentFunc(children)">
-              <q-img class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
+              <q-img no-spinner class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
               <div class="self-center">{{ children.name }}</div>
-              <q-img v-if="children.id == currentPaymentInfo.id" class="absolute" src="/images/select.png" width="30PX"
-                height="30px" style="bottom: 0;right: 0;"></q-img>
+              <q-img no-spinner v-if="children.id == currentPaymentInfo.id" class="absolute" src="/images/select.png"
+                width="30PX" height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </template>
         </div>
@@ -99,7 +99,7 @@
                 <q-card flat>
                   <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
                     <q-icon name="add" color="grey" size="30px" v-if="params.voucher == ''" />
-                    <q-img v-else :src="imageSrc(params.voucher)"></q-img>
+                    <q-img no-spinner v-else :src="imageSrc(params.voucher)"></q-img>
                   </div>
                 </q-card>
               </template>

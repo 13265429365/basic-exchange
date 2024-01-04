@@ -7,7 +7,8 @@
         background-size: 100% 100%;
         background-repeat: no-repeat;
         position: relative;">
-        <q-img src="/images/level.png" width="93px" height="66px" style="position: absolute;top: -13px;right: 0;" />
+        <q-img no-spinner src="/images/level.png" width="93px" height="66px"
+          style="position: absolute;top: -13px;right: 0;" />
         <div class="col-10 column">
           <div style="color: #FEC183;" class="text-h6">VIP Card</div>
           <div style="color: #FEC183;" class="text-caption full-width col">

@@ -4,7 +4,7 @@
       <div v-for="(item, i) in settingList" :key="i" class="bg-white">
         <q-item @click="$router.push(item.toggle ?? item.route)" v-ripple class="q-pa-md" clickable>
           <q-item-section avatar style="padding-right: 11px;min-width: 0;">
-            <q-img width="20px" height="20px" :src="item.icon"></q-img>
+            <q-img no-spinner width="20px" height="20px" :src="item.icon"></q-img>
           </q-item-section>
 
           <q-item-section>
@@ -42,23 +42,23 @@ export default defineComponent({
         {
           name: 'personalSetting',
           icon: '/images/icons/user.png',
-          route: '/settings/info'
+          route: '/settings/update/info'
         }, {
           name: 'updatePassword',
           icon: '/images/icons/pwd.png',
-          route: '/settings/password',
+          route: '/settings/update/password',
         }, {
           name: 'updateSecretKey',
           icon: '/images/icons/key.png',
-          route: '/settings/code'
+          route: '/settings/update/secret-key'
         }, {
           name: 'bindTelephone',
           icon: '/images/icons/mobile.png',
-          route: '/settings/bind/phone'
+          route: '/settings/update/telephone'
         }, {
           name: 'email',
           icon: '/images/icons/email.png',
-          route: '/settings/enter/email'
+          route: '/settings/update/email'
         }, {
           name: 'language',
           icon: '/images/icons/language.png',

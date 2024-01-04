@@ -4,7 +4,7 @@
       <div @click="switchLang(item)" v-for="(item, i) in languageList" :key="i" class="bg-white">
         <q-item v-ripple class="q-pa-md rounded-borders" clickable>
           <q-item-section avatar class="q-mr-sm" style="min-width: 0;">
-            <q-img :src="imageSrc(item.icon)" width="32px" height="21px" />
+            <q-img no-spinner :src="imageSrc(item.icon)" width="32px" height="21px" />
           </q-item-section>
 
           <q-item-section>

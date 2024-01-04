@@ -3,7 +3,7 @@
     <div class="col column justify-between bg-white rounded-borders">
       <div class="q-py-md q-px-lg row items-center no-wrap text-body1 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
-        <q-img src="/images/deposit.png" width="40PX" height="28px"></q-img>
+        <q-img no-spinner src="/images/deposit.png" width="40PX" height="28px"></q-img>
         <div class="q-ml-md">{{ $t('deposit') }}</div>
       </div>
       <div class="col full-width q-pa-lg">
@@ -19,10 +19,10 @@
               border: children.id == currentPaymentInfo.id ? '1px solid #01AC66' : '',
             }" class="q-pa-sm row justify-center cursor-pointer relative-position"
               @click="switchPaymentFunc(children)">
-              <q-img class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
+              <q-img no-spinner class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
               <div class="self-center">{{ children.name }}</div>
-              <q-img v-if="children.id == currentPaymentInfo.id" class="absolute" src="/images/select.png" width="30PX"
-                height="30px" style="bottom: 0;right: 0;"></q-img>
+              <q-img no-spinner v-if="children.id == currentPaymentInfo.id" class="absolute" src="/images/select.png"
+                width="30PX" height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </template>
         </div>
@@ -109,7 +109,7 @@
                   <q-card flat>
                     <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
                       <q-icon name="add" color="grey" size="40px" v-if="params.voucher == ''" />
-                      <q-img v-else :src="imageSrc(params.voucher)"></q-img>
+                      <q-img no-spinner v-else :src="imageSrc(params.voucher)"></q-img>
                     </div>
                   </q-card>
                 </template>

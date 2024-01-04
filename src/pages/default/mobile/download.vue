@@ -3,7 +3,7 @@
     <div class="col">
       <div class="column justify-between items-center">
         <div class="column justify-center shadow-1 q-mt-xl" style="width: 80px;height: 80px;border-radius: 15px;">
-          <q-img class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
+          <q-img no-spinner class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
         </div>
         <div class="text-h6 text-weight-bold q-mt-md">{{ config.name }}</div>
         <div class="q-mt-xl full-width">
@@ -17,7 +17,7 @@
       </div>
 
     </div>
-    <q-img src="/images/download.png" width="240px" height="163px" class="self-center q-mb-xl" />
+    <q-img no-spinner src="/images/download.png" width="240px" height="163px" class="self-center q-mb-xl" />
   </div>
 </template>
 

@@ -4,7 +4,7 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(currentLangInfo.icon)"></q-img>
+        <q-img no-spinner width="24px" height="24px" class="q-mr-sm" :src="imageSrc(currentLangInfo.icon)"></q-img>
         <div>{{ currentLangInfo.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
@@ -14,7 +14,7 @@
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc(config.logo)}`" />
+      <q-img no-spinner class="q-mt-lg q-mb-md" width="70px" height="70px" :src="`${imageSrc(config.logo)}`" />
     </div>
     <div class="row justify-center">
       <div class="text-h6 text-weight-bold">{{ $t('registerSmall') }}</div>
@@ -25,7 +25,7 @@
       <q-input v-if="config.settings.register.showEmail" :input-style="{ fontSize: '16px', color: '#999999!important' }"
         outlined class="q-mb-md" v-model="params.email" :placeholder="$t('email')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/email.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/email.png" />
         </template>
       </q-input>
 
@@ -33,7 +33,7 @@
       <q-input outlined class="q-mb-md" :input-style="{ fontSize: '16px', color: '#999999!important' }"
         v-model="params.username" :placeholder="$t('username')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/username.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/username.png" />
         </template>
       </q-input>
 
@@ -41,7 +41,7 @@
       <q-input class="q-mb-md" :input-style="{ fontSize: '16px', color: '#999999!important' }" v-model="params.password"
         outlined :type="showTextPassword.password ? 'text' : 'password'" :placeholder="$t('password')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/password.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/password.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer" :name="showTextPassword.password ? 'visibility' : 'visibility_off'"
@@ -54,7 +54,7 @@
         class="q-mb-md" v-model="params.cmfPassword" outlined :type="showTextPassword.cmfPassword ? 'text' : 'password'"
         :placeholder="$t('cmfPassword')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/password.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/password.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer"
@@ -67,7 +67,7 @@
       <q-input v-if="config.settings.register.showVerify" :input-style="{ fontSize: '16px', color: '#999999!important' }"
         class="q-mb-md" outlined v-model="params.captchaVal" :placeholder="$t('code')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/code.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/code.png" />
         </template>
         <template v-slot:append>
           <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/150-50'"
@@ -81,7 +81,7 @@
         v-model="params.securityKey" :type="showTextPassword.securityKey ? 'text' : 'password'"
         :placeholder="$t('enterSecretKey')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/key.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/key.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer"
@@ -96,7 +96,7 @@
         v-model="params.cmfSecurityKey" :type="showTextPassword.cmfSecurityKey ? 'text' : 'password'"
         :placeholder="$t('enterSecretKey')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/key.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/key.png" />
         </template>
         <template v-slot:append>
           <q-icon class="text-grey-7 cursor-pointer"
@@ -109,7 +109,7 @@
       <q-input v-if="config.settings.register.isInvite" :input-style="{ fontSize: '16px', color: '#999999!important' }"
         class="q-mb-md" outlined v-model="params.code" :placeholder="$t('inviteCode')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/profile.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/profile.png" />
         </template>
       </q-input>
 
@@ -119,7 +119,7 @@
           style="height: 50px;background: #f5f6fa;border-radius: 10px;color: #8F959E;">
           <template v-slot:label>
             <div class="row no-wrap items-center">
-              <q-img :src="imageSrc(countryList[currentCountryIndex].icon)" width="24px" height="16px" />
+              <q-img no-spinner :src="imageSrc(countryList[currentCountryIndex].icon)" width="24px" height="16px" />
               <div class="q-ml-sm">+{{ countryList[currentCountryIndex].code }}</div>
             </div>
           </template>
@@ -127,7 +127,7 @@
           <q-list style="min-width: 268px" class="q-py-sm">
             <q-item @click="currentCountryIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
               class="row no-wrap items-center">
-              <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
+              <q-img no-spinner class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
               <div>
                 <div style="font-size: 16px;">{{ item.name }}</div>
               </div>

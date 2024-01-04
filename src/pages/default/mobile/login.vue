@@ -4,7 +4,7 @@
     <q-toolbar>
       <q-space />
       <q-btn class="text-grey-8" rounded no-caps flat>
-        <q-img width="24px" height="24px" class="q-mr-sm" :src="imageSrc(currentLangInfo.icon)"></q-img>
+        <q-img no-spinner width="24px" height="24px" class="q-mr-sm" :src="imageSrc(currentLangInfo.icon)"></q-img>
         <div>{{ currentLangInfo.name }}</div>
         <switchLanguage></switchLanguage>
       </q-btn>
@@ -14,7 +14,7 @@
   <div>
     <!-- logo -->
     <div class="row justify-center">
-      <q-img class="q-mt-lg q-mb-md" width="70px" height="70px" :src="imageSrc(config.logo)" />
+      <q-img no-spinner class="q-mt-lg q-mb-md" width="70px" height="70px" :src="imageSrc(config.logo)" />
     </div>
     <div class="row justify-center">
       <div class="text-weight-bold text-h6">{{ $t('loginSmall') }}</div>
@@ -25,7 +25,7 @@
       <q-input class="q-mb-md" outlined v-model="params.username"
         :input-style="{ fontSize: '16px', color: '#999999!important' }" :placeholder="$t('username')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/username.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/username.png" />
         </template>
       </q-input>
 
@@ -34,7 +34,7 @@
         :input-style="{ fontSize: '16px', color: '#999999!important' }" :type="showPwd ? 'text' : 'password'"
         :placeholder="$t('password')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/password.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/password.png" />
         </template>
         <template v-slot:append>
           <q-icon style="color: #999999" :name="showPwd ? 'visibility' : 'visibility_off'" class="cursor-pointer"
@@ -46,7 +46,7 @@
       <q-input v-if="config.settings.login.showVerify" :input-style="{ fontSize: '16px', color: '#999999!important' }"
         class="q-mb-sm" outlined v-model="params.captchaVal" :placeholder="$t('code')">
         <template v-slot:prepend>
-          <q-img width="24px" height="24px" src="/images/icons/code.png" />
+          <q-img no-spinner width="24px" height="24px" src="/images/icons/code.png" />
         </template>
         <template v-slot:append>
           <q-img no-spinner v-if="params.captchaId !== ''" :src="baseURL + '/captcha/' + params.captchaId + '/150-50'"

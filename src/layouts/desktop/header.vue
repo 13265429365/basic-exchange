@@ -20,7 +20,7 @@
               <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
                 aria-hidden="true" :to="children.route" class="rounded-borders">
                 <q-item-section avatar style="min-width:auto">
-                  <q-img width="30px" height="30px" :src="imageSrc(children.icon ?? '')"></q-img>
+                  <q-img no-spinner width="30px" height="30px" :src="imageSrc(children.icon ?? '')"></q-img>
                 </q-item-section>
                 <q-item-section class="text-grey-8">{{ $t(children.name) }}</q-item-section>
               </q-item>
@@ -41,7 +41,7 @@
             class="rounded-borders" v-show="quickMenu.data.isDesktop" :key="quickMenuIndex" clickable v-close-popup
             aria-hidden="true">
             <q-item-section avatar style="min-width:auto">
-              <q-img width="30px" height="30px" :src="imageSrc(quickMenu.icon)"></q-img>
+              <q-img no-spinner width="30px" height="30px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
             <q-item-section class="text-grey-8">{{ $t(quickMenu.name) }}</q-item-section>
           </q-item>
@@ -69,7 +69,7 @@
           <!-- 头像 -->
           <q-btn class="q-mx-xs" round flat>
             <q-avatar size="28px">
-              <q-img :src="imageSrc(userInfo.avatar)"></q-img>
+              <q-img no-spinner :src="imageSrc(userInfo.avatar)"></q-img>
             </q-avatar>
             <q-menu :offset="[300, 15]" class="q-pa-sm">
               <q-list style="min-width: 218px;">
@@ -77,7 +77,7 @@
                 <q-item aria-hidden="true">
                   <div class="row items-center">
                     <q-avatar size="40px" class="q-mt-sm cursor-pointer" @click="$router.push({ name: 'SettingIndex' })">
-                      <q-img :src="imageSrc(userInfo.avatar)"></q-img>
+                      <q-img no-spinner :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
                       <div class="row items-center">
@@ -89,17 +89,17 @@
                         <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs" no-caps
                           @click="$router.push({ name: 'UserLevel' })"
                           style="border: 1px solid #F7DEB6;color: #F7DEB6;background: #322B19;">
-                          <q-img width="13px" height="12px" src="/images/icons/vip-icon.png"></q-img>
+                          <q-img no-spinner width="13px" height="12px" src="/images/icons/vip-icon.png"></q-img>
                           <div class="q-ml-xs" style="font-size: 10px;">Lv{{ userInfo.level }}</div>
                         </q-btn>
                         <!-- 信用分 -->
                         <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs bg-grey-4 text-primary"
                           v-if="userInfo.score > 60">
-                          <q-img width="13px" height="13px" src="/images/icons/credit.png"></q-img>
+                          <q-img no-spinner width="13px" height="13px" src="/images/icons/credit.png"></q-img>
                           <div class="q-ml-xs" style="font-size: 10px;">{{ $t('creditScore') + userInfo.score }}</div>
                         </q-btn>
                         <q-btn size="xs" rounded flat dense no-wrap class="q-px-sm q-mr-xs bg-grey-4 text-red" v-else>
-                          <q-img width="13px" height="13px" src="/images/icons/credit.png"></q-img>
+                          <q-img no-spinner width="13px" height="13px" src="/images/icons/credit.png"></q-img>
                           <div class="q-ml-xs" style="font-size: 10px;">{{ $t('creditScore') + userInfo.score }}</div>
                         </q-btn>
                         <!-- 实名 -->

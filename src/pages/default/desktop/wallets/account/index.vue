@@ -132,7 +132,7 @@ export default defineComponent({
     }
 
     const getWalletsAccount = () => {
-      walletsAccountIndexAPI({modes: [11, 12]}).then((res: any) => {
+      walletsAccountIndexAPI({ modes: [11, 12] }).then((res: any) => {
         state.accountList = res
       })
     }

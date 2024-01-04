@@ -24,10 +24,10 @@
 
       <!-- 充值、提现 -->
       <div class="row">
-        <q-btn @click="$router.push({ name: 'WalletsDeposit', query: {mode: 1} })" unelevated class="text-primary bg-white" rounded no-caps
-          style="width: 80px" :label="$t('deposit')"></q-btn>
-        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: {mode: 11} })" unelevated class="text-primary bg-white q-ml-md" rounded
-          style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsDeposit', query: { mode: 1 } })" unelevated
+          class="text-primary bg-white" rounded no-caps style="width: 80px" :label="$t('deposit')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 11 } })" unelevated
+          class="text-primary bg-white q-ml-md" rounded style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
       </div>
     </div>
 

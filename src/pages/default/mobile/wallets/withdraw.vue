@@ -23,8 +23,8 @@
               <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
               <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName
               }}({{ account.number.slice(-4) }})</div>
-              <q-img v-if="accountIndex == activeAccountIndex" class="absolute" src="/images/select.png" width="30PX"
-                height="30px" style="bottom: 0;right: 0;"></q-img>
+              <q-img no-spinner v-if="accountIndex == activeAccountIndex" class="absolute" src="/images/select.png"
+                width="30PX" height="30px" style="bottom: 0;right: 0;"></q-img>
             </div>
           </div>
         </q-scroll-area>

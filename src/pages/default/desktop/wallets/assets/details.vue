@@ -14,7 +14,8 @@
           <div class="text-body2 text-white q-mt-sm">
             <div v-if="showMoney" class="row items-center">
               <div>{{ $t('currency') }}{{ Number(userAssetsInfo.money).toFixed(2) }}</div>
-              <div class="text-caption q-ml-xs">≈{{ $t('currency') }}{{ Number(userAssetsInfo.moneyRate).toFixed(2) }}</div>
+              <div class="text-caption q-ml-xs">≈{{ $t('currency') }}{{ Number(userAssetsInfo.moneyRate).toFixed(2) }}
+              </div>
             </div>
             <div v-else>
               ******

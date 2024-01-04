@@ -13,8 +13,8 @@
             dropdown-icon="expand_more" style="height: 40px;border: 1px solid rgba(0, 0, 0, 0.24);">
             <template v-slot:label>
               <div class="row no-wrap items-center">
-                <q-img :src="imageSrc(countryList[countryIndex].icon ? countryList[countryIndex].icon : '')" width="24px"
-                  height="16px" />
+                <q-img no-spinner :src="imageSrc(countryList[countryIndex].icon ? countryList[countryIndex].icon : '')"
+                  width="24px" height="16px" />
                 <div class="q-ml-sm">+{{ countryList[countryIndex].code }}</div>
               </div>
             </template>
@@ -22,7 +22,7 @@
             <q-list style="min-width: 268px" class="q-py-sm">
               <q-item @click="countryIndex = i" v-for="(item, i) in countryList" :key="i" clickable v-close-popup
                 class="row no-wrap items-center">
-                <q-img class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
+                <q-img no-spinner class="q-mr-sm" :src="imageSrc(item.icon)" width="38px" height="38px" />
                 <div>
                   <div style="font-size: 16px;">{{ item.name }}</div>
                 </div>
@@ -45,7 +45,7 @@ import { imageSrc } from 'src/utils';
 import { InitStore } from 'src/stores/init';
 import { useRouter } from 'vue-router';
 import { UserStore } from 'src/stores/user';
-import { userInfoAPI, updateInfoAPI } from 'src/apis/user';
+import { updateInfoAPI } from 'src/apis/user';
 import { useI18n } from 'vue-i18n';
 
 // 列表
@@ -65,26 +65,20 @@ export default defineComponent({
       countryList: $initStore.countryList as any,
       countryIndex: 0,
       params: {} as any,
+      userInfo: {} as any,
     })
 
     onMounted(() => {
-      UserInfo()
+      state.userInfo = $userStore.userInfo
+      state.params.telephone = $userStore.userInfo.telephone.split('|')[1]
     })
-
-    // 获取用户信息
-    const UserInfo = () => {
-      userInfoAPI().then((res: any) => {
-        state.params.telephone = res.telephone.split('|')[1]
-        $userStore.updateUserInfo(res)
-      })
-    }
 
     // 执行接口
     const submitFunc = () => {
-      const params = {
-        telephone: state.countryList[state.countryIndex].code + '|' + state.params.telephone,
-      }
-      updateInfoAPI(params).then(() => {
+      const telephone = state.countryList[state.countryIndex].code + '|' + state.params.telephone
+      updateInfoAPI({ telephone }).then(() => {
+        state.userInfo.telephone = telephone
+        $userStore.updateUserInfo(state.userInfo)
         $router.back()
       })
     }

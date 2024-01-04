@@ -15,11 +15,11 @@
           </div>
           <div class="row no-wrap">
             <q-chip class="text-white" size="sm" style="background: #322B19;border: 1px solid #F7DEB6;">
-              <q-img src="/images/icons/vip-icon.png" class="q-mr-xs" width="11px" height="11px" />
+              <q-img no-spinner src="/images/icons/vip-icon.png" class="q-mr-xs" width="11px" height="11px" />
               <span style="color: #F7DEB6;">Lv{{ userInfo.level }}</span>
             </q-chip>
             <q-chip class="text-grey-9 bg-white" size="sm" style="border: 1px solid #F1F1F1;">
-              <q-img src="/images/icons/credit.png" class="q-mr-xs" width="11px" height="11px" />
+              <q-img no-spinner src="/images/icons/credit.png" class="q-mr-xs" width="11px" height="11px" />
               {{ $t('creditScore') + userInfo.score }}
             </q-chip>
             <q-chip class="text-primary bg-white" size="sm" style="border: 1px solid #01AC66;">

@@ -23,7 +23,7 @@
             <q-card flat>
               <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
                 <q-icon name="add" color="grey" size="30px" v-if="params.photo1 == ''" />
-                <q-img v-else :src="imageSrc(params.photo1)"></q-img>
+                <q-img no-spinner v-else :src="imageSrc(params.photo1)"></q-img>
               </div>
             </q-card>
           </template>
@@ -38,7 +38,7 @@
             <q-card flat>
               <div class="column items-center justify-center" style="height: 150px;border: grey 1px dashed">
                 <q-icon name="add" color="grey" size="30px" v-if="params.photo2 == ''" />
-                <q-img v-else :src="imageSrc(params.photo2)"></q-img>
+                <q-img no-spinner v-else :src="imageSrc(params.photo2)"></q-img>
               </div>
             </q-card>
           </template>

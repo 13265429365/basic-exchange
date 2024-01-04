@@ -15,7 +15,8 @@
           class="text-center text-white ellipsis">{{ $t('24hoursOnline') }}</div>
       </div>
       <div class="column justify-end">
-        <q-img style="margin-bottom: -15px;margin-right: 20px;" src="/images/helpers.png" width="62px" height="79px" />
+        <q-img no-spinner style="margin-bottom: -15px;margin-right: 20px;" src="/images/helpers.png" width="62px"
+          height="79px" />
       </div>
     </div>
 
@@ -23,7 +24,7 @@
 
       <div class="col-4 z-top" v-for="(social, socialIndex ) in socialList" :key="socialIndex">
         <div class="rounded-borders bg-white column items-center shadow-1" style="padding: 20px 0;">
-          <q-img :src="imageSrc(social.icon)" width="41px" height="41px" />
+          <q-img no-spinner :src="imageSrc(social.icon)" width="41px" height="41px" />
           <div class="text-body2 text-weight-medium q-mt-sm">{{ social.name }}</div>
         </div>
       </div>

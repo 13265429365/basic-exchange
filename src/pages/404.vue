@@ -2,7 +2,7 @@
   <q-layout class="row items-center justify-center">
     <q-page-container>
       <div class="row justify-center q-mb-lg">
-        <q-img src="/images/404.png" width="200px" height="200px" />
+        <q-img no-spinner src="/images/404.png" width="200px" height="200px" />
       </div>
       <div class="text-center text-weight-bold q-mb-md text-h4">
         Page Not Found!!

@@ -4,7 +4,7 @@
       <!-- 大标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap text-body1 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
-        <q-img src="/images/account.png" width="40PX" height="28px"></q-img>
+        <q-img no-spinner src="/images/account.png" width="40PX" height="28px"></q-img>
         <div class="q-ml-md"> {{ params.id == 0 ? $t('create') : $t('edit') }}</div>
       </div>
 
@@ -21,10 +21,10 @@
             border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
           }" class="q-pa-sm row justify-center cursor-pointer relative-position"
             @click="switchPaymentFunc(payment, paymentIndex)">
-            <q-img class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
+            <q-img no-spinner class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
             <div class="self-center">{{ payment.name }}</div>
-            <q-img v-if="paymentIndex == currentPaymentIndex" class="absolute" src="/images/select.png" width="30PX"
-              height="30px" style="bottom: 0;right: 0;"></q-img>
+            <q-img no-spinner v-if="paymentIndex == currentPaymentIndex" class="absolute" src="/images/select.png"
+              width="30PX" height="30px" style="bottom: 0;right: 0;"></q-img>
           </div>
         </div>
 
@@ -37,7 +37,8 @@
         <div class="q-mt-lg q-pa-md" style="width: 60%" v-if="paymentList[currentPaymentIndex]">
           <div class="column q-gutter-md">
             <div>
-              <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork') }}
+              <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork')
+              }}
               </div>
               <q-select outlined v-model="currentPaymentInfo" :disable="params.id > 0"
                 :options="paymentList[currentPaymentIndex].items" option-value="id" option-label="name">

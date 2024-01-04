@@ -12,7 +12,7 @@
       <!-- 标题 -->
       <div class="q-py-md q-px-lg row items-center no-wrap text-body1 text-weight-medium"
         style="background: linear-gradient(275deg, rgba(19,140,91,0.1) 0%, rgba(1,172,102,0.04) 100%);border-radius: 8px 8px 0 0;">
-        <q-img src="/images/withdraw.png" width="40PX" height="28px"></q-img>
+        <q-img no-spinner src="/images/withdraw.png" width="40PX" height="28px"></q-img>
         <div class="q-ml-md">{{ $t('withdraw') }}</div>
       </div>
 
@@ -30,8 +30,8 @@
             <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
             <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName
             }}({{ account.number.slice(-4) }})</div>
-            <q-img v-if="accountIndex == ActiveAccountIndex" class="absolute" src="/images/select.png" width="30PX"
-              height="30px" style="bottom: 0;right: 0;"></q-img>
+            <q-img no-spinner v-if="accountIndex == ActiveAccountIndex" class="absolute" src="/images/select.png"
+              width="30PX" height="30px" style="bottom: 0;right: 0;"></q-img>
           </div>
         </div>
 
