@@ -133,8 +133,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="scss">
-:deep(.q-btn-dropdown .q-btn__content) {
-  justify-content: space-between;
-}
-</style>
+<style scoped lang="scss"></style>

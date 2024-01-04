@@ -180,7 +180,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
-import { UserStore } from 'src/stores/user';
 import {
   walletsOrderIndexAPI,
   walletsBillOptionsAPI,

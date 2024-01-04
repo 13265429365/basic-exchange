@@ -151,8 +151,8 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'infoEdit',
-        route: '/settings/info',
+        name: 'SettingUpdateUserInfo',
+        route: '/settings/update/info',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'users/setting/info.vue'
@@ -162,8 +162,8 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'UpdatePassword',
-        route: '/settings/password',
+        name: 'SettingUpdatePassword',
+        route: '/settings/update/password',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'users/setting/password.vue'
@@ -173,8 +173,8 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'UpdateCode',
-        route: '/settings/code',
+        name: 'SettingUpdateSecretKey',
+        route: '/settings/update/secret-key',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'users/setting/secretKey.vue'
@@ -184,8 +184,8 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'BindPhone',
-        route: '/settings/bind/phone',
+        name: 'SettingBindTelephone',
+        route: '/settings/update/telephone',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'users/setting/telephone.vue'
@@ -195,8 +195,8 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'EnterEmail',
-        route: '/settings/enter/email',
+        name: 'SettingUpdateEmail',
+        route: '/settings/update/email',
         componentMobile: PagesTemplateMobilePath(
           TemplateName,
           'users/setting/email.vue'
