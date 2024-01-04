@@ -6,9 +6,9 @@
         <q-scroll-area style="height: 80px; width: 100%;" :thumb-style="{ display: 'none' }" :visible="false">
           <div class="row no-wrap">
             <div v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex" :style="{
-              width: '180px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+              width: '180px', height: '50px', borderRadius: '8px',
               border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
-            }" class="q-pa-sm row justify-center cursor-pointer relative-position q-mr-md"
+            }" class="q-pa-sm row justify-center cursor-pointer relative-position q-mr-md bg-grey-2"
               @click="switchPaymentFunc(payment, paymentIndex)">
               <q-img no-spinner class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
               <div class="self-center">{{ payment.name }}</div>
@@ -26,7 +26,7 @@
               <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankName') : $t('digitalNetwork')
               }}
               </div>
-              <q-select dense outlined v-model="currentPaymentInfo" :disable="params.id > 0"
+              <q-select outlined v-model="currentPaymentInfo" :disable="params.id > 0"
                 :options="paymentList[currentPaymentIndex].items" option-value="id" option-label="name">
                 <template v-slot:selected>
                   <div class="row items-center q-gutter-sm">
@@ -58,24 +58,24 @@
 
             <div v-if="paymentList[currentPaymentIndex].type == 1">
               <div class="q-mb-sm">{{ $t('ownerName') }}</div>
-              <q-input dense outlined v-model="params.realName" :placeholder="$t('ownerName')"></q-input>
+              <q-input outlined v-model="params.realName" :placeholder="$t('ownerName')"></q-input>
             </div>
 
             <div>
               <div class="q-mb-sm">{{ paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') :
                 $t('digitalAddress') }}</div>
-              <q-input dense outlined v-model="params.number"
+              <q-input outlined v-model="params.number"
                 :placeholder="paymentList[currentPaymentIndex].type == 1 ? $t('bankNumber') : $t('digitalAddress')"></q-input>
             </div>
 
             <div v-if="paymentList[currentPaymentIndex].type == 1">
               <div class="q-mb-sm">{{ $t('bankAddress') }}</div>
-              <q-input dense outlined v-model="params.code" :placeholder="$t('bankAddress')"></q-input>
+              <q-input outlined v-model="params.code" :placeholder="$t('bankAddress')"></q-input>
             </div>
           </div>
 
           <div class="q-mt-lg text-right">
-            <q-btn rounded unelevated color="primary" no-caps :label="$t('submit')" class="full-width"
+            <q-btn rounded unelevated color="primary" size="lg" no-caps :label="$t('submit')" class="full-width"
               @click="submitFunc"></q-btn>
           </div>
         </div>
@@ -174,6 +174,11 @@ export default {
     const switchPaymentFunc = (paymentInfo: any, paymentIndex: number) => {
       if (state.params.id > 0) {
         return
+      }
+
+      // 如果items长度=0，清空下拉框内容
+      if (paymentInfo.items.length <= 0) {
+        state.currentPaymentInfo = {}
       }
 
       if (paymentInfo.items.length > 0) {

@@ -10,7 +10,7 @@
       <div class="q-mt-lg q-px-lg">
         <div class="row no-wrap justify-between">
           <q-btn-dropdown class="col-4 text-weight-regular rounded-borders" unelevated flat no-caps
-            dropdown-icon="expand_more" style="height: 40px;border: 1px solid rgba(0, 0, 0, 0.24);">
+            dropdown-icon="expand_more" style="height: 56px;border: 1px solid rgba(0, 0, 0, 0.24);">
             <template v-slot:label>
               <div class="row no-wrap items-center">
                 <q-img no-spinner :src="imageSrc(countryList[countryIndex].icon ? countryList[countryIndex].icon : '')"
@@ -29,11 +29,11 @@
               </q-item>
             </q-list>
           </q-btn-dropdown>
-          <q-input style="width: 64%;" :placeholder="$t('telephone')" class="q-mb-lg" outlined dense
+          <q-input style="width: 64%;" :placeholder="$t('telephone')" class="q-mb-lg" outlined
             v-model="params.telephone" />
         </div>
-        <q-btn @click="submitFunc" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
-          color="primary" :label="$t('submit')" />
+        <q-btn @click="submitFunc" class="full-width q-mb-xl" unelevated rounded no-caps size="lg" color="primary"
+          :label="$t('submit')" />
       </div>
     </div>
   </div>

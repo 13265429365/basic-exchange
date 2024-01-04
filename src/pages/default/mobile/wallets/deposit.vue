@@ -7,9 +7,9 @@
         <div class="row no-wrap">
           <template v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex">
             <div v-for="(children, childrenIndex) in payment.items" :key="childrenIndex" :style="{
-              width: '180px', height: '50px', borderRadius: '8px', background: '#F5F6FA',
+              width: '180px', height: '50px', borderRadius: '8px',
               border: children.id == currentPaymentInfo.id ? '1px solid #01AC66' : '',
-            }" class="q-pa-sm row justify-center cursor-pointer relative-position q-mr-md"
+            }" class="q-pa-sm row cursor-pointer relative-position q-mr-md bg-grey-2"
               @click="switchPaymentFunc(children)">
               <q-img no-spinner class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
               <div class="self-center">{{ children.name }}</div>
@@ -29,7 +29,7 @@
               </q-card-section>
             </q-card>
             <div class="q-mt-md" style="width: 310px">
-              <q-input outlined dense v-model="currentPaymentInfo.dataJson.number" readonly>
+              <q-input outlined v-model="currentPaymentInfo.dataJson.number" readonly>
                 <template v-slot:append>
                   <q-icon name="content_copy" class="cursor-pointer" size="xs"
                     @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-icon>
@@ -85,7 +85,7 @@
       <div class="column full-width q-mt-md">
         <div class="q-my-sm">
           <div class="q-mb-sm">{{ $t('depositAmount') }}</div>
-          <q-input dense type="number" outlined v-model="params.money" />
+          <q-input type="number" :placeholder="$t('depositAmount')" outlined v-model="params.money" />
         </div>
 
         <div class="q-my-sm">
@@ -112,7 +112,7 @@
         </div>
 
         <q-btn unelevated rounded color="primary" :label="$t('submit')" class="q-my-md" no-caps @click="submitFunc"
-          size="md" />
+          size="lg" />
       </div>
 
     </div>
@@ -160,8 +160,11 @@ export default {
     onMounted(() => {
       walletsPaymentIndexAPI({ modes: [state.mode] }).then((res: any) => {
         state.paymentList = res
-        if (state.paymentList.length > 0 && state.paymentList[0].items.length > 0) {
-          switchPaymentFunc(state.paymentList[0].items[0])
+        for (let index: any = 0; index < state.paymentList.length; index++) {
+          if (state.paymentList[index].items.length > 0) {
+            switchPaymentFunc(state.paymentList[index].items[0])
+            break;
+          }
         }
       })
     })

@@ -28,8 +28,9 @@
       <div class="row">
         <q-btn @click="$router.push({ name: 'WalletsDeposit', query: { mode: 2 } })" unelevated
           class="text-primary bg-white" rounded no-caps style="width: 80px" :label="$t('deposit')"></q-btn>
-        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" unelevated
-          class="text-primary bg-white q-ml-md" rounded style="width: 80px" no-caps :label="$t('withdraw')"></q-btn>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12, assetsId: params.assetsId } })"
+          unelevated class="text-primary bg-white q-ml-md" rounded style="width: 80px" no-caps
+          :label="$t('withdraw')"></q-btn>
       </div>
     </div>
 
@@ -101,7 +102,7 @@
                   </q-item-section>
                   <q-item-section>
                     <div class="text-center text-body1 text-primary">
-                      {{ order.money.toFixed(2) }}
+                      {{ (order.type == 1 || order.type == 101 ? '+' : '-') }}{{ order.money.toFixed(2) }}
                     </div>
                   </q-item-section>
                   <q-item-section>

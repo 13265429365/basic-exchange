@@ -23,10 +23,11 @@
 
         <!-- 卡类型选择 -->
         <div class="row q-mt-md q-gutter-md">
-          <div v-for="(account, accountIndex) in accountList" :key="accountIndex" :style="{
-            width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
-            border: accountIndex == ActiveAccountIndex ? '1px solid #01AC66' : '',
-          }" class="row cursor-pointer items-center relative-position">
+          <div v-for="(account, accountIndex) in accountList" :key="accountIndex"
+            @click="ActiveAccountIndex = accountIndex" :style="{
+              width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+              border: accountIndex == ActiveAccountIndex ? '1px solid #01AC66' : '',
+            }" class="row cursor-pointer items-center relative-position">
             <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
             <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName
             }}({{ account.number.slice(-4) }})</div>
@@ -42,7 +43,16 @@
               {{ $t('availableAmount') }}
             </div>
             <div class="text-bold text-body1" style="color: #F45E0C;">
-              {{ $t('currency') }}{{ Number(userInfo.money).toFixed(2) }}
+              <span v-if="!$route.query.assetsId">{{ $t('currency') }}
+              </span>
+              <span v-if="$route.query.assetsId">
+                {{ Number(userAssetsInfo.money) }}
+                <span class="text-caption">{{ userAssetsInfo.name }}</span>
+              </span>
+              <span v-else>
+                {{ Number(userInfo.money).toFixed(2) }}
+              </span>
+
             </div>
           </div>
 
@@ -50,9 +60,10 @@
             <div class="q-mb-xs text-grey">{{ $t('withdrawAmount') }}</div>
             <div>
               <q-input class="q-mr-sm" type="number" outlined v-model.number="params.money"
-                :placeholder="$t('withdrawAmount')">
+                :placeholder="$route.query.assetsId ? userAssetsInfo.name : $t('withdrawAmount')">
                 <template v-slot:append>
-                  <q-btn flat dense :label="$t('all')" color="primary" @click="params.money = userInfo.money"></q-btn>
+                  <q-btn flat dense :label="$t('all')" color="primary"
+                    @click="$route.query.assetsId ? params.money = userAssetsInfo.money : params.money = userInfo.money"></q-btn>
                 </template>
               </q-input>
             </div>
@@ -93,17 +104,18 @@
 import { reactive, toRefs, onMounted } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils';
-import { walletsAccountIndexAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
+import { walletsAccountIndexAPI, walletsUserAssetsInfoAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 export default {
   name: 'withdrawalIndex',
   setup() {
     const { t } = useI18n()
     const $router = useRouter()
+    const $route = useRoute()
     const $userStore = UserStore()
     const $initStore = InitStore()
 
@@ -122,6 +134,9 @@ export default {
 
       // 银行卡列表
       accountList: [] as any,
+
+      // 资产页面点击提现后的余额
+      userAssetsInfo: {} as any,
     });
 
     onMounted(() => {
@@ -129,6 +144,13 @@ export default {
       walletsAccountIndexAPI({ modes: [Number(state.mode)] }).then((res: any) => {
         state.accountList = res
       })
+
+      // 如果assetsId存在，获取资产
+      if ($route.query.assetsId) {
+        walletsUserAssetsInfoAPI({ assetsId: Number($route.query.assetsId) }).then((res: any) => {
+          state.userAssetsInfo = res
+        })
+      }
     })
 
     const submitFunc = () => {

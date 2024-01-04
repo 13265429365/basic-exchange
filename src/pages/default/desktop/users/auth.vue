@@ -8,25 +8,25 @@
         <div class="q-gutter-md q-mt-xl">
           <div>
             <div class="q-mb-xs">{{ $t('idName') }}</div>
-            <q-input outlined dense v-model="params.realName"
+            <q-input outlined v-model="params.realName"
               :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
               :placeholder="$t('idName')" />
           </div>
           <div>
             <div class="q-mb-xs">{{ $t('idNumber') }}</div>
-            <q-input outlined dense v-model="params.number"
+            <q-input outlined v-model="params.number"
               :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
               :placeholder="$t('idNumber')" />
           </div>
           <div>
             <div class="q-mb-xs">{{ $t('telephone') }}</div>
-            <q-input outlined dense v-model="params.telephone"
+            <q-input outlined v-model="params.telephone"
               :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
               :placeholder="$t('telephone')" />
           </div>
           <div>
             <div class="q-mb-xs">{{ $t('address') }}</div>
-            <q-input outlined dense v-model="params.address"
+            <q-input outlined v-model="params.address"
               :readonly="params.status == authStatus.pending || params.status == authStatus.complete"
               :placeholder="$t('address')" />
           </div>

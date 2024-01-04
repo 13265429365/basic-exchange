@@ -2,17 +2,21 @@
   <div class="column full-height">
     <div class="col bg-white q-pa-md">
       <div class="text-weight-medium q-pb-sm">{{ $t('idName') }}</div>
-      <q-input outlined :readonly="params.status == authStatus.pending || params.status == authStatus.complete" dense
-        v-model="params.realName" class="q-mb-md" />
+      <q-input :placeholder="$t('idName')" outlined
+        :readonly="params.status == authStatus.pending || params.status == authStatus.complete" v-model="params.realName"
+        class="q-mb-md" />
       <div class="text-weight-medium q-pb-sm">{{ $t('idNumber') }}</div>
-      <q-input outlined :readonly="params.status == authStatus.pending || params.status == authStatus.complete" dense
-        v-model="params.number" class="q-mb-md" />
+      <q-input :placeholder="$t('idNumber')" outlined
+        :readonly="params.status == authStatus.pending || params.status == authStatus.complete" v-model="params.number"
+        class="q-mb-md" />
       <div class="text-weight-medium q-pb-sm">{{ $t('telephone') }}</div>
-      <q-input outlined :readonly="params.status == authStatus.pending || params.status == authStatus.complete" dense
-        v-model="params.telephone" class="q-mb-md" />
+      <q-input :placeholder="$t('telephone')" outlined
+        :readonly="params.status == authStatus.pending || params.status == authStatus.complete" v-model="params.telephone"
+        class="q-mb-md" />
       <div class="text-weight-medium q-pb-sm">{{ $t('address') }}</div>
-      <q-input outlined :readonly="params.status == authStatus.pending || params.status == authStatus.complete" dense
-        v-model="params.address" class="q-mb-md" />
+      <q-input :placeholder="$t('address')" outlined
+        :readonly="params.status == authStatus.pending || params.status == authStatus.complete" v-model="params.address"
+        class="q-mb-md" />
 
       <div class="text-weight-medium">{{ $t('idPhoto') }}</div>
 
@@ -46,7 +50,7 @@
         <div class="text-caption text-weight-medium text-center q-mt-sm">{{ $t('idPhoto2') }}</div>
       </div>
 
-      <q-btn unelevated rounded color="primary" :label="$t('submit')" class="full-width q-my-xl" no-caps
+      <q-btn unelevated rounded color="primary" size="lg" :label="$t('submit')" class="full-width q-my-xl" no-caps
         @click="submitFunc" />
     </div>
   </div>

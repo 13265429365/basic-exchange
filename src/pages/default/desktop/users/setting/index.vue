@@ -61,12 +61,12 @@
           </div>
 
           <div v-else-if="currentSetting.params == 'sex'">
-            <q-select outlined dense v-model="params[currentSetting.params]" :options="sexList" option-value="value"
+            <q-select outlined v-model="params[currentSetting.params]" :options="sexList" option-value="value"
               option-label="name" map-options emit-value dropdown-icon="expand_more" />
           </div>
 
           <div v-else-if="currentSetting.params == 'birthdayStr'">
-            <q-input outlined dense v-model="params[currentSetting.params]" :label="$t(currentSetting.name)" mask="date">
+            <q-input outlined v-model="params[currentSetting.params]" :label="$t(currentSetting.name)" mask="date">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
                   <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -82,22 +82,22 @@
           </div>
 
           <div v-else-if="currentSetting.params == 'password' || currentSetting.params == 'secretKey'">
-            <q-input v-model="params.oldPassword" outlined dense class="q-mb-md"
-              :type="showPwd.oldPwd ? 'text' : 'password'" :label="$t('oldPassword')">
+            <q-input v-model="params.oldPassword" outlined class="q-mb-md" :type="showPwd.oldPwd ? 'text' : 'password'"
+              :label="$t('oldPassword')">
               <template v-slot:append>
                 <q-icon @click="showPwd.oldPwd = !showPwd.oldPwd"
                   :name="showPwd.oldPwd ? 'o_visibility' : 'o_visibility_off'"></q-icon>
               </template>
             </q-input>
-            <q-input v-model="params.newPassword" outlined dense class="q-mb-md"
-              :type="showPwd.newPwd ? 'text' : 'password'" :label="$t('newPassword')">
+            <q-input v-model="params.newPassword" outlined class="q-mb-md" :type="showPwd.newPwd ? 'text' : 'password'"
+              :label="$t('newPassword')">
               <template v-slot:append>
                 <q-icon @click="showPwd.newPwd = !showPwd.newPwd"
                   :name="showPwd.newPwd ? 'o_visibility' : 'o_visibility_off'"></q-icon>
               </template>
             </q-input>
-            <q-input v-model="params.cmfPassword" outlined dense class="q-mb-md"
-              :type="showPwd.cmfPwd ? 'text' : 'password'" :label="$t('cmfPassword')">
+            <q-input v-model="params.cmfPassword" outlined class="q-mb-md" :type="showPwd.cmfPwd ? 'text' : 'password'"
+              :label="$t('cmfPassword')">
               <template v-slot:append>
                 <q-icon @click="showPwd.cmfPwd = !showPwd.cmfPwd"
                   :name="showPwd.cmfPwd ? 'o_visibility' : 'o_visibility_off'"></q-icon>
@@ -107,7 +107,7 @@
 
           <div v-else-if="currentSetting.params == 'telephone'">
             <div class="row no-wrap justify-between">
-              <q-btn-dropdown dense class="col-4" color="grey" outline dropdown-icon="expand_more">
+              <q-btn-dropdown class="col-4" color="grey" outline dropdown-icon="expand_more">
                 <template v-slot:label>
                   <div class="row no-wrap items-center">
                     <q-img no-spinner :src="imageSrc(countryList[currentCountryIndex].icon)" width="18px" height="14px" />
@@ -127,19 +127,18 @@
               </q-btn-dropdown>
 
               <div class="col-8">
-                <q-input dense class="q-ml-xs" outlined v-model="params[currentSetting.params]"
-                  :label="$t('telephone')" />
+                <q-input class="q-ml-xs" outlined v-model="params[currentSetting.params]" :label="$t('telephone')" />
               </div>
             </div>
           </div>
 
           <div v-else-if="currentSetting.params == 'desc'">
-            <q-input outlined dense type="textarea" v-model="params[currentSetting.params]"
+            <q-input outlined type="textarea" v-model="params[currentSetting.params]"
               :label="$t(currentSetting.name)"></q-input>
           </div>
 
           <div v-else>
-            <q-input outlined dense v-model="params[currentSetting.params]" :label="$t(currentSetting.name)"></q-input>
+            <q-input outlined v-model="params[currentSetting.params]" :label="$t(currentSetting.name)"></q-input>
           </div>
         </q-card-section>
 

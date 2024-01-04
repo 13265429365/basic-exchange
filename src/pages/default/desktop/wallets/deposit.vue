@@ -17,8 +17,7 @@
             <div v-for="(children, childrenIndex) in payment.items" :key="childrenIndex" :style="{
               width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
               border: children.id == currentPaymentInfo.id ? '1px solid #01AC66' : '',
-            }" class="q-pa-sm row justify-center cursor-pointer relative-position"
-              @click="switchPaymentFunc(children)">
+            }" class="q-pa-sm row cursor-pointer relative-position" @click="switchPaymentFunc(children)">
               <q-img no-spinner class="q-mr-sm" :src="imageSrc(children.icon)" width="32px" height="32px" />
               <div class="self-center">{{ children.name }}</div>
               <q-img no-spinner v-if="children.id == currentPaymentInfo.id" class="absolute" src="/images/select.png"
@@ -41,7 +40,7 @@
                 </q-card-section>
               </q-card>
               <div class="q-mt-md" style="width: 310px">
-                <q-input outlined dense v-model="currentPaymentInfo.dataJson.number" readonly>
+                <q-input outlined v-model="currentPaymentInfo.dataJson.number" readonly>
                   <template v-slot:append>
                     <q-icon name="content_copy" class="cursor-pointer" size="xs"
                       @click="copyToClipboardFunc(currentPaymentInfo.dataJson.number)"></q-icon>
@@ -167,8 +166,11 @@ export default {
     onMounted(async () => {
       walletsPaymentIndexAPI({ modes: [state.mode] }).then((res: any) => {
         state.paymentList = res
-        if (state.paymentList.length > 0 && state.paymentList[0].items.length > 0) {
-          switchPaymentFunc(state.paymentList[0].items[0])
+        for (let index: any = 0; index < state.paymentList.length; index++) {
+          if (state.paymentList[index].items.length > 0) {
+            switchPaymentFunc(state.paymentList[index].items[0])
+            break;
+          }
         }
       })
     })

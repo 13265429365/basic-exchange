@@ -17,9 +17,9 @@
         <!-- 卡类型选择 -->
         <div class="row q-mt-md q-gutter-md">
           <div v-for="(payment, paymentIndex) in paymentList" :key="paymentIndex" :style="{
-            width: '220px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
+            width: '220px', height: '50px', borderRadius: '8px',
             border: paymentIndex == currentPaymentIndex ? '1px solid #01AC66' : '',
-          }" class="q-pa-sm row justify-center cursor-pointer relative-position"
+          }" class="q-pa-sm row justify-center cursor-pointer relative-position bg-grey-3"
             @click="switchPaymentFunc(payment, paymentIndex)">
             <q-img no-spinner class="q-mr-sm" :src="imageSrc(payment.icon)" width="32px" height="32px" />
             <div class="self-center">{{ payment.name }}</div>
@@ -183,6 +183,11 @@ export default {
     const switchPaymentFunc = (paymentInfo: any, paymentIndex: number) => {
       if (state.params.id > 0) {
         return
+      }
+
+      // 如果items长度=0，清空下拉框内容
+      if (paymentInfo.items.length <= 0) {
+        state.currentPaymentInfo = {}
       }
 
       if (paymentInfo.items.length > 0) {

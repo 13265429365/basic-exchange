@@ -8,9 +8,12 @@
           {{ data.title }}
         </q-toolbar-title>
 
-        <q-btn dense flat round :icon="data.rightBtn.icon" color="grey-8" :size="!data.rightBtn.size ? 'md' : 'xs'"
-          @click="data.rightBtn.callback" />
-        <!-- <q-icon dense flat round :name="data.rightBtn.icon" @click="data.rightBtn.callback" /> -->
+        <q-icon v-if="data.rightBtn.icon" @click="data.rightBtn.callback" size="18px" :name="data.rightBtn.icon"></q-icon>
+        <span v-if="data.rightBtn.text" @click="data.rightBtn.callback">{{ data.rightBtn.text }}</span>
+        <q-btn v-else :ripple="false" flat color="grey-8" size="md"></q-btn>
+        <!-- <q-btn :ripple="false" dense flat round :icon="data.rightBtn.icon ?? ''" color="grey-8" size="md"
+          @click="data.rightBtn.callback">{{
+            data.rightBtn.text ?? '' }}</q-btn> -->
       </q-toolbar>
     </q-header>
     <q-page-container>

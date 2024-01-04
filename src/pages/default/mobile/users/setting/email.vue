@@ -2,9 +2,9 @@
   <div>
     <div class="q-mt-lg q-px-lg">
       <q-form>
-        <q-input class="q-mb-md" v-model="params.email" :label="$t('email')" outlined dense type="text" />
-        <q-btn @click="submitFunc()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
-          color="primary" :label="$t('submit')" />
+        <q-input class="q-mb-md" v-model="params.email" :label="$t('email')" outlined type="text" />
+        <q-btn @click="submitFunc()" size="lg" class="full-width q-mb-xl" unelevated rounded no-caps color="primary"
+          :label="$t('submit')" />
       </q-form>
     </div>
   </div>

@@ -13,10 +13,13 @@
                             1000), 'YYYY/MM/DD HH:mm:ss') }}</div>
                     </div>
                     <div>
-                        <div class="text-body1 text-weight-bold text-right q-mb-xs">
-                            {{ bill.money }}
+                        <div class="text-body1 text-weight-bold text-primary text-right q-mb-xs" v-if="bill.money > 0">
+                            +{{ bill.money.toFixed(2) }}
                         </div>
-                        <div class="text-weight-medium text-grey-7 text-right text-caption">
+                        <div class="text-body1 text-weight-bold text-red text-right q-mb-xs" v-else>
+                            {{ bill.money.toFixed(2) }}
+                        </div>
+                        <div class="text-grey-7 text-right text-caption">
                             {{ $t('balance') }}:{{ bill.balance.toFixed(2) }}
                         </div>
                     </div>
@@ -107,10 +110,11 @@ export default defineComponent({
     setup(props: any, context: any) {
         const { t } = useI18n()
         context.emit('update', {
-            title: t('myWallet'),
+            title: t('billDetails'),
             rightBtn: {
-                icon: t('filter'),
-                size: true,
+                icon: '',
+                text: t('filter'),
+                size: 'xs',
                 callback() {
                     state.billSelectDialog = true
                 },

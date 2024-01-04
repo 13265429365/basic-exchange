@@ -140,8 +140,8 @@
       </div>
 
       <!-- 前往登录、点击注册 -->
-      <q-btn @click="submitFunc()" class="full-width q-my-lg" unelevated rounded no-caps style="height: 44px;"
-        color="primary" :label="$t('register')" />
+      <q-btn @click="submitFunc()" class="full-width q-my-lg" unelevated rounded no-caps size="lg" color="primary"
+        :label="$t('register')" />
       <div @click="$router.push('/login')" class="text-center q-pb-xl text-primary cursor-pointer">
         {{ $t('toLogin') }}
       </div>

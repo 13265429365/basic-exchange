@@ -34,8 +34,8 @@
             <div>{{ $t('deposit') }}</div>
           </div>
         </q-btn>
-        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" style="width: 47%;"
-          class="bg-white q-py-sm rounded-borders" no-caps unelevated>
+        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12, assetsId: params.assetsId } })"
+          style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img no-spinner class="q-mr-sm" :src="imageSrc('/assets/icon/menu/withdraw.png')" width="42px"
               height="42px" />
@@ -63,8 +63,8 @@
           </div>
           <div>
             <div
-              :class="['text-body1 text-weight-bold text-right q-mb-xs', { 'text-primary': order.status == 10, 'text-red': order.status == -1 }]">
-              {{ (order.type == 1 ? '+' : '-') }}{{ order.money }}
+              :class="['text-body1 text-weight-bold text-right q-mb-xs', { 'text-primary': order.status == 10, 'text-red': order.status == -1, 'text-grey': order.status == 20 }]">
+              {{ (order.type == 1 || order.type == 101 ? '+' : '-') }}{{ order.money }}
             </div>
             <div v-if="order.status == -1" class="text-weight-medium text-red text-right text-caption">
               {{ $t('refuse') }}
@@ -102,6 +102,7 @@ export default defineComponent({
       title: t('myAssets'),
       rightBtn: {
         icon: 'o_event_note',
+        text: '',
         callback() {
           $router.push({ name: 'WalletsAccountDetails', query: { type: 'assets' } })
         },

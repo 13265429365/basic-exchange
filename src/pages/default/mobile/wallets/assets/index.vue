@@ -30,8 +30,7 @@
             <div>{{ $t('deposit') }}</div>
           </div>
         </q-btn>
-        <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" style="width: 47%;"
-          class="bg-white q-py-sm rounded-borders" no-caps unelevated>
+        <q-btn @click="toWithdraw" style="width: 47%;" class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img no-spinner class="q-mr-sm" :src="imageSrc('/assets/icon/menu/withdraw.png')" width="42px"
               height="42px" />
@@ -69,9 +68,9 @@
                     height: 12px;
                     border-radius: 2px;" :style="{ background: assets.itemStyle.color }" />
                   <div class="q-mr-md text-grey-7">{{ assets.name }}</div>
-                  <div>- {{ Math.round(assets.money / percentage * 100) }}%</div>
+                  <div>- {{ (assets.moneyRate / userAssetsInfo.moneyRateSum * 100).toFixed(2) }}%</div>
                 </div>
-                <div class="text-weight-bold">{{ $t('currency') }}{{ assets.money.toFixed(2) }}</div>
+                <div class="text-weight-bold">{{ $t('currency') }}{{ assets.moneyRate.toFixed(2) }}</div>
               </div>
               <q-separator v-if="assetsIndex < userAssetsInfo.userAssetsList.length - 1" class="q-my-xs"
                 style="background: #F4F5FD" />
@@ -97,7 +96,7 @@
           <div class="text-weight-bold">{{ assets.name }}</div>
         </div>
         <div>
-          <div class="text-weight-bold text-right" style="font-size: 16px;">{{ $t('currency') }}{{ assets.money.toFixed(2)
+          <div class="text-weight-bold text-right" style="font-size: 16px;">{{ assets.money
           }}</div>
           <div class="text-right text-grey-5" style="font-size: 12px;">≈{{ $t('currency') }}{{ assets.moneyRate.toFixed(2)
           }}</div>
@@ -118,7 +117,9 @@ import { InitStore } from 'src/stores/init';
 import * as echarts from 'echarts'
 import { walletsUserAssetsIndexAPI } from 'src/apis/wallets';
 import { imageSrc } from 'src/utils';
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n';
+import { NotifyNegative } from 'src/utils/notify';
 
 
 export default defineComponent({
@@ -130,6 +131,7 @@ export default defineComponent({
     })
 
     const $initStore = InitStore()
+    const $router = useRouter()
     const echartsLineId = 'line'
     const echartsPieId = 'pie'
     const colorList = [
@@ -140,8 +142,6 @@ export default defineComponent({
     ]
 
     const state = reactive({
-      // 饼状图百分比
-      percentage: 0 as any,
       echarts: {} as any,
       userAssetsInfo: { moneySum: 0, moneyRateSum: 0, userAssetsList: [] as any } as any,
       showMoney: true,
@@ -168,11 +168,10 @@ export default defineComponent({
         state.userAssetsInfo = res
         state.echarts.series = state.userAssetsInfo.echarts
         state.userAssetsInfo.userAssetsList.forEach((item: any, i: any) => {
-          item.value = item.money
+          item.value = item.moneyRate
           item.itemStyle = {
             color: colorList[i]
           }
-          state.percentage += Number(item.money)
         });
 
         // 初始化图形
@@ -201,7 +200,7 @@ export default defineComponent({
       state.myChart.setOption(state.pieOption = {
         title: {
           text: t('totalAssets'),
-          subtext: state.percentage,
+          subtext: state.userAssetsInfo.moneyRateSum,
           left: 'center', // 标题居中
           top: '35%',
           textStyle: { // 标题样式
@@ -255,6 +254,15 @@ export default defineComponent({
       window.addEventListener('resize', () => {
         setTimeout(state.myChart.resize, 300);
       });
+    };
+
+    // 点击提现
+    const toWithdraw = () => {
+      if (state.userAssetsInfo.userAssetsList && state.userAssetsInfo.userAssetsList.length <= 0) {
+        NotifyNegative(t('notAssets'))
+        return false
+      }
+      $router.push({ name: 'WalletsWithdraw', query: { mode: 12, assetsId: state.userAssetsInfo.userAssetsList[0].walletAssetsId } })
     }
 
     return {
@@ -264,6 +272,7 @@ export default defineComponent({
       colorList,
       echartsLineId,
       echartsPieId,
+      toWithdraw,
     }
   },
 });

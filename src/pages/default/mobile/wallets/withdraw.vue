@@ -16,10 +16,11 @@
         <!-- 卡类型选择 -->
         <q-scroll-area style="height: 80px; width: 100%;" :thumb-style="{ display: 'none' }" :visible="false">
           <div class="row no-wrap">
-            <div v-for="(account, accountIndex) in accountList" :key="accountIndex" :style="{
-              width: '200px', height: '50px', borderRadius: '8px', background: '#F8F9FC',
-              border: accountIndex == activeAccountIndex ? '1px solid #01AC66' : '',
-            }" class="row cursor-pointer items-center relative-position q-mr-md no-wrap">
+            <div v-for="(account, accountIndex) in accountList" :key="accountIndex"
+              @click="activeAccountIndex = accountIndex" :style="{
+                width: '200px', height: '50px', borderRadius: '8px',
+                border: accountIndex == activeAccountIndex ? '1px solid #01AC66' : '',
+              }" class="row cursor-pointer items-center relative-position q-mr-md no-wrap bg-grey-2">
               <q-img no-spinner class="q-ml-sm" :src="imageSrc(account.icon)" width="32px" height="32px" />
               <div class="text-body1 q-ml-sm ellipsis" style="width: 168px">{{ account.paymentName
               }}({{ account.number.slice(-4) }})</div>
@@ -31,21 +32,33 @@
 
         <div>
           <div class="text-body2 text-weight-medium q-pb-xs">{{ $t('withdrawAmount') }}</div>
-          <q-input dense type="number" outlined v-model="params.money" class="q-mb-sm"
-            :placeholder="$t('withdrawAmount')">
+          <q-input type="number" outlined v-model="params.money" class="q-mb-sm"
+            :placeholder="$route.query.assetsId ? userAssetsInfo.name : $t('withdrawAmount')">
             <template v-slot:append>
-              <div @click="params.money = userInfo.money" style="font-size: 14px" class="text-primary">{{ $t('all')
-              }}
+              <div @click="$route.query.assetsId ? params.money = userAssetsInfo.money : params.money = userInfo.money"
+                style="font-size: 14px" class="text-primary">{{ $t('all')
+                }}
               </div>
             </template>
           </q-input>
-          <div class="text-grey-7">{{ $t('balance') }}：￥{{ userInfo.money }}</div>
+          <div style="color: #F45E0C;">
+            <span class="text-grey-7">{{ $t('availableAmount') }}:</span>
+
+            <span v-if="!$route.query.assetsId">{{ $t('currency') }}</span>
+            <span v-if="$route.query.assetsId">
+              {{ Number(userAssetsInfo.money) }}
+              <span class="text-caption">{{ userAssetsInfo.name }}</span>
+            </span>
+            <span v-else>
+              {{ Number(userInfo.money).toFixed(2) }}
+            </span>
+          </div>
         </div>
       </div>
 
       <!-- 提现按钮 -->
-      <q-btn unelevated rounded color="primary" :label="$t('withdraw')" class="full-width q-my-md" no-caps
-        @click="submitFunc" />
+      <q-btn unelevated rounded color="primary" :label="$t('withdraw')" class="full-width q-my-md q-mt-xl" size="lg"
+        no-caps @click="submitFunc" />
     </div>
 
     <!-- 安全密码 -->
@@ -57,7 +70,7 @@
 
         <q-card-section>
           <div class="q-mt-md">
-            <q-input dense outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
+            <q-input outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
           </div>
         </q-card-section>
 
@@ -74,11 +87,11 @@
 import { reactive, toRefs, onMounted } from 'vue';
 import { NotifyPositive } from 'src/utils/notify';
 import { imageSrc } from 'src/utils';
-import { walletsAccountIndexAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
+import { walletsAccountIndexAPI, walletsUserAssetsInfoAPI, walletsWithdrawCreateAPI } from 'src/apis/wallets';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 export default {
   name: 'WalletsWithdrawIndex',
@@ -89,6 +102,7 @@ export default {
     })
 
     const $router = useRouter()
+    const $route = useRoute()
     const $userStore = UserStore()
     const $initStore = InitStore()
 
@@ -107,6 +121,9 @@ export default {
 
       // 银行卡列表
       accountList: [] as any,
+
+      // 资产页面点击提现后的余额
+      userAssetsInfo: {} as any,
     });
 
     onMounted(() => {
@@ -114,6 +131,13 @@ export default {
       walletsAccountIndexAPI({ modes: [Number(state.mode)] }).then((res: any) => {
         state.accountList = res
       })
+
+      // 如果assetsId存在，获取资产
+      if ($route.query.assetsId) {
+        walletsUserAssetsInfoAPI({ assetsId: Number($route.query.assetsId) }).then((res: any) => {
+          state.userAssetsInfo = res
+        })
+      }
     })
 
     const submitFunc = () => {

@@ -3,7 +3,7 @@
     <div class="row justify-between no-wrap q-pt-xl q-px-md q-pb-lg bg-white">
       <!-- 头像 -->
       <div class="row">
-        <q-avatar class="q-mr-md avatar">
+        <q-avatar @click="$router.push({ name: 'SettingUpdateUserInfo' })" class="q-mr-md avatar">
           <q-img no-spinner :src="imageSrc(userInfo.avatar ?? config.logo)" width="50px" height="50px" />
         </q-avatar>
         <div class="col-8">
@@ -14,22 +14,26 @@
             {{ userInfo.email }}
           </div>
           <div class="row no-wrap">
-            <q-chip class="text-white" size="sm" style="background: #322B19;border: 1px solid #F7DEB6;">
-              <q-img no-spinner src="/images/icons/vip-icon.png" class="q-mr-xs" width="11px" height="11px" />
-              <span style="color: #F7DEB6;">Lv{{ userInfo.level }}</span>
-            </q-chip>
+            <div @click="$router.push({ name: 'UserLevel' })">
+              <q-chip class="text-white" size="sm" style="background: #322B19;border: 1px solid #F7DEB6;">
+                <q-img no-spinner src="/images/icons/vip-icon.png" class="q-mr-xs" width="11px" height="11px" />
+                <span style="color: #F7DEB6;">Lv{{ userInfo.level }}</span>
+              </q-chip>
+            </div>
             <q-chip class="text-grey-9 bg-white" size="sm" style="border: 1px solid #F1F1F1;">
               <q-img no-spinner src="/images/icons/credit.png" class="q-mr-xs" width="11px" height="11px" />
               {{ $t('creditScore') + userInfo.score }}
             </q-chip>
-            <q-chip class="text-primary bg-white" size="sm" style="border: 1px solid #01AC66;">
-              {{ userInfo.authStatus ? $t('realNameFailed') : $t('alreadyRealName') }}
-              <q-icon class="text-primary" name="keyboard_arrow_right" size="11px"></q-icon>
-            </q-chip>
+            <div @click="$router.push({ name: 'UserRealAuth' })">
+              <q-chip class="text-primary bg-white" size="sm" style="border: 1px solid #01AC66;">
+                {{ userInfo.authStatus ? $t('realNameFailed') : $t('alreadyRealName') }}
+                <q-icon class="text-primary" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+            </div>
           </div>
         </div>
       </div>
-      <div>
+      <div @click="$router.push({ name: 'SettingUpdateUserInfo' })" class="row items-center">
         <q-icon name="keyboard_arrow_right" size="24px"></q-icon>
       </div>
     </div>
@@ -66,8 +70,8 @@
           <q-separator style="background: #F4F5FD;" inset />
         </div>
       </q-list>
-      <q-btn @click="dialog = true" class="full-width q-mb-lg q-mt-md" unelevated rounded no-caps color="primary"
-        :label="$t('logout')" />
+      <q-btn @click="dialog = true" class="full-width q-mb-lg q-mt-md" size="lg" unelevated rounded no-caps
+        color="primary" :label="$t('logout')" />
     </div>
 
     <!-- 退出登录 -->
@@ -85,9 +89,10 @@
             <div class="text-grey-10">{{ $t('logoutSmall') }}</div>
           </div>
           <div class="row justify-between no-wrap">
-            <q-btn @click="dialog = false" class="q-mr-md text-primary bg-white col-5" unelevated rounded no-caps
-              style="border:1px solid #01AC66" :label="$t('cancel')" />
-            <q-btn @click="logoutFunc" class="col-5" unelevated rounded no-caps color="primary" :label="$t('logout')" />
+            <q-btn @click="dialog = false" size="lg" class="q-mr-md text-primary bg-white col-5" unelevated rounded
+              no-caps style="border:1px solid #01AC66" :label="$t('cancel')" />
+            <q-btn @click="logoutFunc" size="lg" class="col-5" unelevated rounded no-caps color="primary"
+              :label="$t('logout')" />
           </div>
         </q-card-section>
       </q-card>

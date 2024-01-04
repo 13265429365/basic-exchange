@@ -46,8 +46,8 @@
         </ul>
       </div>
 
-      <q-btn @click="submitFunc(levelList[currentLevelIndex])" unelevated rounded color="primary" :label="$t('buy')"
-        class="full-width q-my-xl" no-caps style="height: 44px;" />
+      <q-btn @click="submitFunc(levelList[currentLevelIndex])" unelevated rounded size="lg" color="primary"
+        :label="$t('buy')" class="full-width q-my-xl" no-caps style="height: 44px;" />
     </div>
 
   </div>

@@ -43,7 +43,6 @@
 
       <!-- 明细列表 -->
       <div v-if="orderList.length <= 0" class="text-center text-grey q-mt-md">{{ $t('noData') }}</div>
-
       <div v-for="(order, orderIndex) in orderList" :key="orderIndex" class="rounded-borders bg-white q-pa-md  q-mb-md">
         <div class="row justify-between">
           <div>
@@ -53,7 +52,7 @@
           </div>
           <div>
             <div
-              :class="['text-body1 text-weight-bold text-right q-mb-xs', { 'text-primary': order.status == 10, 'text-red': order.status == -1 }]">
+              :class="['text-body1 text-weight-bold text-right q-mb-xs', { 'text-primary': order.status == 10, 'text-red': order.status == -1, 'text-grey': order.status == 20 }]">
               {{ (order.type == 1 ? '+' : '-') }}{{ order.money }}
             </div>
             <div v-if="order.status == -1" class="text-weight-medium text-red text-right text-caption">
@@ -62,7 +61,7 @@
             <div v-if="order.status == 10" class="text-weight-medium text-primary text-right text-caption">
               {{ $t('pending') }}
             </div>
-            <div v-if="order.status == 20" class="text-weight-medium text-right text-caption">
+            <div v-if="order.status == 20" class="text-weight-medium text-grey text-right text-caption">
               {{ $t('complete') }}
             </div>
           </div>
@@ -81,6 +80,7 @@ import { imageSrc } from 'src/utils';
 import { UserStore } from 'src/stores/user';
 import { InitStore } from 'src/stores/init';
 import { walletsOrderIndexAPI } from 'src/apis/wallets';
+import { userInfoAPI } from 'src/apis/user';
 import { date } from 'quasar'
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
@@ -92,7 +92,9 @@ export default defineComponent({
     context.emit('update', {
       title: t('myWallet'),
       rightBtn: {
+        text: '',
         icon: 'o_event_note',
+        size: 'md',
         callback() {
           $router.push({ name: 'WalletsAccountDetails' })
         },
@@ -105,7 +107,7 @@ export default defineComponent({
     const WalletOrderTypeDeposit = 1
     const WalletOrderTypeWithdraw = 11
     const initPagination = {
-      rowsPerPage: 20, //  每页显示条数
+      rowsPerPage: 5, //  每页显示条数
       page: 1, //  当前页数
       descending: true,
       sortBy: 'created_at',
@@ -127,7 +129,11 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      state.userInfo = $userStore.userInfo
+      userInfoAPI().then((res: any) => {
+        $userStore.updateUserInfo(res)
+        state.userInfo = res
+      })
+
       state.params.types = [WalletOrderTypeDeposit, WalletOrderTypeWithdraw]
       walletsOrderIndexAPI(state.params).then((res: any) => {
         state.orderList = res.items

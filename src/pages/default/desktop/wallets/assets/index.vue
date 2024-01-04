@@ -21,8 +21,7 @@
               class="bg-white text-primary" size="sm" style="padding: 6px 18px">
               <div>{{ $t('deposit') }}</div>
             </q-btn>
-            <q-btn @click="$router.push({ name: 'WalletsWithdraw', query: { mode: 12 } })" flat rounded
-              class="bg-white text-primary" size="sm" style="padding: 6px 18px">
+            <q-btn @click="toWithdraw" flat rounded class="bg-white text-primary" size="sm" style="padding: 6px 18px">
               <div>{{ $t('withdraw') }}</div>
             </q-btn>
           </q-card-actions>
@@ -216,7 +215,10 @@ import { UserStore } from 'src/stores/user';
 import * as echarts from 'echarts'
 import { walletsUserAssetsIndexAPI, walletsBillIndexAPI, walletsOrderIndexAPI, walletsBillOptionsAPI } from 'src/apis/wallets';
 import { imageSrc } from 'src/utils';
+import { NotifyNegative } from 'src/utils/notify';
 import { date } from 'quasar'
+import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'WalletsAssetsIndex',
@@ -226,6 +228,8 @@ export default defineComponent({
     const WalletOrderTypeAssetsWithdraw = 12
 
     const $userStore = UserStore()
+    const $router = useRouter()
+    const { t } = useI18n()
     const initPagination = {
       rowsPerPage: 20, //  每页显示条数
       page: 1, //  当前页数
@@ -363,6 +367,15 @@ export default defineComponent({
       });
     };
 
+    // 点击提现
+    const toWithdraw = () => {
+      if (state.userAssetsInfo.userAssetsList && state.userAssetsInfo.userAssetsList.length <= 0) {
+        NotifyNegative(t('notAssets'))
+      } else {
+        $router.push({ name: 'WalletsWithdraw', query: { mode: 12, assetsId: state.userAssetsInfo.userAssetsList[0].walletAssetsId } })
+      }
+    }
+
     return {
       imageSrc,
       date,
@@ -372,6 +385,7 @@ export default defineComponent({
       changeTabFunc,
       selectBillTypeFunc,
       walletBillFilterFunc,
+      toWithdraw,
     }
   }
 });

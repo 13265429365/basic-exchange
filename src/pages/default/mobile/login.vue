@@ -56,8 +56,8 @@
 
       <!-- 忘记密码、登录、注册 -->
       <div class="text-right q-mb-lg text-grey-7 cursor-pointer">{{ $t('forgotPassword') }}</div>
-      <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps style="height: 44px"
-        color="primary" :label="$t('login')" />
+      <q-btn @click="submitFunc()" class="full-width q-mb-lg" unelevated rounded no-caps size="lg" color="primary"
+        :label="$t('login')" />
       <div @click="$router.push({ name: 'UserRegister' })" v-if="config.settings.login.showRegister"
         class="text-center text-primary q-mb-xl cursor-pointer">
         {{ $t('toRegister') }}

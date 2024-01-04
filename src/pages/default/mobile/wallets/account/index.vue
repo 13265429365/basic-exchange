@@ -16,7 +16,8 @@
                   <div class="q-mt-xs">
                     <div class="text-body1 text-bold">
                       {{ account.paymentName }}
-                      <q-btn rounded unelevated size="xs" style="border: 1px solid #fff; padding: 0 10px;margin-left: 2px"
+                      <q-btn v-if="walletsSetting.showUpdate" rounded unelevated size="xs"
+                        style="border: 1px solid #fff; padding: 0 10px;margin-left: 2px"
                         @click="$router.push({ name: 'WalletAccountUpdate', query: { id: account.id } })">
                         <div style="font-size: 12px">{{ $t('edit') }}</div>
                       </q-btn>
@@ -27,13 +28,14 @@
                   <div class="q-mt-sm">
                     <div class="text-caption text-grey-2">{{ account.paymentType == 1 ? $t('bankNumber') :
                       $t('digitalAddress') }}</div>
-                    <div class="text-body1 text-bold">{{ account.number }}</div>
+                    <div v-if="walletsSetting.showNumber" class="text-body1 text-bold">{{ account.number }}</div>
+                    <div v-else class="text-body1 text-bold">****{{ account.number.slice(-4) }}</div>
                   </div>
                 </div>
 
               </div>
               <div class="text-right">
-                <q-icon color="white" class="cursor-pointer" size="18px" name="cancel"
+                <q-icon v-if="walletsSetting.showDelete" color="white" class="cursor-pointer" size="18px" name="cancel"
                   @click="deleteAccountFunc(account)"></q-icon>
               </div>
             </div>
@@ -60,7 +62,7 @@
 
         <q-card-section>
           <div class="q-mt-md">
-            <q-input dense outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
+            <q-input outlined v-model="params.securityKey" type="password" :label="$t('enterSecretKey')"></q-input>
           </div>
         </q-card-section>
 
@@ -78,7 +80,7 @@ import { useI18n } from 'vue-i18n';
 import { defineComponent, onMounted, reactive, toRefs } from 'vue';
 import { imageSrc } from 'src/utils';
 import { walletsAccountIndexAPI, walletsAccountDeleteAPI } from 'src/apis/wallets';
-import { NotifyPositive } from 'src/utils/notify';
+import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 import { InitStore } from 'stores/init';
 
 export default defineComponent({
@@ -110,12 +112,14 @@ export default defineComponent({
 
     // 删除账户
     const deleteAccountFunc = (account: any) => {
-      state.currentAccountInfo = account
-      if (state.walletsSetting.showSecurityPass) {
-        state.showSecurityKey = true
-      } else {
-        submitDeleteFunc()
-      }
+      ConfirmPrompt(t('deleteLabel'), t('deleteLabel') + '【' + account.name + '】?', () => {
+        state.currentAccountInfo = account
+        if (state.walletsSetting.showSecurityPass) {
+          state.showSecurityKey = true
+        } else {
+          submitDeleteFunc()
+        }
+      }, { ok: { label: t('confirm') }, cancel: { label: t('cancel') } })
     }
 
     // 删除提交

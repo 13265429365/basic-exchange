@@ -20,18 +20,18 @@
       <div class="q-mt-lg q-px-lg">
         <div class="q-mb-md">
           <div class="text-weight-bold q-mb-sm">{{ $t('nickname') }}</div>
-          <q-input color="green" :placeholder="$t('nickname')" outlined dense v-model="params.nickname" />
+          <q-input color="green" :placeholder="$t('nickname')" outlined v-model="params.nickname" />
         </div>
 
         <div class="q-mb-md">
           <div class="text-weight-bold q-mb-sm">{{ $t('sex') }}</div>
-          <q-select outlined dense v-model="params.sex" map-options :options="GenderList" option-value="value"
+          <q-select outlined v-model="params.sex" map-options :options="GenderList" option-value="value"
             option-label="name" emit-value dropdown-icon="expand_more" />
         </div>
 
         <div div class=" q-mb-md">
           <div class="text-weight-bold q-mb-sm">{{ $t('birthday') }}</div>
-          <q-input @click="birthdayPopup = true" :placeholder="$t('birthday')" outlined dense v-model="params.birthday"
+          <q-input @click="birthdayPopup = true" :placeholder="$t('birthday')" outlined v-model="params.birthday"
             mask="date" class="q-mb-lg">
             <template v-slot:append>
               <q-popup-proxy v-model="birthdayPopup">
@@ -45,8 +45,8 @@
           </q-input>
         </div>
 
-        <q-btn @click="submitFunc" class="full-width q-mb-xl row justify-center" unelevated rounded no-caps
-          style="height: 44px;" color="primary" :label="$t('submit')" />
+        <q-btn @click="submitFunc" size="lg" class="full-width q-mb-xl row justify-center" unelevated rounded no-caps
+          color="primary" :label="$t('submit')" />
       </div>
     </div>
   </div>

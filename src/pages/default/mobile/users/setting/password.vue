@@ -3,7 +3,7 @@
     <div>
       <div class="q-mt-lg q-px-lg">
         <q-form>
-          <q-input class="q-mb-md" v-model="oldPassword" outlined dense :type="showPwd.oldPwd ? 'password' : 'text'"
+          <q-input class="q-mb-md" v-model="oldPassword" outlined :type="showPwd.oldPwd ? 'password' : 'text'"
             :label="$t('oldPassword')">
             <template v-slot:prepend>
               <q-img no-spinner class="iconLogo" src="/images/default/password.png" />
@@ -13,7 +13,7 @@
                 class="cursor-pointer" @click="showPwd.oldPwd = !showPwd.oldPwd" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="newPassword" outlined dense :type="showPwd.newPwd ? 'password' : 'text'"
+          <q-input class="q-mb-md" v-model="newPassword" outlined :type="showPwd.newPwd ? 'password' : 'text'"
             :label="$t('newPassword')">
             <template v-slot:prepend>
               <q-img no-spinner class="iconLogo" src="/images/default/password.png" />
@@ -23,7 +23,7 @@
                 class="cursor-pointer" @click="showPwd.newPwd = !showPwd.newPwd" />
             </template>
           </q-input>
-          <q-input class="q-mb-md" v-model="cmfPassword" outlined dense :type="showPwd.cmfPwd ? 'password' : 'text'"
+          <q-input class="q-mb-md" v-model="cmfPassword" outlined :type="showPwd.cmfPwd ? 'password' : 'text'"
             :label="$t('cmfPassword')">
             <template v-slot:prepend>
               <q-img no-spinner class="iconLogo" src="/images/default/password.png" />
@@ -33,8 +33,8 @@
                 class="cursor-pointer" @click="showPwd.cmfPwd = !showPwd.cmfPwd" />
             </template>
           </q-input>
-          <q-btn @click="submitFunc()" class="full-width q-mb-xl" unelevated rounded no-caps style="height: 44px;"
-            color="primary" :label="$t('confirm')" />
+          <q-btn @click="submitFunc()" size="lg" class="full-width q-mb-xl" unelevated rounded no-caps color="primary"
+            :label="$t('confirm')" />
         </q-form>
       </div>
     </div>
@@ -61,9 +61,9 @@ export default defineComponent({
 
     const state = reactive({
       showPwd: {
-        oldPwd: false,
-        newPwd: false,
-        cmfPwd: false
+        oldPwd: true,
+        newPwd: true,
+        cmfPwd: true
       },
 
       oldPassword: '',
