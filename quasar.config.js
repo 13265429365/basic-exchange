@@ -9,8 +9,8 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 // 本地API接口
-// const devBaseURL = 'http://192.168.5.28:3010/api/v1';
-const devBaseURL = 'https://api.home.ainn.us/api/v1';
+const devBaseURL = 'http://127.0.0.1:3010/api/v1';
+// const devBaseURL = 'https://api.home.ainn.us/api/v1';
 
 // 线上API接口
 const prodBaseURL = 'https://api.home.ainn.us/api/v1';
@@ -167,7 +167,7 @@ module.exports = configure(function (ctx) {
             // manualStoreHydration: true,
             // manualPostHydrationTrigger: true,
 
-            prodPort: 3000, // The default port that the production server should use
+            prodPort: 3001, // The default port that the production server should use
             // (gets superseded if process.env.PORT is specified at runtime)
 
             middlewares: [
