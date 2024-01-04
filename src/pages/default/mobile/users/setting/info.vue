@@ -6,7 +6,7 @@
           <uploader @uploaded="(url) => { params.avatar = url }">
             <template v-slot:default>
               <q-uploader-add-trigger />
-              <q-avatar style="width: 80px;height: 80px;">
+              <q-avatar size="80px">
                 <q-img no-spinner :src="imageSrc(params.avatar)" />
                 <q-badge floating class="bg-transparent" :style="{ top: '70%' }">
                   <q-img no-spinner src='/images/icons/edit.png' width="28px" height="28px"></q-img>

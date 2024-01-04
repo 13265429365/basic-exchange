@@ -61,12 +61,9 @@
       </div>
     </div>
 
-<!--    折线图-->
+    <!--    折线图-->
     <div class="q-mt-xl">
-      <div
-        :id="echartsDomId"
-        style="height: 400px; width: 100%"
-      ></div>
+      <div :id="echartsDomId" style="height: 400px; width: 100%"></div>
     </div>
 
     <!-- 账单、订单部分 -->
@@ -121,7 +118,8 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="tabTransactions" class="no-padding">
             <div v-for="(order, orderIndex) in dataList" :key="orderIndex" class="q-px-md">
-              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''" :header-style="{ borderRadius: '4px',height: '68px', lineHeight: '54px' }">
+              <q-expansion-item default-opened :expand-icon-class="order.status != -1 ? 'text-transparent' : ''"
+                :header-style="{ borderRadius: '4px', height: '68px', lineHeight: '54px' }">
                 <template v-slot:header>
                   <q-item-section>
                     <div class="col">
@@ -162,7 +160,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -196,7 +194,7 @@
             <!-- 分页 -->
             <div class="row justify-center q-mt-md" v-if="dataList.length > 0">
               <q-pagination v-model="params.pagination.page" :max="pagination.countPage"
-                            @update:modelValue="changePagination" input input-class="primary" color="grey">
+                @update:modelValue="changePagination" input input-class="primary" color="grey">
               </q-pagination>
             </div>
           </q-tab-panel>
@@ -224,8 +222,8 @@ export default defineComponent({
   name: 'WalletsAssetsIndex',
   setup() {
     const WalletBillAccountType = -2
-    const WalletOrderTypeAssetsDeposit = 101
-    const WalletOrderTypeAssetsWithdraw = 111
+    const WalletOrderTypeAssetsDeposit = 2
+    const WalletOrderTypeAssetsWithdraw = 12
 
     const $userStore = UserStore()
     const initPagination = {
@@ -238,7 +236,7 @@ export default defineComponent({
     const echartsDomId = 'echartsId'
     const state = reactive({
       echarts: {} as any,
-      userAssetsInfo: {moneySum: 0, moneyRateSum: 0, userAssetsList: [] as any} as any,
+      userAssetsInfo: { moneySum: 0, moneyRateSum: 0, userAssetsList: [] as any } as any,
       userInfo: {} as any,
       showMoney: true,
       tab: 'tabTransactions',
@@ -270,7 +268,7 @@ export default defineComponent({
       getWalletsOrderList()
 
       // 获取钱包账单Options
-      walletsBillOptionsAPI({type: WalletBillAccountType}).then((res: any) => {
+      walletsBillOptionsAPI({ type: WalletBillAccountType }).then((res: any) => {
         state.billFilterParams.typeList = res
       })
 
@@ -349,7 +347,7 @@ export default defineComponent({
       }
       option = {
         tooltip: { trigger: 'axis' },
-        legend: { data: legendList, bottom: '0'},
+        legend: { data: legendList, bottom: '0' },
         grid: { left: '0', right: '0', bottom: '36px', containLabel: true },
         xAxis: {
           type: 'category',
