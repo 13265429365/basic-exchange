@@ -31,11 +31,11 @@
 
         <div div class=" q-mb-md">
           <div class="text-weight-bold q-mb-sm">{{ $t('birthday') }}</div>
-          <q-input @click="birthdayPopup = true" :placeholder="$t('birthday')" outlined v-model="params.birthday"
+          <q-input @click="birthdayPopup = true" :placeholder="$t('birthday')" outlined v-model="params.birthdayStr"
             mask="date" class="q-mb-lg">
             <template v-slot:append>
               <q-popup-proxy v-model="birthdayPopup">
-                <q-date v-model="params.birthday">
+                <q-date v-model="params.birthdayStr">
                   <div class="row items-center justify-end">
                     <q-btn @click="birthdayPopup = false" no-caps :label="$t('confirm')" color="primary" flat />
                   </div>
@@ -86,6 +86,7 @@ export default defineComponent({
 
     onMounted(() => {
       state.params = $userStore.userInfo
+      state.params.birthdayStr = date.formatDate($userStore.userInfo.birthday * 1000, 'YYYY-MM-DD')
     })
 
     // 执行接口
