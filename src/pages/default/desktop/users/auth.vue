@@ -2,10 +2,13 @@
   <div style="margin-top: 60px;">
     <div class="row justify-center">
       <div class="col-6">
-        <div class="text-h5">{{ $t('realAuth') }}</div>
-
-        <div class="q-mt-xs text-negative" v-if="params.status == authStatus.refuse">{{ params.data }}</div>
-        <div class="q-gutter-md q-mt-xl">
+        <div v-if="params.status == authStatus.refuse">
+          <q-banner rounded class="bg-red text-white q-mt-sm">
+            {{ params.data }}
+          </q-banner>
+        </div>
+        <div class="text-h5 q-mt-md">{{ $t('realAuth') }}</div>
+        <div class="q-gutter-md q-mt-md">
           <div>
             <div class="q-mb-xs">{{ $t('idName') }}</div>
             <q-input outlined v-model="params.realName"

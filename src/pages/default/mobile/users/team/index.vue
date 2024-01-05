@@ -24,7 +24,7 @@
         <div @click="$router.push({ name: 'TeamEarnings', query: { id: currentTeamInfo.id } })" class="text-white">{{
           $t('desc') }} <q-icon name="chevron_right" size="16px" /></div>
       </div>
-      <div class="bg-white q-pa-md" style="min-height: 80vh;">
+      <div class="bg-white q-pa-md" v-if="currentTeamInfo.children.length > 0">
         <div v-for="(children, childrenIndex) in currentTeamInfo.children" :key="childrenIndex">
           <div @click="$router.push({ name: 'TeamIndex', query: { id: children.id } })"
             class="row justify-between bg-white q-py-md">
@@ -48,9 +48,9 @@
           </div>
           <q-separator style="height: 1px;background: #F4F5FD;" />
         </div>
-        <div v-if="currentTeamInfo.children.length <= 0" class="q-py-md text-center text-grey-6">
-          {{ $t('noData') }}
-        </div>
+      </div>
+      <div v-else class="q-py-lg text-center text-grey-6">
+        {{ $t('noData') }}
       </div>
     </div>
   </div>

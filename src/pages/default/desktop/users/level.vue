@@ -34,11 +34,9 @@
             </div>
             <q-card-section>
               <div class="q-mt-md">
-                <q-btn :disable="level.level <= userInfo.level" v-if="currentLevelIndex == levelIndex"
-                  @click="submitFunc(level)" outline rounded color="primary" class="full-width"
-                  :label="$t('buy')"></q-btn>
-                <q-btn :disable="level.level <= userInfo.level" v-else flat rounded
-                  class="full-width bg-primary text-white" :label="$t('buy')" @click="submitFunc(level)"></q-btn>
+                <q-btn :disable="level.level <= userInfo.level" @click="submitFunc(level)" no-caps outline rounded
+                  color="primary" class="full-width"
+                  :label="level.level <= userInfo.level ? $t('purchased') : $t('buy')"></q-btn>
               </div>
               <div v-html="level.desc" class="q-mt-lg"></div>
             </q-card-section>
@@ -66,7 +64,9 @@ export default {
     const state = reactive({
       userInfo: {} as any,
       currentLevelIndex: 0,
-      levelList: [] as any,
+      levelList: [
+        {} as any
+      ] as any,
     });
 
     onMounted(() => {

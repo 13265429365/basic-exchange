@@ -25,9 +25,22 @@
               {{ $t('creditScore') + userInfo.score }}
             </q-chip>
             <div @click="$router.push({ name: 'UserRealAuth' })">
-              <q-chip class="text-primary bg-white" size="sm" style="border: 1px solid #01AC66;">
-                {{ userInfo.authStatus ? $t('realNameFailed') : $t('alreadyRealName') }}
+              <q-chip v-if="userInfo.authStatus == 0" style="border: 1px solid red;" class="text-red bg-white" size="sm">
+                {{ $t('alreadyRealName') }}
+                <q-icon class="bg-white" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+              <q-chip v-else-if="userInfo.authStatus == 10" class="bg-info text-white" size="sm">
+                {{ $t('pendingRealName') }}
+                <q-icon class="text-white" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+              <q-chip v-else-if="userInfo.authStatus == 20" style="border: 1px solid #01AC66;"
+                class="text-primary bg-white" size="sm">
+                {{ $t('realNameFailed') }}
                 <q-icon class="text-primary" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+              <q-chip v-else class="bg-negative text-white" size="sm">
+                {{ $t('notRealName') }}
+                <q-icon class="text-white" name="keyboard_arrow_right" size="11px"></q-icon>
               </q-chip>
             </div>
           </div>
@@ -106,6 +119,7 @@ import { useRouter } from 'vue-router';
 import { InitStore } from 'src/stores/init';
 import { UserStore } from 'src/stores/user';
 import { imageSrc } from 'src/utils';
+import { userInfoAPI } from 'src/apis/user';
 
 export default defineComponent({
   name: 'UserIndex',
@@ -130,7 +144,10 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      state.userInfo = $userStore.userInfo
+      userInfoAPI().then((res: any) => {
+        state.userInfo = res
+        $userStore.updateUserInfo(res)
+      })
     })
 
     // 退出登录

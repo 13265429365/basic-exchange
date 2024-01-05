@@ -63,21 +63,30 @@
       </div>
 
       <div v-for="(children, childrenIndex) in currentTeamInfo.children" :key="childrenIndex"
-        class="row justify-between bg-white rounded-borders q-pa-md q-mb-md">
-        <div>
-          <div class="text-subtitle2 text-weight-medium">
-            {{ children.username }}
-            <span class="text-caption text-grey-7">(ID:{{ children.id }})</span>
+        class="row justify-between items-center bg-white rounded-borders q-pa-md q-mb-md">
+
+        <div class="row">
+          <q-avatar size="40px">
+            <q-img no-spinner :src="imageSrc(children.avatar)"></q-img>
+          </q-avatar>
+          <div class="q-ml-sm">
+            <div class="text-subtitle2 text-weight-medium">
+              {{ children.username }}
+              <span class="text-caption text-grey-7">(ID:{{ children.id }})</span>
+            </div>
+            <div class="text-grey-8 text-caption text-weight-regular text-weight-regular">{{
+              date.formatDate(children.createdAt
+                *
+                1000, 'YYYY/MM/DD HH:mm:ss') }}</div>
           </div>
-          <div class="text-grey-8 text-caption text-weight-regular text-weight-regular">{{
-            date.formatDate(children.createdAt
-              *
-              1000, 'YYYY/MM/DD HH:mm:ss') }}</div>
         </div>
-        <div class="text-primary self-center text-subtitle1 text-weight-medium">+{{ children.money }}</div>
+        <div>
+          <div class="text-primary text-right text-subtitle1 text-weight-medium">+{{ children.money }}</div>
+          <div class="text-caption text-right">{{ children.name }}</div>
+        </div>
       </div>
 
-      <div v-if="currentTeamInfo.children || currentTeamInfo.children.length <= 0" class="text-grey text-center q-py-lg">
+      <div v-if="currentTeamInfo.children && currentTeamInfo.children.length <= 0" class="text-grey text-center q-py-lg">
         {{ $t('noData') }}
       </div>
 

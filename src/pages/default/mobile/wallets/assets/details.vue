@@ -1,5 +1,5 @@
 <template>
-  <div class="column full-width" style="min-height: 100vh;">
+  <div class="column full-width">
     <div class="col page_bg q-pa-md full-width">
 
       <div style="height: 112px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);padding: 0 20px;"
@@ -53,7 +53,6 @@
 
       <!-- 明细列表 -->
       <div v-if="orderList.length <= 0" class="text-center text-grey q-mt-md">{{ $t('noData') }}</div>
-
       <div v-for="(order, orderIndex) in orderList" :key="orderIndex" class="rounded-borders bg-white q-pa-md  q-mb-md">
         <div class="row justify-between">
           <div>
@@ -80,7 +79,9 @@
         <div v-if="order.status == -1" class="text-red text-caption">{{ order.data }}
         </div>
       </div>
-
+      <div v-if="noData == false" class="row justify-center">
+        <q-btn @click="loadOrder" unelevated :label="$t('more')"></q-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -114,7 +115,7 @@ export default defineComponent({
     const WalletOrderTypeDeposit = 101
     const WalletOrderTypeWithdraw = 111
     const initPagination = {
-      rowsPerPage: 20, //  每页显示条数
+      rowsPerPage: 10, //  每页显示条数
       page: 1, //  当前页数
       descending: true,
       sortBy: 'created_at',
@@ -134,12 +135,19 @@ export default defineComponent({
 
       // 账单
       orderList: [] as any,
+
+      // 判断上拉是否加载数据
+      noData: false,
     });
 
     onMounted(() => {
       // 获取钱包订单
       state.params.types = [WalletOrderTypeDeposit, WalletOrderTypeWithdraw]
       walletsOrderIndexAPI(state.params).then((res: any) => {
+        // 如果第一次请求数据小于每页数量，禁止上拉加载
+        if (res.items.length < initPagination.rowsPerPage) {
+          state.noData = true
+        }
         state.orderList = res.items
       })
 
@@ -149,10 +157,31 @@ export default defineComponent({
       })
     })
 
+    // 上拉加载订单
+    const loadOrder = (index: any, done: any) => {
+      if (state.noData == false) {
+        state.params.types = [WalletOrderTypeDeposit, WalletOrderTypeWithdraw]
+        initPagination.page++
+        walletsOrderIndexAPI(state.params).then((res: any) => {
+          if (res.items.length <= 0) {
+            state.noData = true
+            done()
+            return false
+          }
+
+          res.items.forEach((element: any) => {
+            state.orderList.push(element)
+          });
+          done()
+        })
+      }
+    }
+
     return {
       imageSrc,
       date,
       ...toRefs(state),
+      loadOrder,
     }
   }
 });

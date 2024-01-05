@@ -1,5 +1,5 @@
 <template>
-    <div class="column full-width" style="min-height: 100vh;">
+    <div class="column full-width">
         <div class="col page_bg q-pa-md full-width">
             <div v-if="billDetailList.length <= 0" class="text-center text-grey q-mt-lg">
                 {{ $t('noData') }}
@@ -27,6 +27,9 @@
                 <div v-if="bill.status == -1" class="text-red text-caption">Failure Reason：This is the reason for the
                     failure
                 </div>
+            </div>
+            <div v-if="noData == false" class="row justify-center">
+                <q-btn @click="loadBillDetail" unelevated :label="$t('more')"></q-btn>
             </div>
         </div>
     </div>
@@ -61,8 +64,7 @@
                             <q-date v-model="billFilterParams.dateTime" range>
                                 <div class="row items-center justify-end q-gutter-sm">
                                     <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                                    <q-btn @click="walletBillFilterFunc" :label="$t('confirm')" color="primary" flat
-                                        v-close-popup />
+                                    <q-btn :label="$t('confirm')" color="primary" flat v-close-popup />
                                 </div>
                             </q-date>
                         </q-popup-proxy>
@@ -77,8 +79,7 @@
                             <q-date v-model="billFilterParams.dateTime" range>
                                 <div class="row items-center justify-end q-gutter-sm">
                                     <q-btn :label="$t('cancel')" color="primary" flat v-close-popup />
-                                    <q-btn @click="walletBillFilterFunc" :label="$t('confirm')" color="primary" flat
-                                        v-close-popup />
+                                    <q-btn :label="$t('confirm')" color="primary" flat v-close-popup />
                                 </div>
                             </q-date>
                         </q-popup-proxy>
@@ -125,7 +126,7 @@ export default defineComponent({
         const WalletBillAccountType = -1
         const WalletBillAssetsType = -2
         const initPagination = {
-            rowsPerPage: 20, //  每页显示条数
+            rowsPerPage: 10, //  每页显示条数
             page: 1, //  当前页数
             descending: true,
             sortBy: 'created_at',
@@ -142,13 +143,16 @@ export default defineComponent({
             billFilterParams: {
                 typeList: [] as any,
                 dateTime: {
-                    from: date.formatDate(Date.now(), 'YYYY/MM/DD'),
-                    to: date.formatDate(Date.now(), 'YYYY/MM/DD'),
+                    from: '',
+                    to: '',
                 },
             },
 
             // 筛选账单弹窗
             billSelectDialog: false,
+
+            // 判断上拉是否加载数据
+            noData: false,
         });
 
         onMounted(() => {
@@ -166,12 +170,17 @@ export default defineComponent({
                 state.params.types = [$route.query.type ? WalletBillAssetsType : WalletBillAccountType]
             }
             walletsBillIndexAPI(state.params).then((res: any) => {
+                // 如果第一次请求数据小于每页数量，禁止上拉加载
+                if (res.items.length < initPagination.rowsPerPage) {
+                    state.noData = true
+                }
                 state.billDetailList = res.items
             })
         }
 
         // 选择账单类型
         const selectBillTypeFunc = (billType: number) => {
+            initPagination.page = 1
             const typesIndex = state.params.types.indexOf(billType)
             if (typesIndex > -1) {
                 state.params.types.splice(typesIndex, 1)
@@ -182,10 +191,33 @@ export default defineComponent({
 
         // 钱包账单筛选确定方法
         const walletBillFilterFunc = () => {
+            state.noData = false
+            initPagination.page = 1
             state.params.pagination = initPagination
             state.params.createdAt = state.billFilterParams.dateTime
             getWalletsBillList()
             state.billSelectDialog = false
+        }
+
+        const loadBillDetail = (index: any, done: any) => {
+            if (state.noData == false) {
+                if (state.params.types.length == 0) {
+                    state.params.types = [$route.query.type ? WalletBillAssetsType : WalletBillAccountType]
+                }
+                initPagination.page++
+                walletsBillIndexAPI(state.params).then((res: any) => {
+
+                    if (res.items.length <= 0) {
+                        state.noData = true
+                        done()
+                        return false
+                    }
+
+                    res.items.forEach((element: any) => {
+                        state.billDetailList.push(element)
+                    })
+                })
+            }
         }
 
         return {
@@ -193,6 +225,7 @@ export default defineComponent({
             ...toRefs(state),
             walletBillFilterFunc,
             selectBillTypeFunc,
+            loadBillDetail,
         }
     }
 });

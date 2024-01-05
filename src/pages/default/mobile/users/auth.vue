@@ -1,7 +1,12 @@
 <template>
   <div class="column full-height">
     <div class="col bg-white q-pa-md">
-      <div class="text-weight-medium q-pb-sm">{{ $t('idName') }}</div>
+      <div v-if="params.status == authStatus.refuse">
+        <q-banner rounded class="bg-red text-white q-mt-sm">
+          {{ params.data }}
+        </q-banner>
+      </div>
+      <div class="text-weight-medium q-pb-sm q-mt-lg">{{ $t('idName') }}</div>
       <q-input :placeholder="$t('idName')" outlined
         :readonly="params.status == authStatus.pending || params.status == authStatus.complete" v-model="params.realName"
         class="q-mb-md" />
@@ -50,8 +55,10 @@
         <div class="text-caption text-weight-medium text-center q-mt-sm">{{ $t('idPhoto2') }}</div>
       </div>
 
-      <q-btn unelevated rounded color="primary" size="lg" :label="$t('submit')" class="full-width q-my-xl" no-caps
-        @click="submitFunc" />
+      <q-btn v-if="params.status == authStatus.start" unelevated rounded color="primary" size="lg" :label="$t('submit')"
+        class="full-width q-my-xl" no-caps @click="submitFunc" />
+      <q-btn v-if="params.status == authStatus.refuse" unelevated rounded color="primary" size="lg"
+        :label="$t('reSubmit')" class="full-width q-my-xl" no-caps @click="submitFunc" />
     </div>
   </div>
 </template>

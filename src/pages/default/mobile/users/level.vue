@@ -10,13 +10,11 @@
         <q-img no-spinner src="/images/level.png" width="93px" height="66px"
           style="position: absolute;top: -13px;right: 0;" />
         <div class="col-10 column">
-          <div style="color: #FEC183;" class="text-h6">VIP Card</div>
+          <div style="color: #FEC183;" class="text-h6">{{ $t('memberVip') }}</div>
           <div style="color: #FEC183;" class="text-caption full-width col">
             <div class="ellipsis ">
-              Purchase members to gain more
-              benefitsPurchase
-              members to gain
-              more benefitsPurchase members to gain more benefits
+              {{ $t('memberVipTitle') }}
+              {{ $t('memberVipSmall') }}
             </div>
           </div>
         </div>
@@ -39,15 +37,12 @@
         </div>
       </div>
 
-      <div class="q-ml-md q-mt-md">
-        <ul class="text-color-3 text-weight-regular" style="padding: 0;">
-          <li>Vip the mounth However mean your life</li>
-          <li>Vip the mounth However mean your lifeHowever mean your life</li>
-        </ul>
-      </div>
+      <div class="q-ml-md q-mt-md" v-html="levelList[currentLevelIndex].desc ?? ''"></div>
 
-      <q-btn @click="submitFunc(levelList[currentLevelIndex])" unelevated rounded size="lg" color="primary"
-        :label="$t('buy')" class="full-width q-my-xl" no-caps style="height: 44px;" />
+      <q-btn :disable="levelList[currentLevelIndex].level <= userInfo.level"
+        @click="submitFunc(levelList[currentLevelIndex])" unelevated rounded size="lg" color="primary"
+        :label="levelList[currentLevelIndex].level <= userInfo.level ? $t('purchased') : $t('buy')"
+        class="full-width q-my-xl" no-caps style="height: 44px;" />
     </div>
 
   </div>
@@ -59,7 +54,7 @@ import { levelIndexAPI, levelCreateAPI } from 'src/apis/user';
 import { imageSrc } from 'src/utils';
 import { UserStore } from 'src/stores/user';
 import { useI18n } from 'vue-i18n';
-import { ConfirmPrompt } from 'src/utils/notify';
+import { ConfirmPrompt, NotifyPositive } from 'src/utils/notify';
 
 export default {
   name: 'UserLevel',
@@ -73,7 +68,9 @@ export default {
     const state = reactive({
       currentLevelIndex: 0,
       userInfo: {} as any,
-      levelList: [] as any,
+      levelList: [
+        {} as any,
+      ] as any,
     });
 
     onMounted(() => {
@@ -89,6 +86,7 @@ export default {
         levelCreateAPI({ id: level.id }).then(() => {
           state.userInfo.level = level.level
           $userStore.updateUserInfo(state.userInfo)
+          NotifyPositive(t('submittedSuccess'))
         })
       }, { ok: { label: t('submit') }, cancel: { label: t('cancel') } })
     }

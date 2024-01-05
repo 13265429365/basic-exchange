@@ -1,5 +1,5 @@
 <template>
-  <div class="column full-width" style="min-height: 100vh;">
+  <div class="column full-width">
     <div class="col page_bg q-pa-md full-width">
 
       <div style="height: 112px;background: linear-gradient(93deg, #10BE70 0%, #91DB82 100%);padding: 0 20px;"
