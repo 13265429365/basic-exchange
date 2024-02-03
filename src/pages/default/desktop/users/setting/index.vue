@@ -65,7 +65,7 @@
               option-label="name" map-options emit-value dropdown-icon="expand_more" />
           </div>
 
-          <div v-else-if="currentSetting.params == 'birthdayStr'">
+          <div v-else-if="currentSetting.params == 'birthday'">
             <q-input outlined v-model="params[currentSetting.params]" :label="$t(currentSetting.name)" mask="date">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
@@ -209,7 +209,7 @@ export default defineComponent({
         { name: 'secretKey', params: 'secretKey', type: 'password', desc: 'secretKeySmall', value: '' },
         { name: 'telephone', params: 'telephone', type: 'telephone', desc: 'telephoneSmall', value: userInfo.telephone },
         { name: 'sex', params: 'sex', type: 'toggle', desc: 'sexSmall', value: userInfo.sex },
-        { name: 'birthday', params: 'birthdayStr', type: 'datePicker', desc: 'birthdaySmall', value: userInfo.birthday },
+        { name: 'birthday', params: 'birthday', type: 'datePicker', desc: 'birthdaySmall', value: userInfo.birthday },
         { name: 'personalSignature', params: 'desc', type: 'textarea', desc: 'personalSignatureSmall', value: userInfo.desc },
       ]
     })
@@ -220,7 +220,7 @@ export default defineComponent({
       state.currentSetting = setting
       state.params = {}
       state.params[state.currentSetting.params] = state.currentSetting.value
-      if (state.currentSetting.params == 'birthdayStr') {
+      if (state.currentSetting.params == 'birthday') {
         state.params[state.currentSetting.params] = ''
       }
       // 如果是手机, 那么默认选中
@@ -257,6 +257,10 @@ export default defineComponent({
       // 更新手机号码
       if (state.currentSetting.params == 'telephone') {
         state.params['telephone'] = state.countryList[state.currentCountryIndex].code + '|' + state.params['telephone']
+      }
+      // 更新生日
+      if (state.currentSetting.params == 'birthday') {
+        state.params['birthday'] = date.formatDate(state.params[state.currentSetting.params], 'X')
       }
       updateInfoAPI(state.params).then(() => {
         updateUserInfo()
