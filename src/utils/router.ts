@@ -8,18 +8,28 @@ export const LayoutsMobilePath = (name: string): string => {
   return '../layouts/mobile/' + name;
 };
 
+// LayoutsCommonPath 公用布局文件
+export const LayoutsCommonPath = (name: string): string => {
+  return '../layouts/' + name
+}
+
 // PagesTemplateDesktopPath 桌面端页面文件
 export const PagesTemplateDesktopPath = (
-  templabe: string,
+  template: string,
   name: string
 ): string => {
-  return '../pages/' + templabe + '/desktop/' + name;
+  return '../pages/' + template + '/desktop/' + name;
 };
 
 // PagesTemplateMobilePath 手机端页面文件
 export const PagesTemplateMobilePath = (
-  templabe: string,
+  template: string,
   name: string
 ): string => {
-  return '../pages/' + templabe + '/mobile/' + name;
+  return '../pages/' + template + '/mobile/' + name;
 };
+
+// PagesTemplateCommonPath 页面公用文件
+export const PagesTemplateCommonPath = (template: string, name: string): string => {
+  return '../pages/' + template + '/' + name
+}
