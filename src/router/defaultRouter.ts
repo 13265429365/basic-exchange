@@ -7,7 +7,7 @@ import {
   PagesTemplateMobilePath,
 } from 'src/utils/router';
 
-export const TemplateName = 'default';
+export const DefaultTemplateName = 'default';
 export const defaultRouter: TemplateRouteInterface[] = [
   //  主体布局文件 TabBar + 桌面端头部尾部
   {
@@ -19,40 +19,40 @@ export const defaultRouter: TemplateRouteInterface[] = [
       {
         name: 'HomeIndex',
         route: '/',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'home.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'home.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'home.vue'),
         children: [],
         meta: { keepAlive: false, requireAuth: false },
       },
       {
         name: 'MarketIndex',
         route: '/markets',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'market.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'market.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'market.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'market.vue'),
         children: [],
         meta: { keepAlive: false, requireAuth: false },
       },
       {
         name: 'ContactIndex',
         route: '/contract',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'contact.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'contact.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'contact.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'contact.vue'),
         children: [],
         meta: { keepAlive: false, requireAuth: false },
       },
       {
         name: 'FuturesIndex',
         route: '/futures',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'futures.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'futures.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'futures.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'futures.vue'),
         children: [],
         meta: { keepAlive: false, requireAuth: false },
       },
       {
         name: 'UserIndex',
         route: '/user',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'users/index.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/setting/index.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'users/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'users/setting/index.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -71,40 +71,40 @@ export const defaultRouter: TemplateRouteInterface[] = [
       {
         name: 'UserLogin',
         route: '/login',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'login.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'login.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'home.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
       {
         name: 'UserRegister',
         route: '/register',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'register.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'register.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'home.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
       {
         name: 'MarketsDigital',
         route: '/markets/digital',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'markets/digital.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'markets/digital.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'markets/digital.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'markets/digital.vue'),
         children: [],
         meta: { keepAlive: false, requireAuth: false },
       },
       {
         name: 'MarketsForex',
         route: '/markets/forex',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'markets/forex.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'markets/forex.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'markets/forex.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'markets/forex.vue'),
         children: [],
         meta: { keepAlive: false, requireAuth: false },
       },
       {
         name: 'MarketsFutures',
         route: '/markets/futures',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'markets/futures.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'markets/futures.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'markets/futures.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'markets/futures.vue'),
         children: [],
         meta: { keepAlive: false, requireAuth: false },
       },
@@ -121,10 +121,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletsDeposit',
         route: '/wallets/deposit',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/deposit.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/deposit.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/deposit.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -132,10 +132,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletsWithdraw',
         route: '/wallets/withdraw',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/withdraw.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/withdraw.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/withdraw.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -143,10 +143,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletAccountUpdate',
         route: '/wallets/account/update',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/account/update.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/update.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/account/update.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -154,10 +154,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'SettingUpdateUserInfo',
         route: '/settings/update/info',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/setting/info.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, ''),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -165,10 +165,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'SettingUpdatePassword',
         route: '/settings/update/password',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/setting/password.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, ''),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -176,10 +176,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'SettingUpdateSecretKey',
         route: '/settings/update/secret-key',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/setting/secretKey.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, ''),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -187,10 +187,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'SettingBindTelephone',
         route: '/settings/update/telephone',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/setting/telephone.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, ''),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -198,10 +198,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'SettingUpdateEmail',
         route: '/settings/update/email',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/setting/email.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, ''),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, ''),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -209,10 +209,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'SettingLanguage',
         route: '/settings/language',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/setting/language.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'home.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'home.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -220,10 +220,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'ArticleDetails',
         route: '/article/details',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'article/details.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'article/details.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'article/details.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -231,10 +231,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'UserShare',
         route: '/team/share',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/team/share.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/share.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'users/team/share.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -242,10 +242,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'DownloadApp',
         route: '/download',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'download.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'download.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'download.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -253,10 +253,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'HelpersCenter',
         route: '/helpers',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'helpers.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'helpers.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'helpers.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -264,10 +264,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'UserLevel',
         route: '/user/level',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/level.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/level.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'users/level.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -285,10 +285,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletsAccountIndex',
         route: '/wallets/account/index',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/account/index.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/account/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/account/index.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -296,10 +296,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletsIndex',
         route: '/wallets/index',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/index.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/index.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -307,10 +307,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletsAccountDetails',
         route: '/wallets/detail',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/details.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/index.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -318,10 +318,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletsAssetsIndex',
         route: '/wallets/assets/index',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/assets/index.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/assets/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/assets/index.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
@@ -329,10 +329,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'WalletsAssetsDetails',
         route: '/wallets/assets/details',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/assets/details.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/assets/details.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/assets/details.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -340,10 +340,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'TeamIndex',
         route: '/team/index',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/team/index.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'users/team/index.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -351,10 +351,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'TeamEarnings',
         route: '/team/earnings',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/team/earnings.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/team/earnings.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'users/team/earnings.vue'),
         children: [],
         meta: { requireAuth: false, keepAlive: false },
       },
@@ -363,18 +363,18 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'UserRealAuth',
         route: '/user/auth',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'users/auth.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/auth.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'users/auth.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
       {
         name: 'SettingIndex',
         route: '/user/settings',
-        componentMobile: PagesTemplateMobilePath(TemplateName, 'users/setting/index.vue'),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'users/setting/index.vue'),
+        componentMobile: PagesTemplateMobilePath(DefaultTemplateName, 'users/setting/index.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'users/setting/index.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },

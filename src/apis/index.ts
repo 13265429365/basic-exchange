@@ -29,3 +29,8 @@ export const downloadInfoAPI = () => {
 export const helpersInfoAPI = () => {
   return api.post('/helpers');
 };
+
+// 访问请求
+export const accessAPI = (params: any) => {
+  return api.post('/access', params)
+}

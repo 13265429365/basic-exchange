@@ -3,16 +3,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
 import { useMeta, LocalStorage } from 'quasar';
 import { InitStore } from 'src/stores/init';
 import { imageSrc } from 'src/utils';
 import { useI18n } from 'vue-i18n';
 import { setLanguageFunc } from 'boot/i18n';
 import { UserStore, UserInfoKey } from 'stores/user';
+import {accessAPI} from 'src/apis';
 
 export default defineComponent({
   name: 'App',
+  setup() {
+    onMounted(() => {
+      accessAPI({name: 'init', type: 1})
+    })
+  },
   created: () => {
     const $initStore = InitStore();
     const $userStore = UserStore();
