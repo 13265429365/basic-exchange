@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-uploader flat auto-upload :url="baseURL + '/upload'" :field-name="name" :style="uploaderStyle" :accept="accept"
+    <q-uploader ref="" flat auto-upload :url="baseURL + '/upload'" :field-name="name" :style="uploaderStyle" :accept="accept"
       style="width: 100%;background: transparent;" :multiple="false" @uploaded="uploadedFunc" @start="uploaderStartFunc"
       @finish="uploaderFinishFunc" @rejected="uploaderRejectedFunc"
       :headers="[{ name: 'Authorization', value: 'Bearer ' + userToken }]">
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, ref, watch } from 'vue';
 import { imageSrc } from 'src/utils';
 import { Loading, QSpinnerBars } from 'quasar';
 import { InitStore } from 'src/stores/init';
@@ -41,6 +41,7 @@ export default {
     accept: { type: String, default: '.jpg,.png,.gif,image/*' },
   },
   setup(props: any, context: any) {
+    const uploaderRef = ref(null) as any
     const $initStore = InitStore()
     const state = reactive({
       // 用户token
@@ -52,6 +53,11 @@ export default {
       // 返回数据
       respValue: props.respValue,
     });
+
+    // 打开选择器
+    const uploaderPickFiles = () => {
+      uploaderRef.value.pickFiles()
+    }
 
     // 上传完成回调方法
     const uploadedFunc = (info: any) => {
@@ -79,8 +85,13 @@ export default {
       NotifyNegative(props.accept)
     };
 
+    watch(() => $initStore.userToken, (userToken: string) => {
+      state.userToken = userToken
+    })
+
     return {
       imageSrc,
+      uploaderPickFiles,
       uploadedFunc,
       uploaderStartFunc,
       uploaderFinishFunc,
@@ -92,8 +103,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// :deep(.q-uploader .q-uploader__list) {
-//   padding: 0 !important;
-//   min-height: 0 !important;
-// }
+
 </style>

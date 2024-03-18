@@ -2,8 +2,8 @@ class WebsocketFunc {
   url: string;                    //  连接路由
   conn: null | any = null;        //  连接对象
   restTime = 5000;      //  重连时间
-
   onMessageFunc: (msg: any) => void = (() => {/**/})     //  消息回调
+  onMessageOpenFunc: () => void = (() => {/**/})  //  消息打开事件
 
   // 构造函数
   constructor(url: string) {
@@ -34,24 +34,42 @@ class WebsocketFunc {
       }, this.restTime);
     };
 
+    // 连接成功, 绑定
+    this.conn.onopen = () => {
+      this.onMessageOpenFunc()
+    }
+
     // 消息回调
     this.conn.onmessage = (ev: any) => {
-      if (this.onMessageFunc != undefined) {
-        this.onMessageFunc(JSON.parse(ev.data))
-      }
+      this.onMessageFunc(JSON.parse(ev.data))
     };
+    return this
+  }
+
+  // 发送Json消息
+  sendMessageJsonFunc(data: object) {
+    if (this.conn) {
+      this.conn.send(JSON.stringify(data));
+    }
+  }
+
+  // 发送Text消息
+  sendMessageTextFunc(data: string) {
+    if (this.conn) {
+      this.conn.send(data)
+    }
   }
 
   // 设置消息回调
   setOnMessageFunc(fn: (msg: any) => void) {
     this.onMessageFunc = fn
+    return this
   }
 
-  // 发送消息
-  sendMessageFunc(data: object) {
-    if (!this.conn) {
-      this.conn.send(JSON.stringify(data));
-    }
+  // 设置连接成功事件
+  setOnMessageOpenFunc(fn: () => void) {
+    this.onMessageOpenFunc = fn
+    return this
   }
 }
 
