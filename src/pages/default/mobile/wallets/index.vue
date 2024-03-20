@@ -29,7 +29,7 @@
           class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img no-spinner class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
-            <div>{{ $t(quickMenu.name) }}</div>
+            <div>{{ quickMenu.name }}</div>
           </div>
         </q-btn>
       </div>
