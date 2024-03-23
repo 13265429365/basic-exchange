@@ -35,6 +35,26 @@ export const walletsUserAssetsIndexAPI = () => {
   return api.post('/wallets/user/assets/index');
 };
 
+// 获取钱包资产列表
+export const walletsAssetsIndexAPI = () => {
+  return api.post('/wallets/assets/index');
+};
+
+// 获取划转信息
+export const walletstransferInfoAPI = (params: any) => {
+  return api.post('/wallets/transfer/info', params);
+};
+
+// 闪兑、划转
+export const walletsTransfeCreateAPI = (params: any) => {
+  return api.post('/wallets/transfer/create', params);
+};
+
+// 闪兑记录、划转记录
+export const walletsTransfeIndexAPI = (params: any) => {
+  return api.post('/wallets/transfer/index', params);
+};
+
 // 获取用户资产信息
 export const walletsUserAssetsInfoAPI = (params: any) => {
   return api.post('/wallets/user/assets/info', params)
@@ -63,4 +83,29 @@ export const walletsDepositCreateAPI = (params: any) => {
 // 用户提现
 export const walletsWithdrawCreateAPI = (params: any) => {
   return api.post('/wallets/withdraw/create', params);
+};
+
+// 用户划转
+export const walletsTransferAPI = (params: any) => {
+  return api.post('/wallets/exchange/transfer', params);
+};
+
+// 用户划转历史、闪兑历史
+export const walletsTransferListAPI = (params: any) => {
+  return api.post('/wallets/exchange/transfer/index', params);
+};
+
+// 闪兑信息
+export const walletsexChangeInfoAPI = (params: any) => {
+  return api.post('/wallets/exchange/info', params);
+};
+
+// 闪兑
+export const walletsexChangeCraeteAPI = (params: any) => {
+  return api.post('/wallets/exchange/create', params);
+};
+
+// 闪兑结果
+export const walletsexChangeResAPI = (params: any) => {
+  return api.post('/wallets/exchange/res', params);
 };

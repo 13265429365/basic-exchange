@@ -71,7 +71,7 @@
             <q-avatar size="28px">
               <q-img no-spinner :src="imageSrc(userInfo.avatar)"></q-img>
             </q-avatar>
-            <q-menu :offset="[300, 15]" class="q-pa-sm">
+            <q-menu :offset="[300, 13]" class="q-pa-sm">
               <q-list style="min-width: 218px;">
                 <!-- 固定头部 -->
                 <q-item aria-hidden="true">
