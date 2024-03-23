@@ -2,7 +2,7 @@ import { api } from 'src/boot/axios';
 
 // 创建验证码
 export const captchaAPI = () => {
-  return api.get('/captcha/create');
+  return api.get('/captcha/create', { showLoading: false } as any);
 };
 
 // 初始化数据

@@ -36,14 +36,18 @@
       <!-- 左侧快捷菜单 -->
       <q-btn-dropdown :menu-offset="[310, 18]" class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t('more')" dense
         flat no-caps>
-        <q-list class="q-ma-sm row" style="max-width: 370px;">
+        <q-list class="q-ma-sm row" style="max-width: 390px;">
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
-            class="rounded-borders" v-show="quickMenu.data.isDesktop" :key="quickMenuIndex" clickable v-close-popup
-            aria-hidden="true">
+            class="rounded-borders q-mt-md col-4" v-show="quickMenu.data.isDesktop" :key="quickMenuIndex" clickable
+            v-close-popup aria-hidden="true">
             <q-item-section avatar style="min-width:auto">
               <q-img no-spinner width="30px" height="30px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
-            <q-item-section class="text-grey-8">{{ quickMenu.name }}</q-item-section>
+            <q-item-section class="text-grey-8">
+              <span class="ellipsis" style="width: 50px;">
+                {{ quickMenu.name }}
+              </span>
+            </q-item-section>
           </q-item>
         </q-list>
       </q-btn-dropdown>
