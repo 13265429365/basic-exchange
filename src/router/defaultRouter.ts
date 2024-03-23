@@ -13,7 +13,7 @@ export const defaultRouter: TemplateRouteInterface[] = [
   {
     name: 'Layouts',
     route: '/',
-    componentMobile: LayoutsMobilePath('tabbar.vue'),
+    componentMobile: LayoutsMobilePath('tabBar.vue'),
     componentDesktop: LayoutsDesktopPath('main.vue'),
     children: [
       {
@@ -136,6 +136,50 @@ export const defaultRouter: TemplateRouteInterface[] = [
           'wallets/withdraw.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/withdraw.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'WalletsFlash',
+        route: '/wallets/flash',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/flash.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/flash.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'WalletsTransfer',
+        route: '/wallets/transfer',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/transfer.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/transfer.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'FlashExchangeSuccess',
+        route: '/wallets/transfer/success',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/transferSuccess.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/transferSuccess.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'FlashExchangeRecord',
+        route: '/wallets/transfer/record',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/flashRecord.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/flashRecord.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
