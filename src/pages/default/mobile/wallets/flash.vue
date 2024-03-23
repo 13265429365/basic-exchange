@@ -3,7 +3,7 @@
     <div class="column">
       <!-- 闪兑资产 -->
       <q-card class="relative-position bg-grey-2 rounded-borders" flat>
-        <q-card-section class="text-accent q-py-md q-px-xs">
+        <q-card-section class="text-grey-7 q-py-md q-px-xs">
           <div class="row items-center no-wrap">
             <q-btn @click="showAssetsPopup = true; assetsPopupType = 'to'" class="col-5" flat no-caps rounded>
               <template v-slot:default>
@@ -17,20 +17,21 @@
             <q-separator vertical inset style="background: #bbb;" />
             <q-input v-model="toAssets.value" dense borderless class="q-px-lg">
               <template v-slot:append>
-                <span @click="toAssets.value = toAssets.money" class="text-primary text-body1">最大</span>
+                <span @click="toAssets.value = toAssets.money" class="text-primary text-body1">{{ $t('maximum')
+                  }}</span>
               </template>
             </q-input>
           </div>
         </q-card-section>
       </q-card>
 
-      <div class="text-accent q-mt-sm">
+      <div class="text-grey-7 q-mt-sm">
         {{ $t('usable') }}: {{ toAssets.money }} {{ toAssets.name }}
       </div>
 
       <!-- 闪兑后资产 -->
       <q-card class="relative-position bg-grey-2 rounded-borders q-mt-lg" flat>
-        <q-card-section class="text-accent q-py-md q-px-xs">
+        <q-card-section class="text-grey-7 q-py-md q-px-xs">
           <div class="row items-center no-wrap">
             <q-btn @click="showAssetsPopup = true; assetsPopupType = 'from'" class="col-5" flat no-caps rounded>
               <template v-slot:default>
@@ -89,14 +90,14 @@
         </q-card-section>
 
         <q-card-section class="q-px-md q-mt-xs q-gutter-y-md">
-          <div class="text-center text-accent">{{ $t('receive') }}</div>
+          <div class="text-center text-grey-7">{{ $t('receive') }}</div>
           <div class="text-center">
             <span class="text-h5 text-weight-medium">{{ toAssets.value * rate }}</span>
             <span class="q-ml-sm text-body1">{{ fromAssets.name }}</span>
           </div>
           <q-card-section class="bg-grey-2">
             <div class="row justify-between">
-              <span class="text-grey">{{ $t('exchange') }}</span>
+              <span class="text-grey">{{ $t('flash') }}</span>
               <div class="text-weight-medium">
                 <span>{{ toAssets.value }}</span>
                 <span class="q-ml-xs">{{ toAssets.name }}</span>

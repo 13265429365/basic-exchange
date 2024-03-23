@@ -35,7 +35,7 @@
         <!-- 选择交易账户 -->
         <q-card class="q-mt-md relative-position bg-grey-2 rounded-borders" flat>
           <q-card-section class="row items-center text-body1">
-            <q-btn :disable="tradeStatus[0] == 'fundAccount'" @click="showAssets = true" dense flat no-caps>
+            <q-btn @click="showAssets = true" dense flat no-caps>
               <template v-slot:default>
                 <div class="row items-center no-wrap">
                   <q-img width="26px" height="26px" :src="imageSrc(assetsDetails.icon ?? '')" no-spinner alt="" />
@@ -44,17 +44,19 @@
                 </div>
               </template>
             </q-btn>
+            <q-separator class="q-mx-sm" vertical inset />
+            <q-space></q-space>
+            <div class="text-grey-7 row">
+              <div>≈{{ Number(assetsDetails.moneyRate).toFixed(4) }}</div>
+            </div>
           </q-card-section>
         </q-card>
-        <div v-if="tradeStatus[0] == 'fundAccount'" class="text-negative q-mt-sm q-ml-sm">
-          {{ $t('notAssets') }}
-        </div>
 
         <!-- 输入金额 -->
         <div class="q-mt-lg q-gutter-y-sm">
           <div class="text-grey-7">{{ $t('number') }}</div>
           <q-input v-model="params.money" borderless class="bg-grey-2 rounded-borders  text-body1"
-            :input-style="{ padding: '10px 20px' }">
+            :input-style="{ padding: '10px 20px' }" :placeholder="$t('pleaseEnterQuantity')">
             <template v-slot:append>
               <div class="text-body2 q-pr-lg text-black">
                 <span
@@ -63,14 +65,14 @@
               </div>
             </template>
           </q-input>
-          <div class="text-grey-7 text-right">
+          <div class="text-grey-7 justify-end row">
+            <span class="text-grey q-mr-sm">
+              {{ tradeStatus[0] == 'fundAccount' ? $t('availableBalance') : $t('availableAsset') }}
+            </span>
             <div>
               <span>{{ tradeStatus[0] == 'fundAccount' ? userInfo.money : assetsDetails.money }}</span>
               <span class="q-ml-xs">{{ tradeStatus[0] == 'fundAccount' ? $t('currency') : assetsDetails.name }}</span>
             </div>
-            <span class="text-grey q-ml-sm">
-              {{ tradeStatus[0] == 'fundAccount' ? $t('availableBalance') : $t('availableAsset') }}
-            </span>
           </div>
         </div>
 

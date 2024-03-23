@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="padding: 60px 120px;" class="row justify-between">
-      <div class="text-h5 text-weight-bolder">{{ $t('flashExchange') }}</div>
+      <div class="text-h5 text-weight-bolder">{{ $t('flash') }}</div>
       <q-btn @click="$router.push({ name: 'WalletsAssetsIndex' })" unelevated style="background: #EAECEF;">
         <div class="row no-wrap items-center">
           <span>
@@ -28,7 +28,7 @@
                 :input-style="{ fontSize: '20px' }" placeholder="请输入金额">
                 <template v-slot:append>
                   <span @click="toAssets.value = toAssets.money"
-                    class="text-primary text-body2 cursor-pointer q-mr-md">最大</span>
+                    class="text-primary text-body2 cursor-pointer q-mr-md">{{ $t('maximum') }}</span>
                 </template>
               </q-input>
               <q-btn-dropdown @click="showAssetsPopup = true; assetsPopupType = 'to'" rounded color="black"
@@ -118,7 +118,7 @@
           </div>
           <q-card-section class="bg-grey-2">
             <div class="row justify-between">
-              <span class="text-grey">{{ $t('exchange') }}</span>
+              <span class="text-grey">{{ $t('flash') }}</span>
               <div class="text-weight-medium">
                 <span>{{ toAssets.value }}</span>
                 <span class="q-ml-xs">{{ toAssets.name }}</span>

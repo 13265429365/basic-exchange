@@ -59,7 +59,6 @@
 
           <!-- 资产账户列表 -->
           <div>
-
             <div v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex"
               @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })">
               <div class="row justify-between items-center justify-start">
@@ -97,9 +96,10 @@
         </div>
         <div>
           <div class="text-weight-bold text-right" style="font-size: 16px;">{{ assets.money
-          }}</div>
-          <div class="text-right text-grey-5" style="font-size: 12px;">≈{{ $t('currency') }}{{ assets.moneyRate.toFixed(2)
-          }}</div>
+            }}</div>
+          <div class="text-right text-grey-5" style="font-size: 12px;">≈{{ $t('currency') }}{{
+              assets.moneyRate.toFixed(2)
+            }}</div>
         </div>
       </div>
 

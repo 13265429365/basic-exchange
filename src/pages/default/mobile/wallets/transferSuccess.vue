@@ -13,7 +13,7 @@
     <q-card flat class="q-py-none">
       <q-card-section class="bg-grey-2">
         <div class="row justify-between">
-          <span class="text-grey">{{ $t('exchange') }}</span>
+          <span class="text-grey">{{ $t('flash') }}</span>
           <div class="text-weight-medium">
             <span>{{ flashDetails.money }}</span>
             <span class="q-ml-xs">{{ flashDetails.assetsName }}</span>

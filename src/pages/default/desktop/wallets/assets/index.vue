@@ -61,7 +61,7 @@
     </div>
 
     <!--    折线图-->
-    <div class="q-mt-xl">
+    <div v-if="dataList.length > 0" class="q-mt-xl">
       <div :id="echartsDomId" style="height: 400px; width: 100%"></div>
     </div>
 
@@ -76,7 +76,8 @@
           <!-- 右侧 -->
           <div v-if="tab == 'tabBillDetails'" class="row items-center">
             <!-- 选择 -->
-            <q-btn-dropdown class="bg-grey-1" style="font-weight: 400;" :label="$t('filter')" unelevated no-caps rounded>
+            <q-btn-dropdown class="bg-grey-1" style="font-weight: 400;" :label="$t('filter')" unelevated no-caps
+              rounded>
               <div class="row q-pa-sm" style="max-width: 420px">
                 <div v-for="(billType, billTypeIndex) in billFilterParams.typeList" :key="billTypeIndex" class="col-4">
                   <div class="q-ma-xs">
