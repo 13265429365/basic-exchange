@@ -59,9 +59,7 @@ export default route(async function ({ store, ssrContext }) {
     store.state.value.init.userLang = <string>$cookies.get(UserLangKey) ?? 'zh-CN';
 
     //获取初始化数据
-    console.log(store.state.value.init.userLang)
     await initAPI({ domain: ssrContext?.req.get('host'), lang: store.state.value.init.userLang }).then((res: any) => {
-      console.log(res)
       //  初始化配置
       store.state.value.init.config = res.config
 
