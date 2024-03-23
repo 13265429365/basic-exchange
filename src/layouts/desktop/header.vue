@@ -15,21 +15,21 @@
         <div v-for="(tabBar, tabBarIndex) in tabBarList" :key="tabBarIndex">
           <!-- 有子级 -->
           <q-btn-dropdown v-if="tabBar.children.length > 0" v-show="tabBar.data.isDesktop" :menu-offset="[80, 18]"
-            class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t(tabBar.name)" dense flat no-wrap no-caps>
+            class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="tabBar.name" dense flat no-wrap no-caps>
             <q-list v-if="tabBar.children.length > 0" class="q-ma-sm">
               <q-item v-for="(children, childrenIndex) in tabBar.children" :key="childrenIndex" clickable
                 aria-hidden="true" :to="children.route" class="rounded-borders">
                 <q-item-section avatar style="min-width:auto">
                   <q-img no-spinner width="30px" height="30px" :src="imageSrc(children.icon ?? '')"></q-img>
                 </q-item-section>
-                <q-item-section class="text-grey-8">{{ $t(children.name) }}</q-item-section>
+                <q-item-section class="text-grey-8">{{ children.name }}</q-item-section>
               </q-item>
             </q-list>
           </q-btn-dropdown>
 
           <!-- 没有子级 -->
-          <q-btn v-else v-show="tabBar.data.isDesktop" class="text-grey-8 q-mr-sm q-py-xs q-px-md"
-            :label="$t(tabBar.name)" dense flat no-wrap no-caps :to="tabBar.route"></q-btn>
+          <q-btn v-else v-show="tabBar.data.isDesktop" class="text-grey-8 q-mr-sm q-py-xs q-px-md" :label="tabBar.name"
+            dense flat no-wrap no-caps :to="tabBar.route"></q-btn>
         </div>
       </div>
 
@@ -43,7 +43,7 @@
             <q-item-section avatar style="min-width:auto">
               <q-img no-spinner width="30px" height="30px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
-            <q-item-section class="text-grey-8">{{ $t(quickMenu.name) }}</q-item-section>
+            <q-item-section class="text-grey-8">{{ quickMenu.name }}</q-item-section>
           </q-item>
         </q-list>
       </q-btn-dropdown>
@@ -76,7 +76,8 @@
                 <!-- 固定头部 -->
                 <q-item aria-hidden="true">
                   <div class="row items-center">
-                    <q-avatar size="40px" class="q-mt-sm cursor-pointer" @click="$router.push({ name: 'SettingIndex' })">
+                    <q-avatar size="40px" class="q-mt-sm cursor-pointer"
+                      @click="$router.push({ name: 'SettingIndex' })">
                       <q-img no-spinner :src="imageSrc(userInfo.avatar)"></q-img>
                     </q-avatar>
                     <div class="q-ml-sm">
@@ -121,8 +122,8 @@
                             {{ $t('realNameFailed') }}
                           </div>
                         </q-btn>
-                        <q-btn size="xs" rounded flat dense no-wrap class="bg-negative text-white q-px-sm" no-caps v-else
-                          @click="$router.push({ name: 'UserRealAuth' })">
+                        <q-btn size="xs" rounded flat dense no-wrap class="bg-negative text-white q-px-sm" no-caps
+                          v-else @click="$router.push({ name: 'UserRealAuth' })">
                           <div style="font-size: 10px">
                             {{ $t('notRealName') }}
                           </div>
@@ -141,7 +142,7 @@
                     <q-img no-spinner width="24px" height="24px" :src="imageSrc(userMenu.icon)"></q-img>
                   </q-item-section>
                   <q-item-section class="text-grey-8 text-body1">
-                    {{ $t(userMenu.name) }}
+                    {{ userMenu.name }}
                   </q-item-section>
                 </q-item>
 

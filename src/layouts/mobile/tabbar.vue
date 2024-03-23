@@ -15,10 +15,10 @@
     <q-footer reveal bordered class="bg-white text-black text-caption">
       <q-tabs v-model="currentTab" dense indicator-color="transparent" active-color="primary">
         <q-route-tab v-for="(tab, tabIndex) in tabBarList" :key="tabIndex" :name="tab.route" :icon="'img:' +
-          imageSrc(tab.route == currentTab ? tab.activeIcon : tab.icon)
-          " :ripple="false" :to="tab.route">
+      imageSrc(tab.route == currentTab ? tab.activeIcon : tab.icon)
+      " :ripple="false" :to="tab.route">
           <template v-slot:default>
-            <div class="text-caption">{{ $t(tab.name) }}</div>
+            <div class="text-caption">{{ tab.name }}</div>
           </template>
         </q-route-tab>
       </q-tabs>

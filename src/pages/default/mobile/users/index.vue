@@ -25,7 +25,8 @@
               {{ $t('creditScore') + userInfo.score }}
             </q-chip>
             <div @click="$router.push({ name: 'UserRealAuth' })">
-              <q-chip v-if="userInfo.authStatus == 0" style="border: 1px solid red;" class="text-red bg-white" size="sm">
+              <q-chip v-if="userInfo.authStatus == 0" style="border: 1px solid red;" class="text-red bg-white"
+                size="sm">
                 {{ $t('alreadyRealName') }}
                 <q-icon class="bg-white" name="keyboard_arrow_right" size="11px"></q-icon>
               </q-chip>
@@ -59,7 +60,7 @@
           class="bg-white q-py-sm rounded-borders" no-caps unelevated>
           <div class="row justify-start items-center">
             <q-img no-spinner class="q-mr-sm" :src="imageSrc(quickMenu.icon)" width="42px" height="42px" />
-            <div>{{ $t(quickMenu.name) }}</div>
+            <div>{{ quickMenu.name }}</div>
           </div>
         </q-btn>
       </div>
