@@ -34,9 +34,9 @@
       </div>
 
       <!-- 左侧快捷菜单 -->
-      <q-btn-dropdown :menu-offset="[50, 18]" class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t('more')" dense flat
-        no-caps>
-        <q-list class="q-ma-sm">
+      <q-btn-dropdown :menu-offset="[310, 18]" class="text-grey-8 q-mr-sm q-py-xs q-px-sm" :label="$t('more')" dense
+        flat no-caps>
+        <q-list class="q-ma-sm row" style="max-width: 370px;">
           <q-item @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
             class="rounded-borders" v-show="quickMenu.data.isDesktop" :key="quickMenuIndex" clickable v-close-popup
             aria-hidden="true">
