@@ -173,6 +173,8 @@ export default defineComponent({
       // 获取资产列表
       walletsAssetsIndexAPI().then((res: any) => {
         state.assetsList = res
+        Object.assign(state.toAssets, res[0])
+        Object.assign(state.fromAssets, res[1])
       })
     })
 
