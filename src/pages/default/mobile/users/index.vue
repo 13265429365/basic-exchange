@@ -7,8 +7,30 @@
           <q-img no-spinner :src="imageSrc(userInfo.avatar ?? config.logo)" width="50px" height="50px" />
         </q-avatar>
         <div class="col-8">
-          <div class="text-weight-bolder">
-            {{ userInfo.username }}
+          <div class="row justify-start items-center">
+            <div class="text-weight-bolder q-mr-xs">
+              {{ userInfo.username }}
+            </div>
+            <div @click="$router.push({ name: 'UserRealAuth' })">
+              <q-chip v-if="userInfo.authStatus == 0" style="border: 1px solid red;padding: 1px 4px;" class="text-red bg-white"
+                      size="xs">
+                {{ $t('notRealName') }}
+                <q-icon class="bg-white" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+              <q-chip v-else-if="userInfo.authStatus == 10" style="padding: 1px 4px;" class="bg-info text-white" size="xs">
+                {{ $t('pendingRealName') }}
+                <q-icon class="text-white" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+              <q-chip v-else-if="userInfo.authStatus == 20" style="border: 1px solid #01AC66;padding: 1px 4px;"
+                      class="text-green bg-white" size="xs">
+                {{ $t('alreadyRealName') }}
+                <q-icon class="text-green" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+              <q-chip v-else class="bg-red text-white" size="xs" style="padding: 1px 4px;">
+                {{ $t('realNameFailed') }}
+                <q-icon class="text-white" name="keyboard_arrow_right" size="11px"></q-icon>
+              </q-chip>
+            </div>
           </div>
           <div>
             {{ userInfo.email }}
@@ -24,26 +46,6 @@
               <q-img no-spinner src="/images/icons/credit.png" class="q-mr-xs" width="11px" height="11px" />
               {{ $t('creditScore') + userInfo.score }}
             </q-chip>
-            <div @click="$router.push({ name: 'UserRealAuth' })">
-              <q-chip v-if="userInfo.authStatus == 0" style="border: 1px solid red;" class="text-red bg-white"
-                size="sm">
-                {{ $t('alreadyRealName') }}
-                <q-icon class="bg-white" name="keyboard_arrow_right" size="11px"></q-icon>
-              </q-chip>
-              <q-chip v-else-if="userInfo.authStatus == 10" class="bg-info text-white" size="sm">
-                {{ $t('pendingRealName') }}
-                <q-icon class="text-white" name="keyboard_arrow_right" size="11px"></q-icon>
-              </q-chip>
-              <q-chip v-else-if="userInfo.authStatus == 20" style="border: 1px solid #01AC66;"
-                class="text-primary bg-white" size="sm">
-                {{ $t('realNameFailed') }}
-                <q-icon class="text-primary" name="keyboard_arrow_right" size="11px"></q-icon>
-              </q-chip>
-              <q-chip v-else class="bg-negative text-white" size="sm">
-                {{ $t('notRealName') }}
-                <q-icon class="text-white" name="keyboard_arrow_right" size="11px"></q-icon>
-              </q-chip>
-            </div>
           </div>
         </div>
       </div>

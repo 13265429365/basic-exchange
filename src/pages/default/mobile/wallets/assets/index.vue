@@ -88,6 +88,7 @@
 
       <!--  -->
       <div class="q-mt-md q-mb-sm text-weight-bold">{{ $t('assetsBlock') }}</div>
+      <q-separator style="height: 4px;width: 20px;border-radius: 2px;" class="bg-primary" inset />
       <div @click="$router.push({ name: 'WalletsAssetsDetails', query: { id: assets.walletAssetsId } })"
         v-for="(assets, assetsIndex) in userAssetsInfo.userAssetsList" :key="assetsIndex"
         class="row justify-between items-center bg-white q-py-sm q-px-md q-mb-sm rounded-borders">

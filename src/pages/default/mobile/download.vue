@@ -2,10 +2,12 @@
   <div class="column bg-white window-height">
     <div class="col">
       <div class="column justify-between items-center">
-        <div class="column justify-center shadow-1 q-mt-xl" style="width: 80px;height: 80px;border-radius: 15px;">
-          <q-img no-spinner class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
+        <div class="q-mt-xl" style="width: 80px;height: 80px;border-radius: 15px;">
+          <q-avatar size="88px" class="bg-grey-2">
+            <q-img no-spinner class="self-center" :src="imageSrc(config.logo)" width="56px" height="56px" />
+          </q-avatar>
         </div>
-        <div class="text-h6 text-weight-bold q-mt-md">{{ config.name }}</div>
+        <div class="text-h6 text-weight-bold q-mt-lg">{{ config.name }}</div>
         <div class="q-mt-xl full-width">
           <div class="row no-wrap justify-center">
             <img style="width: 120px;" class="cursor-pointer q-mx-sm" src="/images/ios.svg" alt=""

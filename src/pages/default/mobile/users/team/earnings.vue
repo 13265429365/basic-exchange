@@ -20,7 +20,7 @@
       </div>
 
       <div class="rounded-borders bg-white q-px-md q-py-lg  q-mt-md">
-        <div class="text-black text-weight-bold">Beneficial Data</div>
+        <div class="text-black text-weight-bold">{{$t('beneficialData')}}</div>
         <div class="row ">
           <div class="col-4 q-pt-md">
             <div class="text-weight-bold text-h6 text-center">{{ currentTeamInfo.todayNums }}</div>

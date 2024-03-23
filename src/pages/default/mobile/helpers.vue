@@ -7,23 +7,22 @@
 
   <div class="q-pa-md">
     <div class="row justify-between">
-      <div class="col-6 z-top">
+      <div class="col-9 z-top">
         <div class="text-body1 text-white text-weight-bold q-mb-sm">
           {{ $t('helperYou') }}
         </div>
         <div style="background: rgba(255, 255, 255, 0.12);padding: 7px 16px;max-width: 131px;border-radius: 19px;"
           class="text-center text-white ellipsis">{{ $t('24hoursOnline') }}</div>
       </div>
-      <div class="column justify-end">
+      <div class="col column justify-end">
         <q-img no-spinner style="margin-bottom: -15px;margin-right: 20px;" src="/images/helpers.png" width="62px"
           height="79px" />
       </div>
     </div>
 
-    <div class="row q-col-gutter-md justify-center q-mt-xs">
-
+    <div class="row q-col-gutter-md justify-center q-mt-lg">
       <div class="col-4 z-top" v-for="(social, socialIndex ) in socialList" :key="socialIndex">
-        <div class="rounded-borders bg-white column items-center shadow-1" style="padding: 20px 0;">
+        <div class="rounded-borders bg-white column items-center" style="padding: 20px 0;">
           <q-img no-spinner :src="imageSrc(social.icon)" width="41px" height="41px" />
           <div class="text-body2 text-weight-medium q-mt-sm">{{ social.name }}</div>
         </div>
