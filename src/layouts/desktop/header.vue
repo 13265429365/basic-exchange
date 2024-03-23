@@ -44,7 +44,7 @@
               <q-img no-spinner width="30px" height="30px" :src="imageSrc(quickMenu.icon)"></q-img>
             </q-item-section>
             <q-item-section class="text-grey-8">
-              <span class="ellipsis" style="width: 50px;">
+              <span class="ellipsis" style="width: 60px;">
                 {{ quickMenu.name }}
               </span>
             </q-item-section>
