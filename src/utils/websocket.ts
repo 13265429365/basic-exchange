@@ -7,7 +7,7 @@ class WebsocketFunc {
 
   // 构造函数
   constructor(url: string) {
-    if (url == '') {
+    if (url == '' || url == undefined) {
       const protocol = document.location.protocol === 'https:' ? 'wss:' : 'ws:';
       const domain = process.env.baseURL?.substring(process.env.baseURL.indexOf('//'))
       this.url = protocol + domain + '/ws';
