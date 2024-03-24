@@ -173,17 +173,6 @@ export const defaultRouter: TemplateRouteInterface[] = [
         meta: { requireAuth: true, keepAlive: false },
       },
       {
-        name: 'FlashExchangeRecord',
-        route: '/wallets/transfer/record',
-        componentMobile: PagesTemplateMobilePath(
-          TemplateName,
-          'wallets/flashRecord.vue'
-        ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/flashRecord.vue'),
-        children: [],
-        meta: { requireAuth: true, keepAlive: false },
-      },
-      {
         name: 'WalletAccountUpdate',
         route: '/wallets/account/update',
         componentMobile: PagesTemplateMobilePath(
@@ -344,6 +333,17 @@ export const defaultRouter: TemplateRouteInterface[] = [
           'wallets/index.vue'
         ),
         componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/index.vue'),
+        children: [],
+        meta: { requireAuth: true, keepAlive: false },
+      },
+      {
+        name: 'FlashExchangeRecord',
+        route: '/wallets/transfer/record',
+        componentMobile: PagesTemplateMobilePath(
+          TemplateName,
+          'wallets/flashRecord.vue'
+        ),
+        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/flashRecord.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },

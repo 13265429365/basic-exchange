@@ -43,7 +43,7 @@
               </template>
             </q-btn>
             <q-separator vertical inset style="background: #bbb;" />
-            <span class="q-px-lg q-py-sm">{{ toAssets.value * rate }}</span>
+            <span class="q-px-lg q-py-sm">{{ (toAssets.value * rate).toFixed(6) }}</span>
           </div>
         </q-card-section>
       </q-card>
@@ -92,7 +92,7 @@
         <q-card-section class="q-px-md q-mt-xs q-gutter-y-md">
           <div class="text-center text-grey-7">{{ $t('receive') }}</div>
           <div class="text-center">
-            <span class="text-h5 text-weight-medium">{{ toAssets.value * rate }}</span>
+            <span class="text-h5 text-weight-medium">{{ (toAssets.value * rate).toFixed(6) }}</span>
             <span class="q-ml-sm text-body1">{{ fromAssets.name }}</span>
           </div>
           <q-card-section class="bg-grey-2">
@@ -106,7 +106,7 @@
             <div class="row justify-between q-mt-sm">
               <span class="text-grey">{{ $t('ratio') }}</span>
               <div class="text-weight-medium">
-                <span>1 {{ toAssets.name }} ≈ {{ rate }}</span>
+                <span>1 {{ toAssets.name }} ≈ {{ rate.toFixed(6) }}</span>
                 <span class="q-ml-xs">{{ fromAssets.name }}</span>
               </div>
             </div>

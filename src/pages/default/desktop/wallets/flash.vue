@@ -16,7 +16,7 @@
     <div class="row justify-center q-mt-lg">
       <div class="column">
         <q-card class="relative-position bg-grey-2 rounded-borders" flat style="width: 390px">
-          <q-card-section class="q-pa-lg text-grey-7">
+          <q-card-section class="q-pa-lg  text-grey-7">
             <div class="row items-center justify-between">
               <div>{{ $t('begin') }}</div>
               <div class="row items-center justify-between">
@@ -25,7 +25,7 @@
             </div>
             <div class="row items-center no-wrap justify-between q-mt-sm">
               <q-input v-model="toAssets.value" borderless class="bg-grey-2 rounded-borders"
-                :input-style="{ fontSize: '20px' }" placeholder="请输入金额">
+                :input-style="{ fontSize: '20px' }" :placeholder="$t('pleaseEnterQuantity')">
                 <template v-slot:append>
                   <span @click="toAssets.value = toAssets.money"
                     class="text-primary text-body2 cursor-pointer q-mr-md">{{ $t('maximum') }}</span>
@@ -55,7 +55,7 @@
             </div>
             <div class="row items-center no-wrap justify-between q-mt-sm">
               <div class="row items-center">
-                <div class="text-h6 text-black">{{ toAssets.value * rate }}</div>
+                <div class="text-h6 text-black">{{ (toAssets.value * rate).toFixed(6) }}</div>
               </div>
               <q-btn-dropdown @click="showAssetsPopup = true; assetsPopupType = 'from'" rounded color="black"
                 class="bg-white" flat no-caps :menu-offset="[0, 18]">
@@ -113,7 +113,7 @@
         <q-card-section class="q-px-md q-mt-xs q-gutter-y-md">
           <div class="text-center text-grey-7">{{ $t('receive') }}</div>
           <div class="text-center">
-            <span class="text-h5 text-weight-medium">{{ toAssets.value * rate }}</span>
+            <span class="text-h5 text-weight-medium">{{ (toAssets.value * rate).toFixed(6) }}</span>
             <span class="q-ml-sm text-body1">{{ fromAssets.name }}</span>
           </div>
           <q-card-section class="bg-grey-2">
@@ -127,7 +127,7 @@
             <div class="row justify-between q-mt-sm">
               <span class="text-grey">{{ $t('ratio') }}</span>
               <div class="text-weight-medium">
-                <span>1 {{ toAssets.name }} ≈ {{ rate }}</span>
+                <span>1 {{ toAssets.name }} ≈ {{ rate.toFixed(6) }}</span>
                 <span class="q-ml-xs">{{ fromAssets.name }}</span>
               </div>
             </div>
@@ -210,7 +210,7 @@ export default defineComponent({
         type: 2,
       }).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        $router.push({ name: 'WalletsAssetsIndex' })
+        $router.push({ name: 'FlashExchangeRecord' })
       })
 
     }
