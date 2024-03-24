@@ -30,7 +30,8 @@
                   <div>
                     <span>{{ flash.money }} {{ flash.assetsName == '' ? $t('currency') : flash.assetsName }}</span>
                     <q-icon name="east" color="primary" class="q-mx-sm"></q-icon>
-                    <span>{{ flash.nums }} {{ flash.symbolAssetsName }}</span>
+                    <span>{{ flash.nums }} {{ flash.symbolAssetsName == '' ? $t('currency') : flash.symbolAssetsName
+                      }}</span>
                   </div>
                 </div>
               </q-item-section>
