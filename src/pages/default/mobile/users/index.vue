@@ -56,7 +56,7 @@
 
     <div class="bg-grey-1 q-px-md q-py-md full-width">
       <!-- 充值、提现 -->
-      <div class="row justify-between q-mb-md btn">
+      <div class="row q-gutter-y-sm justify-between q-mb-md btn">
         <q-btn @click="$router.push(quickMenu.route)" v-for="(quickMenu, quickMenuIndex) in quickMenuList"
           :key="quickMenuIndex" v-show="quickMenu.data.isMobile" style="width: 47%;"
           class="bg-white q-py-sm rounded-borders" no-caps unelevated>

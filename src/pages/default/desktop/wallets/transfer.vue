@@ -162,7 +162,7 @@ export default defineComponent({
       state.params.money = parseFloat(state.params.money)
       walletsTransfeCreateAPI(state.params).then(() => {
         NotifyPositive(t('submittedSuccess'))
-        $router.push({ name: 'WalletsAssetsIndex' })
+        $router.push({ name: 'FlashExchangeRecord' })
       })
 
     }
