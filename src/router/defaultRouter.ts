@@ -351,10 +351,10 @@ export const defaultRouter: TemplateRouteInterface[] = [
         name: 'FlashExchangeRecord',
         route: '/wallets/transfer/record',
         componentMobile: PagesTemplateMobilePath(
-          TemplateName,
+          DefaultTemplateName,
           'wallets/flashRecord.vue'
         ),
-        componentDesktop: PagesTemplateDesktopPath(TemplateName, 'wallets/flashRecord.vue'),
+        componentDesktop: PagesTemplateDesktopPath(DefaultTemplateName, 'wallets/flashRecord.vue'),
         children: [],
         meta: { requireAuth: true, keepAlive: false },
       },
